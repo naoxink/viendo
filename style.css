@@ -209,3 +209,127 @@ h1 {
         box-shadow: none;
     }
 }
+
+
+/* --- SECCIONES DEL HISTÓRICO --- */
+.año-section {
+    margin-bottom: 1.5rem; /* Separación entre bloques de años */
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Estado cuando está abierto */
+.año-section[open] {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Cabecera del acordeón */
+summary {
+    padding: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    user-select: none;
+    list-style: none;
+}
+
+summary::-webkit-details-marker { display: none; } /* Quitar flecha Safari */
+
+summary::after {
+    content: "→";
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+}
+
+.año-section[open] summary::after {
+    transform: rotate(90deg);
+}
+
+/* Contenedor de las series dentro del acordeón */
+.año-content {
+    padding: 0 1.2rem 0.5rem 1.2rem;
+    border-top: 1px solid var(--border);
+}
+
+/* Ajuste de las cards dentro del histórico para que no se peguen */
+.año-content .serie-card {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.año-content .serie-card:last-child {
+    border-bottom: none;
+}
+
+/* Estilo para las etiquetas de cantidad */
+.count {
+    font-size: 0.7rem;
+    background: var(--border);
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: var(--text-muted);
+    margin-right: 10px;
+}
+
+
+.stats-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.stat-item {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.stat-item b {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* Un pequeño separador visual entre stats */
+.stat-item:not(:last-child)::after {
+    content: "•";
+    margin-left: 1rem;
+    color: var(--border);
+}
+
+
+.search-wrapper {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+#history-search {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#history-search:focus {
+    border-color: var(--accent);
+}
+
+/* Estilo para cuando no hay resultados */
+.no-results {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+}
