@@ -12,29 +12,41 @@ async function loadSeries() {
         const response = await fetch('data.json');
         const data = await response.json();
         
+        const viendoOrdenadas = data.viendo.sort((a, b) => {
+            // Si b es true (1) y a es false (0), el resultado es positivo y b sube.
+            return (b.pendiente === true) - (a.pendiente === true);
+        });
+
         // Renderizar "Viendo actualmente"
         const currentContainer = document.getElementById('series-list');
-        currentContainer.innerHTML = data.viendo.map(s => `
+        currentContainer.innerHTML = viendoOrdenadas.map(s => `
             <div class="serie-card">
                 <div class="info">
-                    <h2>${s.titulo}</h2>
-                    <p class="progress">T${s.temporada} • E${s.capitulo}</p>
+                    <h2>
+                        ${s.titulo}
+                        <span class="año-label">(${s.año})</span>
+                    </h2>
+                    <p class="progress">T${s.temporada} • E${s.capitulo} ${s.pendiente ? `<span class="badge-pendiente">Pendiente</span>` : `<span class="badge-visto">Visto</span>`}</p>
                 </div>
                 <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
             </div>
         `).join('');
 
+        const completadasOrdenadas = data.completadas.sort((a, b) => {
+            return b.año - a.año; // Orden descendente numérico
+        });
+
         const historyContainer = document.getElementById('history-list');
-        historyContainer.innerHTML = data.completadas.map(s => {
+        historyContainer.innerHTML = completadasOrdenadas.map(s => {
             const colorClass = getNotaClass(s.nota); // Calculamos el color
             
             return `
                 <div class="serie-card">
                     <div class="info">
                         <h2>${s.titulo} <span class="nota-tag ${colorClass}">${s.nota}</span></h2>
-                        <p class="progress">Finalizada en ${s.año}</p>
+                        <p class="progress">Estrenada el ${s.año}</p>
                     </div>
-                    <a href="${s.link}" target="_blank" class="link-imdb">Ficha</a>
+                    <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
                 </div>
             `;
         }).join('');

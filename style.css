@@ -133,3 +133,79 @@ h1 {
     .nota-tag.medium { background: #443a2a; color: #ffb347; border: none; }
     .nota-tag.good { background: #234e52; color: #81e6d9; border: none; }
 }
+
+/* Añade esto a tu style.css */
+.año-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: 6px;
+}
+
+/* Ajuste sutil para que el título y el año se alineen bien */
+.info h2 {
+    display: flex;
+    align-items: baseline;
+}
+
+/* Badge común para ambos */
+.badge-pendiente, .badge-visto {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+/* Específico Pendiente (Azul) */
+.badge-pendiente {
+    background-color: #ebf5ff;
+    color: #0070f3;
+}
+
+/* Específico Visto (Verde) */
+.badge-visto {
+    background-color: #e6fffa;
+    color: #38b2ac;
+}
+
+/* Modo Oscuro */
+@media (prefers-color-scheme: dark) {
+    .badge-visto {
+        background-color: #1a2e2c;
+        color: #81e6d9;
+    }
+    .badge-pendiente {
+        background-color: #1e1e1e;
+        color: #70baff;
+    }
+}
+
+/* Estilo para las series vistas (más discretas) */
+.serie-card:has(.badge-visto) {
+    opacity: 0.6;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Estilo para las series pendientes (bloques individuales) */
+.serie-card:has(.badge-pendiente) {
+    opacity: 1;
+    background-color: rgba(0, 112, 243, 0.03); /* Un azul casi invisible */
+    border-left: 4px solid var(--accent);
+    border-bottom: 1px solid transparent; /* Quitamos la línea divisoria común */
+    margin-bottom: 5px; /* ESTO crea la separación entre bloques */
+    padding: 1rem; /* Más aire interno */
+    border-radius: 0 8px 8px 0; /* Suaviza las esquinas derechas */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.02); /* Sombra muy sutil */
+}
+
+/* Ajuste para el modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .serie-card:has(.badge-pendiente) {
+        background-color: rgba(0, 112, 243, 0.1);
+        box-shadow: none;
+    }
+}

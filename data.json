@@ -1,24 +1,236 @@
 {
   "viendo": [
     {
-      "titulo": "The Bear",
-      "temporada": 3,
+      "titulo": "Margo tiene problemas de dinero",
+      "temporada": 1,
+      "capitulo": 6,
+      "año": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt31137273",
+      "pendiente": false
+    },
+    {
+      "titulo": "Marshals: Una historia de Yellowstone",
+      "temporada": 1,
+      "capitulo": 10,
+      "año": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt36849871",
+      "pendiente": false
+    },
+    {
+      "titulo": "Barrio Esperanza",
+      "temporada": 1,
+      "año": 2026,
       "capitulo": 5,
-      "link": "https://www.imdb.com/title/tt14452792/"
+      "link": "https://www.imdb.com/es-es/title/tt37439565",
+      "pendiente": true
+    },
+    {
+      "titulo": "Euphoria",
+      "temporada": 1,
+      "capitulo": 6,
+      "año": 2019,
+      "link": "https://www.imdb.com/es-es/title/tt8772296/",
+      "pendiente": true
+    },
+    {
+      "titulo": "Stranger Things: Relatos del 85",
+      "temporada": 1,
+      "capitulo": 8,
+      "año": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt27486290/",
+      "pendiente": true
+    },
+    {
+      "titulo": "From",
+      "temporada": 4,
+      "capitulo": 1,
+      "año": 2022,
+      "link": "https://www.imdb.com/es-es/title/tt9813792/",
+      "pendiente": true
+    },
+    {
+      "titulo": "Machos Alfa",
+      "temporada": 5,
+      "capitulo": 1,
+      "año": 2022,
+      "link": "https://www.imdb.com/es-es/title/tt18482892/",
+      "pendiente": true
     }
   ],
   "completadas": [
     {
-      "titulo": "Succession",
-      "año": 2023,
-      "nota": "10/10",
-      "link": "https://www.imdb.com/title/tt7605810/"
+      "titulo": "Pluribus",
+      "año": 2025,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt22202452/"
     },
     {
-      "titulo": "Dark",
-      "año": 2020,
+      "titulo": "Secuestro en el aire",
+      "año": 2023,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt19854762/"
+    },
+    {
+      "titulo": "Rick & Morty",
+      "año": 2013,
+      "nota": "10/10",
+      "link": "https://www.imdb.com/title/tt2861424/"
+    },
+    {
+      "titulo": "Stranger Things",
+      "año": 2016,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt4574334/"
+    },
+    {
+      "titulo": "La que se avecina",
+      "año": 2007,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt0922037/"
+    },
+    {
+      "titulo": "Breaking Bad",
+      "año": 2008,
+      "nota": "10/10",
+      "link": "https://www.imdb.com/title/tt0903747/"
+    },
+    {
+      "titulo": "Better Call Saul",
+      "año": 2015,
+      "nota": "10/10",
+      "link": "https://www.imdb.com/title/tt3032476/"
+    },
+    {
+      "titulo": "Vikings",
+      "año": 2013,
+      "nota": "10/10",
+      "link": "https://www.imdb.com/title/tt2306299/"
+    },
+    {
+      "titulo": "The Wire",
+      "año": 2002,
+      "nota": "10/10",
+      "link": "https://www.imdb.com/title/tt0306414/"
+    },
+    {
+      "titulo": "Mr. Robot",
+      "año": 2015,
+      "nota": "10/10",
+      "link": "https://www.imdb.com/title/tt4158110/"
+    },
+    {
+      "titulo": "Dexter",
+      "año": 2006,
       "nota": "9/10",
-      "link": "https://www.imdb.com/title/tt5753856/"
+      "link": "https://www.imdb.com/title/tt0773262/"
+    },
+    {
+      "titulo": "Apagón",
+      "año": 2022,
+      "nota": "6/10",
+      "link": "https://www.imdb.com/title/tt16021642/"
+    },
+    {
+      "titulo": "Dead Set",
+      "año": 2008,
+      "nota": "6/10",
+      "link": "https://www.imdb.com/title/tt1285482/"
+    },
+    {
+      "titulo": "Antidisturbios",
+      "año": 2020,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt10883660/"
+    },
+    {
+      "titulo": "Spartacus",
+      "año": 2010,
+      "nota": "7/10",
+      "link": "https://www.imdb.com/title/tt1442449/"
+    },
+    {
+      "titulo": "Spartacus: Dioses de la arena",
+      "año": 2011,
+      "nota": "6/10",
+      "link": "https://www.imdb.com/title/tt39020004/"
+    },
+    {
+      "titulo": "Respira",
+      "año": 2024,
+      "nota": "5/10",
+      "link": "https://www.imdb.com/title/tt28298539/"
+    },
+    {
+      "titulo": "Sin gluten",
+      "año": 2025,
+      "nota": "6/10",
+      "link": "https://www.imdb.com/title/tt37284797/"
+    },
+    {
+      "titulo": "La Caza",
+      "año": 2019,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt8787372/"
+    },
+    {
+      "titulo": "Bel-Air",
+      "año": 2022,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt12878838/"
+    },
+    {
+      "titulo": "Boots",
+      "año": 2025,
+      "nota": "7/10",
+      "link": "https://www.imdb.com/title/tt27987047/"
+    },
+    {
+      "titulo": "Solar Opposites",
+      "año": 2020,
+      "nota": "7/10",
+      "link": "https://www.imdb.com/title/tt8910922/"
+    },
+    {
+      "titulo": "Upload",
+      "año": 2020,
+      "nota": "7/10",
+      "link": "https://www.imdb.com/title/tt7826376/"
+    },
+    {
+      "titulo": "El refugio atómico",
+      "año": 2025,
+      "nota": "4/10",
+      "link": "https://www.imdb.com/title/tt31173096/"
+    },
+    {
+      "titulo": "Muertos S.L.",
+      "año": 2024,
+      "nota": "7/10",
+      "link": "https://www.imdb.com/title/tt29614148/"
+    },
+    {
+      "titulo": "El juego del calamar",
+      "año": 2021,
+      "nota": "7/10",
+      "link": "https://www.imdb.com/title/tt10919420/"
+    },
+    {
+      "titulo": "The Bear",
+      "año": 2022,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt14452776/"
+    },
+    {
+      "titulo": "Motorheads",
+      "año": 2025,
+      "nota": "6/10",
+      "link": "https://www.imdb.com/title/tt13723084/"
+    },
+    {
+      "titulo": "Entrepreneurs",
+      "año": 2025,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt34779099/"
     }
   ]
 }
