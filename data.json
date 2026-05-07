@@ -1,14 +1,24 @@
-[
-  {
-    "titulo": "The Bear",
-    "temporada": 3,
-    "capitulo": 5,
-    "link": "https://www.imdb.com/title/tt14452792/"
-  },
-  {
-    "titulo": "Severance",
-    "temporada": 2,
-    "capitulo": 1,
-    "link": "https://www.imdb.com/title/tt11280740/"
-  }
-]
+{
+  "viendo": [
+    {
+      "titulo": "The Bear",
+      "temporada": 3,
+      "capitulo": 5,
+      "link": "https://www.imdb.com/title/tt14452792/"
+    }
+  ],
+  "completadas": [
+    {
+      "titulo": "Succession",
+      "año": 2023,
+      "nota": "10/10",
+      "link": "https://www.imdb.com/title/tt7605810/"
+    },
+    {
+      "titulo": "Dark",
+      "año": 2020,
+      "nota": "9/10",
+      "link": "https://www.imdb.com/title/tt5753856/"
+    }
+  ]
+}

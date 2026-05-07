@@ -78,3 +78,58 @@ h1 {
     color: var(--accent);
     border-color: var(--accent);
 }
+
+.history-title {
+    margin-top: 4rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.history .serie-card {
+    border-bottom: 1px dashed var(--border); /* Diferente estilo de línea */
+    opacity: 0.8;
+}
+
+.history .info h2 {
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.history .progress {
+    font-size: 0.8rem;
+}
+
+.nota-tag {
+    font-family: monospace;
+    font-size: 0.8rem;
+    background: var(--border);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+/* Colores para las notas */
+.nota-tag.bad {
+    background: #ffeded;
+    color: #ff4d4d;
+    border: 1px solid #ffcccc;
+}
+
+.nota-tag.medium {
+    background: #fff5e6;
+    color: #f5a623;
+    border: 1px solid #ffe0b3;
+}
+
+.nota-tag.good {
+    background: #e6fffa;
+    color: #38b2ac;
+    border: 1px solid #b2f5ea;
+}
+
+/* Ajuste para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .nota-tag.bad { background: #442a2a; color: #ff8080; border: none; }
+    .nota-tag.medium { background: #443a2a; color: #ffb347; border: none; }
+    .nota-tag.good { background: #234e52; color: #81e6d9; border: none; }
+}
