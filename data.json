@@ -1,0 +1,16 @@
+[
+  {
+    "titulo": "The Bear",
+    "temporada": 3,
+    "capitulo": 5,
+    "link": "https://www.imdb.com/title/tt14452792/",
+    "poster": "https://image.tmdb.org/t/p/w200/r9S67O0Y6N3OphY7N4K5q5e3E.jpg"
+  },
+  {
+    "titulo": "Severance",
+    "temporada": 2,
+    "capitulo": 1,
+    "link": "https://www.imdb.com/title/tt11280740/",
+    "poster": "https://image.tmdb.org/t/p/w200/l99v899mPZ69oZ7G99X9V.jpg"
+  }
+]
