@@ -33,14 +33,6 @@
       "pendiente": true
     },
     {
-      "titulo": "Stranger Things: Relatos del 85",
-      "temporada": 1,
-      "capitulo": 8,
-      "año": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt27486290/",
-      "pendiente": true
-    },
-    {
       "titulo": "From",
       "temporada": 4,
       "capitulo": 1,
@@ -58,6 +50,12 @@
     }
   ],
   "completadas": [
+    {
+      "titulo": "Stranger Things: Relatos del 85",
+      "nota": "07/10",
+      "año": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt27486290/"
+    },
     {
       "titulo": "Pluribus",
       "año": 2025,
