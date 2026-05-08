@@ -145,6 +145,24 @@ function renderHistorico(completadas, añoActual) {
     }).join('');
 }
 
+async function setLastUpdateDate() {
+  // Obtener la fecha de última modificación de data.csv
+  let formatted = ''
+  try {
+    const res = await fetch('data.json', { method: 'HEAD' })
+    const lastModified = res.headers.get('Last-Modified')
+    if (lastModified) {
+      const date = new Date(lastModified)
+      formatted = date.toLocaleDateString('es-ES')
+    } else {
+      formatted = 'desconocida'
+    }
+  } catch (e) {
+    formatted = 'desconocida'
+  }
+  document.querySelector('.last-update .date').textContent = formatted
+}
+
 async function loadSeries() {
     try {
         const response = await fetch('data.json');
@@ -155,6 +173,7 @@ async function loadSeries() {
         renderStats(data, añoActual);
         renderViendo(data.viendo);
         renderHistorico(data.completadas, añoActual);
+        setLastUpdateDate()
 
     } catch (error) {
         console.error("Error cargando la App:", error);

@@ -333,3 +333,7 @@ summary::after {
     color: var(--text-muted);
     font-style: italic;
 }
+
+.last-update {
+    text-align: right;
+}
