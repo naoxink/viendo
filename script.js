@@ -100,7 +100,7 @@ function renderViendo(lista) {
     container.innerHTML = ordenada.map(s => `
         <div class="serie-card">
             <div class="info">
-                <h2>${s.titulo} <span class="año-label">(${s.año})</span></h2>
+                <h2>${s.titulo} ${getRewatchBadge(s)}<span class="año-label">(${s.año})</span></h2>
                 <p class="progress">T${s.temporada} • E${s.capitulo} 
                    ${s.pendiente ? '<span class="badge-pendiente">Pendiente</span>' : '<span class="badge-visto">Visto</span>'}
                 </p>
@@ -113,30 +113,37 @@ function renderViendo(lista) {
 function renderHistorico(completadas, añoActual) {
     const container = document.getElementById('history-list');
     
+    // Filtramos usando 'vistoEn', y si no existe (por error), usamos 'año'
     const grupos = [
-        { titulo: `Recientes (${añoActual-1}-${añoActual})`, filtro: (s) => s.año >= añoActual - 1, open: true },
-        { titulo: `Anteriores (${añoActual-6}-${añoActual-2})`, filtro: (s) => s.año < añoActual - 1 && s.año >= añoActual - 6, open: false },
-        { titulo: `Archivo (Antes de ${añoActual-6})`, filtro: (s) => s.año < añoActual - 6, open: false }
+        { titulo: `Recientes (${añoActual-1}-${añoActual})`, filtro: (s) => (s.vistoEn || s.año) >= añoActual - 1, open: true },
+        { titulo: `Anteriores (${añoActual-6}-${añoActual-2})`, filtro: (s) => (s.vistoEn || s.año) < añoActual - 1 && (s.vistoEn || s.año) >= añoActual - 6, open: false },
+        { titulo: `Archivo (Antes de ${añoActual-6})`, filtro: (s) => (s.vistoEn || s.año) < añoActual - 6, open: false }
     ];
 
     container.innerHTML = grupos.map(grupo => {
-        const series = completadas.filter(grupo.filtro).sort((a, b) => b.año - a.año);
+        // Ordenamos por el año en que las viste (vistoEn)
+        const series = completadas.filter(grupo.filtro).sort((a, b) => (b.vistoEn || b.año) - (a.vistoEn || a.año));
+        
         if (series.length === 0) return '';
 
         return `
-            <details class="año-section" ${grupo.open ? 'open' : ''}>
+            <details class="año-section">
                 <summary>
                     <span>${grupo.titulo}</span>
                     <span class="count">${series.length} series</span>
                 </summary>
                 <div class="año-content">
                     ${series.map(s => `
-                        <div class="serie-card">
+                        <div class="serie-card" data-titulo="${s.titulo.toLowerCase()}">
                             <div class="info">
                                 <h2>${s.titulo} <span class="nota-tag ${getNotaClass(s.nota)}">${s.nota}</span></h2>
-                                <p class="progress">Estrenada en ${s.año}</p>
+                                <p class="progress">
+                                    Finalizada en <b>${s.vistoEn || s.año}</b>
+                                    ${getRewatchBadge(s)}
+                                    <span class="original-year">(Estreno: ${s.año})</span>
+                                </p>
                             </div>
-                            <a href="${s.link}" target="_blank" class="link-imdb">Ficha</a>
+                            <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
                         </div>
                     `).join('')}
                 </div>
@@ -204,6 +211,12 @@ document.getElementById('history-search').addEventListener('input', (e) => {
         }
     });
 });
+
+function getRewatchBadge(serie) {
+    if (!serie.rewatch) return '';
+    const vecesTexto = serie.veces > 1 ? `<span>x${serie.veces}</span>` : '';
+    return `<span class="badge-rewatch">Rewatch ${vecesTexto}</span>`;
+}
 
 // Arrancar
 loadSeries();

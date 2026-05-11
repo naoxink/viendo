@@ -337,3 +337,44 @@ summary::after {
 .last-update {
     text-align: right;
 }
+
+.original-year {
+    font-size: 0.8rem;
+    opacity: 0.5;
+    margin-left: 8px;
+    font-weight: normal;
+}
+
+.progress b {
+    color: var(--accent); /* Resaltamos el año en que TÚ la viste */
+}
+
+.badge-rewatch {
+    background-color: #6366f1; /* Un color violeta/índigo */
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+.badge-rewatch span {
+    background: rgba(255, 255, 255, 0.2);
+    margin-left: 4px;
+    padding: 0 4px;
+    border-radius: 4px;
+}
+
+/* Ajuste para que en el móvil no se amontone */
+@media (max-width: 480px) {
+    .badge-rewatch {
+        margin-left: 0;
+        margin-top: 4px;
+        display: table; /* Para que baje a una línea propia si el título es largo */
+    }
+}
