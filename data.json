@@ -3,11 +3,11 @@
     {
       "titulo": "Margo tiene problemas de dinero",
       "temporada": 1,
-      "capitulo": 6,
+      "capitulo": 7,
       "año": 2026,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt31137273",
-      "pendiente": false
+      "pendiente": true
     },
     {
       "titulo": "Marshals: Una historia de Yellowstone",
@@ -30,7 +30,7 @@
     {
       "titulo": "Euphoria",
       "temporada": 2,
-      "capitulo": 2,
+      "capitulo": 3,
       "año": 2019,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt8772296/",
