@@ -22,10 +22,10 @@
       "titulo": "Barrio Esperanza",
       "temporada": 1,
       "año": 2026,
-      "capitulo": 5,
+      "capitulo": 6,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt37439565",
-      "pendiente": false
+      "pendiente": true
     },
     {
       "titulo": "Euphoria",
@@ -39,7 +39,7 @@
     {
       "titulo": "From",
       "temporada": 4,
-      "capitulo": 1,
+      "capitulo": 2,
       "año": 2022,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt9813792/",
