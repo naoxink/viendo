@@ -12,11 +12,11 @@
     {
       "titulo": "Marshals: Una historia de Yellowstone",
       "temporada": 1,
-      "capitulo": 11,
+      "capitulo": 12,
       "año": 2026,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt36849871",
-      "pendiente": false
+      "pendiente": true
     },
     {
       "titulo": "Barrio Esperanza",
@@ -30,7 +30,7 @@
     {
       "titulo": "Euphoria",
       "temporada": 2,
-      "capitulo": 3,
+      "capitulo": 4,
       "año": 2019,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt8772296/",
@@ -39,11 +39,11 @@
     {
       "titulo": "From",
       "temporada": 4,
-      "capitulo": 4,
+      "capitulo": 5,
       "año": 2022,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt9813792/",
-      "pendiente": false
+      "pendiente": true
     },
     {
       "titulo": "Machos Alfa",
