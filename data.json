@@ -10,15 +10,6 @@
       "pendiente": false
     },
     {
-      "titulo": "Marshals: Una historia de Yellowstone",
-      "temporada": 1,
-      "capitulo": 12,
-      "año": 2026,
-      "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt36849871",
-      "pendiente": false
-    },
-    {
       "titulo": "Barrio Esperanza",
       "temporada": 1,
       "año": 2026,
@@ -53,6 +44,17 @@
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt18482892/",
       "pendiente": true
+    }
+  ],
+  "dropeadas": [
+    {
+      "titulo": "Marshals: Una historia de Yellowstone",
+      "temporada": 1,
+      "capitulo": 12,
+      "año": 2026,
+      "vistoEn": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt36849871",
+      "pendiente": false
     }
   ],
   "completadas": [

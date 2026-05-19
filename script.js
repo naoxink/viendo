@@ -52,25 +52,6 @@ function setupSearch() {
     });
 }
 
-// 2. En tu función principal, asegúrate del orden:
-async function loadSeries() {
-    try {
-        const response = await fetch('data.json');
-        const data = await response.json();
-        const añoActual = new Date().getFullYear();
-
-        renderStats(data, añoActual);
-        renderViendo(data.viendo);
-        renderHistorico(data.completadas, añoActual);
-
-        // ¡IMPORTANTE! Configura el buscador después de que el HTML exista
-        setupSearch();
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
-}
-
 // Devuelve la clase de color según la nota
 function getNotaClass(notaString) {
     const nota = parseFloat(notaString);
@@ -180,6 +161,7 @@ async function loadSeries() {
         renderStats(data, añoActual);
         renderViendo(data.viendo);
         renderHistorico(data.completadas, añoActual);
+        renderDropeadas(data.dropeadas);
         setLastUpdateDate()
 
     } catch (error) {
@@ -193,7 +175,7 @@ document.getElementById('history-search').addEventListener('input', (e) => {
     const sections = document.querySelectorAll('.año-section');
 
     sections.forEach((section, index) => {
-        const cards = section.querySelectorAll('.serie-card');
+        const cards = section.querySelectorAll('.serie-card, .serie-card-dropped');
         let matches = 0;
 
         cards.forEach(card => {
@@ -216,6 +198,38 @@ function getRewatchBadge(serie) {
     if (!serie.rewatch) return '';
     const vecesTexto = serie.veces > 1 ? `<span>x${serie.veces}</span>` : '';
     return `<span class="badge-rewatch">Rewatch ${vecesTexto}</span>`;
+}
+
+function renderDropeadas(dropeadas) {
+    const container = document.getElementById('dropped-container');
+    if (!container || !dropeadas || dropeadas.length === 0) {
+        if (container) container.innerHTML = '';
+        return;
+    }
+
+    const ordenadas = [...dropeadas].sort((a, b) => a.titulo.localeCompare(b.titulo));
+
+    container.innerHTML = `
+        <details class="año-section dropped-section">
+            <summary>
+                <span>🗑️ Series Dropeadas</span>
+                <span class="count">${ordenadas.length} series</span>
+            </summary>
+            <div class="año-content">
+                ${ordenadas.map(s => `
+                    <div class="serie-card-dropped" data-titulo="${s.titulo.toLowerCase()}">
+                        <div class="info">
+                            <h3>${s.titulo} <small>(${s.año})</small></h3>
+                            <p class="dropped-meta">
+                                Dropeada en <b>${s.vistoEn || s.año}</b> • Te quedaste en: <span>T${s.temporada} • E${s.capitulo}</span>
+                            </p>
+                        </div>
+                        <a href="${s.link}" target="_blank" class="link-imdb-dropped">Ficha</a>
+                    </div>
+                `).join('')}
+            </div>
+        </details>
+    `;
 }
 
 // Arrancar

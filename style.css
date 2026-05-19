@@ -378,3 +378,63 @@ summary::after {
         display: table; /* Para que baje a una línea propia si el título es largo */
     }
 }
+
+/* Dropeadas */
+/* Contenedor del bloque */
+.dropped-section-wrapper {
+    margin-top: 3rem;
+    opacity: 0.6; /* Hace que toda la sección sea más tenue */
+    transition: opacity 0.3s ease;
+}
+
+.dropped-section-wrapper:hover {
+    opacity: 0.9; /* Recupera color si pasas el ratón por encima */
+}
+
+/* El acordeón de dropeadas */
+.dropped-section {
+    background: var(--bg-card); /* O un gris más oscuro si estás en modo oscuro */
+    border: 1px dashed #cccccc; /* Línea discontinua para dar sensación de "descarte" */
+    border-radius: 8px;
+}
+
+.dropped-section summary {
+    padding: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    color: #888888; /* Texto gris */
+}
+
+/* Tarjetas individuales de series dropeadas */
+.serie-card-dropped {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.serie-card-dropped h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #666666;
+}
+
+.dropped-meta {
+    margin: 4px 0 0 0;
+    font-size: 0.8rem;
+    color: #999999;
+}
+
+.dropped-meta span {
+    font-weight: 600;
+    color: #cc4444; /* Un toque rojo suave para el punto de abandono */
+}
+
+.link-imdb-dropped {
+    font-size: 0.8rem;
+    color: #999999;
+    text-decoration: none;
+}
