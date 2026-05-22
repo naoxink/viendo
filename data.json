@@ -19,15 +19,6 @@
       "pendiente": false
     },
     {
-      "titulo": "Euphoria",
-      "temporada": 2,
-      "capitulo": 6,
-      "año": 2019,
-      "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt8772296/",
-      "pendiente": true
-    },
-    {
       "titulo": "From",
       "temporada": 4,
       "capitulo": 5,
@@ -48,13 +39,20 @@
   ],
   "dropeadas": [
     {
+      "titulo": "Euphoria",
+      "temporada": 2,
+      "capitulo": 6,
+      "año": 2019,
+      "vistoEn": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt8772296/"
+    },
+    {
       "titulo": "Marshals: Una historia de Yellowstone",
       "temporada": 1,
       "capitulo": 12,
       "año": 2026,
       "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt36849871",
-      "pendiente": false
+      "link": "https://www.imdb.com/es-es/title/tt36849871"
     }
   ],
   "completadas": [
