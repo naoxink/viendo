@@ -1,16 +1,6 @@
 {
   "viendo": [
     {
-      "titulo": "Margo tiene problemas de dinero",
-      "temporada": 1,
-      "capitulo": 8,
-      "año": 2026,
-      "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt31137273",
-      "pendiente": false,
-      "tvdb_id": 445651
-    },
-    {
       "titulo": "Barrio Esperanza",
       "temporada": 1,
       "año": 2026,
@@ -18,7 +8,9 @@
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt37439565",
       "pendiente": false,
-      "tvdb_id": 476159
+      "tvdb_id": 476159,
+      "acumulados": 0,
+      "proximaFecha": "2026-05-24"
     },
     {
       "titulo": "From",
@@ -28,7 +20,9 @@
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt9813792/",
       "pendiente": false,
-      "tvdb_id": 401003
+      "tvdb_id": 401003,
+      "acumulados": 0,
+      "proximaFecha": "2026-05-31"
     },
     {
       "titulo": "Machos Alfa",
@@ -38,7 +32,8 @@
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt18482892/",
       "pendiente": true,
-      "tvdb_id": 417478
+      "tvdb_id": 417478,
+      "acumulados": 6
     }
   ],
   "dropeadas": [
@@ -60,6 +55,19 @@
     }
   ],
   "completadas": [
+    {
+      "titulo": "Margo tiene problemas de dinero",
+      "temporada": 1,
+      "capitulo": 8,
+      "año": 2026,
+      "vistoEn": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt31137273",
+      "pendiente": false,
+      "tvdb_id": 445651,
+      "acumulados": 0,
+      "proximaFecha": "TBA",
+      "nota": "08/10"
+    },
     {
       "titulo": "Stranger Things: Relatos del 85",
       "nota": "07/10",
