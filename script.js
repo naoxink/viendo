@@ -85,6 +85,12 @@ function renderViendo(lista) {
                 <p class="progress">T${s.temporada} • E${s.capitulo} 
                    ${s.pendiente ? '<span class="badge-pendiente">Pendiente</span>' : '<span class="badge-visto">Visto</span>'}
                 </p>
+                ${s.acumulados > 1 ? `<span class="badge-warning">+${s.acumulados} caps</span>` : ''}
+                ${s.proximaFecha ? `
+                    <p class="next-air">
+                        📅 Próximo cap: <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha}</strong>
+                    </p>
+                ` : ''}
             </div>
             <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
         </div>

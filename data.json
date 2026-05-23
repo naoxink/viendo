@@ -7,7 +7,8 @@
       "año": 2026,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt31137273",
-      "pendiente": false
+      "pendiente": false,
+      "tvdb_id": 445651
     },
     {
       "titulo": "Barrio Esperanza",
@@ -16,7 +17,8 @@
       "capitulo": 6,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt37439565",
-      "pendiente": false
+      "pendiente": false,
+      "tvdb_id": 476159
     },
     {
       "titulo": "From",
@@ -25,7 +27,8 @@
       "año": 2022,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt9813792/",
-      "pendiente": false
+      "pendiente": false,
+      "tvdb_id": 401003
     },
     {
       "titulo": "Machos Alfa",
@@ -34,7 +37,8 @@
       "año": 2022,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt18482892/",
-      "pendiente": true
+      "pendiente": true,
+      "tvdb_id": 417478
     }
   ],
   "dropeadas": [

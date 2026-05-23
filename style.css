@@ -438,3 +438,46 @@ summary::after {
     color: #999999;
     text-decoration: none;
 }
+
+.next-air {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    color: #256a41; /* Verde oscuro para buen contraste */
+    background-color: rgba(39, 174, 96, 0.15); /* Fondo verde translúcido */
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(39, 174, 96, 0.3); /* Borde sutil */
+}
+
+.next-air strong {
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+/* Si tu web tiene modo oscuro, puedes añadir esto para que no deslumbre */
+@media (prefers-color-scheme: dark) {
+    .next-air {
+        color: #6ee7b7; /* Verde menta claro */
+        background-color: rgba(16, 185, 129, 0.15);
+        border-color: rgba(16, 185, 129, 0.3);
+    }
+}
+
+.badge-warning {
+    background-color: #e63946;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Opcional: Hacer que la tarjeta entera tenga un borde sutil si está pendiente */
+.serie-card.is-pending {
+    border-left: 4px solid #e63946;
+}
