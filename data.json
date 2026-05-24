@@ -1,6 +1,19 @@
 {
   "viendo": [
     {
+      "titulo": "Rick & Morty",
+      "temporada": 9,
+      "capitulo": 1,
+      "pendiente: true,
+      "tvdb_id": 275274,
+      "año": 2013,
+      "vistoEn": 2026,
+      "nota": "10/10",
+      "link": "https://www.imdb.com/title/tt2861424/",
+      "rewatch": false,
+      "veces": 3
+    },
+    {
       "titulo": "Barrio Esperanza",
       "temporada": 1,
       "año": 2026,
@@ -94,15 +107,6 @@
       "link": "https://www.imdb.com/title/tt19854762/",
       "rewatch": false,
       "veces": 0
-    },
-    {
-      "titulo": "Rick & Morty",
-      "año": 2013,
-      "vistoEn": 2026,
-      "nota": "10/10",
-      "link": "https://www.imdb.com/title/tt2861424/",
-      "rewatch": true,
-      "veces": 3
     },
     {
       "titulo": "Stranger Things",
