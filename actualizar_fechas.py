@@ -37,41 +37,57 @@ def actualizar_fechas(api_key):
     headers = {"Authorization": f"Bearer {token}"}
     hoy = datetime.now().date()
 
+    # Preparamos las listas
+    viendo_actual = data.get('viendo', [])
+    completadas = data.get('completadas', [])
+    
+    nuevas_viendo = []
+
     # 2. Recorrer la lista de series en seguimiento
-    for serie in data.get('viendo', []):
+    for serie in viendo_actual:
         tvdb_id = serie.get('tvdb_id')
         if not tvdb_id:
             print(f"⚠️ Saltando '{serie.get('titulo', 'Sin título')}': No tiene tvdb_id configurado.")
+            nuevas_viendo.append(serie)
             continue
             
         print(f"🔍 Analizando: {serie['titulo']} (ID: {tvdb_id})...")
         
-        # Petición a la API para obtener el listado completo de episodios (orden default)
-        url = f"https://api4.thetvdb.com/v4/series/{tvdb_id}/episodes/default"
+        # OBTENER EL ESTADO GLOBAL DE LA SERIE
+        url_info = f"https://api4.thetvdb.com/v4/series/{tvdb_id}"
         try:
-            res = requests.get(url, headers=headers, timeout=10)
-            if res.status_code != 200:
-                print(f"❌ Error {res.status_code} al consultar la serie {serie['titulo']}")
+            res_info = requests.get(url_info, headers=headers, timeout=10)
+            estado_serie = res_info.json()['data']['status']['name']
+        except (requests.exceptions.RequestException, KeyError):
+            estado_serie = "Unknown"
+
+        # OBTENER LOS EPISODIOS
+        url_eps = f"https://api4.thetvdb.com/v4/series/{tvdb_id}/episodes/default"
+        try:
+            res_eps = requests.get(url_eps, headers=headers, timeout=10)
+            if res_eps.status_code != 200:
+                print(f"❌ Error {res_eps.status_code} al consultar episodios.")
+                nuevas_viendo.append(serie)
                 continue
+            episodes = res_eps.json().get('data', {}).get('episodes', [])
         except requests.exceptions.RequestException as e:
-            print(f"❌ Error de red con {serie['titulo']}: {e}")
+            print(f"❌ Error de red: {e}")
+            nuevas_viendo.append(serie)
             continue
             
-        episodes = res.json().get('data', {}).get('episodes', [])
         if not episodes:
-            print(f"⚠️ No se encontraron episodios para {serie['titulo']}")
+            print(f"⚠️ No se encontraron episodios.")
+            nuevas_viendo.append(serie)
             continue
         
-        # Filtrar capítulos especiales (temporada 0) y los que no tienen fecha de estreno
+        # Filtrar y ordenar
         valid_eps = [e for e in episodes if e.get('seasonNumber', 0) > 0 and e.get('aired')]
-        # Ordenar cronológicamente por temporada y número de episodio
         valid_eps.sort(key=lambda x: (x['seasonNumber'], x['number']))
         
         user_s = serie.get('temporada', 1)
         user_e = serie.get('capitulo', 0)
         esta_pendiente = serie.get('pendiente', False)
         
-        # Clasificar episodios de la API según el día de hoy
         emitidos = []
         futuros = []
         
@@ -83,48 +99,65 @@ def actualizar_fechas(api_key):
                 else:
                     futuros.append(ep)
             except ValueError:
-                continue # Saltar si la fecha tiene un formato extraño
+                continue
 
-        # Buscar episodios ya emitidos que sean estrictamente posteriores a tu punto de guardado
         nuevos_emitidos = [
             ep for ep in emitidos 
             if ep['seasonNumber'] > user_s or (ep['seasonNumber'] == user_s and ep['number'] > user_e)
         ]
         
-        # 3. Aplicar reglas de negocio según tu flujo de trabajo
+        # 3. APLICAR REGLAS DE NEGOCIO
         if not esta_pendiente:
-            # CASO A: Estabas al día (viste el capítulo apuntado).
             if nuevos_emitidos:
                 siguiente = nuevos_emitidos[0]
                 serie['temporada'] = siguiente['seasonNumber']
                 serie['capitulo'] = siguiente['number']
                 serie['pendiente'] = True
-                serie['acumulados'] = len(nuevos_emitidos) -1 # quitamos el que está marcado como pendiente
+                serie['acumulados'] = len(nuevos_emitidos) - 1
                 serie.pop('proximaFecha', None)
                 print(f"   ✨ ¡Nuevo capítulo detectado! Avanzado a T{serie['temporada']}E{serie['capitulo']} (Pendiente).")
+                nuevas_viendo.append(serie)
             else:
                 serie['acumulados'] = 0
-                if futuros:
-                    serie['proximaFecha'] = futuros[0]['aired']
-                    print(f"   📅 Al día. Próximo estreno el: {serie['proximaFecha']}")
+                
+                # CASO: SERIE FINALIZADA Y USUARIO AL DÍA
+                if not futuros and estado_serie in ["Ended", "Canceled"]:
+                    # Mantenemos los campos de seguimiento vivos
+                    serie['proximaFecha'] = "TBA" # Reemplazamos fechas antiguas por TBA
+                    serie['estado_final'] = estado_serie
+                    serie['vistoEn'] = hoy.year # Archiva en 2026 (o el año actual) para el render
+                    
+                    if 'nota' not in serie:
+                        serie['nota'] = "-" # Para evitar undefined en el frontend
+                        
+                    completadas.append(serie)
+                    print(f"   🏆 ¡Serie terminada ({estado_serie})! Movida a Completadas automáticamente en {hoy.year} conservando su progreso.")
                 else:
-                    serie['proximaFecha'] = "TBA"
-                    print("   📅 Al día. Sin fecha de regreso confirmada (TBA).")
+                    if futuros:
+                        serie['proximaFecha'] = futuros[0]['aired']
+                        print(f"   📅 Al día. Próximo estreno el: {serie['proximaFecha']}")
+                    else:
+                        serie['proximaFecha'] = "TBA"
+                        print("   📅 Al día. Sin fecha de regreso confirmada (TBA).")
+                    nuevas_viendo.append(serie)
                     
         else:
-            # CASO B: Ya tenías el capítulo apuntado como pendiente.
             serie['acumulados'] = len(nuevos_emitidos)
             serie.pop('proximaFecha', None)
-            print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes en total.")
+            print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
+            nuevas_viendo.append(serie)
 
-    # 4. Guardar los cambios
+    # 4. GUARDAR LOS CAMBIOS EN EL JSON
+    data['viendo'] = nuevas_viendo
+    data['completadas'] = completadas
+
     with open(JSON_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         
-    print("\n💾 ¡El archivo data.json ha sido sincronizado y actualizado con éxito!")
+    print("\n💾 ¡El archivo data.json ha sido sincronizado con éxito!")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Actualiza las fechas de series desde TheTVDB.')
+    parser = argparse.ArgumentParser(description='Actualiza fechas de series y gestiona finalizadas automáticamente.')
     parser.add_argument('--apikey', required=True, help='API Key de TheTVDB')
     
     args = parser.parse_args()
