@@ -11,7 +11,8 @@
       "nota": "10/10",
       "link": "https://www.imdb.com/title/tt2861424/",
       "rewatch": false,
-      "veces": 3
+      "veces": 3,
+      "acumulados": 0
     },
     {
       "titulo": "Barrio Esperanza",
@@ -22,7 +23,7 @@
       "link": "https://www.imdb.com/es-es/title/tt37439565",
       "pendiente": true,
       "tvdb_id": 476159,
-      "acumulados": 2
+      "acumulados": 1
     },
     {
       "titulo": "From",
@@ -45,7 +46,7 @@
       "link": "https://www.imdb.com/es-es/title/tt18482892/",
       "pendiente": true,
       "tvdb_id": 417478,
-      "acumulados": 6
+      "acumulados": 5
     }
   ],
   "dropeadas": [

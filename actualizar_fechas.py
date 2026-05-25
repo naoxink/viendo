@@ -99,7 +99,7 @@ def actualizar_fechas(api_key):
                 serie['temporada'] = siguiente['seasonNumber']
                 serie['capitulo'] = siguiente['number']
                 serie['pendiente'] = True
-                serie['acumulados'] = len(nuevos_emitidos)
+                serie['acumulados'] = len(nuevos_emitidos) -1 # quitamos el que está marcado como pendiente
                 serie.pop('proximaFecha', None)
                 print(f"   ✨ ¡Nuevo capítulo detectado! Avanzado a T{serie['temporada']}E{serie['capitulo']} (Pendiente).")
             else:
@@ -113,7 +113,7 @@ def actualizar_fechas(api_key):
                     
         else:
             # CASO B: Ya tenías el capítulo apuntado como pendiente.
-            serie['acumulados'] = 1 + len(nuevos_emitidos)
+            serie['acumulados'] = len(nuevos_emitidos)
             serie.pop('proximaFecha', None)
             print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes en total.")
 
