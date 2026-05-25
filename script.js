@@ -136,7 +136,13 @@ function renderHistorico(completadas, añoActual) {
                                     <span class="original-year">(Estreno: ${s.año})</span>
                                 </p>
                             </div>
-                            <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
+                            <div>
+                                <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
+                                ${s.tvdb_id
+                                    ? `<a href="https://www.thetvdb.com/?tab=series&id=${s.tvdb_id}" target="_blank" class="link-imdb">TVDB</a>`
+                                    : ''
+                                }
+                            </div>
                         </div>
                     `).join('')}
                 </div>
@@ -236,7 +242,13 @@ function renderDropeadas(dropeadas) {
                                 Dropeada en <b>${s.vistoEn || s.año}</b> • Te quedaste en: <span>T${s.temporada} • E${s.capitulo}</span>
                             </p>
                         </div>
-                        <a href="${s.link}" target="_blank" class="link-imdb-dropped">Ficha</a>
+                        <div>
+                            <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
+                            ${s.tvdb_id
+                                ? `<a href="https://www.thetvdb.com/?tab=series&id=${s.tvdb_id}" target="_blank" class="link-imdb">TVDB</a>`
+                                : ''
+                            }
+                        </div>
                     </div>
                 `).join('')}
             </div>
