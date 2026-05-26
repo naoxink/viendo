@@ -64,7 +64,7 @@ function getNotaClass(notaString) {
 
 function renderStats(data, añoActual) {
     const statsContainer = document.getElementById('stats');
-    const terminadasEsteAño = data.completadas.filter(s => s.año === añoActual).length
+    const terminadasEsteAño = data.completadas.filter(s => s.vistoEn === añoActual).length
     const pendientes = data.viendo.filter(s => s.pendiente).length
 
     statsContainer.innerHTML = `
