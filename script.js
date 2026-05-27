@@ -61,6 +61,27 @@ function getNotaClass(notaString) {
     return 'good';
 }
 
+function formatearFecha(fechaStr) {
+    if (!fechaStr) return '-';
+
+    // Cambiamos el espacio por 'T' y añadimos 'Z' para indicar formato UTC
+    const d = new Date(fechaStr.replace(' ', 'T') + 'Z');
+
+    // Por si acaso el JSON tuviera un formato corrupto
+    if (isNaN(d.getTime())) return fechaStr;
+
+    // Extraemos los componentes con dos dígitos
+    const dia = String(d.getDate()).padStart(2, '0');
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const año = String(d.getFullYear()).slice(-2);
+
+    const horas = String(d.getHours()).padStart(2, '0');
+    const minutos = String(d.getMinutes()).padStart(2, '0');
+    const segundos = String(d.getSeconds()).padStart(2, '0'); // <-- Aquí estaba bien declarada
+
+    // Devolvemos el formato exacto: dd.mm.YY H:i:s (corregido a 'segundos')
+    return `${dia}.${mes}.${año} ${horas}:${minutos}:${segundos}`;
+}
 
 function renderStats(data, añoActual) {
     const statsContainer = document.getElementById('stats');
@@ -188,6 +209,35 @@ function renderEnCola(enCola) {
     }
 }
 
+function renderStatus() {
+    fetch('status.json')
+    .then(response => response.json())
+    .then(status => {
+        const statusContainer = document.getElementById('status-dashboard');
+        
+        const scriptClase = status.script_ok ? 'status-success' : 'status-error';
+        const scriptTexto = status.script_ok ? 'Sincronizado' : 'Error';
+        
+        const notifTexto = status.notificacion_enviada 
+            ? '🔔 Notificación enviada hoy' 
+            : '🔕 Sin cambios notificados';
+
+        statusContainer.innerHTML = `
+            <div class="status-item">
+                <span class="status-dot ${scriptClase}"></span>
+                <span>Script: ${scriptTexto}</span>
+            </div>
+            <div class="status-item text-muted">
+                <span>${notifTexto}</span>
+            </div>
+            <div class="status-item timestamp">
+                Refrescado: ${formatearFecha(status.ultima_ejecucion)}
+            </div>
+        `;
+    })
+    .catch(err => console.log('Aún no existe el archivo de estados:', err));
+}
+
 async function setLastUpdateDate() {
   // Obtener la fecha de última modificación de data.csv
   let formatted = ''
@@ -219,6 +269,7 @@ async function loadSeries() {
         renderDropeadas(data.dropeadas);
         renderEnCola(data.en_cola || [])
         setLastUpdateDate()
+        renderStatus()
 
     } catch (error) {
         console.error("Error cargando la App:", error);

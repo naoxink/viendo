@@ -35,7 +35,7 @@ body {
     background-color: var(--bg);
     color: var(--text);
     margin: 0;
-    padding: 3rem 1.5rem;
+    padding: 1.5rem 1.5rem;
     display: flex;
     justify-content: center;
 }
@@ -568,4 +568,54 @@ summary::after {
     align-items: center;
     justify-content: flex-end;
     gap: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.status-container {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #1e293b;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    align-items: center;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #cbd5e1;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-success {
+    background-color: #10b981; /* Verde */
+    box-shadow: 0 0 8px #10b981;
+}
+
+.status-error {
+    background-color: #ef4444; /* Rojo */
+    box-shadow: 0 0 8px #ef4444;
+}
+
+.status-container .timestamp {
+    color: #64748b;
 }

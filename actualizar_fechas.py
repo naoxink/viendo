@@ -31,8 +31,10 @@ def enviar_notificacion_telegram(token, chat_id, mensaje):
     try:
         response = requests.post(url, json=payload, timeout=10)
         response.raise_for_status()
+        return True
     except requests.exceptions.RequestException as e:
         print(f"⚠️ No se pudo enviar la notificación de Telegram: {e}")
+        return False
 
 def actualizar_fechas(api_key):
     # 1. Cargar tu archivo JSON
@@ -187,12 +189,37 @@ def actualizar_fechas(api_key):
     if notificaciones and tg_token and tg_chat_id:
         cabecera = "🤖 *Resumen de actualización de series:*\n\n"
         mensaje_final = cabecera + "\n".join(notificaciones)
-        enviar_notificacion_telegram(tg_token, tg_chat_id, mensaje_final)
+        notificacion_ok = enviar_notificacion_telegram(tg_token, tg_chat_id, mensaje_final)
+        return notificacion_ok # Sí o No envía notificación
+
+    return False # No envía notificación
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Actualiza fechas de series y gestiona finalizadas automáticamente.')
     parser.add_argument('--apikey', required=True, help='API Key de TheTVDB')
     
     args = parser.parse_args()
+
+    # Estructura inicial del estado
+    status_data = {
+        "ultima_ejecucion": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "script_ok": False,
+        "notificacion_enviada": False
+    }
     
-    actualizar_fechas(args.apikey)
+    try:
+        status_data["notificacion_enviada"] = actualizar_fechas(args.apikey)
+        status_data["script_ok"] = True
+
+    except Exception as e:
+        print(f"❌ El script falló inesperadamente: {e}")
+        status_data["script_ok"] = False
+        
+    finally:
+        # Esto se ejecuta SIEMPRE, vaya bien o vaya mal el script
+        # Nota: Para saber si hubo notificación, modifica el final de tu función actualizar_fechas
+        # para que devuelva 'True' si envió el mensaje a Telegram, y recógelo aquí:
+        # hizo_notificacion = actualizar_fechas(args.apikey)
+        
+        with open('status.json', 'w', encoding='utf-8') as f:
+            json.dump(status_data, f, indent=2, ensure_ascii=False)
