@@ -2,8 +2,7 @@ name: Sincronización Diaria de Series
 
 on:
   schedule:
-    # Se ejecuta todos los días a las 04:00 UTC (las 05:00 AM o 06:00 AM en España según el horario de verano/invierno)
-    - cron: '0 4 * * *'
+    - cron: '33 1 * * *'
   workflow_dispatch: # Esto te permite activar el script a mano desde la web de GitHub cuando quieras
 
 permissions:
