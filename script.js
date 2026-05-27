@@ -151,6 +151,36 @@ function renderHistorico(completadas, añoActual) {
     }).join('');
 }
 
+function renderEnCola(enCola) {
+    const enColaContainer = document.getElementById('en-cola-container');
+    // Si no hay series en cola, limpiamos el contenedor y no pintamos nada
+    if (enCola.length === 0) {
+        enColaContainer.innerHTML = '';
+    } else {
+        enColaContainer.innerHTML = `
+            <details class="cola-section">
+                <summary>
+                    <span>⏳ En Cola / Pendientes</span>
+                    <span class="count">${enCola.length} series</span>
+                </summary>
+                <div class="cola-content grid-series">
+                    ${enCola.map(s => `
+                        <div class="serie-card serie-en-cola">
+                            <div class="info">
+                                <h2>${s.titulo}</h2>
+                                <p class="progress">Por empezar • Temporada ${s.temporada || 1}</p>
+                            </div>
+                            <div class="acciones-cola">
+                                <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </details>
+        `;
+    }
+}
+
 async function setLastUpdateDate() {
   // Obtener la fecha de última modificación de data.csv
   let formatted = ''
@@ -180,6 +210,7 @@ async function loadSeries() {
         renderViendo(data.viendo);
         renderHistorico(data.completadas, añoActual);
         renderDropeadas(data.dropeadas);
+        renderEnCola(data.en_cola || [])
         setLastUpdateDate()
 
     } catch (error) {

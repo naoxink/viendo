@@ -4,6 +4,13 @@
     --text-muted: #666666;
     --accent: #0070f3;
     --border: #f0f0f0;
+    --cola-border: #666666;
+    --cola-text: #1e293b; /* Texto oscuro para tema claro */
+    --cola-count-bg: #e2e8f0;
+    --cola-count-text: #475569;
+    --cola-content-bg: transparent; /* Fondo transparente por defecto */
+    --cola-content-border: #cbd5e1;
+    --cola-progress-text: #64748b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,6 +20,12 @@
         --text-muted: #888888;
         --border: #333333;
         --accent: #0070f3;
+        --cola-text: #f8fafc; /* Texto claro para tema oscuro */
+        --cola-count-bg: #475569;
+        --cola-count-text: #cbd5e1;
+        --cola-content-bg: transparent; /* Ojo: si prefieres fondo oscuro aquí, pon #0f172a */
+        --cola-content-border: #334155;
+        --cola-progress-text: #94a3b8;
     }
 }
 
@@ -480,4 +493,82 @@ summary::after {
 /* Opcional: Hacer que la tarjeta entera tenga un borde sutil si está pendiente */
 .serie-card.is-pending {
     border-left: 4px solid #e63946;
+}
+
+
+
+
+
+
+
+/* ==========================================================================
+   SECCIÓN EN COLA (BACKLOG)
+   ========================================================================== */
+.cola-section {
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--cola-border);
+    opacity: .5;
+    transition: opacity 0.2s ease;
+}
+
+.cola-section summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--cola-text);
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+/* Indicador de cantidad a la derecha */
+.cola-section summary .count {
+    background-color: var(--cola-count-bg);
+    color: var(--cola-count-text);
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.cola-section:hover {
+    opacity: 1;
+}
+
+/* Contenedor desplegable */
+.cola-content {
+    background-color: var(--cola-content-bg); 
+    border-top: 1px solid var(--cola-content-border);
+}
+
+/* Grid de tarjetas */
+.grid-series {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+/* Tarjeta específica para series en cola */
+.serie-en-cola {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0 20px;
+    background-color: transparent; /* Sin color de fondo */
+}
+
+/* Atenuación sutil para el texto secundario de la cola */
+.serie-en-cola .progress {
+    color: var(--cola-progress-text);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Estilos para los botones de acción dentro de las tarjetas */
+.acciones-cola {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
