@@ -181,7 +181,9 @@ def actualizar_fechas(api_key):
     import os
     tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     tg_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
-    
+
+    notificaciones.append("🔔 Esto es una prueba manual para verificar que Telegram funciona correctamente.")
+
     if notificaciones and tg_token and tg_chat_id:
         cabecera = "🤖 *Resumen de actualización de series:*\n\n"
         mensaje_final = cabecera + "\n".join(notificaciones)
