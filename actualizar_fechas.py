@@ -150,6 +150,7 @@ def actualizar_fechas(api_key):
                         
                     completadas.append(serie)
                     print(f"   🏆 ¡Serie terminada ({estado_serie})! Movida a Completadas automáticamente en {hoy.year} conservando su progreso.")
+                    notificaciones.append(f"   🏆 ¡Serie terminada ({estado_serie})! Movida a Completadas automáticamente en {hoy.year} conservando su progreso.")
                 else:
                     if futuros:
                         serie['proximaFecha'] = futuros[0]['aired']
@@ -167,6 +168,7 @@ def actualizar_fechas(api_key):
             serie['acumulados'] = len(nuevos_emitidos)
             serie.pop('proximaFecha', None)
             print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
+            notificaciones.append(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
             nuevas_viendo.append(serie)
 
     # 4. GUARDAR LOS CAMBIOS EN EL JSON
@@ -181,8 +183,6 @@ def actualizar_fechas(api_key):
     import os
     tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     tg_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
-
-    notificaciones.append("🔔 Esto es una prueba manual para verificar que Telegram funciona correctamente.")
 
     if notificaciones and tg_token and tg_chat_id:
         cabecera = "🤖 *Resumen de actualización de series:*\n\n"
