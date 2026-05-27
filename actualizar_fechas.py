@@ -18,6 +18,22 @@ def obtener_token(api_key):
         print(f"❌ Error crítico al autenticar en TheTVDB: {e}")
         return None
 
+def enviar_notificacion_telegram(token, chat_id, mensaje):
+    """Envía un mensaje de texto a un chat de Telegram."""
+    if not token or not chat_id:
+        return
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": mensaje,
+        "parse_mode": "Markdown" # Nos permite usar negritas con *texto*
+    }
+    try:
+        response = requests.post(url, json=payload, timeout=10)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"⚠️ No se pudo enviar la notificación de Telegram: {e}")
+
 def actualizar_fechas(api_key):
     # 1. Cargar tu archivo JSON
     try:
@@ -36,6 +52,7 @@ def actualizar_fechas(api_key):
 
     headers = {"Authorization": f"Bearer {token}"}
     hoy = datetime.now().date()
+    notificaciones = [] # <--- Lista para acumular los cambios
 
     # Preparamos las listas
     viendo_actual = data.get('viendo', [])
@@ -117,6 +134,7 @@ def actualizar_fechas(api_key):
                 serie.pop('proximaFecha', None)
                 print(f"   ✨ ¡Nuevo capítulo detectado! Avanzado a T{serie['temporada']}E{serie['capitulo']} (Pendiente).")
                 nuevas_viendo.append(serie)
+                notificaciones.append(f"✨ *{serie['titulo']}*: ¡Nuevo capítulo disponible! Avanzado a T{serie['temporada']}E{serie['capitulo']}.")
             else:
                 serie['acumulados'] = 0
                 
@@ -136,6 +154,10 @@ def actualizar_fechas(api_key):
                     if futuros:
                         serie['proximaFecha'] = futuros[0]['aired']
                         print(f"   📅 Al día. Próximo estreno el: {serie['proximaFecha']}")
+                        # Si la fecha ha cambiado respecto a la que tenías guardada, puedes avisar:
+                        fecha_nueva = futuros[0]['aired']
+                        if serie.get('proximaFecha') != fecha_nueva:
+                            notificaciones.append(f"📅 *{serie['titulo']}*: Nueva fecha de estreno confirmada para el *{fecha_nueva}*.")
                     else:
                         serie['proximaFecha'] = "TBA"
                         print("   📅 Al día. Sin fecha de regreso confirmada (TBA).")
@@ -155,6 +177,15 @@ def actualizar_fechas(api_key):
         json.dump(data, f, indent=2, ensure_ascii=False)
         
     print("\n💾 ¡El archivo data.json ha sido sincronizado con éxito!")
+    # 5. ENVIAR NOTIFICACIONES SI HAY CAMBIOS
+    import os
+    tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')
+    tg_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
+    
+    if notificaciones and tg_token and tg_chat_id:
+        cabecera = "🤖 *Resumen de actualización de series:*\n\n"
+        mensaje_final = cabecera + "\n".join(notificaciones)
+        enviar_notificacion_telegram(tg_token, tg_chat_id, mensaje_final)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Actualiza fechas de series y gestiona finalizadas automáticamente.')

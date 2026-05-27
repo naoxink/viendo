@@ -28,6 +28,9 @@ jobs:
         pip install requests
 
     - name: Ejecutar script de actualización
+      env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
         python actualizar_fechas.py --apikey "${{ secrets.TVDB_API_KEY }}"
 
