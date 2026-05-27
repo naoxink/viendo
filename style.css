@@ -524,23 +524,12 @@ summary::after {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
+    padding: 1rem;
     cursor: pointer;
-    font-size: 1.2rem;
     font-weight: 600;
     color: var(--cola-text);
     user-select: none;
     transition: background-color 0.2s ease;
-}
-
-/* Indicador de cantidad a la derecha */
-.cola-section summary .count {
-    background-color: var(--cola-count-bg);
-    color: var(--cola-count-text);
-    font-size: 0.85rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 500;
 }
 
 .cola-section:hover {
