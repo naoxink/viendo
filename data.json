@@ -40,6 +40,38 @@
     }
   ],
   "en_cola": [
+    {
+      "titulo": "The Boys",
+      "tvdb_id": 355567,
+      "año": 2019,
+      "temporada": 5
+    },
+    {
+      "titulo": "Acapulco",
+      "tvdb_id": 393155,
+      "año": 2021,
+      "temporada": 4
+    },
+    {
+      "titulo": "Atasco",
+      "tvdb_id": 449580,
+      "año": 2024
+    },
+    {
+      "titulo": "Yellowstone",
+      "tvdb_id": 341164,
+      "año": 2018
+    },
+    {
+      "titulo": "Halo",
+      "tvdb_id": 366524,
+      "año": 2022
+    },
+    {
+      "titulo": "Fargo",
+      "tvdb_id": 269613,
+      "año": 2014
+    }
   ],
   "dropeadas": [
     {

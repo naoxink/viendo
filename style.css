@@ -5,6 +5,7 @@
     --accent: #0070f3;
     --border: #f0f0f0;
     --cola-border: #666666;
+    --accent-cola: goldenrod;
     --cola-text: #1e293b; /* Texto oscuro para tema claro */
     --cola-count-bg: #e2e8f0;
     --cola-count-text: #475569;
@@ -510,7 +511,13 @@ summary::after {
     overflow: hidden;
     border: 1px solid var(--cola-border);
     opacity: .5;
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.cola-section[open] {
+    opacity: 1;
+    border-color: var(--accent-cola);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .cola-section summary {
@@ -571,4 +578,5 @@ summary::after {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: 3px;
 }

@@ -171,7 +171,14 @@ function renderEnCola(enCola) {
                                 <p class="progress">Por empezar • Temporada ${s.temporada || 1}</p>
                             </div>
                             <div class="acciones-cola">
-                                <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
+                                ${s.link
+                                    ? `<a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>`
+                                    : ''
+                                }
+                                ${s.tvdb_id
+                                    ? `<a href="https://www.thetvdb.com/?tab=series&id=${s.tvdb_id}" target="_blank" class="link-imdb">TVDB</a>`
+                                    : ''
+                                }
                             </div>
                         </div>
                     `).join('')}
