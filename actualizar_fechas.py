@@ -170,7 +170,6 @@ def actualizar_fechas(api_key):
             serie['acumulados'] = len(nuevos_emitidos)
             serie.pop('proximaFecha', None)
             print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
-            notificaciones.append(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
             nuevas_viendo.append(serie)
 
     # 4. GUARDAR LOS CAMBIOS EN EL JSON
