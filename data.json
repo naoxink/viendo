@@ -21,6 +21,7 @@
       "capitulo": 5,
       "año": 2022,
       "vistoEn": 2026,
+      "nota": "9/10",
       "link": "https://www.imdb.com/es-es/title/tt9813792/",
       "pendiente": false,
       "tvdb_id": 401003,
@@ -33,10 +34,19 @@
       "capitulo": 6,
       "año": 2022,
       "vistoEn": 2026,
+      "nota": "7/10",
       "link": "https://www.imdb.com/es-es/title/tt18482892/",
       "pendiente": true,
       "tvdb_id": 417478,
       "acumulados": 0
+    },
+    {
+      "titulo": "Widow's Bay",
+      "temporada": 1,
+      "capitulo": 1,
+      "tvdb_id": 454109,
+      "pendiente": true,
+      "año": 2026
     }
   ],
   "en_cola": [
