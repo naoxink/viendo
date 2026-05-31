@@ -113,7 +113,7 @@ def actualizar_fechas(api_key):
         for ep in valid_eps:
             try:
                 fecha_emision = datetime.strptime(ep['aired'], '%Y-%m-%d').date()
-                if fecha_emision <= hoy:
+                if fecha_emision < hoy:
                     emitidos.append(ep)
                 else:
                     futuros.append(ep)
