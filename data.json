@@ -31,11 +31,11 @@
     {
       "titulo": "Widow's Bay",
       "temporada": 1,
-      "capitulo": 6,
+      "capitulo": 7,
       "tvdb_id": 454109,
-      "pendiente": true,
+      "pendiente": false,
       "año": 2026,
-      "acumulados": 1
+      "acumulados": 0
     }
   ],
   "en_cola": [
