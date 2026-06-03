@@ -114,7 +114,10 @@ function renderViendo(lista) {
                 ` : ''}
             </div>
             <div>
-                <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
+                ${s.link
+                    ? `<a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>`
+                    : ''
+                }
                 ${s.tvdb_id
                     ? `<a href="https://www.thetvdb.com/?tab=series&id=${s.tvdb_id}" target="_blank" class="link-imdb">TVDB</a>`
                     : ''
