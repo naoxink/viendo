@@ -35,17 +35,43 @@
       "tvdb_id": 454109,
       "pendiente": false,
       "año": 2026,
+      "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt33332385/",
       "acumulados": 0
     },
     {
       "titulo": "Paradise",
       "año": 2025,
+      "vistoEn": 2026,
       "tvdb_id": 454565,
       "link": "https://www.imdb.com/es-es/title/tt27444205/",
       "temporada": 1,
       "capitulo": 1,
       "pendiente": true
+    },
+    {
+      "titulo": "The Bear",
+      "año": 2022,
+      "vistoEn": 2026,
+      "temporada": 4,
+      "capitulo": 10,
+      "pendiente": false,
+      "nota": "8/10",
+      "link": "https://www.imdb.com/title/tt14452776/",
+      "tvdb_id": 403294,
+      "rewatch": false,
+      "veces": 0
+    },
+    {
+      "titulo": "Silo",
+      "año": 2023,
+      "vistoEn": 2026,
+      "temporada": 2,
+      "capitulo": 10,
+      "pendiente": false,
+      "nota": "7/10",
+      "tvdb_id": 403245,
+      "link": "https://www.imdb.com/es-es/title/tt14688458/"
     }
   ],
   "en_cola": [
@@ -357,14 +383,6 @@
       "año": 2021,
       "nota": "7/10",
       "link": "https://www.imdb.com/title/tt10919420/",
-      "rewatch": false,
-      "veces": 0
-    },
-    {
-      "titulo": "The Bear",
-      "año": 2022,
-      "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt14452776/",
       "rewatch": false,
       "veces": 0
     },
