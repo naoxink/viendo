@@ -37,7 +37,8 @@
       "año": 2026,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt33332385/",
-      "acumulados": 0
+      "acumulados": 0,
+      "proximaFecha": "2026-06-10"
     },
     {
       "titulo": "Paradise",
@@ -47,7 +48,8 @@
       "link": "https://www.imdb.com/es-es/title/tt27444205/",
       "temporada": 1,
       "capitulo": 3,
-      "pendiente": true
+      "pendiente": true,
+      "acumulados": 13
     },
     {
       "titulo": "The Bear",
@@ -60,7 +62,9 @@
       "link": "https://www.imdb.com/title/tt14452776/",
       "tvdb_id": 403294,
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "acumulados": 0,
+      "proximaFecha": "2026-06-25"
     },
     {
       "titulo": "Silo",
@@ -71,7 +75,9 @@
       "pendiente": false,
       "nota": "7/10",
       "tvdb_id": 403245,
-      "link": "https://www.imdb.com/es-es/title/tt14688458/"
+      "link": "https://www.imdb.com/es-es/title/tt14688458/",
+      "acumulados": 0,
+      "proximaFecha": "2026-07-03"
     }
   ],
   "en_cola": [
