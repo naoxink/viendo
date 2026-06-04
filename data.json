@@ -33,9 +33,19 @@
       "temporada": 1,
       "capitulo": 8,
       "tvdb_id": 454109,
-      "pendiente": true,
+      "pendiente": false,
       "año": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt33332385/",
       "acumulados": 0
+    },
+    {
+      "titulo": "Paradise",
+      "año": 2025,
+      "tvdb_id": 454565,
+      "link": "https://www.imdb.com/es-es/title/tt27444205/",
+      "temporada": 1,
+      "capitulo": 1,
+      "pendiente": true
     }
   ],
   "en_cola": [
