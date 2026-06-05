@@ -78,6 +78,16 @@
       "link": "https://www.imdb.com/es-es/title/tt14688458/",
       "acumulados": 0,
       "proximaFecha": "2026-07-03"
+    },
+    {
+      "titulo": "Severance",
+      "temporada": 1,
+      "capitulo": 1,
+      "pendiente": true,
+      "tvdb_id": 371980,
+      "año": 2022,
+      "vistoEn": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt11280740/"
     }
   ],
   "en_cola": [
