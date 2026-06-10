@@ -41,6 +41,17 @@
       "proximaFecha": "2026-06-10"
     },
     {
+      "titulo": "Severance",
+      "temporada": 1,
+      "capitulo": 5,
+      "pendiente": true,
+      "tvdb_id": 371980,
+      "año": 2022,
+      "vistoEn": 2026,
+      "link": "https://www.imdb.com/es-es/title/tt11280740/",
+      "acumulados": 14
+    },
+    {
       "titulo": "The Bear",
       "año": 2022,
       "vistoEn": 2026,
@@ -114,17 +125,6 @@
       "capitulo": 3,
       "pendiente": true,
       "acumulados": 13
-    },
-    {
-      "titulo": "Severance",
-      "temporada": 1,
-      "capitulo": 4,
-      "pendiente": true,
-      "tvdb_id": 371980,
-      "año": 2022,
-      "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt11280740/",
-      "acumulados": 15
     },
     {
       "titulo": "Euphoria",
