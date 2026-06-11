@@ -31,14 +31,13 @@
     {
       "titulo": "Widow's Bay",
       "temporada": 1,
-      "capitulo": 8,
+      "capitulo": 9,
       "tvdb_id": 454109,
-      "pendiente": false,
+      "pendiente": true,
       "año": 2026,
       "vistoEn": 2026,
       "link": "https://www.imdb.com/es-es/title/tt33332385/",
-      "acumulados": 0,
-      "proximaFecha": "2026-06-10"
+      "acumulados": 0
     },
     {
       "titulo": "Severance",
