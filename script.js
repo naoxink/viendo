@@ -106,7 +106,7 @@ function renderViendo(lista) {
         const fechaB = b.proximaFecha && b.proximaFecha !== 'TBA' ? Date.parse(b.proximaFecha) : -Infinity;
         if (isNaN(fechaA) || isNaN(fechaB)) return 0;
 
-        return fechaB - fechaA;
+        return fechaA - fechaB;
     });
 
     container.innerHTML = ordenada.map(s => `
