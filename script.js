@@ -97,6 +97,8 @@ function renderStats(data, añoActual) {
 
 function renderViendo(lista) {
     const container = document.getElementById('series-list');
+    const todayStart = new Date();
+    const todayTimestamp = new Date(todayStart.getFullYear(), todayStart.getMonth(), todayStart.getDate()).getTime();
     const ordenada = [...lista].sort((a, b) => {
         const pendienteA = a.pendiente === true ? 1 : 0;
         const pendienteB = b.pendiente === true ? 1 : 0;
@@ -104,6 +106,11 @@ function renderViendo(lista) {
 
         const fechaA = a.proximaFecha && a.proximaFecha !== 'TBA' ? Date.parse(a.proximaFecha) : -Infinity;
         const fechaB = b.proximaFecha && b.proximaFecha !== 'TBA' ? Date.parse(b.proximaFecha) : -Infinity;
+
+        const actualOPasadaA = pendienteA === 0 && fechaA !== -Infinity && fechaA <= todayTimestamp;
+        const actualOPasadaB = pendienteB === 0 && fechaB !== -Infinity && fechaB <= todayTimestamp;
+        if (actualOPasadaA !== actualOPasadaB) return actualOPasadaA ? 1 : -1;
+
         if (isNaN(fechaA) || isNaN(fechaB)) return 0;
 
         return fechaA - fechaB;
