@@ -111,7 +111,9 @@ function renderViendo(lista) {
         const actualOPasadaB = pendienteB === 0 && fechaB !== -Infinity && fechaB <= todayTimestamp;
         if (actualOPasadaA !== actualOPasadaB) return actualOPasadaA ? 1 : -1;
 
-        if (isNaN(fechaA) || isNaN(fechaB)) return 0;
+        if (fechaA === -Infinity && fechaB === -Infinity) return 0;
+        if (fechaA === -Infinity) return 1;
+        if (fechaB === -Infinity) return -1;
 
         return fechaA - fechaB;
     });
