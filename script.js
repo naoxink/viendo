@@ -97,7 +97,17 @@ function renderStats(data, añoActual) {
 
 function renderViendo(lista) {
     const container = document.getElementById('series-list');
-    const ordenada = [...lista].sort((a, b) => (b.pendiente === true) - (a.pendiente === true));
+    const ordenada = [...lista].sort((a, b) => {
+        const pendienteA = a.pendiente === true ? 1 : 0;
+        const pendienteB = b.pendiente === true ? 1 : 0;
+        if (pendienteA !== pendienteB) return pendienteB - pendienteA;
+
+        const fechaA = a.proximaFecha && a.proximaFecha !== 'TBA' ? Date.parse(a.proximaFecha) : -Infinity;
+        const fechaB = b.proximaFecha && b.proximaFecha !== 'TBA' ? Date.parse(b.proximaFecha) : -Infinity;
+        if (isNaN(fechaA) || isNaN(fechaB)) return 0;
+
+        return fechaB - fechaA;
+    });
 
     container.innerHTML = ordenada.map(s => `
         <div class="serie-card">
