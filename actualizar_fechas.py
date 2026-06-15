@@ -3,7 +3,7 @@ import os
 import re
 import requests
 import argparse
-from datetime import datetime
+from datetime import datetime, time
 from urllib.parse import urlparse
 
 # CONFIGURACIÓN
@@ -24,6 +24,50 @@ def resolver_url_imagen(image_value):
         return f"https://artworks.thetvdb.com{image_value}"
 
     return f"https://artworks.thetvdb.com/banners/{image_value}"
+
+
+def obtener_fecha_hora_emision(ep, hora_default=None):
+    """Devuelve la fecha y hora de emisión del episodio, usando la hora de la serie si el capítulo no la trae."""
+    aired = ep.get('aired')
+    if not aired:
+        return None
+
+    try:
+        fecha_emision = datetime.strptime(aired, '%Y-%m-%d').date()
+    except ValueError:
+        return None
+
+    hora_str = ep.get('airTime') or ep.get('airedTime') or hora_default
+    if hora_str:
+        for fmt in ('%H:%M', '%H:%M:%S', '%I:%M %p', '%I:%M%p'):
+            try:
+                hora = datetime.strptime(hora_str, fmt).time()
+                return datetime.combine(fecha_emision, hora)
+            except ValueError:
+                continue
+
+    return None
+
+
+def es_emision_futura(ep, ahora=None, hora_default=None):
+    """Comprueba si el episodio está en el futuro usando la hora cuando exista; si no, solo la fecha."""
+    if ahora is None:
+        ahora = datetime.now()
+
+    fecha_hora = obtener_fecha_hora_emision(ep, hora_default=hora_default)
+    if fecha_hora is not None:
+        return fecha_hora > ahora
+
+    aired = ep.get('aired')
+    if not aired:
+        return False
+
+    try:
+        fecha_emision = datetime.strptime(aired, '%Y-%m-%d').date()
+    except ValueError:
+        return False
+
+    return fecha_emision > ahora.date()
 
 
 def guardar_poster_local(serie, image_url):
@@ -105,7 +149,8 @@ def actualizar_fechas(api_key):
         return
 
     headers = {"Authorization": f"Bearer {token}"}
-    hoy = datetime.now().date()
+    ahora = datetime.now()
+    hoy = ahora.date()
     notificaciones = [] # <--- Lista para acumular los cambios
 
     # Preparamos las listas
@@ -168,15 +213,18 @@ def actualizar_fechas(api_key):
         emitidos = []
         futuros = []
         
+        hora_serie = None
+        serie_data = series_data or {}
+        schedule = serie_data.get('status', {}).get('name', '')
+        if schedule:
+            pass
+
         for ep in valid_eps:
-            try:
-                fecha_emision = datetime.strptime(ep['aired'], '%Y-%m-%d').date()
-                if fecha_emision < hoy:
-                    emitidos.append(ep)
-                else:
-                    futuros.append(ep)
-            except ValueError:
-                continue
+            hora_serie = serie_data.get('airsTime') or serie_data.get('airTime') or serie_data.get('airs', {}).get('time') or hora_serie
+            if es_emision_futura(ep, ahora, hora_default=hora_serie):
+                futuros.append(ep)
+            else:
+                emitidos.append(ep)
 
         nuevos_emitidos = [
             ep for ep in emitidos 
