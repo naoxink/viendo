@@ -61,6 +61,13 @@ function getNotaClass(notaString) {
     return 'good';
 }
 
+function renderSeriePoster(serie) {
+    const posterSrc = serie.poster_path || serie.image_url || '';
+    return posterSrc
+        ? `<img class="serie-thumb" src="${posterSrc}" alt="${serie.titulo}" loading="lazy">`
+        : '';
+}
+
 function formatearFecha(fechaStr) {
     if (!fechaStr) return '-';
 
@@ -120,6 +127,7 @@ function renderViendo(lista) {
 
     container.innerHTML = ordenada.map(s => `
         <div class="serie-card">
+            ${renderSeriePoster(s)}
             <div class="info">
                 <h2>${s.titulo} ${getRewatchBadge(s)}<span class="año-label">(${s.año})</span></h2>
                 <p class="progress">T${s.temporada} • E${s.capitulo} 
@@ -171,6 +179,7 @@ function renderHistorico(completadas, añoActual) {
                 <div class="año-content">
                     ${series.map(s => `
                         <div class="serie-card" data-titulo="${s.titulo.toLowerCase()}">
+                            ${renderSeriePoster(s)}
                             <div class="info">
                                 <h2>${s.titulo} <span class="nota-tag ${getNotaClass(s.nota)}">${s.nota}</span></h2>
                                 <p class="progress">
@@ -212,6 +221,7 @@ function renderEnCola(enCola) {
                 <div class="cola-content grid-series">
                     ${enCola.map(s => `
                         <div class="serie-card serie-en-cola">
+                            ${renderSeriePoster(s)}
                             <div class="info">
                                 <h2>${s.titulo}</h2>
                                 <p class="progress">Por empezar • Temporada ${s.temporada || 1}</p>

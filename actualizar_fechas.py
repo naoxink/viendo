@@ -1,10 +1,62 @@
 import json
+import os
+import re
 import requests
 import argparse
 from datetime import datetime
+from urllib.parse import urlparse
 
 # CONFIGURACIÓN
 JSON_FILE = 'data.json'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+POSTERS_DIR = os.path.join(BASE_DIR, 'posters')
+
+
+def resolver_url_imagen(image_value):
+    """Convierte el campo image de TheTVDB en una URL de imagen usable."""
+    if not image_value:
+        return None
+
+    if image_value.startswith(("http://", "https://")):
+        return image_value
+
+    if image_value.startswith("/"):
+        return f"https://artworks.thetvdb.com{image_value}"
+
+    return f"https://artworks.thetvdb.com/banners/{image_value}"
+
+
+def guardar_poster_local(serie, image_url):
+    """Descarga la imagen de la serie en la carpeta posters si aún no existe."""
+    if not image_url:
+        return None
+
+    os.makedirs(POSTERS_DIR, exist_ok=True)
+
+    tvdb_id = serie.get('tvdb_id') or 'serie'
+    titulo = serie.get('titulo', 'serie')
+    slug = re.sub(r'[^A-Za-z0-9._-]+', '_', titulo).strip('_') or f"serie_{tvdb_id}"
+    extension = os.path.splitext(urlparse(image_url).path)[1] or '.jpg'
+    filename = f"{tvdb_id}_{slug}{extension}"
+    local_path = os.path.join(POSTERS_DIR, filename)
+    rel_path = os.path.join('posters', filename).replace(os.sep, '/')
+
+    if os.path.exists(local_path):
+        return rel_path
+
+    try:
+        response = requests.get(image_url, timeout=20, stream=True)
+        response.raise_for_status()
+        with open(local_path, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+        print(f"   🖼️ Poster guardado en {rel_path}")
+        return rel_path
+    except requests.exceptions.RequestException as e:
+        print(f"   ⚠️ No se pudo descargar la imagen: {e}")
+        return None
+
 
 def obtener_token(api_key):
     """Obtiene el token Bearer JWT v4 para autenticarse en TheTVDB."""
@@ -72,13 +124,19 @@ def actualizar_fechas(api_key):
             
         print(f"🔍 Analizando: {serie['titulo']} (ID: {tvdb_id})...")
         
-        # OBTENER EL ESTADO GLOBAL DE LA SERIE
+        # OBTENER EL ESTADO GLOBAL DE LA SERIE (Y LA IMAGEN SI EXISTE)
         url_info = f"https://api4.thetvdb.com/v4/series/{tvdb_id}"
+        series_data = {}
         try:
             res_info = requests.get(url_info, headers=headers, timeout=10)
-            estado_serie = res_info.json()['data']['status']['name']
-        except (requests.exceptions.RequestException, KeyError):
+            series_data = res_info.json().get('data', {})
+            estado_serie = series_data.get('status', {}).get('name', 'Unknown')
+        except (requests.exceptions.RequestException, KeyError, ValueError):
             estado_serie = "Unknown"
+
+        remote_image_url = resolver_url_imagen(series_data.get('image'))
+        serie['image_url'] = remote_image_url
+        serie['poster_path'] = serie.get('poster_path') or guardar_poster_local(serie, remote_image_url)
 
         # OBTENER LOS EPISODIOS
         url_eps = f"https://api4.thetvdb.com/v4/series/{tvdb_id}/episodes/default"

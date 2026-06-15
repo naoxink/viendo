@@ -12,7 +12,9 @@
       "imdb_id": "tt2861424",
       "rewatch": false,
       "veces": 3,
-      "acumulados": 0
+      "acumulados": 0,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/275274-2.jpg",
+      "poster_path": "posters/275274_Rick_Morty.jpg"
     },
     {
       "titulo": "From",
@@ -25,7 +27,9 @@
       "pendiente": false,
       "tvdb_id": 401003,
       "acumulados": 0,
-      "proximaFecha": "2026-06-21"
+      "proximaFecha": "2026-06-21",
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/401003/posters/6415dbaec770c.jpg",
+      "poster_path": "posters/401003_From.jpg"
     },
     {
       "titulo": "Widow's Bay",
@@ -37,7 +41,9 @@
       "vistoEn": 2026,
       "imdb_id": "tt33332385",
       "acumulados": 0,
-      "proximaFecha": "2026-06-17"
+      "proximaFecha": "2026-06-17",
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/454109/posters/69d1a63ba34e6.jpg",
+      "poster_path": "posters/454109_Widow_s_Bay.jpg"
     },
     {
       "titulo": "Severance",
@@ -48,7 +54,9 @@
       "año": 2022,
       "vistoEn": 2026,
       "imdb_id": "tt11280740",
-      "acumulados": 8
+      "acumulados": 8,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/371980/posters/621096b26f0e2.jpg",
+      "poster_path": "posters/371980_Severance.jpg"
     },
     {
       "titulo": "The Bear",
@@ -63,7 +71,9 @@
       "rewatch": false,
       "veces": 0,
       "acumulados": 0,
-      "proximaFecha": "2026-06-25"
+      "proximaFecha": "2026-06-25",
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/403294/posters/62cb2fad70271.jpg",
+      "poster_path": "posters/403294_The_Bear.jpg"
     },
     {
       "titulo": "Silo",
@@ -76,7 +86,9 @@
       "tvdb_id": 403245,
       "imdb_id": "tt14688458",
       "acumulados": 0,
-      "proximaFecha": "2026-07-03"
+      "proximaFecha": "2026-07-03",
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/403245/posters/64432dea72673.jpg",
+      "poster_path": "posters/403245_Silo.jpg"
     }
   ],
   "en_cola": [
