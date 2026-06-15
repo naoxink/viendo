@@ -133,8 +133,8 @@ function renderViendo(lista) {
                 ` : ''}
             </div>
             <div>
-                ${s.link
-                    ? `<a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>`
+                ${s.imdb_id
+                    ? `<a href="https://www.imdb.com/title/${s.imdb_id}/" target="_blank" class="link-imdb">IMDb</a>`
                     : ''
                 }
                 ${s.tvdb_id
@@ -180,7 +180,10 @@ function renderHistorico(completadas, añoActual) {
                                 </p>
                             </div>
                             <div>
-                                <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
+                                ${s.imdb_id
+                                    ? `<a href="https://www.imdb.com/title/${s.imdb_id}/" target="_blank" class="link-imdb">IMDb</a>`
+                                    : ''
+                                }
                                 ${s.tvdb_id
                                     ? `<a href="https://www.thetvdb.com/?tab=series&id=${s.tvdb_id}" target="_blank" class="link-imdb">TVDB</a>`
                                     : ''
@@ -214,8 +217,8 @@ function renderEnCola(enCola) {
                                 <p class="progress">Por empezar • Temporada ${s.temporada || 1}</p>
                             </div>
                             <div class="acciones-cola">
-                                ${s.link
-                                    ? `<a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>`
+                                ${s.imdb_id
+                                    ? `<a href="https://www.imdb.com/title/${s.imdb_id}/" target="_blank" class="link-imdb">IMDb</a>`
                                     : ''
                                 }
                                 ${s.tvdb_id
@@ -354,7 +357,10 @@ function renderDropeadas(dropeadas) {
                             </p>
                         </div>
                         <div>
-                            <a href="${s.link}" target="_blank" class="link-imdb">IMDb</a>
+                            ${s.imdb_id
+                                ? `<a href="https://www.imdb.com/title/${s.imdb_id}/" target="_blank" class="link-imdb">IMDb</a>`
+                                : ''
+                            }
                             ${s.tvdb_id
                                 ? `<a href="https://www.thetvdb.com/?tab=series&id=${s.tvdb_id}" target="_blank" class="link-imdb">TVDB</a>`
                                 : ''

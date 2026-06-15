@@ -9,7 +9,7 @@
       "año": 2013,
       "vistoEn": 2026,
       "nota": "10/10",
-      "link": "https://www.imdb.com/title/tt2861424/",
+      "imdb_id": "tt2861424",
       "rewatch": false,
       "veces": 3,
       "acumulados": 0
@@ -21,7 +21,7 @@
       "año": 2022,
       "vistoEn": 2026,
       "nota": "9/10",
-      "link": "https://www.imdb.com/es-es/title/tt9813792/",
+      "imdb_id": "tt9813792",
       "pendiente": false,
       "tvdb_id": 401003,
       "acumulados": 0
@@ -34,7 +34,7 @@
       "pendiente": false,
       "año": 2026,
       "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt33332385/",
+      "imdb_id": "tt33332385",
       "acumulados": 0,
       "proximaFecha": "2026-06-17"
     },
@@ -46,7 +46,7 @@
       "tvdb_id": 371980,
       "año": 2022,
       "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt11280740/",
+      "imdb_id": "tt11280740",
       "acumulados": 8
     },
     {
@@ -57,7 +57,7 @@
       "capitulo": 10,
       "pendiente": false,
       "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt14452776/",
+      "imdb_id": "tt14452776",
       "tvdb_id": 403294,
       "rewatch": false,
       "veces": 0,
@@ -73,7 +73,7 @@
       "pendiente": false,
       "nota": "7/10",
       "tvdb_id": 403245,
-      "link": "https://www.imdb.com/es-es/title/tt14688458/",
+      "imdb_id": "tt14688458",
       "acumulados": 0,
       "proximaFecha": "2026-07-03"
     }
@@ -118,7 +118,7 @@
       "año": 2025,
       "vistoEn": 2026,
       "tvdb_id": 454565,
-      "link": "https://www.imdb.com/es-es/title/tt27444205/",
+      "imdb_id": "tt27444205",
       "temporada": 1,
       "capitulo": 3,
       "pendiente": true,
@@ -130,7 +130,7 @@
       "capitulo": 6,
       "año": 2019,
       "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt8772296/"
+      "imdb_id": "tt8772296"
     },
     {
       "titulo": "Marshals: Una historia de Yellowstone",
@@ -138,7 +138,7 @@
       "capitulo": 12,
       "año": 2026,
       "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt36849871"
+      "imdb_id": "tt36849871"
     }
   ],
   "completadas": [
@@ -149,7 +149,7 @@
       "año": 2022,
       "vistoEn": 2026,
       "nota": "7/10",
-      "link": "https://www.imdb.com/es-es/title/tt18482892/",
+      "imdb_id": "tt18482892",
       "pendiente": false,
       "tvdb_id": 417478,
       "acumulados": 0
@@ -161,7 +161,7 @@
       "capitulo": 8,
       "vistoEn": 2026,
       "nota": "7/10",
-      "link": "https://www.imdb.com/es-es/title/tt37439565",
+      "imdb_id": "tt37439565",
       "tvdb_id": 476159
     },
     {
@@ -170,7 +170,7 @@
       "capitulo": 8,
       "año": 2026,
       "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt31137273",
+      "imdb_id": "tt31137273",
       "pendiente": false,
       "tvdb_id": 445651,
       "acumulados": 0,
@@ -182,7 +182,7 @@
       "nota": "07/10",
       "año": 2026,
       "vistoEn": 2026,
-      "link": "https://www.imdb.com/es-es/title/tt27486290/",
+      "imdb_id": "tt27486290",
       "rewatch": false,
       "veces": 0
     },
@@ -191,7 +191,7 @@
       "año": 2025,
       "nota": "8/10",
       "vistoEn": 2025,
-      "link": "https://www.imdb.com/title/tt22202452/",
+      "imdb_id": "tt22202452",
       "rewatch": false,
       "veces": 0
     },
@@ -200,7 +200,7 @@
       "año": 2023,
       "vistoEn": 2026,
       "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt19854762/",
+      "imdb_id": "tt19854762",
       "rewatch": false,
       "veces": 0
     },
@@ -209,7 +209,7 @@
       "año": 2016,
       "vistoEn": 2024,
       "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt4574334/",
+      "imdb_id": "tt4574334",
       "rewatch": false,
       "veces": 0
     },
@@ -218,7 +218,7 @@
       "año": 2007,
       "vistoEn": 2024,
       "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt0922037/",
+      "imdb_id": "tt0922037",
       "rewatch": true,
       "veces": 3
     },
@@ -226,7 +226,7 @@
       "titulo": "Breaking Bad",
       "año": 2008,
       "nota": "10/10",
-      "link": "https://www.imdb.com/title/tt0903747/",
+      "imdb_id": "tt0903747",
       "rewatch": true,
       "veces": 4
     },
@@ -235,7 +235,7 @@
       "año": 2015,
       "nota": "10/10",
       "vistoEn": 2023,
-      "link": "https://www.imdb.com/title/tt3032476/",
+      "imdb_id": "tt3032476",
       "rewatch": true,
       "veces": 2
     },
@@ -243,7 +243,7 @@
       "titulo": "Vikings",
       "año": 2013,
       "nota": "10/10",
-      "link": "https://www.imdb.com/title/tt2306299/",
+      "imdb_id": "tt2306299",
       "rewatch": true,
       "veces": 2
     },
@@ -251,7 +251,7 @@
       "titulo": "The Wire",
       "año": 2002,
       "nota": "10/10",
-      "link": "https://www.imdb.com/title/tt0306414/",
+      "imdb_id": "tt0306414",
       "rewatch": true,
       "veces": 2
     },
@@ -259,7 +259,7 @@
       "titulo": "Mr. Robot",
       "año": 2015,
       "nota": "10/10",
-      "link": "https://www.imdb.com/title/tt4158110/",
+      "imdb_id": "tt4158110",
       "rewatch": true,
       "veces": 2
     },
@@ -267,7 +267,7 @@
       "titulo": "Dexter",
       "año": 2006,
       "nota": "9/10",
-      "link": "https://www.imdb.com/title/tt0773262/",
+      "imdb_id": "tt0773262",
       "rewatch": true,
       "veces": 1
     },
@@ -276,7 +276,7 @@
       "año": 2022,
       "vistoEn": 2025,
       "nota": "6/10",
-      "link": "https://www.imdb.com/title/tt16021642/",
+      "imdb_id": "tt16021642",
       "rewatch": false,
       "veces": 0
     },
@@ -285,7 +285,7 @@
       "año": 2008,
       "vistoEn": 2023,
       "nota": "6/10",
-      "link": "https://www.imdb.com/title/tt1285482/",
+      "imdb_id": "tt1285482",
       "rewatch": true,
       "veces": 1
     },
@@ -293,7 +293,7 @@
       "titulo": "Antidisturbios",
       "año": 2020,
       "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt10883660/",
+      "imdb_id": "tt10883660",
       "rewatch": false,
       "veces": 0
     },
@@ -301,7 +301,7 @@
       "titulo": "Spartacus",
       "año": 2010,
       "nota": "7/10",
-      "link": "https://www.imdb.com/title/tt1442449/",
+      "imdb_id": "tt1442449",
       "rewatch": true,
       "veces": 1
     },
@@ -309,7 +309,7 @@
       "titulo": "Spartacus: Dioses de la arena",
       "año": 2011,
       "nota": "6/10",
-      "link": "https://www.imdb.com/title/tt39020004/",
+      "imdb_id": "tt39020004",
       "rewatch": true,
       "veces": 1
     },
@@ -318,7 +318,7 @@
       "año": 2024,
       "vistoEn": 2025,
       "nota": "5/10",
-      "link": "https://www.imdb.com/title/tt28298539/",
+      "imdb_id": "tt28298539",
       "rewatch": false,
       "veces": 0
     },
@@ -327,7 +327,7 @@
       "año": 2025,
       "vistoEn": 2025,
       "nota": "6/10",
-      "link": "https://www.imdb.com/title/tt37284797/",
+      "imdb_id": "tt37284797",
       "rewatch": false,
       "veces": 0
     },
@@ -336,7 +336,7 @@
       "año": 2019,
       "vistoEn": 2025,
       "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt8787372/",
+      "imdb_id": "tt8787372",
       "rewatch": false,
       "veces": 0
     },
@@ -345,7 +345,7 @@
       "año": 2022,
       "vistoEn": 2025,
       "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt12878838/",
+      "imdb_id": "tt12878838",
       "rewatch": false,
       "veces": 0
     },
@@ -354,7 +354,7 @@
       "año": 2025,
       "vistoEn": 2025,
       "nota": "7/10",
-      "link": "https://www.imdb.com/title/tt27987047/",
+      "imdb_id": "tt27987047",
       "rewatch": false,
       "veces": 0
     },
@@ -363,7 +363,7 @@
       "año": 2020,
       "vistoEn": 2025,
       "nota": "7/10",
-      "link": "https://www.imdb.com/title/tt8910922/",
+      "imdb_id": "tt8910922",
       "rewatch": false,
       "veces": 0
     },
@@ -371,7 +371,7 @@
       "titulo": "Upload",
       "año": 2020,
       "nota": "7/10",
-      "link": "https://www.imdb.com/title/tt7826376/",
+      "imdb_id": "tt7826376",
       "rewatch": false,
       "veces": 0
     },
@@ -380,7 +380,7 @@
       "año": 2025,
       "vistoEn": 2025,
       "nota": "4/10",
-      "link": "https://www.imdb.com/title/tt31173096/",
+      "imdb_id": "tt31173096",
       "rewatch": false,
       "veces": 0
     },
@@ -389,7 +389,7 @@
       "año": 2024,
       "vistoEn": 2025,
       "nota": "7/10",
-      "link": "https://www.imdb.com/title/tt29614148/",
+      "imdb_id": "tt29614148",
       "rewatch": false,
       "veces": 0
     },
@@ -397,7 +397,7 @@
       "titulo": "El juego del calamar",
       "año": 2021,
       "nota": "7/10",
-      "link": "https://www.imdb.com/title/tt10919420/",
+      "imdb_id": "tt10919420",
       "rewatch": false,
       "veces": 0
     },
@@ -405,7 +405,7 @@
       "titulo": "Motorheads",
       "año": 2025,
       "nota": "6/10",
-      "link": "https://www.imdb.com/title/tt13723084/",
+      "imdb_id": "tt13723084",
       "rewatch": false,
       "veces": 0
     },
@@ -414,7 +414,7 @@
       "año": 2025,
       "vistoEn": 2025,
       "nota": "8/10",
-      "link": "https://www.imdb.com/title/tt34779099/",
+      "imdb_id": "tt34779099",
       "rewatch": false,
       "veces": 0
     }
