@@ -3,8 +3,8 @@
     {
       "titulo": "Rick & Morty",
       "temporada": 9,
-      "capitulo": 3,
-      "pendiente": false,
+      "capitulo": 4,
+      "pendiente": true,
       "tvdb_id": 275274,
       "año": 2013,
       "vistoEn": 2026,
@@ -12,21 +12,19 @@
       "link": "https://www.imdb.com/title/tt2861424/",
       "rewatch": false,
       "veces": 3,
-      "acumulados": 0,
-      "proximaFecha": "2026-06-14"
+      "acumulados": 0
     },
     {
       "titulo": "From",
       "temporada": 4,
-      "capitulo": 7,
+      "capitulo": 8,
       "año": 2022,
       "vistoEn": 2026,
       "nota": "9/10",
       "link": "https://www.imdb.com/es-es/title/tt9813792/",
-      "pendiente": false,
+      "pendiente": true,
       "tvdb_id": 401003,
-      "acumulados": 0,
-      "proximaFecha": "2026-06-14"
+      "acumulados": 0
     },
     {
       "titulo": "Widow's Bay",
