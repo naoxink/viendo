@@ -48,13 +48,13 @@
     {
       "titulo": "Severance",
       "temporada": 2,
-      "capitulo": 3,
+      "capitulo": 4,
       "pendiente": true,
       "tvdb_id": 371980,
       "año": 2022,
       "vistoEn": 2026,
       "imdb_id": "tt11280740",
-      "acumulados": 7,
+      "acumulados": 6,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/371980/posters/621096b26f0e2.jpg",
       "poster_path": "posters/371980_Severance.jpg"
     },
