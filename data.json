@@ -89,6 +89,30 @@
       "proximaFecha": "2026-07-03",
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/403245/posters/64432dea72673.jpg",
       "poster_path": "posters/403245_Silo.jpg"
+    },
+    {
+      "titulo": "Muertos S.L. (Death Inc.)",
+      "año": 2024,
+      "vistoEn": 2026,
+      "nota": "7/10",
+      "imdb_id": "tt29614148",
+      "tvdb_id": 441201,
+      "rewatch": false,
+      "veces": 0,
+      "temporada": 3,
+      "capitulo": 6,
+      "proximaFecha": "2026-08-07"
+    },
+    {
+      "titulo": "Trying (Ciclos)",
+      "imdb_id": "tt10982034",
+      "tvdb_id": 375903,
+      "año": 2020,
+      "vistoEn": 2026,
+      "nota": "7/10",
+      "temporada": 4,
+      "capitulo": 8,
+      "proximaFecha": "2026-07-08"
     }
   ],
   "en_cola": [
@@ -394,15 +418,6 @@
       "vistoEn": 2025,
       "nota": "4/10",
       "imdb_id": "tt31173096",
-      "rewatch": false,
-      "veces": 0
-    },
-    {
-      "titulo": "Muertos S.L.",
-      "año": 2024,
-      "vistoEn": 2025,
-      "nota": "7/10",
-      "imdb_id": "tt29614148",
       "rewatch": false,
       "veces": 0
     },
