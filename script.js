@@ -136,7 +136,7 @@ function renderViendo(lista) {
                 ${s.acumulados > 0 ? `<span class="badge-warning">+${s.acumulados} caps</span>` : ''}
                 ${s.proximaFecha ? `
                     <p class="next-air">
-                        📅: <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha.split('-').reverse().join('.')}</strong>
+                        📅 <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha.split('-').reverse().join('.')}</strong>
                     </p>
                 ` : ''}
             </div>
