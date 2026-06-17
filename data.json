@@ -14,7 +14,8 @@
       "veces": 3,
       "acumulados": 0,
       "image_url": "https://artworks.thetvdb.com/banners/posters/275274-2.jpg",
-      "poster_path": "posters/275274_Rick_Morty.jpg"
+      "poster_path": "posters/275274_Rick_Morty.jpg",
+      "proximaFecha": "2026-06-21"
     },
     {
       "titulo": "From",
@@ -34,14 +35,13 @@
     {
       "titulo": "Widow's Bay",
       "temporada": 1,
-      "capitulo": 9,
+      "capitulo": 10,
       "tvdb_id": 454109,
-      "pendiente": false,
+      "pendiente": true,
       "año": 2026,
       "vistoEn": 2026,
       "imdb_id": "tt33332385",
       "acumulados": 0,
-      "proximaFecha": "2026-06-17",
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/454109/posters/69d1a63ba34e6.jpg",
       "poster_path": "posters/454109_Widow_s_Bay.jpg"
     },
