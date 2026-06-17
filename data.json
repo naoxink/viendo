@@ -101,7 +101,10 @@
       "veces": 0,
       "temporada": 3,
       "capitulo": 6,
-      "proximaFecha": "2026-08-07"
+      "proximaFecha": "2026-08-07",
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/441201/posters/65f2d24670c1e.jpg",
+      "poster_path": "posters/441201_Muertos_S.L._Death_Inc..jpg",
+      "acumulados": 0
     },
     {
       "titulo": "Trying (Ciclos)",
@@ -112,7 +115,10 @@
       "nota": "7/10",
       "temporada": 4,
       "capitulo": 8,
-      "proximaFecha": "2026-07-08"
+      "proximaFecha": "2026-07-08",
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/375903/posters/60a4c57394881.jpg",
+      "poster_path": "posters/375903_Trying_Ciclos.jpg",
+      "acumulados": 0
     }
   ],
   "en_cola": [
