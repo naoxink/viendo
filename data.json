@@ -249,7 +249,10 @@
       "vistoEn": 2026,
       "imdb_id": "tt27486290",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 462906,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/462906/posters/69de7aadd9a74.jpg",
+      "poster_path": "posters/462906_Stranger_Things_Relatos_del_85.jpg"
     },
     {
       "titulo": "Pluribus",
@@ -258,16 +261,22 @@
       "vistoEn": 2025,
       "imdb_id": "tt22202452",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 436457,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/436457/posters/68e7e3997a36a.jpg",
+      "poster_path": "posters/436457_Pluribus.jpg"
     },
     {
-      "titulo": "Secuestro en el aire",
+      "titulo": "Hijack",
       "año": 2023,
       "vistoEn": 2026,
       "nota": "8/10",
       "imdb_id": "tt19854762",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 419254,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/419254/posters/693b2eb546705.jpg",
+      "poster_path": "posters/419254_Hijack.jpg"
     },
     {
       "titulo": "Stranger Things",
@@ -276,7 +285,10 @@
       "nota": "8/10",
       "imdb_id": "tt4574334",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 305288,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/305288-4.jpg",
+      "poster_path": "posters/305288_Stranger_Things.jpg"
     },
     {
       "titulo": "La que se avecina",
@@ -285,7 +297,10 @@
       "nota": "8/10",
       "imdb_id": "tt0922037",
       "rewatch": true,
-      "veces": 3
+      "veces": 3,
+      "tvdb_id": 82753,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/82753-4.jpg",
+      "poster_path": "posters/82753_La_que_se_avecina.jpg"
     },
     {
       "titulo": "Breaking Bad",
@@ -293,7 +308,10 @@
       "nota": "10/10",
       "imdb_id": "tt0903747",
       "rewatch": true,
-      "veces": 4
+      "veces": 4,
+      "tvdb_id": 81189,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/81189-10.jpg",
+      "poster_path": "posters/81189_Breaking_Bad.jpg"
     },
     {
       "titulo": "Better Call Saul",
@@ -302,7 +320,10 @@
       "vistoEn": 2023,
       "imdb_id": "tt3032476",
       "rewatch": true,
-      "veces": 2
+      "veces": 2,
+      "tvdb_id": 273181,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/273181/posters/625dca9d408d4.jpg",
+      "poster_path": "posters/273181_Better_Call_Saul.jpg"
     },
     {
       "titulo": "Vikings",
@@ -310,7 +331,10 @@
       "nota": "10/10",
       "imdb_id": "tt2306299",
       "rewatch": true,
-      "veces": 2
+      "veces": 2,
+      "tvdb_id": 260449,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/260449-3.jpg",
+      "poster_path": "posters/260449_Vikings.jpg"
     },
     {
       "titulo": "The Wire",
@@ -318,7 +342,10 @@
       "nota": "10/10",
       "imdb_id": "tt0306414",
       "rewatch": true,
-      "veces": 2
+      "veces": 2,
+      "tvdb_id": 79126,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/79126-2.jpg",
+      "poster_path": "posters/79126_The_Wire.jpg"
     },
     {
       "titulo": "Mr. Robot",
@@ -326,7 +353,10 @@
       "nota": "10/10",
       "imdb_id": "tt4158110",
       "rewatch": true,
-      "veces": 2
+      "veces": 2,
+      "tvdb_id": 289590,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/289590-12.jpg",
+      "poster_path": "posters/289590_Mr._Robot.jpg"
     },
     {
       "titulo": "Dexter",
@@ -334,7 +364,10 @@
       "nota": "9/10",
       "imdb_id": "tt0773262",
       "rewatch": true,
-      "veces": 1
+      "veces": 1,
+      "tvdb_id": 79349,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/79349-2.jpg",
+      "poster_path": "posters/79349_Dexter.jpg"
     },
     {
       "titulo": "Apagón",
@@ -343,7 +376,10 @@
       "nota": "6/10",
       "imdb_id": "tt16021642",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 412401,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/412401/posters/63237db5b0cb5.jpg",
+      "poster_path": "posters/412401_Apag_n.jpg"
     },
     {
       "titulo": "Dead Set",
@@ -352,7 +388,10 @@
       "nota": "6/10",
       "imdb_id": "tt1285482",
       "rewatch": true,
-      "veces": 1
+      "veces": 1,
+      "tvdb_id": 83427,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/83427-2.jpg",
+      "poster_path": "posters/83427_Dead_Set.jpg"
     },
     {
       "titulo": "Antidisturbios",
@@ -360,7 +399,10 @@
       "nota": "8/10",
       "imdb_id": "tt10883660",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 377307,
+      "image_url": "https://artworks.thetvdb.com/banners/series/377307/posters/5f9773ea9067c.jpg",
+      "poster_path": "posters/377307_Antidisturbios.jpg"
     },
     {
       "titulo": "Spartacus",
@@ -368,15 +410,10 @@
       "nota": "7/10",
       "imdb_id": "tt1442449",
       "rewatch": true,
-      "veces": 1
-    },
-    {
-      "titulo": "Spartacus: Dioses de la arena",
-      "año": 2011,
-      "nota": "6/10",
-      "imdb_id": "tt39020004",
-      "rewatch": true,
-      "veces": 1
+      "veces": 1,
+      "tvdb_id": 129261,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/129261-11.jpg",
+      "poster_path": "posters/129261_Spartacus.jpg"
     },
     {
       "titulo": "Respira",
@@ -385,7 +422,10 @@
       "nota": "5/10",
       "imdb_id": "tt28298539",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 437173,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/437173/posters/66abf85044ca1.jpg",
+      "poster_path": "posters/437173_Respira.jpg"
     },
     {
       "titulo": "Sin gluten",
@@ -394,7 +434,10 @@
       "nota": "6/10",
       "imdb_id": "tt37284797",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 468877,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/468877/posters/68df762655a08.jpg",
+      "poster_path": "posters/468877_Sin_gluten.jpg"
     },
     {
       "titulo": "La Caza",
@@ -403,7 +446,10 @@
       "nota": "8/10",
       "imdb_id": "tt8787372",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 356952,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/356952/posters/64371a3a77459.jpg",
+      "poster_path": "posters/356952_La_Caza.jpg"
     },
     {
       "titulo": "Bel-Air",
@@ -412,7 +458,10 @@
       "nota": "8/10",
       "imdb_id": "tt12878838",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 388151,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/388151/posters/690f7c4eab718.jpg",
+      "poster_path": "posters/388151_Bel-Air.jpg"
     },
     {
       "titulo": "Boots",
@@ -421,7 +470,10 @@
       "nota": "7/10",
       "imdb_id": "tt27987047",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 434473,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/434473/posters/68e28477a7753.jpg",
+      "poster_path": "posters/434473_Boots.jpg"
     },
     {
       "titulo": "Solar Opposites",
@@ -430,7 +482,10 @@
       "nota": "7/10",
       "imdb_id": "tt8910922",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 375892,
+      "image_url": "https://artworks.thetvdb.com/banners/series/375892/posters/6012f8c994922.jpg",
+      "poster_path": "posters/375892_Solar_Opposites.jpg"
     },
     {
       "titulo": "Upload",
@@ -438,7 +493,10 @@
       "nota": "7/10",
       "imdb_id": "tt7826376",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 368211,
+      "image_url": "https://artworks.thetvdb.com/banners/series/368211/posters/5ed2cb98d3f6b.jpg",
+      "poster_path": "posters/368211_Upload.jpg"
     },
     {
       "titulo": "El refugio atómico",
@@ -447,7 +505,10 @@
       "nota": "4/10",
       "imdb_id": "tt31173096",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 454715,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/454715/posters/68d55c5be13ba.jpg",
+      "poster_path": "posters/454715_El_refugio_at_mico.jpg"
     },
     {
       "titulo": "El juego del calamar",
@@ -455,7 +516,10 @@
       "nota": "7/10",
       "imdb_id": "tt10919420",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 383275,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/383275/posters/6151351c5420c.jpg",
+      "poster_path": "posters/383275_El_juego_del_calamar.jpg"
     },
     {
       "titulo": "Motorheads",
@@ -463,7 +527,10 @@
       "nota": "6/10",
       "imdb_id": "tt13723084",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 450314,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/450314/posters/681bd9815031d.jpg",
+      "poster_path": "posters/450314_Motorheads.jpg"
     },
     {
       "titulo": "Entrepreneurs",
@@ -472,7 +539,10 @@
       "nota": "8/10",
       "imdb_id": "tt34779099",
       "rewatch": false,
-      "veces": 0
+      "veces": 0,
+      "tvdb_id": 467341,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/467341/posters/68b0591adf8b8.jpg",
+      "poster_path": "posters/467341_Entrepreneurs.jpg"
     }
   ]
 }

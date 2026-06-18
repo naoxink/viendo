@@ -1,0 +1,41 @@
+name: Revisión Mensual de Series Completadas
+
+on:
+  schedule:
+    # Se ejecuta el día 1 de cada mes a las 04:25 UTC (06:25 AM en España en verano)
+    - cron: '25 4 1 * *'
+  workflow_dispatch: # Te permite ejecutarlo a mano desde la web de GitHub cuando quieras
+
+jobs:
+  check-completed:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Ejecutar escáner de completadas
+      env:
+        TVDB_API_KEY: ${{ secrets.TVDB_API_KEY }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        python revisar_completadas.py
+
+    - name: Guardar cambios en el repositorio
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add data.json
+        git commit -m "🤖 Mantenimiento mensual: Reviviendo series a En Cola" || echo "Sin series que revivir este mes."
+        git push
