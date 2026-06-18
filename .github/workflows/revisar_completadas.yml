@@ -6,6 +6,9 @@ on:
     - cron: '25 4 1 * *'
   workflow_dispatch: # Te permite ejecutarlo a mano desde la web de GitHub cuando quieras
 
+permissions:
+  contents: write
+
 jobs:
   check-completed:
     runs-on: ubuntu-latest
