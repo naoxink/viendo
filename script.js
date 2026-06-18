@@ -225,6 +225,11 @@ function renderEnCola(enCola) {
                             <div class="info">
                                 <h2>${s.titulo}</h2>
                                 <p class="progress">Por empezar • Temporada ${s.temporada || 1}</p>
+                                ${s.proximaFecha ? `
+                                    <p class="next-air">
+                                        📅 <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha.split('-').reverse().join('.')}</strong>
+                                    </p>
+                                ` : ''}
                             </div>
                             <div class="acciones-cola">
                                 ${s.imdb_id

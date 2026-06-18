@@ -31,13 +31,15 @@
       "proximaFecha": "2026-06-21",
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/401003/posters/6415dbaec770c.jpg",
       "poster_path": "posters/401003_From.jpg"
-    },
+    }
+  ],
+  "en_cola": [
     {
       "titulo": "The Bear",
       "año": 2022,
       "vistoEn": 2026,
-      "temporada": 4,
-      "capitulo": 10,
+      "temporada": 5,
+      "capitulo": 1,
       "pendiente": false,
       "nota": "8/10",
       "imdb_id": "tt14452776",
@@ -53,8 +55,8 @@
       "titulo": "Silo",
       "año": 2023,
       "vistoEn": 2026,
-      "temporada": 2,
-      "capitulo": 10,
+      "temporada": 3,
+      "capitulo": 1,
       "pendiente": false,
       "nota": "7/10",
       "tvdb_id": 403245,
@@ -73,8 +75,8 @@
       "tvdb_id": 441201,
       "rewatch": false,
       "veces": 0,
-      "temporada": 3,
-      "capitulo": 6,
+      "temporada": 4,
+      "capitulo": 1,
       "proximaFecha": "2026-08-07",
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/441201/posters/65f2d24670c1e.jpg",
       "poster_path": "posters/441201_Muertos_S.L._Death_Inc..jpg",
@@ -87,15 +89,13 @@
       "año": 2020,
       "vistoEn": 2026,
       "nota": "7/10",
-      "temporada": 4,
-      "capitulo": 8,
+      "temporada": 5,
+      "capitulo": 1,
       "proximaFecha": "2026-07-08",
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/375903/posters/60a4c57394881.jpg",
       "poster_path": "posters/375903_Trying_Ciclos.jpg",
       "acumulados": 0
-    }
-  ],
-  "en_cola": [
+    },
     {
       "titulo": "The Boys",
       "tvdb_id": 355567,
