@@ -33,19 +33,6 @@
       "poster_path": "posters/401003_From.jpg"
     },
     {
-      "titulo": "Severance",
-      "temporada": 2,
-      "capitulo": 9,
-      "pendiente": true,
-      "tvdb_id": 371980,
-      "año": 2022,
-      "vistoEn": 2026,
-      "imdb_id": "tt11280740",
-      "acumulados": 1,
-      "image_url": "https://artworks.thetvdb.com/banners/v4/series/371980/posters/621096b26f0e2.jpg",
-      "poster_path": "posters/371980_Severance.jpg"
-    },
-    {
       "titulo": "The Bear",
       "año": 2022,
       "vistoEn": 2026,
@@ -186,6 +173,20 @@
     }
   ],
   "completadas": [
+    {
+      "titulo": "Severance",
+      "temporada": 2,
+      "capitulo": 10,
+      "pendiente": false,
+      "tvdb_id": 371980,
+      "año": 2022,
+      "vistoEn": 2026,
+      "imdb_id": "tt11280740",
+      "acumulados": 0,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/371980/posters/621096b26f0e2.jpg",
+      "poster_path": "posters/371980_Severance.jpg",
+      "nota": "8.5/10"
+    },
     {
       "titulo": "Widow's Bay",
       "temporada": 1,
