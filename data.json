@@ -35,13 +35,13 @@
     {
       "titulo": "Severance",
       "temporada": 2,
-      "capitulo": 8,
+      "capitulo": 9,
       "pendiente": true,
       "tvdb_id": 371980,
       "año": 2022,
       "vistoEn": 2026,
       "imdb_id": "tt11280740",
-      "acumulados": 2,
+      "acumulados": 1,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/371980/posters/621096b26f0e2.jpg",
       "poster_path": "posters/371980_Severance.jpg"
     },
@@ -113,33 +113,45 @@
       "titulo": "The Boys",
       "tvdb_id": 355567,
       "año": 2019,
-      "temporada": 5
+      "temporada": 5,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/5c5c402b075cc.jpg",
+      "poster_path": "posters/355567_The_Boys.jpg"
     },
     {
       "titulo": "Acapulco",
       "tvdb_id": 393155,
       "año": 2021,
-      "temporada": 4
+      "temporada": 4,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/393155/posters/63467793dd0e9.jpg",
+      "poster_path": "posters/393155_Acapulco.jpg"
     },
     {
       "titulo": "Atasco",
       "tvdb_id": 449580,
-      "año": 2024
+      "año": 2024,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/449580/posters/6a33465102b18.jpg",
+      "poster_path": "posters/449580_Atasco.jpg"
     },
     {
       "titulo": "Yellowstone",
       "tvdb_id": 341164,
-      "año": 2018
+      "año": 2018,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/5d1bfa6c30c50.jpg",
+      "poster_path": "posters/341164_Yellowstone.jpg"
     },
     {
       "titulo": "Halo",
       "tvdb_id": 366524,
-      "año": 2022
+      "año": 2022,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/366524/posters/621558d61fc2d.jpg",
+      "poster_path": "posters/366524_Halo.jpg"
     },
     {
       "titulo": "Fargo",
       "tvdb_id": 269613,
-      "año": 2014
+      "año": 2014,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/269613-3.jpg",
+      "poster_path": "posters/269613_Fargo.jpg"
     }
   ],
   "dropeadas": [
@@ -152,7 +164,9 @@
       "temporada": 1,
       "capitulo": 3,
       "pendiente": true,
-      "acumulados": 13
+      "acumulados": 13,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/454565/posters/6768b8f58e0fa.jpg",
+      "poster_path": "posters/454565_Paradise.jpg"
     },
     {
       "titulo": "Euphoria",
@@ -196,7 +210,9 @@
       "imdb_id": "tt18482892",
       "pendiente": false,
       "tvdb_id": 417478,
-      "acumulados": 0
+      "acumulados": 0,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/417478/posters/63b824a00c2cd.jpg",
+      "poster_path": "posters/417478_Machos_Alfa.jpg"
     },
     {
       "titulo": "Barrio Esperanza",
@@ -206,7 +222,9 @@
       "vistoEn": 2026,
       "nota": "7/10",
       "imdb_id": "tt37439565",
-      "tvdb_id": 476159
+      "tvdb_id": 476159,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/476159/posters/69e398474e94b.jpg",
+      "poster_path": "posters/476159_Barrio_Esperanza.jpg"
     },
     {
       "titulo": "Margo tiene problemas de dinero",
@@ -219,7 +237,9 @@
       "tvdb_id": 445651,
       "acumulados": 0,
       "proximaFecha": "TBA",
-      "nota": "07/10"
+      "nota": "07/10",
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/445651/posters/69aecbd28602c.jpg",
+      "poster_path": "posters/445651_Margo_tiene_problemas_de_dinero.jpg"
     },
     {
       "titulo": "Stranger Things: Relatos del 85",
