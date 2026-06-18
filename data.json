@@ -288,7 +288,8 @@
       "veces": 0,
       "tvdb_id": 305288,
       "image_url": "https://artworks.thetvdb.com/banners/posters/305288-4.jpg",
-      "poster_path": "posters/305288_Stranger_Things.jpg"
+      "poster_path": "posters/305288_Stranger_Things.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "La que se avecina",
@@ -311,7 +312,9 @@
       "veces": 4,
       "tvdb_id": 81189,
       "image_url": "https://artworks.thetvdb.com/banners/posters/81189-10.jpg",
-      "poster_path": "posters/81189_Breaking_Bad.jpg"
+      "poster_path": "posters/81189_Breaking_Bad.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "Better Call Saul",
@@ -323,7 +326,8 @@
       "veces": 2,
       "tvdb_id": 273181,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/273181/posters/625dca9d408d4.jpg",
-      "poster_path": "posters/273181_Better_Call_Saul.jpg"
+      "poster_path": "posters/273181_Better_Call_Saul.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "Vikings",
@@ -334,7 +338,9 @@
       "veces": 2,
       "tvdb_id": 260449,
       "image_url": "https://artworks.thetvdb.com/banners/posters/260449-3.jpg",
-      "poster_path": "posters/260449_Vikings.jpg"
+      "poster_path": "posters/260449_Vikings.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "The Wire",
@@ -345,7 +351,9 @@
       "veces": 2,
       "tvdb_id": 79126,
       "image_url": "https://artworks.thetvdb.com/banners/posters/79126-2.jpg",
-      "poster_path": "posters/79126_The_Wire.jpg"
+      "poster_path": "posters/79126_The_Wire.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "Mr. Robot",
@@ -356,7 +364,9 @@
       "veces": 2,
       "tvdb_id": 289590,
       "image_url": "https://artworks.thetvdb.com/banners/posters/289590-12.jpg",
-      "poster_path": "posters/289590_Mr._Robot.jpg"
+      "poster_path": "posters/289590_Mr._Robot.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "Dexter",
@@ -367,7 +377,9 @@
       "veces": 1,
       "tvdb_id": 79349,
       "image_url": "https://artworks.thetvdb.com/banners/posters/79349-2.jpg",
-      "poster_path": "posters/79349_Dexter.jpg"
+      "poster_path": "posters/79349_Dexter.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "Apagón",
@@ -379,7 +391,8 @@
       "veces": 0,
       "tvdb_id": 412401,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/412401/posters/63237db5b0cb5.jpg",
-      "poster_path": "posters/412401_Apag_n.jpg"
+      "poster_path": "posters/412401_Apag_n.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "Dead Set",
@@ -391,7 +404,8 @@
       "veces": 1,
       "tvdb_id": 83427,
       "image_url": "https://artworks.thetvdb.com/banners/posters/83427-2.jpg",
-      "poster_path": "posters/83427_Dead_Set.jpg"
+      "poster_path": "posters/83427_Dead_Set.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "Antidisturbios",
@@ -402,7 +416,9 @@
       "veces": 0,
       "tvdb_id": 377307,
       "image_url": "https://artworks.thetvdb.com/banners/series/377307/posters/5f9773ea9067c.jpg",
-      "poster_path": "posters/377307_Antidisturbios.jpg"
+      "poster_path": "posters/377307_Antidisturbios.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "Spartacus",
@@ -413,7 +429,9 @@
       "veces": 1,
       "tvdb_id": 129261,
       "image_url": "https://artworks.thetvdb.com/banners/posters/129261-11.jpg",
-      "poster_path": "posters/129261_Spartacus.jpg"
+      "poster_path": "posters/129261_Spartacus.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "Respira",
@@ -449,7 +467,8 @@
       "veces": 0,
       "tvdb_id": 356952,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/356952/posters/64371a3a77459.jpg",
-      "poster_path": "posters/356952_La_Caza.jpg"
+      "poster_path": "posters/356952_La_Caza.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "Bel-Air",
@@ -461,7 +480,8 @@
       "veces": 0,
       "tvdb_id": 388151,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/388151/posters/690f7c4eab718.jpg",
-      "poster_path": "posters/388151_Bel-Air.jpg"
+      "poster_path": "posters/388151_Bel-Air.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "Boots",
@@ -473,7 +493,8 @@
       "veces": 0,
       "tvdb_id": 434473,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/434473/posters/68e28477a7753.jpg",
-      "poster_path": "posters/434473_Boots.jpg"
+      "poster_path": "posters/434473_Boots.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "Solar Opposites",
@@ -485,7 +506,8 @@
       "veces": 0,
       "tvdb_id": 375892,
       "image_url": "https://artworks.thetvdb.com/banners/series/375892/posters/6012f8c994922.jpg",
-      "poster_path": "posters/375892_Solar_Opposites.jpg"
+      "poster_path": "posters/375892_Solar_Opposites.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "Upload",
@@ -496,7 +518,9 @@
       "veces": 0,
       "tvdb_id": 368211,
       "image_url": "https://artworks.thetvdb.com/banners/series/368211/posters/5ed2cb98d3f6b.jpg",
-      "poster_path": "posters/368211_Upload.jpg"
+      "poster_path": "posters/368211_Upload.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "El refugio atómico",
@@ -508,7 +532,8 @@
       "veces": 0,
       "tvdb_id": 454715,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/454715/posters/68d55c5be13ba.jpg",
-      "poster_path": "posters/454715_El_refugio_at_mico.jpg"
+      "poster_path": "posters/454715_El_refugio_at_mico.jpg",
+      "estado_final": "Ended"
     },
     {
       "titulo": "El juego del calamar",
@@ -519,7 +544,9 @@
       "veces": 0,
       "tvdb_id": 383275,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/383275/posters/6151351c5420c.jpg",
-      "poster_path": "posters/383275_El_juego_del_calamar.jpg"
+      "poster_path": "posters/383275_El_juego_del_calamar.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "Motorheads",
@@ -530,7 +557,9 @@
       "veces": 0,
       "tvdb_id": 450314,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/450314/posters/681bd9815031d.jpg",
-      "poster_path": "posters/450314_Motorheads.jpg"
+      "poster_path": "posters/450314_Motorheads.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
     },
     {
       "titulo": "Entrepreneurs",
@@ -542,7 +571,8 @@
       "veces": 0,
       "tvdb_id": 467341,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/467341/posters/68b0591adf8b8.jpg",
-      "poster_path": "posters/467341_Entrepreneurs.jpg"
+      "poster_path": "posters/467341_Entrepreneurs.jpg",
+      "estado_final": "Ended"
     }
   ]
 }
