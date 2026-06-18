@@ -33,19 +33,6 @@
       "poster_path": "posters/401003_From.jpg"
     },
     {
-      "titulo": "Widow's Bay",
-      "temporada": 1,
-      "capitulo": 10,
-      "tvdb_id": 454109,
-      "pendiente": true,
-      "año": 2026,
-      "vistoEn": 2026,
-      "imdb_id": "tt33332385",
-      "acumulados": 0,
-      "image_url": "https://artworks.thetvdb.com/banners/v4/series/454109/posters/69d1a63ba34e6.jpg",
-      "poster_path": "posters/454109_Widow_s_Bay.jpg"
-    },
-    {
       "titulo": "Severance",
       "temporada": 2,
       "capitulo": 8,
@@ -185,6 +172,20 @@
     }
   ],
   "completadas": [
+    {
+      "titulo": "Widow's Bay",
+      "temporada": 1,
+      "capitulo": 10,
+      "tvdb_id": 454109,
+      "pendiente": false,
+      "año": 2026,
+      "vistoEn": 2026,
+      "nota": "6.5/10",
+      "imdb_id": "tt33332385",
+      "acumulados": 0,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/454109/posters/69d1a63ba34e6.jpg",
+      "poster_path": "posters/454109_Widow_s_Bay.jpg"
+    },
     {
       "titulo": "Machos Alfa",
       "temporada": 5,
