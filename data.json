@@ -33,20 +33,14 @@
       "poster_path": "posters/401003_From.jpg"
     },
     {
-      "titulo": "The Wire",
-      "año": 2002,
-      "nota": "10/10",
-      "imdb_id": "tt0306414",
-      "rewatch": true,
-      "veces": 2,
-      "temporada": 3,
-      "capitulo": 2,
+      "titulo": "Halo",
+      "tvdb_id": 366524,
+      "año": 2022,
+      "temporada": 1,
+      "capitulo": 1,
       "pendiente": true,
-      "tvdb_id": 79126,
-      "image_url": "https://artworks.thetvdb.com/banners/posters/79126-2.jpg",
-      "poster_path": "posters/79126_The_Wire.jpg",
-      "estado_final": "Ended",
-      "vistoEn": 2026
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/366524/posters/621558d61fc2d.jpg",
+      "poster_path": "posters/366524_Halo.jpg"
     }
   ],
   "en_cola": [
@@ -141,13 +135,6 @@
       "año": 2018,
       "image_url": "https://artworks.thetvdb.com/banners/posters/5d1bfa6c30c50.jpg",
       "poster_path": "posters/341164_Yellowstone.jpg"
-    },
-    {
-      "titulo": "Halo",
-      "tvdb_id": 366524,
-      "año": 2022,
-      "image_url": "https://artworks.thetvdb.com/banners/v4/series/366524/posters/621558d61fc2d.jpg",
-      "poster_path": "posters/366524_Halo.jpg"
     },
     {
       "titulo": "Fargo",
@@ -355,6 +342,22 @@
       "tvdb_id": 260449,
       "image_url": "https://artworks.thetvdb.com/banners/posters/260449-3.jpg",
       "poster_path": "posters/260449_Vikings.jpg",
+      "estado_final": "Ended",
+      "vistoEn": 2026
+    },
+    {
+      "titulo": "The Wire",
+      "año": 2002,
+      "nota": "10/10",
+      "imdb_id": "tt0306414",
+      "rewatch": true,
+      "veces": 2,
+      "temporada": 3,
+      "capitulo": 2,
+      "pendiente": true,
+      "tvdb_id": 79126,
+      "image_url": "https://artworks.thetvdb.com/banners/posters/79126-2.jpg",
+      "poster_path": "posters/79126_The_Wire.jpg",
       "estado_final": "Ended",
       "vistoEn": 2026
     },
