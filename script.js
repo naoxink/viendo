@@ -344,7 +344,7 @@ document.getElementById('history-search').addEventListener('input', (e) => {
 function getRewatchBadge(serie) {
     if (!serie.rewatch) return '';
     const vecesTexto = serie.veces > 1 ? `<span>x${serie.veces}</span>` : '';
-    return `<span class="badge-rewatch">Rewatch ${vecesTexto}</span>`;
+    return `<span class="badge-rewatch">Rw ${vecesTexto}</span>`;
 }
 
 function renderDropeadas(dropeadas) {
