@@ -57,9 +57,7 @@
       "estado_final": "Ended",
       "vistoEn": 2026,
       "acumulados": 29
-    }
-  ],
-  "en_cola": [
+    },
     {
       "titulo": "The Bear",
       "año": 2022,
@@ -76,7 +74,9 @@
       "proximaFecha": "2026-06-25",
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/403294/posters/62cb2fad70271.jpg",
       "poster_path": "posters/403294_The_Bear.jpg"
-    },
+    }
+  ],
+  "en_cola": [
     {
       "titulo": "Silo",
       "año": 2023,
