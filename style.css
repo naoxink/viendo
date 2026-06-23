@@ -252,8 +252,8 @@ h1 {
   letter-spacing: 0.02em;
   line-height: 1.4;
   white-space: nowrap;
-  padding: 3px 9px;
-  border-radius: 6px;
+  padding: 2px 7px;
+  border-radius: 4px;
   background: var(--badge-slowmode-bg);
   color: var(--badge-slowmode-text);
   cursor: help;
@@ -473,9 +473,12 @@ summary::after {
 
 /* Ajuste para que en el móvil no se amontone */
 @media (max-width: 480px) {
+    body {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
     .badge-rewatch {
         margin-left: 0;
-        margin-top: 4px;
         display: table; /* Para que baje a una línea propia si el título es largo */
     }
 }
