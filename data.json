@@ -14,7 +14,8 @@
       "veces": 3,
       "acumulados": 0,
       "image_url": "https://artworks.thetvdb.com/banners/posters/275274-2.jpg",
-      "poster_path": "posters/275274_Rick_Morty.jpg"
+      "poster_path": "posters/275274_Rick_Morty.jpg",
+      "proximaFecha": "2026-06-28"
     },
     {
       "titulo": "From",
@@ -28,7 +29,8 @@
       "tvdb_id": 401003,
       "acumulados": 0,
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/401003/posters/6415dbaec770c.jpg",
-      "poster_path": "posters/401003_From.jpg"
+      "poster_path": "posters/401003_From.jpg",
+      "proximaFecha": "2026-06-28"
     },
     {
       "titulo": "Halo",
