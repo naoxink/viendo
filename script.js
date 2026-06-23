@@ -1,10 +1,10 @@
 // 1. Definimos la función de inicialización del buscador
 function setupSearch() {
     const searchInput = document.getElementById('history-search');
-    
+
     // Eliminamos cualquier listener previo para no duplicar
     searchInput.replaceWith(searchInput.cloneNode(true));
-    
+
     // Volvemos a capturar el elemento tras clonarlo
     const nuevoInput = document.getElementById('history-search');
 
@@ -19,11 +19,11 @@ function setupSearch() {
             cards.forEach(card => {
                 // 1. Buscamos el elemento del título (el h2)
                 const tituloElemento = card.querySelector('h2');
-                
+
                 if (tituloElemento) {
                     // 2. IMPORTANTE: Clonamos el nodo para poder manipularlo sin romper la web
                     const clonTitulo = tituloElemento.cloneNode(true);
-                    
+
                     // 3. Si tienes la nota (span) o el año (small) dentro del h2, los borramos del clon
                     // para que NO busque en la nota ni en etiquetas extra
                     const extras = clonTitulo.querySelectorAll('span, small, .nota-tag');
@@ -32,10 +32,10 @@ function setupSearch() {
                     // 4. Ahora sí, tenemos el texto limpio de la serie
                     const nombreSerie = clonTitulo.innerText.toLowerCase().trim();
                     const isMatch = nombreSerie.includes(term);
-                    
+
                     // 5. Aplicamos el cambio visual
                     card.style.display = isMatch ? 'flex' : 'none';
-                    
+
                     if (isMatch) matches++;
                 }
             });
@@ -55,7 +55,7 @@ function setupSearch() {
 // Devuelve la clase de color según la nota
 function getNotaClass(notaString) {
     const nota = parseFloat(notaString);
-    if (isNaN(nota)) return ''; 
+    if (isNaN(nota)) return '';
     if (nota < 5) return 'bad';
     if (nota < 8) return 'medium';
     return 'good';
@@ -127,20 +127,21 @@ function renderViendo(lista) {
 
     container.innerHTML = ordenada.map(s => `
         <div class="serie-card">
-            ${renderSeriePoster(s)}
-            <div class="info">
-                <h2>${s.titulo} ${getRewatchBadge(s)}<span class="año-label">(${s.año})</span></h2>
-                <p class="progress">T${s.temporada} • E${s.capitulo} 
-                   ${s.pendiente ? '<span class="badge-pendiente">Pendiente</span>' : '<span class="badge-visto">Visto</span>'}
-                </p>
-                ${s.acumulados > 0 ? `<span class="badge-warning">+${s.acumulados} caps</span>` : ''}
-                ${s.proximaFecha ? `
-                    <p class="next-air">
-                        📅 <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha.split('-').reverse().join('.')}</strong>
+            <div class="serie-card-body">
+                ${renderSeriePoster(s)}
+                <div class="info">
+                    <h2>${s.titulo} <span class="año-label">(${s.año})</span></h2>
+                    <p class="progress">T${s.temporada} • E${s.capitulo}
+                    ${s.pendiente ? '<span class="badge-pendiente">Pendiente</span>' : '<span class="badge-visto">Visto</span>'}
                     </p>
-                ` : ''}
+                    ${s.acumulados > 0 ? `<span class="badge-warning">+${s.acumulados} caps</span>` : ''}
+
+                </div>
+                <div>
+
+                </div>
             </div>
-            <div>
+            <div class="serie-card-footer">
                 ${s.imdb_id
                     ? `<a href="https://www.imdb.com/title/${s.imdb_id}/" target="_blank" class="link-imdb">IMDb</a>`
                     : ''
@@ -149,6 +150,12 @@ function renderViendo(lista) {
                     ? `<a href="https://www.thetvdb.com/?tab=series&id=${s.tvdb_id}" target="_blank" class="link-imdb">TVDB</a>`
                     : ''
                 }
+                ${getRewatchBadge(s)}
+                ${s.proximaFecha ? `
+                    <p class="next-air">
+                        📅 <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha.split('-').reverse().join('.')}</strong>
+                    </p>
+                ` : ''}
             </div>
         </div>
     `).join('');
@@ -156,7 +163,7 @@ function renderViendo(lista) {
 
 function renderHistorico(completadas, añoActual) {
     const container = document.getElementById('history-list');
-    
+
     // Filtramos usando 'vistoEn', y si no existe (por error), usamos 'año'
     const grupos = [
         { titulo: `Recientes (${añoActual-1}-${añoActual})`, filtro: (s) => (s.vistoEn || s.año) >= añoActual - 1, open: true },
@@ -167,7 +174,7 @@ function renderHistorico(completadas, añoActual) {
     container.innerHTML = grupos.map(grupo => {
         // Ordenamos por el año en que las viste (vistoEn)
         const series = completadas.filter(grupo.filtro).sort((a, b) => (b.vistoEn || b.año) - (a.vistoEn || a.año));
-        
+
         if (series.length === 0) return '';
 
         return `
@@ -179,16 +186,17 @@ function renderHistorico(completadas, añoActual) {
                 <div class="año-content">
                     ${series.map(s => `
                         <div class="serie-card" data-titulo="${s.titulo.toLowerCase()}">
-                            ${renderSeriePoster(s)}
-                            <div class="info">
-                                <h2>${s.titulo} <span class="nota-tag ${getNotaClass(s.nota)}">${s.nota}</span></h2>
-                                <p class="progress">
-                                    Finalizada en <b>${s.vistoEn || s.año}</b>
-                                    ${getRewatchBadge(s)}
-                                    <span class="original-year">(Estreno: ${s.año})</span>
-                                </p>
+                            <div class="serie-card-body">
+                                ${renderSeriePoster(s)}
+                                <div class="info">
+                                    <h2>${s.titulo} <span class="nota-tag ${getNotaClass(s.nota)}">${s.nota}</span></h2>
+                                    <p class="progress">
+                                        Finalizada en <b>${s.vistoEn || s.año}</b>
+                                        <span class="original-year">(Estreno: ${s.año})</span>
+                                    </p>
+                                </div>
                             </div>
-                            <div>
+                            <div class="serie-card-footer">
                                 ${s.imdb_id
                                     ? `<a href="https://www.imdb.com/title/${s.imdb_id}/" target="_blank" class="link-imdb">IMDb</a>`
                                     : ''
@@ -197,6 +205,7 @@ function renderHistorico(completadas, añoActual) {
                                     ? `<a href="https://www.thetvdb.com/?tab=series&id=${s.tvdb_id}" target="_blank" class="link-imdb">TVDB</a>`
                                     : ''
                                 }
+                                ${getRewatchBadge(s)}
                             </div>
                         </div>
                     `).join('')}
@@ -221,17 +230,19 @@ function renderEnCola(enCola) {
                 <div class="cola-content grid-series">
                     ${enCola.map(s => `
                         <div class="serie-card serie-en-cola">
-                            ${renderSeriePoster(s)}
-                            <div class="info">
-                                <h2>${s.titulo}</h2>
-                                <p class="progress">Por empezar • Temporada ${s.temporada || 1}</p>
-                                ${s.proximaFecha ? `
-                                    <p class="next-air">
-                                        📅 <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha.split('-').reverse().join('.')}</strong>
-                                    </p>
-                                ` : ''}
+                            <div class="serie-card-body">
+                                ${renderSeriePoster(s)}
+                                <div class="info">
+                                    <h2>${s.titulo}</h2>
+                                    <p class="progress">Por empezar • Temporada ${s.temporada || 1}</p>
+                                    ${s.proximaFecha ? `
+                                        <p class="next-air">
+                                            📅 <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha.split('-').reverse().join('.')}</strong>
+                                        </p>
+                                    ` : ''}
+                                </div>
                             </div>
-                            <div class="acciones-cola">
+                            <div class="serie-card-footer">
                                 ${s.imdb_id
                                     ? `<a href="https://www.imdb.com/title/${s.imdb_id}/" target="_blank" class="link-imdb">IMDb</a>`
                                     : ''
@@ -254,12 +265,12 @@ function renderStatus() {
     .then(response => response.json())
     .then(status => {
         const statusContainer = document.getElementById('status-dashboard');
-        
+
         const scriptClase = status.script_ok ? 'status-success' : 'status-error';
         const scriptTexto = status.script_ok ? 'Sincronizado' : 'Error';
-        
-        const notifTexto = status.notificacion_enviada 
-            ? '🔔 Notificación enviada hoy' 
+
+        const notifTexto = status.notificacion_enviada
+            ? '🔔 Notificación enviada hoy'
             : '🔕 Sin cambios notificados';
 
         statusContainer.innerHTML = `
@@ -344,7 +355,7 @@ document.getElementById('history-search').addEventListener('input', (e) => {
 function getRewatchBadge(serie) {
     if (!serie.rewatch) return '';
     const vecesTexto = serie.veces > 1 ? `<span>x${serie.veces}</span>` : '';
-    return `<span class="badge-rewatch">Rw ${vecesTexto}</span>`;
+    return `<span class="badge-rewatch">Rewatch ${vecesTexto}</span>`;
 }
 
 function renderDropeadas(dropeadas) {

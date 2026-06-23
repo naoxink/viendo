@@ -58,12 +58,30 @@ h1 {
 }
 
 .serie-card {
+    overflow: hidden;
+    margin-bottom: .5rem;
+}
+
+.serie-card-body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 0.75rem;
     padding: 1rem 0;
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-bottom: 0;
+}
+
+.serie-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: .3rem;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.serie-card-footer > * {
+    margin-right: .3rem;
 }
 
 .serie-thumb {
@@ -94,7 +112,8 @@ h1 {
 
 .link-imdb {
     text-decoration: none;
-    color: var(--text-muted);
+    color: var(--text);
+    background-color: rgba(0, 0, 0, 0.1);
     font-size: 0.75rem;
     border: 1px solid var(--border);
     padding: 2px 8px;
@@ -160,6 +179,7 @@ h1 {
     .nota-tag.bad { background: #442a2a; color: #ff8080; border: none; }
     .nota-tag.medium { background: #443a2a; color: #ffb347; border: none; }
     .nota-tag.good { background: #234e52; color: #81e6d9; border: none; }
+    .serie-card-footer { background-color: rgba(255, 255, 255, 0.1); }
 }
 
 /* Añade esto a tu style.css */
@@ -225,9 +245,12 @@ h1 {
     border-left: 4px solid var(--accent);
     border-bottom: 1px solid transparent; /* Quitamos la línea divisoria común */
     margin-bottom: 5px; /* ESTO crea la separación entre bloques */
-    padding: 1rem; /* Más aire interno */
     border-radius: 0 8px 8px 0; /* Suaviza las esquinas derechas */
     box-shadow: 2px 2px 5px rgba(0,0,0,0.02); /* Sombra muy sutil */
+}
+
+.serie-card-body:has(.badge-pendiente) {
+    padding: 1rem; /* Más aire interno */
 }
 
 /* Ajuste para el modo oscuro */
@@ -282,14 +305,17 @@ summary::after {
 
 /* Contenedor de las series dentro del acordeón */
 .año-content {
-    padding: 0 1.2rem 0.5rem 1.2rem;
+    padding: 0.5rem;
     border-top: 1px solid var(--border);
 }
 
 /* Ajuste de las cards dentro del histórico para que no se peguen */
 .año-content .serie-card {
-    padding: 1rem 0;
     border-bottom: 1px solid var(--border);
+}
+
+.año-content .serie-card .serie-card-body {
+    padding: .5rem;
 }
 
 .año-content .serie-card:last-child {
@@ -378,13 +404,13 @@ summary::after {
 }
 
 .badge-rewatch {
-    background-color: #6366f1; /* Un color violeta/índigo */
+    background-color: #5a5cdb; /* Un color violeta/índigo */
+    border: 1px solid #3a3c96; /* Un color violeta/índigo */
     color: white;
     font-size: 0.7rem;
     padding: 2px 8px;
-    border-radius: 20px;
+    border-radius: 4px;
     font-weight: 600;
-    margin-left: 8px;
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
@@ -468,12 +494,12 @@ summary::after {
 }
 
 .next-air {
-    margin-top: 8px;
+    margin-top: 0;
     margin-bottom: 0;
     font-size: 0.8rem;
     color: #256a41; /* Verde oscuro para buen contraste */
     background-color: rgba(39, 174, 96, 0.15); /* Fondo verde translúcido */
-    padding: 4px 8px;
+    padding: 1px 4px;
     border-radius: 6px;
     display: inline-flex;
     align-items: center;
@@ -554,6 +580,7 @@ summary::after {
 .cola-content {
     background-color: var(--cola-content-bg); 
     border-top: 1px solid var(--cola-content-border);
+    padding: .5rem;
 }
 
 /* Grid de tarjetas */
@@ -565,8 +592,12 @@ summary::after {
 /* Tarjeta específica para series en cola */
 .serie-en-cola {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin: 0 20px;
+    margin-bottom: .5rem;
     background-color: transparent; /* Sin color de fondo */
+}
+
+.serie-en-cola .serie-card-body {
+    padding: 1rem;
 }
 
 /* Atenuación sutil para el texto secundario de la cola */
