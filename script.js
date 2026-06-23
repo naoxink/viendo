@@ -126,7 +126,7 @@ function renderViendo(lista) {
     });
 
     container.innerHTML = ordenada.map(s => `
-        <div class="serie-card">
+        <div class="serie-card" ${getBgImage(s)}>
             <div class="serie-card-body">
                 ${renderSeriePoster(s)}
                 <div class="info">
@@ -151,6 +151,7 @@ function renderViendo(lista) {
                     : ''
                 }
                 ${getRewatchBadge(s)}
+                ${getSlowModeBadge(s)}
                 ${s.proximaFecha ? `
                     <p class="next-air">
                         📅 <strong>${s.proximaFecha === 'TBA' ? 'Sin fecha' : s.proximaFecha.split('-').reverse().join('.')}</strong>
@@ -185,7 +186,7 @@ function renderHistorico(completadas, añoActual) {
                 </summary>
                 <div class="año-content">
                     ${series.map(s => `
-                        <div class="serie-card" data-titulo="${s.titulo.toLowerCase()}">
+                        <div class="serie-card" data-titulo="${s.titulo.toLowerCase()}" ${getBgImage(s)}>
                             <div class="serie-card-body">
                                 ${renderSeriePoster(s)}
                                 <div class="info">
@@ -229,7 +230,7 @@ function renderEnCola(enCola) {
                 </summary>
                 <div class="cola-content grid-series">
                     ${enCola.map(s => `
-                        <div class="serie-card serie-en-cola">
+                        <div class="serie-card serie-en-cola" ${getBgImage(s)}>
                             <div class="serie-card-body">
                                 ${renderSeriePoster(s)}
                                 <div class="info">
@@ -355,7 +356,17 @@ document.getElementById('history-search').addEventListener('input', (e) => {
 function getRewatchBadge(serie) {
     if (!serie.rewatch) return '';
     const vecesTexto = serie.veces > 1 ? `<span>x${serie.veces}</span>` : '';
-    return `<span class="badge-rewatch">Rewatch ${vecesTexto}</span>`;
+    return `<span class="badge-rewatch" title="Vista ${serie.veces} veces">Rewatch ${vecesTexto}</span>`;
+}
+
+function getSlowModeBadge(serie) {
+    if (!serie.slow_mode) return ''
+    return `<span class="badge-slowmode" title="Viendo de tranquileo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+        </svg>
+        SLOW MODE
+    </span>`
 }
 
 function renderDropeadas(dropeadas) {
@@ -397,6 +408,11 @@ function renderDropeadas(dropeadas) {
             </div>
         </details>
     `;
+}
+
+function getBgImage(serie) {
+    if (!serie.poster_path && !serie.image_url) return ''
+    return ` style="--card-bg-image: url('${serie.poster_path || serie.image_url}')"`
 }
 
 // Arrancar

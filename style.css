@@ -12,6 +12,8 @@
     --cola-content-bg: transparent; /* Fondo transparente por defecto */
     --cola-content-border: #cbd5e1;
     --cola-progress-text: #64748b;
+    --badge-slowmode-bg: #e8a23d;
+    --badge-slowmode-text: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,6 +29,8 @@
         --cola-content-bg: transparent; /* Ojo: si prefieres fondo oscuro aquí, pon #0f172a */
         --cola-content-border: #334155;
         --cola-progress-text: #94a3b8;
+        --badge-slowmode-bg: #b8782a;
+        --badge-slowmode-text: #fff3e0;
     }
 }
 
@@ -60,6 +64,24 @@ h1 {
 .serie-card {
     overflow: hidden;
     margin-bottom: .5rem;
+    position: relative;
+}
+
+.serie-card::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  background-image: var(--card-bg-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(4px);
+}
+
+.serie-card:not(:has(.badge-pendiente))::before {
+    opacity: .05;
 }
 
 .serie-card-body {
@@ -67,7 +89,7 @@ h1 {
     justify-content: space-between;
     align-items: flex-start;
     gap: 0.75rem;
-    padding: 1rem 0;
+    padding: 1rem 1rem;
     border: 1px solid var(--border);
     border-bottom: 0;
 }
@@ -206,6 +228,7 @@ h1 {
     margin-left: 8px;
     font-weight: 700;
     display: inline-block;
+    cursor: help;
 }
 
 /* Específico Pendiente (Azul) */
@@ -218,6 +241,29 @@ h1 {
 .badge-visto {
     background-color: #e6fffa;
     color: #38b2ac;
+}
+
+.badge-slowmode {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  white-space: nowrap;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--badge-slowmode-bg);
+  color: var(--badge-slowmode-text);
+  cursor: help;
+}
+
+.badge-slowmode svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  display: block;
 }
 
 /* Modo Oscuro */
@@ -415,6 +461,7 @@ summary::after {
     align-items: center;
     vertical-align: middle;
     text-transform: uppercase;
+    cursor: help;
 }
 
 .badge-rewatch span {

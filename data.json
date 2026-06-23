@@ -58,7 +58,8 @@
       "poster_path": "posters/79126_The_Wire.jpg",
       "estado_final": "Ended",
       "vistoEn": 2026,
-      "acumulados": 29
+      "acumulados": 29,
+      "slow_mode": true
     },
     {
       "titulo": "The Bear",
