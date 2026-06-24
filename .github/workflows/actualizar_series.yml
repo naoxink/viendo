@@ -31,7 +31,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
-        python actualizar_fechas.py --apikey "${{ secrets.TVDB_API_KEY }}"
+        python scripts/actualizar_fechas.py --apikey "${{ secrets.TVDB_API_KEY }}"
 
     - name: Guardar cambios en el repositorio
       run: |

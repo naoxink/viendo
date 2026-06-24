@@ -33,7 +33,7 @@ jobs:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
-        python revisar_completadas.py
+        python scripts/revisar_completadas.py
 
     - name: Guardar cambios en el repositorio
       run: |

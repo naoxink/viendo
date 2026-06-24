@@ -6,28 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Series Tracker</title>
     <link rel="stylesheet" href="style.css">
+
+    <!--
+        Import map: permite escribir `import { ref } from 'vue'` en los módulos
+        sin necesidad de un bundler (Vite/Webpack). El navegador resuelve 'vue'
+        directamente contra el build ESM de Vue alojado en jsDelivr.
+        Si en algún momento quieres blindarte de cambios en la CDN, sustituye
+        "vue@3" por una versión fija, p.ej. "vue@3.5.13".
+    -->
+    <script type="importmap">
+    {
+        "imports": {
+            "vue": "https://cdn.jsdelivr.net/npm/vue@3/dist/vue.esm-browser.prod.js"
+        }
+    }
+    </script>
 </head>
 <body>
-    <main class="container">
-        <div id="status-dashboard" class="status-container"></div>
-        <div id="stats" class="stats-bar"></div>
+    <div id="app"></div>
 
-        <h1>📺 Viendo actualmente</h1>
-        <div id="series-list" class="grid"></div>
-
-        <div class="last-update progress"><small>Actualizado el </small><small class="date"></small></div>
-
-        <div id="en-cola-container"></div>
-
-        <div class="search-wrapper">
-            <input type="search" id="history-search" placeholder="Buscar en el histórico...">
-        </div>
-
-        <h1 class="history-title">✅ Completadas</h1>
-        <div id="history-list" class="grid history"></div>
-
-        <div id="dropped-container" class="dropped-section-wrapper"></div>
-    </main>
-    <script src="script.js"></script>
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
