@@ -157,6 +157,7 @@
       "titulo": "Halo",
       "tvdb_id": 366524,
       "año": 2022,
+      "vistoEn": 2026,
       "temporada": 1,
       "capitulo": 4,
       "pendiente": true,
@@ -336,7 +337,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/posters/81189-10.jpg",
       "poster_path": "posters/81189_Breaking_Bad.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2019
     },
     {
       "titulo": "Better Call Saul",
@@ -362,7 +363,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/posters/260449-3.jpg",
       "poster_path": "posters/260449_Vikings.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2020
     },
     {
       "titulo": "Mr. Robot",
@@ -375,7 +376,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/posters/289590-12.jpg",
       "poster_path": "posters/289590_Mr._Robot.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2022
     },
     {
       "titulo": "Dexter",
@@ -388,7 +389,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/posters/79349-2.jpg",
       "poster_path": "posters/79349_Dexter.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2024
     },
     {
       "titulo": "Apagón",
@@ -427,7 +428,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/series/377307/posters/5f9773ea9067c.jpg",
       "poster_path": "posters/377307_Antidisturbios.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2023
     },
     {
       "titulo": "Spartacus",
@@ -440,7 +441,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/posters/129261-11.jpg",
       "poster_path": "posters/129261_Spartacus.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2022
     },
     {
       "titulo": "Respira",
@@ -529,7 +530,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/series/368211/posters/5ed2cb98d3f6b.jpg",
       "poster_path": "posters/368211_Upload.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2024
     },
     {
       "titulo": "El refugio atómico",
@@ -555,7 +556,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/383275/posters/6151351c5420c.jpg",
       "poster_path": "posters/383275_El_juego_del_calamar.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2024
     },
     {
       "titulo": "Motorheads",
@@ -568,7 +569,7 @@
       "image_url": "https://artworks.thetvdb.com/banners/v4/series/450314/posters/681bd9815031d.jpg",
       "poster_path": "posters/450314_Motorheads.jpg",
       "estado_final": "Ended",
-      "vistoEn": 2026
+      "vistoEn": 2024
     },
     {
       "titulo": "Entrepreneurs",
