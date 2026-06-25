@@ -11,7 +11,7 @@ export default {
             <div class="info">
                 <h3>{{ serie.titulo }} <small>({{ serie.año }})</small></h3>
                 <p class="dropped-meta">
-                    Dropeada en <b>{{ serie.vistoEn || serie.año }}</b> •
+                    Dropeada en <b>{{ serie.vistoEn || serie.año }}</b><br>
                     Te quedaste en: <span>T{{ serie.temporada }} • E{{ serie.capitulo }}</span>
                 </p>
             </div>

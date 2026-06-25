@@ -4,7 +4,7 @@
     --text-muted: #666666;
     --accent: #0070f3;
     --border: #f0f0f0;
-    --cola-border: #666666;
+    --cola-border: #f0f0f0;
     --accent-cola: goldenrod;
     --cola-text: #1e293b; /* Texto oscuro para tema claro */
     --cola-count-bg: #e2e8f0;
@@ -14,6 +14,8 @@
     --cola-progress-text: #64748b;
     --badge-slowmode-bg: #e8a23d;
     --badge-slowmode-text: #ffffff;
+    --estreno-bg: rgba(39, 174, 96, 0.15);
+    --estreno-text: #256a41;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,6 +33,8 @@
         --cola-progress-text: #94a3b8;
         --badge-slowmode-bg: #b8782a;
         --badge-slowmode-text: #fff3e0;
+        --estreno-bg: rgba(16, 185, 129, 0.15);
+        --estreno-text: #6ee7b7;
     }
 }
 
@@ -346,7 +350,9 @@ summary::after {
     transition: transform 0.3s;
 }
 
-.año-section[open] summary::after {
+.año-section[open] summary::after,
+.cola-section[open] summary::after,
+.stats-panel[open] summary::after {
     transform: rotate(90deg);
 }
 
@@ -407,7 +413,6 @@ summary::after {
 
 
 .search-wrapper {
-    margin-top: 3rem;
     margin-bottom: 1rem;
 }
 
@@ -597,15 +602,12 @@ summary::after {
    ========================================================================== */
 .cola-section {
     border-radius: 8px;
-    margin-top: 1.5rem;
     overflow: hidden;
     border: 1px solid var(--cola-border);
-    opacity: .5;
     transition: all 0.2s ease;
 }
 
 .cola-section[open] {
-    opacity: 1;
     border-color: var(--accent-cola);
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
@@ -718,7 +720,7 @@ summary::after {
    PANEL DE ESTADÍSTICAS AVANZADAS
    ========================================================================== */
 .stats-panel {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
@@ -863,4 +865,308 @@ summary::after {
 
 .stats-inline-stat b {
     color: var(--text);
+}
+
+
+/* ==========================================
+   CALENDARIO DE ESTRENOS (SISTEMA DE VARIABLES)
+   ========================================== */
+
+.calendario-container {
+  background-color: var(--bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  margin-top: 25px;
+}
+
+.calendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendario-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--text);
+}
+
+.btn-nav {
+  background-color: var(--accent);
+  color: var(--badge-slowmode-text); /* Blanco para garantizar legibilidad */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-nav:hover {
+  background-color: color-mix(in srgb, var(--accent) 85%, #000);
+}
+
+.btn-nav:active {
+  transform: scale(0.97);
+}
+
+.dias-semana-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: var(--text-muted);
+}
+
+.dia-semana-label {
+  padding: 6px;
+  font-size: 0.9rem;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.dia-calendario {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  min-height: 55px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+.dia-calendario.vacio {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.dia-calendario.hoy {
+  border: 2px solid var(--accent);
+  background-color: color-mix(in srgb, var(--accent) 8%, var(--bg));
+}
+
+.dia-calendario.tiene-estrenos {
+  background-color: var(--bg);
+}
+
+.numero-dia {
+  font-weight: bold;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+}
+
+.dia-calendario.hoy .numero-dia {
+  color: var(--accent);
+}
+
+.lista-estrenos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  max-height: 65px;
+}
+
+.lista-estrenos::-webkit-scrollbar {
+  width: 3px;
+}
+.lista-estrenos::-webkit-scrollbar-thumb {
+  background-color: var(--cola-content-border);
+  border-radius: 4px;
+}
+
+.chip-estreno {
+  font-size: 0.72rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+/* Colores semánticos basados en tus variables de estado */
+.estado-viendo {
+  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--estreno);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.estado-por-empezar {
+  background-color: var(--estreno-bg);
+  color: var(--estreno-text);
+  border: var(--estreno-text);
+}
+
+/* Botón para abrir el calendario en el Dashboard */
+.btn-trigger-calendario {
+  background-color: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================
+   ESTILOS ESPECÍFICOS DEL MODAL (PANTALLA COMPLETA)
+   ========================================== */
+
+/* Fondo oscuro filtrado */
+.cal-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Contenedor principal dentro del modal */
+.cal-modal-content {
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1400px;
+  height: 90vh;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Botón de cierre (X) */
+.cal-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.cal-modal-close:hover {
+  color: var(--text);
+}
+
+/* Reajustes del contenedor en modo modal */
+.cal-modal-content .calendario-container {
+  padding: 2rem 4rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-top: 0;
+  box-shadow: none;
+  overflow-y: auto;
+}
+
+.cal-modal-content .dias-semana-grid {
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+
+.cal-modal-content .calendario-grid {
+  flex-grow: 1;
+  grid-auto-rows: minmax(100px, 1fr);
+}
+
+.cal-modal-content .dia-calendario {
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.cal-modal-content .dia-calendario.hoy {
+  border-color: var(--accent);
+  background-color: color-mix(in srgb, var(--accent) 8%, var(--bg));
+}
+
+/* ==========================================
+   MEDIA QUERY: RESPONSIVE EN MÓVILES
+   ========================================== */
+@media (max-width: 768px) {
+  .btn-trigger-calendario {
+    display: none; /* Por ahora en móviles no voy a enseñar el calendario, only PC */
+  }
+
+  .cal-modal-overlay {
+    padding: 0;
+  }
+
+  .cal-modal-content {
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+
+  .calendario-container {
+    padding: 12px;
+  }
+
+  .cal-modal-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .calendario-grid {
+    grid-auto-rows: minmax(65px, 1fr);
+    gap: 4px;
+  }
+
+  .dias-semana-grid {
+    gap: 4px;
+    font-size: 0.8rem;
+  }
+
+  .numero-dia {
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+  }
+
+  .chip-estreno {
+    font-size: 0.65rem;
+    padding: 2px 4px;
+    text-align: center;
+  }
+  
+  .chip-text {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

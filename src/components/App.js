@@ -7,10 +7,11 @@ import ViendoList from './ViendoList.js'
 import HistoricoList from './HistoricoList.js'
 import EnColaList from './EnColaList.js'
 import DropeadasList from './DropeadasList.js'
+import CalendarioEstrenos from './CalendarioEstrenos.js'
 
 export default {
     name: 'App',
-    components: { StatusDashboard, StatsBar, StatsPanel, ViendoList, HistoricoList, EnColaList, DropeadasList },
+    components: { StatusDashboard, StatsBar, StatsPanel, ViendoList, HistoricoList, EnColaList, DropeadasList, CalendarioEstrenos },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
         const searchTerm = ref('')
@@ -31,7 +32,6 @@ export default {
         <main class="container">
             <StatusDashboard :status="status" />
             <StatsBar v-if="data" :viendo="viendo" :completadas="completadas" :ano-actual="añoActual" />
-            <StatsPanel v-if="data" :viendo="viendo" :en-cola="enCola" :dropeadas="dropeadas" :completadas="completadas" :ano-actual="añoActual" />
 
             <h1>📺 Viendo actualmente</h1>
             <p v-if="loading">Cargando series...</p>
@@ -40,13 +40,14 @@ export default {
 
             <div class="last-update progress"><small>Actualizado el </small><small class="date">{{ lastUpdate }}</small></div>
 
+            <CalendarioEstrenos :series="[...viendo, ...enCola]"></CalendarioEstrenos>
+            <StatsPanel v-if="data" :viendo="viendo" :en-cola="enCola" :dropeadas="dropeadas" :completadas="completadas" :ano-actual="añoActual" />
             <EnColaList :series="enCola" />
 
+            <h1 class="history-title">✅ Completadas</h1>
             <div class="search-wrapper">
                 <input type="search" id="history-search" v-model="searchTerm" placeholder="Buscar en el histórico...">
             </div>
-
-            <h1 class="history-title">✅ Completadas</h1>
             <HistoricoList :completadas="completadas" :ano-actual="añoActual" :search-term="searchTerm" />
 
             <DropeadasList :series="dropeadas" :search-term="searchTerm" />
