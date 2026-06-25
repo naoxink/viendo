@@ -25,10 +25,16 @@ export function formatProximaFecha(fecha) {
     return fecha.split('-').reverse().join('.')
 }
 
+/** Convierte "8.5/10" en 8.5 (o null si la serie no tiene nota) */
+export function parseNota(notaString) {
+    const nota = parseFloat(notaString)
+    return isNaN(nota) ? null : nota
+}
+
 /** Clase de color según la nota (0-10) de una serie completada */
 export function getNotaClass(notaString) {
-    const nota = parseFloat(notaString)
-    if (isNaN(nota)) return ''
+    const nota = parseNota(notaString)
+    if (nota === null) return ''
     if (nota < 5) return 'bad'
     if (nota < 8) return 'medium'
     return 'good'

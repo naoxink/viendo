@@ -2,6 +2,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useSeriesData } from '../composables/useSeriesData.js'
 import StatusDashboard from './StatusDashboard.js'
 import StatsBar from './StatsBar.js'
+import StatsPanel from './StatsPanel.js'
 import ViendoList from './ViendoList.js'
 import HistoricoList from './HistoricoList.js'
 import EnColaList from './EnColaList.js'
@@ -9,7 +10,7 @@ import DropeadasList from './DropeadasList.js'
 
 export default {
     name: 'App',
-    components: { StatusDashboard, StatsBar, ViendoList, HistoricoList, EnColaList, DropeadasList },
+    components: { StatusDashboard, StatsBar, StatsPanel, ViendoList, HistoricoList, EnColaList, DropeadasList },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
         const searchTerm = ref('')
@@ -30,6 +31,7 @@ export default {
         <main class="container">
             <StatusDashboard :status="status" />
             <StatsBar v-if="data" :viendo="viendo" :completadas="completadas" :ano-actual="añoActual" />
+            <StatsPanel v-if="data" :viendo="viendo" :en-cola="enCola" :dropeadas="dropeadas" :completadas="completadas" :ano-actual="añoActual" />
 
             <h1>📺 Viendo actualmente</h1>
             <p v-if="loading">Cargando series...</p>

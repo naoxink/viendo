@@ -46,7 +46,8 @@ body {
 
 .container {
     width: 100%;
-    max-width: 500px;
+    max-width: 460px;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -682,7 +683,6 @@ summary::after {
     border-radius: 6px;
     font-size: 0.65rem;
     align-items: center;
-    width: fit-content;
     margin-bottom: 1rem;
 }
 
@@ -712,4 +712,155 @@ summary::after {
 
 .status-container .timestamp {
     color: #64748b;
+}
+
+/* ==========================================================================
+   PANEL DE ESTADÍSTICAS AVANZADAS
+   ========================================================================== */
+.stats-panel {
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.stats-panel[open] {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stats-panel summary {
+    padding: 1.2rem;
+}
+
+.stats-panel-content {
+    padding: 0.5rem 1.2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.stats-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding-top: 1rem;
+}
+
+@media (max-width: 480px) {
+    .stats-kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.stats-kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.stats-kpi-value {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.stats-kpi-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.stats-section-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 0 0 0.6rem;
+}
+
+.stats-section--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.5rem;
+}
+
+.stats-section--split > * {
+    min-width: 0;
+}
+
+.stats-rank-list li {
+    overflow-wrap: anywhere;
+}
+
+.stats-rank-list {
+    min-width: 0;
+}
+
+@media (max-width: 480px) {
+    .stats-section--split {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
+
+.stat-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-bar-row {
+    display: grid;
+    grid-template-columns: 38px 1fr 28px;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.stat-bar-label {
+    color: var(--text-muted);
+    text-align: right;
+}
+
+.stat-bar-track {
+    background: var(--border);
+    border-radius: 6px;
+    height: 7px;
+    overflow: hidden;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 6px;
+}
+
+.stat-bar-value {
+    color: var(--text-muted);
+}
+
+.stats-rank-list {
+    list-style: decimal;
+    padding-left: 1.1rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.88rem;
+}
+
+.stats-inline-stat {
+    font-size: 0.88rem;
+    margin: 0.3rem 0;
+    color: var(--text-muted);
+}
+
+.stats-inline-stat b {
+    color: var(--text);
 }
