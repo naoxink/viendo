@@ -17,20 +17,6 @@
       "poster_path": "posters/275274_Rick_Morty.jpg"
     },
     {
-      "titulo": "From",
-      "temporada": 4,
-      "capitulo": 10,
-      "año": 2022,
-      "vistoEn": 2026,
-      "nota": "9/10",
-      "imdb_id": "tt9813792",
-      "pendiente": false,
-      "tvdb_id": 401003,
-      "acumulados": 0,
-      "image_url": "https://artworks.thetvdb.com/banners/v4/series/401003/posters/6415dbaec770c.jpg",
-      "poster_path": "posters/401003_From.jpg"
-    },
-    {
       "titulo": "The Wire",
       "año": 2002,
       "nota": "10/10",
@@ -191,6 +177,20 @@
     }
   ],
   "completadas": [
+    {
+      "titulo": "From",
+      "temporada": 4,
+      "capitulo": 10,
+      "año": 2022,
+      "vistoEn": 2026,
+      "nota": "9/10",
+      "imdb_id": "tt9813792",
+      "pendiente": false,
+      "tvdb_id": 401003,
+      "acumulados": 0,
+      "image_url": "https://artworks.thetvdb.com/banners/v4/series/401003/posters/6415dbaec770c.jpg",
+      "poster_path": "posters/401003_From.jpg"
+    },
     {
       "titulo": "Severance",
       "temporada": 2,
