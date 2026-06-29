@@ -16,6 +16,8 @@
     --badge-slowmode-text: #ffffff;
     --estreno-bg: rgba(39, 174, 96, 0.15);
     --estreno-text: #256a41;
+    --final-status-bg: cadetblue;
+    --final-status-text: white;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,6 +37,8 @@
         --badge-slowmode-text: #fff3e0;
         --estreno-bg: rgba(16, 185, 129, 0.15);
         --estreno-text: #6ee7b7;
+        --final-status-bg: darkslategrey;
+        --final-status-text: white;
     }
 }
 
@@ -224,7 +228,7 @@ h1 {
 }
 
 /* Badge común para ambos */
-.badge-pendiente, .badge-visto {
+.badge-pendiente, .badge-visto, .badge-final-status {
     font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -269,6 +273,11 @@ h1 {
   height: 11px;
   flex-shrink: 0;
   display: block;
+}
+
+.badge-final-status {
+    background-color: var(--final-status-bg);
+    color:var(--final-status-text);
 }
 
 /* Modo Oscuro */

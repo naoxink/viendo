@@ -2,11 +2,12 @@ import { computed } from 'vue'
 import PosterThumb from './shared/PosterThumb.js'
 import LinksFooter from './shared/LinksFooter.js'
 import RewatchBadge from './shared/RewatchBadge.js'
+import FinalStatusBadge from './shared/FinalStatusBadge.js'
 import { cardBgStyle, getNotaClass } from '../utils/format.js'
 
 export default {
     name: 'HistoricoCard',
-    components: { PosterThumb, LinksFooter, RewatchBadge },
+    components: { PosterThumb, LinksFooter, RewatchBadge, FinalStatusBadge },
     props: {
         serie: { type: Object, required: true }
     },
@@ -30,6 +31,7 @@ export default {
             <div class="serie-card-footer">
                 <LinksFooter :serie="serie" />
                 <RewatchBadge :serie="serie" />
+                <FinalStatusBadge :serie="serie" />
             </div>
         </div>
     `
