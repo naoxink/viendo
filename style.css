@@ -55,7 +55,7 @@
     --status-timestamp: #64748b;
     --nc-text: #6c757d;
     --nc-bg: #f8f9fa;
-    --nc-border: #d6d8db;
+    --nc-border: #d6d8db; 
 }
 
 :root[data-theme="dark"] {
