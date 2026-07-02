@@ -10,7 +10,7 @@ export default {
   data() {
     return {
       mostrarModal: false, // Controla la visibilidad del modal
-      fechaReferencia: new Date(2026, 5, 25), // Junio de 2026
+      fechaReferencia: new Date(),
       diasSemana: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
       nombresMeses: [
         'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
