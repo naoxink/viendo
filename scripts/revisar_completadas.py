@@ -3,7 +3,7 @@ import requests
 import os
 from datetime import datetime
 
-JSON_FILE = 'data.json'
+from scripts.data_store import load_data, save_data
 
 def obtener_token(api_key):
     """Obtiene el token JWT v4 de TheTVDB."""
@@ -30,12 +30,7 @@ def enviar_telegram(token, chat_id, mensaje):
         print(f"⚠️ Error al enviar a Telegram: {e}")
 
 def revisar_completadas():
-    if not os.path.exists(JSON_FILE):
-        print(f"❌ No se encuentra el archivo {JSON_FILE}")
-        return
-
-    with open(JSON_FILE, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    data = load_data(os.path.dirname(os.path.abspath(__file__)))
 
     completadas = data.get('completadas', [])
     viendo = data.get('viendo', [])
@@ -148,9 +143,8 @@ def revisar_completadas():
         data['completadas'] = nuevas_completadas
         data['viendo'] = viendo
 
-        with open(JSON_FILE, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-        print("💾 Cambios sincronizados en data.json.")
+        save_data(data, os.path.dirname(os.path.abspath(__file__)))
+        print("💾 Cambios sincronizados en los archivos de datos fragmentados.")
 
         # Si hay alertas de Telegram de series que vuelven, se envían
         if notificaciones:

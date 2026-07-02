@@ -6,8 +6,9 @@ import argparse
 from datetime import datetime, time
 from urllib.parse import urlparse
 
+from scripts.data_store import load_data, save_data
+
 # CONFIGURACIÓN
-JSON_FILE = 'data.json'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 POSTERS_DIR = os.path.join(BASE_DIR, 'posters')
 
@@ -134,15 +135,7 @@ def enviar_notificacion_telegram(token, chat_id, mensaje):
 
 def actualizar_fechas(api_key):
     # 1. Cargar tu archivo JSON
-    try:
-        with open(JSON_FILE, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-    except FileNotFoundError:
-        print(f"❌ No se encontró el archivo {JSON_FILE}")
-        return
-    except json.JSONDecodeError:
-        print(f"❌ El archivo {JSON_FILE} no tiene un formato JSON válido")
-        return
+    data = load_data(BASE_DIR)
 
     token = obtener_token(api_key)
     if not token:
@@ -282,10 +275,9 @@ def actualizar_fechas(api_key):
     data['viendo'] = nuevas_viendo
     data['completadas'] = completadas
 
-    with open(JSON_FILE, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-        
-    print("\n💾 ¡El archivo data.json ha sido sincronizado con éxito!")
+    save_data(data, BASE_DIR)
+
+    print("\n💾 ¡Los archivos de datos fragmentados han sido sincronizados con éxito!")
     # 5. ENVIAR NOTIFICACIONES SI HAY CAMBIOS
     import os
     tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')

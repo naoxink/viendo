@@ -35,7 +35,7 @@ export default {
 
             <h1>📺 Viendo actualmente</h1>
             <p v-if="loading">Cargando series...</p>
-            <p v-else-if="error">No se ha podido cargar data.json. Revisa la consola para más detalles.</p>
+            <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
             <ViendoList v-else :series="viendo" />
 
             <div class="last-update progress"><small>Actualizado el </small><small class="date">{{ lastUpdate }}</small></div>

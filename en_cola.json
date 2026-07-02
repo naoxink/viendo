@@ -1,0 +1,84 @@
+[
+  {
+    "titulo": "Silo",
+    "año": 2023,
+    "vistoEn": 2026,
+    "temporada": 3,
+    "capitulo": 1,
+    "pendiente": false,
+    "nota": "7/10",
+    "tvdb_id": 403245,
+    "imdb_id": "tt14688458",
+    "acumulados": 0,
+    "proximaFecha": "2026-07-03",
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/403245/posters/64432dea72673.jpg",
+    "poster_path": "posters/403245_Silo.jpg"
+  },
+  {
+    "titulo": "Muertos S.L. (Death Inc.)",
+    "año": 2024,
+    "vistoEn": 2026,
+    "nota": "7/10",
+    "imdb_id": "tt29614148",
+    "tvdb_id": 441201,
+    "rewatch": false,
+    "veces": 0,
+    "temporada": 4,
+    "capitulo": 1,
+    "proximaFecha": "2026-08-07",
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/441201/posters/65f2d24670c1e.jpg",
+    "poster_path": "posters/441201_Muertos_S.L._Death_Inc..jpg",
+    "acumulados": 0
+  },
+  {
+    "titulo": "Trying (Ciclos)",
+    "imdb_id": "tt10982034",
+    "tvdb_id": 375903,
+    "año": 2020,
+    "vistoEn": 2026,
+    "nota": "7/10",
+    "temporada": 5,
+    "capitulo": 1,
+    "proximaFecha": "2026-07-08",
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/375903/posters/60a4c57394881.jpg",
+    "poster_path": "posters/375903_Trying_Ciclos.jpg",
+    "acumulados": 0
+  },
+  {
+    "titulo": "The Boys",
+    "tvdb_id": 355567,
+    "año": 2019,
+    "temporada": 5,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/5c5c402b075cc.jpg",
+    "poster_path": "posters/355567_The_Boys.jpg"
+  },
+  {
+    "titulo": "Acapulco",
+    "tvdb_id": 393155,
+    "año": 2021,
+    "temporada": 4,
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/393155/posters/63467793dd0e9.jpg",
+    "poster_path": "posters/393155_Acapulco.jpg"
+  },
+  {
+    "titulo": "Atasco",
+    "tvdb_id": 449580,
+    "año": 2024,
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/449580/posters/6a33465102b18.jpg",
+    "poster_path": "posters/449580_Atasco.jpg"
+  },
+  {
+    "titulo": "Yellowstone",
+    "tvdb_id": 341164,
+    "año": 2018,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/5d1bfa6c30c50.jpg",
+    "poster_path": "posters/341164_Yellowstone.jpg"
+  },
+  {
+    "titulo": "Fargo",
+    "tvdb_id": 269613,
+    "año": 2014,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/269613-3.jpg",
+    "poster_path": "posters/269613_Fargo.jpg"
+  }
+]

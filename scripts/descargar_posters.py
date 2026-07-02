@@ -5,8 +5,9 @@ import requests
 import argparse
 from urllib.parse import urlparse
 
+from scripts.data_store import load_data, save_data
+
 # CONFIGURACIÓN
-JSON_FILE = "data.json"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 POSTERS_DIR = os.path.join(BASE_DIR, "posters")
 
@@ -84,17 +85,7 @@ def obtener_token(api_key):
 
 def descargar_posters(api_key):
     # Cargar JSON
-    try:
-        with open(JSON_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-    except FileNotFoundError:
-        print(f"❌ No se encontró el archivo {JSON_FILE}")
-        return
-
-    except json.JSONDecodeError:
-        print(f"❌ El archivo {JSON_FILE} no tiene un formato JSON válido")
-        return
+    data = load_data(BASE_DIR)
 
     token = obtener_token(api_key)
     if not token:
@@ -187,8 +178,7 @@ def descargar_posters(api_key):
             print(f"   ⚠️ Error inesperado: {e}")
 
     # Guardar cambios
-    with open(JSON_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    save_data(data, BASE_DIR)
 
     print("\n💾 ¡Sincronización completada!")
 

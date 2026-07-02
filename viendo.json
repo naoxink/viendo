@@ -1,0 +1,37 @@
+[
+  {
+    "titulo": "Rick & Morty",
+    "temporada": 9,
+    "capitulo": 6,
+    "pendiente": false,
+    "tvdb_id": 275274,
+    "año": 2013,
+    "vistoEn": 2026,
+    "nota": "10/10",
+    "imdb_id": "tt2861424",
+    "rewatch": false,
+    "veces": 3,
+    "acumulados": 0,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/275274-2.jpg",
+    "poster_path": "posters/275274_Rick_Morty.jpg",
+    "proximaFecha": "2026-07-05"
+  },
+  {
+    "titulo": "The Wire",
+    "año": 2002,
+    "nota": "10/10",
+    "imdb_id": "tt0306414",
+    "rewatch": true,
+    "veces": 2,
+    "temporada": 3,
+    "capitulo": 9,
+    "pendiente": true,
+    "tvdb_id": 79126,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/79126-2.jpg",
+    "poster_path": "posters/79126_The_Wire.jpg",
+    "estado_final": "Ended",
+    "vistoEn": 2026,
+    "acumulados": 27,
+    "slow_mode": true
+  }
+]

@@ -3,12 +3,7 @@ import { ref, computed } from 'vue'
 /**
  * Encapsula todo el acceso a los JSON estáticos del sitio.
  *
- * Diferencia deliberada respecto al script original: aquí cada fuente
- * (data.json, status.json, fecha de última modificación) se carga de forma
- * independiente. En el script original, si fallaba el fetch de data.json,
- * el dashboard de estado tampoco llegaba a pintarse porque todo colgaba del
- * mismo try/catch secuencial. Con esto, un fallo en una fuente no afecta a
- * las demás.
+ * Ahora carga cada colección desde su propio archivo JSON fragmentado.
  */
 export function useSeriesData() {
     const data = ref(null)
@@ -21,10 +16,21 @@ export function useSeriesData() {
 
     async function loadData() {
         try {
-            const res = await fetch('data.json')
-            data.value = await res.json()
+            const [viendo, enCola, dropeadas, completadas] = await Promise.all([
+                fetch('viendo.json').then(res => res.json()),
+                fetch('en_cola.json').then(res => res.json()),
+                fetch('dropeadas.json').then(res => res.json()),
+                fetch('completadas.json').then(res => res.json())
+            ])
+
+            data.value = {
+                viendo: Array.isArray(viendo) ? viendo : [],
+                en_cola: Array.isArray(enCola) ? enCola : [],
+                dropeadas: Array.isArray(dropeadas) ? dropeadas : [],
+                completadas: Array.isArray(completadas) ? completadas : []
+            }
         } catch (e) {
-            console.error('Error cargando data.json:', e)
+            console.error('Error cargando los archivos de datos fragmentados:', e)
             error.value = e
         }
     }
@@ -42,8 +48,14 @@ export function useSeriesData() {
 
     async function loadLastUpdate() {
         try {
-            const res = await fetch('data.json', { method: 'HEAD' })
-            const lastModified = res.headers.get('Last-Modified')
+            const files = ['viendo.json', 'en_cola.json', 'dropeadas.json', 'completadas.json']
+            const responses = await Promise.all(files.map(file => fetch(file, { method: 'HEAD' })))
+            const lastModified = responses
+                .map(res => res.headers.get('Last-Modified'))
+                .filter(Boolean)
+                .map(value => new Date(value).getTime())
+                .sort((a, b) => b - a)[0]
+
             lastUpdate.value = lastModified
                 ? new Date(lastModified).toLocaleDateString('es-ES')
                 : 'desconocida'
