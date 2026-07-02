@@ -1,10 +1,14 @@
 import json
 import os
 import re
+import sys
 import requests
 import argparse
-from datetime import datetime, time
+from datetime import datetime, date, time
 from urllib.parse import urlparse
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from scripts.data_store import load_data, save_data
 
@@ -69,6 +73,59 @@ def es_emision_futura(ep, ahora=None, hora_default=None):
         return False
 
     return fecha_emision > ahora.date()
+
+
+def _parsear_fecha_proxima(valor):
+    """Convierte valores de fecha de emisión a un datetime comparable."""
+    if not valor or valor == 'TBA':
+        return None
+
+    if isinstance(valor, datetime):
+        return valor
+
+    if isinstance(valor, date):
+        return datetime.combine(valor, time.min)
+
+    texto = str(valor).strip()
+    if not texto:
+        return None
+
+    for fmt in ('%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d', '%Y/%m/%d'):
+        try:
+            return datetime.strptime(texto, fmt)
+        except ValueError:
+            continue
+
+    return None
+
+
+def limpiar_fechas_pasadas_en_cola(data, ahora=None):
+    """Elimina la fecha de próxima emisión de las series en_cola cuando ya ha pasado."""
+    if not isinstance(data, dict):
+        return False
+
+    if ahora is None:
+        ahora = datetime.now()
+
+    en_cola = data.get('en_cola', [])
+    if not isinstance(en_cola, list):
+        return False
+
+    cambiado = False
+    for serie in en_cola:
+        if not isinstance(serie, dict):
+            continue
+
+        proxima_fecha = serie.get('proximaFecha')
+        fecha_parsed = _parsear_fecha_proxima(proxima_fecha)
+        if fecha_parsed is None:
+            continue
+
+        if fecha_parsed <= ahora:
+            serie.pop('proximaFecha', None)
+            cambiado = True
+
+    return cambiado
 
 
 def guardar_poster_local(serie, image_url):
@@ -149,6 +206,7 @@ def actualizar_fechas(api_key):
     # Preparamos las listas
     viendo_actual = data.get('viendo', [])
     completadas = data.get('completadas', [])
+    limpiar_fechas_pasadas_en_cola(data, ahora=ahora)
     
     nuevas_viendo = []
 
