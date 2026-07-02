@@ -174,5 +174,18 @@
     "veces": 0,
     "acumulados": 0,
     "proximaFecha": ""
+  },
+  {
+    "titulo": "See",
+    "temporada": 2,
+    "capitulo": 4,
+    "pendiente": false,
+    "tvdb_id": 361565,
+    "año": 2019,
+    "vistoEn": 2022,
+    "nota": "",
+    "imdb_id": "",
+    "acumulados": 0,
+    "proximaFecha": ""
   }
 ]
