@@ -200,9 +200,9 @@ h1 {
   filter: blur(10px);
 }
 
-/* .serie-card:not(:has(.badge-pendiente))::before {
-    opacity: .05;
-} */
+.serie-card:not(:has(.badge-pendiente))::before {
+    opacity: .1;
+}
 
 .serie-card-body {
     display: flex;
