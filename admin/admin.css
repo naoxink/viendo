@@ -1,0 +1,232 @@
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    display: block;
+    padding: 1.5rem;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.admin-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.admin-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 24px var(--section-shadow);
+    padding: 1.5rem;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.admin-header h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.35rem;
+}
+
+.admin-header p {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.74rem;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+}
+
+.status-banner {
+    border: 1px solid var(--border);
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    padding: 0.75rem 0.9rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.status-banner.error {
+    background: var(--note-bad-bg);
+    color: var(--note-bad-text);
+    border-color: var(--note-bad-border);
+}
+
+.admin-toolbar {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: end;
+    margin-bottom: 1rem;
+}
+
+.admin-toolbar label,
+.move-box label,
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.admin-toolbar select,
+.move-box select,
+.form-field input,
+.form-field textarea,
+.form-field select {
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    padding: 0.7rem 0.8rem;
+    min-width: 180px;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.admin-toolbar select,
+.move-box select,
+.form-field select {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%), linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+    background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 10px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 2.2rem;
+}
+
+.form-field textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 1rem;
+}
+
+.admin-list-card,
+.admin-form-card {
+    border: 1px solid var(--border);
+    background: var(--surface-elevated);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.list-header h2 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.list-header span {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.series-item {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    padding: 0.8rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 0.55rem;
+    cursor: pointer;
+}
+
+.series-item.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-soft);
+}
+
+.series-item span {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.empty-state {
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 0.95rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.form-grid .full-width {
+    grid-column: 1 / -1;
+}
+
+.form-actions,
+.move-box {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: end;
+    margin-top: 1rem;
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn {
+    border: 0;
+    border-radius: 6px;
+    padding: 0.7rem 0.95rem;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+.primary-btn {
+    background: var(--accent);
+    color: white;
+}
+
+.secondary-btn {
+    background: var(--link-bg);
+    color: var(--text);
+}
+
+.danger-btn {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+@media (max-width: 860px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
