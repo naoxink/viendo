@@ -253,21 +253,6 @@
         "proximaFecha": ""
     },
     {
-        "titulo": "Barry",
-        "temporada": 1,
-        "capitulo": 1,
-        "pendiente": false,
-        "tvdb_id": 333072,
-        "año": 2023,
-        "vistoEn": 2023,
-        "nota": "",
-        "imdb_id": "",
-        "rewatch": false,
-        "veces": 0,
-        "acumulados": 0,
-        "proximaFecha": ""
-    },
-    {
         "titulo": "The Walking Dead",
         "temporada": 4,
         "capitulo": 6,
@@ -294,6 +279,32 @@
         "imdb_id": "",
         "rewatch": false,
         "veces": 0,
+        "acumulados": 0,
+        "proximaFecha": ""
+    },
+    {
+        "titulo": "Vikings: Valhalla",
+        "temporada": 1,
+        "capitulo": 8,
+        "pendiente": false,
+        "tvdb_id": 372700,
+        "año": 2022,
+        "vistoEn": 2024,
+        "nota": "",
+        "imdb_id": "",
+        "acumulados": 0,
+        "proximaFecha": ""
+    },
+    {
+        "titulo": "See",
+        "temporada": 2,
+        "capitulo": 4,
+        "pendiente": false,
+        "tvdb_id": 361565,
+        "año": 2019,
+        "vistoEn": 2022,
+        "nota": "",
+        "imdb_id": "",
         "acumulados": 0,
         "proximaFecha": ""
     }
@@ -727,7 +738,7 @@
         "nota": "9/10",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 2,
         "acumulados": 0,
         "proximaFecha": "",
         "estado_final": "Ended"
@@ -759,7 +770,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 2,
         "acumulados": 0,
         "proximaFecha": "",
         "estado_final": "Ended"
@@ -775,7 +786,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 3,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -790,7 +801,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 2,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -804,8 +815,6 @@
         "vistoEn": 2026,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -820,7 +829,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 2,
+        "veces": 3,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -849,23 +858,6 @@
         "vistoEn": 2019,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
-        "acumulados": 0,
-        "proximaFecha": ""
-    },
-    {
-        "titulo": "I'm Alive!",
-        "temporada": 4,
-        "capitulo": 13,
-        "pendiente": false,
-        "tvdb_id": 334427,
-        "año": 2018,
-        "vistoEn": 2021,
-        "nota": "",
-        "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -880,7 +872,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 2,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -895,7 +887,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 2,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -909,8 +901,6 @@
         "vistoEn": 2023,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 2,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -924,8 +914,6 @@
         "vistoEn": 2019,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -939,8 +927,6 @@
         "vistoEn": 2020,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -954,23 +940,6 @@
         "vistoEn": 2020,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
-        "acumulados": 0,
-        "proximaFecha": ""
-    },
-    {
-        "titulo": "Vikings: Valhalla",
-        "temporada": 1,
-        "capitulo": 8,
-        "pendiente": false,
-        "tvdb_id": 372700,
-        "año": 2022,
-        "vistoEn": 2024,
-        "nota": "",
-        "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -985,7 +954,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 2,
+        "veces": 3,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -999,8 +968,6 @@
         "vistoEn": 2019,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -1014,8 +981,6 @@
         "vistoEn": 2025,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -1030,7 +995,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 2,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -1045,7 +1010,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 2,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -1058,8 +1023,6 @@
         "vistoEn": 2026,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -1073,23 +1036,6 @@
         "vistoEn": 2022,
         "nota": "",
         "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
-        "acumulados": 0,
-        "proximaFecha": ""
-    },
-    {
-        "titulo": "See",
-        "temporada": 2,
-        "capitulo": 4,
-        "pendiente": false,
-        "tvdb_id": 361565,
-        "año": 2019,
-        "vistoEn": 2022,
-        "nota": "",
-        "imdb_id": "",
-        "rewatch": true,
-        "veces": 1,
         "acumulados": 0,
         "proximaFecha": ""
     },
@@ -1104,7 +1050,7 @@
         "nota": "",
         "imdb_id": "",
         "rewatch": true,
-        "veces": 1,
+        "veces": 2,
         "acumulados": 0,
         "proximaFecha": ""
     }
