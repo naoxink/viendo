@@ -243,7 +243,7 @@
     "nota": "6/10",
     "imdb_id": "tt1285482",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "tvdb_id": 83427,
     "image_url": "https://artworks.thetvdb.com/banners/posters/83427-2.jpg",
     "poster_path": "posters/83427_Dead_Set.jpg",
@@ -268,7 +268,7 @@
     "nota": "7/10",
     "imdb_id": "tt1442449",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "tvdb_id": 129261,
     "image_url": "https://artworks.thetvdb.com/banners/posters/129261-11.jpg",
     "poster_path": "posters/129261_Spartacus.jpg",
@@ -427,7 +427,7 @@
     "nota": "9/10",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": "",
     "estado_final": "Ended"
@@ -443,7 +443,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 2,
+    "veces": 3,
     "acumulados": 0,
     "proximaFecha": "",
     "estado_final": "Ended"
@@ -459,7 +459,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": "",
     "estado_final": "Ended"
@@ -490,7 +490,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -520,7 +520,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 2,
+    "veces": 3,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -549,8 +549,6 @@
     "vistoEn": 2019,
     "nota": "",
     "imdb_id": "",
-    "rewatch": true,
-    "veces": 1,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -565,7 +563,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -580,7 +578,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -595,7 +593,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -609,8 +607,6 @@
     "vistoEn": 2023,
     "nota": "",
     "imdb_id": "",
-    "rewatch": true,
-    "veces": 2,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -654,8 +650,7 @@
     "vistoEn": 2020,
     "nota": "",
     "imdb_id": "",
-    "rewatch": true,
-    "veces": 1,
+    "rewatch": false,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -669,8 +664,7 @@
     "vistoEn": 2024,
     "nota": "",
     "imdb_id": "",
-    "rewatch": true,
-    "veces": 1,
+    "rewatch": false,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -700,7 +694,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -745,7 +739,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -758,8 +752,7 @@
     "vistoEn": 2026,
     "nota": "",
     "imdb_id": "",
-    "rewatch": true,
-    "veces": 1,
+    "rewatch": false,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -773,23 +766,7 @@
     "vistoEn": 2022,
     "nota": "",
     "imdb_id": "",
-    "rewatch": true,
-    "veces": 1,
-    "acumulados": 0,
-    "proximaFecha": ""
-  },
-  {
-    "titulo": "See",
-    "temporada": 2,
-    "capitulo": 4,
-    "pendiente": false,
-    "tvdb_id": 361565,
-    "año": 2019,
-    "vistoEn": 2022,
-    "nota": "",
-    "imdb_id": "",
-    "rewatch": true,
-    "veces": 1,
+    "rewatch": false,
     "acumulados": 0,
     "proximaFecha": ""
   },
@@ -804,7 +781,7 @@
     "nota": "",
     "imdb_id": "",
     "rewatch": true,
-    "veces": 1,
+    "veces": 2,
     "acumulados": 0,
     "proximaFecha": ""
   }
