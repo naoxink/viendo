@@ -53,6 +53,9 @@
     --status-container-bg: #0f172a1a;
     --status-item-text: #404347;
     --status-timestamp: #64748b;
+    --nc-text: #6c757d;
+    --nc-bg: #f8f9fa;
+    --nc-border: #d6d8db;
 }
 
 :root[data-theme="dark"] {
@@ -104,6 +107,9 @@
     --status-container-bg: #111827;
     --status-item-text: #e2e8f0;
     --status-timestamp: #64748b;
+    --nc-text: #a0aec0;
+    --nc-bg: #1a202c;
+    --nc-border: #2d3748;
 }
 
 body {
@@ -188,15 +194,15 @@ h1 {
   background-image: var(--card-bg-image);
   background-size: cover;
   background-position: center;
-  opacity: 0.1;
+  opacity: .8;
   z-index: -1;
   pointer-events: none;
-  filter: blur(4px);
+  filter: blur(10px);
 }
 
-.serie-card:not(:has(.badge-pendiente))::before {
+/* .serie-card:not(:has(.badge-pendiente))::before {
     opacity: .05;
-}
+} */
 
 .serie-card-body {
     display: flex;
@@ -206,6 +212,7 @@ h1 {
     padding: 1rem 1rem;
     border: 1px solid var(--border);
     border-bottom: 0;
+    background-color: color-mix(in srgb, var(--bg) 55%, transparent);
 }
 
 .serie-card-footer {
@@ -213,7 +220,7 @@ h1 {
     align-items: center;
     justify-content: flex-start;
     padding: .3rem;
-    background-color: var(--card-footer-bg);
+    background-color: color-mix(in srgb, var(--bg) 65%, transparent);
 }
 
 .serie-card-footer > * {
@@ -392,7 +399,6 @@ h1 {
     border-left: 4px solid var(--pending-card-border);
     border-bottom: 1px solid transparent;
     margin-bottom: 5px;
-    border-radius: 0 8px 8px 0;
     box-shadow: 0 2px 10px var(--section-shadow);
 }
 
@@ -1297,4 +1303,37 @@ summary::after {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+/* --- Bloque de Estilos para "Sin Contenido" --- */
+
+.no-content {
+    /* 1. Variables para Tema Claro (Por defecto) */
+
+    /* Estructura y Diseño */
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    font-size: 1.1rem;
+    font-style: italic;
+    margin: 0;
+    border-radius: 8px;
+    
+    /* Aplicación de colores usando las variables locales */
+    color: var(--nc-text);
+    background-color: var(--nc-bg);
+    border: 1px dashed var(--nc-border);
+    
+    /* Animación de entrada fluida */
+    animation: fadeInNoContent 0.3s ease-in-out;
+}
+
+/* --- Animación --- */
+@keyframes fadeInNoContent {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

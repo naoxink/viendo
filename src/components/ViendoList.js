@@ -14,6 +14,7 @@ export default {
     },
     template: `
         <div id="series-list" class="grid">
+            <div class="no-content" v-if="!ordenada.length">No estás viendo nada actualmente :(</div>
             <ViendoCard v-for="serie in ordenada" :key="serie.titulo + serie.año" :serie="serie" />
         </div>
     `
