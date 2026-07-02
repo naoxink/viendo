@@ -50,62 +50,60 @@
     --rewatch-badge-text: #eef2ff;
     --warning-bg: #dc2626;
     --warning-text: #fff1f2;
-    --status-container-bg: #0f172a;
-    --status-item-text: #cbd5e1;
+    --status-container-bg: #0f172a1a;
+    --status-item-text: #404347;
     --status-timestamp: #64748b;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #020617;
-        --surface: #111827;
-        --surface-elevated: #172033;
-        --surface-muted: #0f172a;
-        --text: #f8fafc;
-        --text-muted: #94a3b8;
-        --accent: #60a5fa;
-        --accent-soft: rgba(96, 165, 250, 0.16);
-        --accent-strong: #93c5fd;
-        --border: #334155;
-        --border-strong: #475569;
-        --section-border: var(--border);
-        --section-shadow: rgba(2, 6, 23, 0.35);
-        --section-shadow-strong: rgba(2, 6, 23, 0.5);
-        --section-title: var(--text);
-        --section-muted: var(--text-muted);
-        --pill-bg: #1e293b;
-        --pill-text: #cbd5e1;
-        --card-footer-bg: rgba(255, 255, 255, 0.06);
-        --link-bg: rgba(255, 255, 255, 0.08);
-        --link-border: var(--border);
-        --note-bad-bg: #3f1d1d;
-        --note-bad-text: #fca5a5;
-        --note-bad-border: #7f1d1d;
-        --note-medium-bg: #3f2f1d;
-        --note-medium-text: #fbbf24;
-        --note-medium-border: #92400e;
-        --note-good-bg: #12332d;
-        --note-good-text: #5eead4;
-        --note-good-border: #155e75;
-        --cola-content-bg: var(--surface-elevated);
-        --cola-progress-text: #cbd5e1;
-        --badge-slowmode-bg: #d97706;
-        --badge-slowmode-text: #fff7ed;
-        --estreno-bg: rgba(16, 185, 129, 0.15);
-        --estreno-text: #6ee7b7;
-        --final-status-bg: #115e59;
-        --final-status-text: #ecfeff;
-        --pending-card-bg: rgba(96, 165, 250, 0.14);
-        --pending-card-border: var(--accent);
-        --rewatch-badge-bg: #818cf8;
-        --rewatch-badge-border: #6366f1;
-        --rewatch-badge-text: #eef2ff;
-        --warning-bg: #ef4444;
-        --warning-text: #fef2f2;
-        --status-container-bg: #111827;
-        --status-item-text: #e2e8f0;
-        --status-timestamp: #64748b;
-    }
+:root[data-theme="dark"] {
+    --bg: #020617;
+    --surface: #111827;
+    --surface-elevated: #172033;
+    --surface-muted: #0f172a;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-soft: rgba(96, 165, 250, 0.16);
+    --accent-strong: #93c5fd;
+    --border: #334155;
+    --border-strong: #475569;
+    --section-border: var(--border);
+    --section-shadow: rgba(2, 6, 23, 0.35);
+    --section-shadow-strong: rgba(2, 6, 23, 0.5);
+    --section-title: var(--text);
+    --section-muted: var(--text-muted);
+    --pill-bg: #1e293b;
+    --pill-text: #cbd5e1;
+    --card-footer-bg: rgba(255, 255, 255, 0.06);
+    --link-bg: rgba(255, 255, 255, 0.08);
+    --link-border: var(--border);
+    --note-bad-bg: #3f1d1d;
+    --note-bad-text: #fca5a5;
+    --note-bad-border: #7f1d1d;
+    --note-medium-bg: #3f2f1d;
+    --note-medium-text: #fbbf24;
+    --note-medium-border: #92400e;
+    --note-good-bg: #12332d;
+    --note-good-text: #5eead4;
+    --note-good-border: #155e75;
+    --cola-content-bg: var(--surface-elevated);
+    --cola-progress-text: #cbd5e1;
+    --badge-slowmode-bg: #d97706;
+    --badge-slowmode-text: #fff7ed;
+    --estreno-bg: rgba(16, 185, 129, 0.15);
+    --estreno-text: #6ee7b7;
+    --final-status-bg: #115e59;
+    --final-status-text: #ecfeff;
+    --pending-card-bg: rgba(96, 165, 250, 0.14);
+    --pending-card-border: var(--accent);
+    --rewatch-badge-bg: #818cf8;
+    --rewatch-badge-border: #6366f1;
+    --rewatch-badge-text: #eef2ff;
+    --warning-bg: #ef4444;
+    --warning-text: #fef2f2;
+    --status-container-bg: #111827;
+    --status-item-text: #e2e8f0;
+    --status-timestamp: #64748b;
 }
 
 body {
@@ -116,6 +114,33 @@ body {
     padding: 1.5rem 1.5rem;
     display: flex;
     justify-content: center;
+}
+
+.theme-selector {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+}
+
+.theme-selector label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.theme-selector select {
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.theme-selector select:focus {
+    border-color: var(--accent);
 }
 
 .container {
@@ -589,6 +614,12 @@ summary::after {
         padding-left: 1rem;
         padding-right: 1rem;
     }
+
+
+    .theme-selector {
+        display: none;
+    }
+
     .badge-rewatch {
         margin-left: 0;
         display: table; /* Para que baje a una línea propia si el título es largo */
@@ -1109,7 +1140,7 @@ summary::after {
 
 /* Botón para abrir el calendario en el Dashboard */
 .btn-trigger-calendario {
-  background-color: var(--bg-card);
+  background-color: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
   padding: 1rem;
