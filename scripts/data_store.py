@@ -17,12 +17,19 @@ def get_project_root(base_dir=None) -> Path:
     return path
 
 
-def load_data(base_dir=None) -> Dict[str, List[dict]]:
+def get_data_dir(base_dir=None) -> Path:
     root = get_project_root(base_dir)
+    data_dir = root / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    return data_dir
+
+
+def load_data(base_dir=None) -> Dict[str, List[dict]]:
+    data_dir = get_data_dir(base_dir)
     data = {key: [] for key in DATA_KEYS}
 
     for key in DATA_KEYS:
-        file_path = root / f"{key}.json"
+        file_path = data_dir / f"{key}.json"
         if file_path.exists():
             with file_path.open("r", encoding="utf-8") as handle:
                 loaded = json.load(handle)
@@ -32,7 +39,7 @@ def load_data(base_dir=None) -> Dict[str, List[dict]]:
 
 
 def save_data(data, base_dir=None) -> Path:
-    root = get_project_root(base_dir)
+    data_dir = get_data_dir(base_dir)
     normalized = {key: [] for key in DATA_KEYS}
 
     if isinstance(data, dict):
@@ -41,8 +48,8 @@ def save_data(data, base_dir=None) -> Path:
             normalized[key] = value if isinstance(value, list) else []
 
     for key in DATA_KEYS:
-        file_path = root / f"{key}.json"
+        file_path = data_dir / f"{key}.json"
         with file_path.open("w", encoding="utf-8") as handle:
             json.dump(normalized[key], handle, indent=2, ensure_ascii=False)
 
-    return root / f"{DATA_KEYS[0]}.json"
+    return data_dir / f"{DATA_KEYS[0]}.json"

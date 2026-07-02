@@ -1,44 +1,110 @@
 :root {
-    --bg: #ffffff;
-    --text: #1a1a1a;
-    --text-muted: #666666;
-    --accent: #0070f3;
-    --border: #f0f0f0;
-    --cola-border: #f0f0f0;
-    --accent-cola: goldenrod;
-    --cola-text: #1e293b; /* Texto oscuro para tema claro */
-    --cola-count-bg: #e2e8f0;
-    --cola-count-text: #475569;
-    --cola-content-bg: transparent; /* Fondo transparente por defecto */
-    --cola-content-border: #cbd5e1;
-    --cola-progress-text: #64748b;
-    --badge-slowmode-bg: #e8a23d;
-    --badge-slowmode-text: #ffffff;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface-elevated: #f8fafc;
+    --surface-muted: #f8fafc;
+    --text: #1f2937;
+    --text-muted: #64748b;
+    --accent: #2563eb;
+    --accent-soft: rgba(37, 99, 235, 0.08);
+    --accent-strong: #1d4ed8;
+    --border: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --section-border: var(--border);
+    --section-shadow: rgba(15, 23, 42, 0.06);
+    --section-shadow-strong: rgba(15, 23, 42, 0.12);
+    --section-title: var(--text);
+    --section-muted: var(--text-muted);
+    --pill-bg: var(--surface-elevated);
+    --pill-text: var(--text-muted);
+    --card-footer-bg: rgba(15, 23, 42, 0.04);
+    --link-bg: rgba(15, 23, 42, 0.06);
+    --link-border: var(--border);
+    --note-bad-bg: #fef2f2;
+    --note-bad-text: #dc2626;
+    --note-bad-border: #fecaca;
+    --note-medium-bg: #fffbeb;
+    --note-medium-text: #d97706;
+    --note-medium-border: #fde68a;
+    --note-good-bg: #ecfdf5;
+    --note-good-text: #059669;
+    --note-good-border: #a7f3d0;
+    --cola-border: var(--section-border);
+    --accent-cola: var(--accent);
+    --cola-text: var(--section-title);
+    --cola-count-bg: var(--pill-bg);
+    --cola-count-text: var(--pill-text);
+    --cola-content-bg: var(--surface-muted);
+    --cola-content-border: var(--border);
+    --cola-progress-text: var(--text-muted);
+    --badge-slowmode-bg: #f59e0b;
+    --badge-slowmode-text: #fff7ed;
     --estreno-bg: rgba(39, 174, 96, 0.15);
     --estreno-text: #256a41;
-    --final-status-bg: cadetblue;
-    --final-status-text: white;
+    --final-status-bg: #0f766e;
+    --final-status-text: #f0fdfa;
+    --pending-card-bg: var(--accent-soft);
+    --pending-card-border: var(--accent);
+    --rewatch-badge-bg: #6366f1;
+    --rewatch-badge-border: #4f46e5;
+    --rewatch-badge-text: #eef2ff;
+    --warning-bg: #dc2626;
+    --warning-text: #fff1f2;
+    --status-container-bg: #0f172a;
+    --status-item-text: #cbd5e1;
+    --status-timestamp: #64748b;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg: #000000;
-        --text: #eaeaea;
-        --text-muted: #888888;
-        --border: #333333;
-        --accent: #0070f3;
-        --cola-text: #f8fafc; /* Texto claro para tema oscuro */
-        --cola-count-bg: #475569;
-        --cola-count-text: #cbd5e1;
-        --cola-content-bg: transparent; /* Ojo: si prefieres fondo oscuro aquí, pon #0f172a */
-        --cola-content-border: #334155;
-        --cola-progress-text: #94a3b8;
-        --badge-slowmode-bg: #b8782a;
-        --badge-slowmode-text: #fff3e0;
+        --bg: #020617;
+        --surface: #111827;
+        --surface-elevated: #172033;
+        --surface-muted: #0f172a;
+        --text: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent: #60a5fa;
+        --accent-soft: rgba(96, 165, 250, 0.16);
+        --accent-strong: #93c5fd;
+        --border: #334155;
+        --border-strong: #475569;
+        --section-border: var(--border);
+        --section-shadow: rgba(2, 6, 23, 0.35);
+        --section-shadow-strong: rgba(2, 6, 23, 0.5);
+        --section-title: var(--text);
+        --section-muted: var(--text-muted);
+        --pill-bg: #1e293b;
+        --pill-text: #cbd5e1;
+        --card-footer-bg: rgba(255, 255, 255, 0.06);
+        --link-bg: rgba(255, 255, 255, 0.08);
+        --link-border: var(--border);
+        --note-bad-bg: #3f1d1d;
+        --note-bad-text: #fca5a5;
+        --note-bad-border: #7f1d1d;
+        --note-medium-bg: #3f2f1d;
+        --note-medium-text: #fbbf24;
+        --note-medium-border: #92400e;
+        --note-good-bg: #12332d;
+        --note-good-text: #5eead4;
+        --note-good-border: #155e75;
+        --cola-content-bg: var(--surface-elevated);
+        --cola-progress-text: #cbd5e1;
+        --badge-slowmode-bg: #d97706;
+        --badge-slowmode-text: #fff7ed;
         --estreno-bg: rgba(16, 185, 129, 0.15);
         --estreno-text: #6ee7b7;
-        --final-status-bg: darkslategrey;
-        --final-status-text: white;
+        --final-status-bg: #115e59;
+        --final-status-text: #ecfeff;
+        --pending-card-bg: rgba(96, 165, 250, 0.14);
+        --pending-card-border: var(--accent);
+        --rewatch-badge-bg: #818cf8;
+        --rewatch-badge-border: #6366f1;
+        --rewatch-badge-text: #eef2ff;
+        --warning-bg: #ef4444;
+        --warning-text: #fef2f2;
+        --status-container-bg: #111827;
+        --status-item-text: #e2e8f0;
+        --status-timestamp: #64748b;
     }
 }
 
@@ -56,6 +122,20 @@ body {
     width: 100%;
     max-width: 460px;
     box-sizing: border-box;
+}
+
+.dashboard-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.dashboard-top,
+.dashboard-main,
+.history-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 h1 {
@@ -108,7 +188,7 @@ h1 {
     align-items: center;
     justify-content: flex-start;
     padding: .3rem;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--card-footer-bg);
 }
 
 .serie-card-footer > * {
@@ -144,9 +224,9 @@ h1 {
 .link-imdb {
     text-decoration: none;
     color: var(--text);
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--link-bg);
     font-size: 0.75rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--link-border);
     padding: 2px 8px;
     border-radius: 4px;
     transition: all 0.2s;
@@ -188,29 +268,21 @@ h1 {
 
 /* Colores para las notas */
 .nota-tag.bad {
-    background: #ffeded;
-    color: #ff4d4d;
-    border: 1px solid #ffcccc;
+    background: var(--note-bad-bg);
+    color: var(--note-bad-text);
+    border: 1px solid var(--note-bad-border);
 }
 
 .nota-tag.medium {
-    background: #fff5e6;
-    color: #f5a623;
-    border: 1px solid #ffe0b3;
+    background: var(--note-medium-bg);
+    color: var(--note-medium-text);
+    border: 1px solid var(--note-medium-border);
 }
 
 .nota-tag.good {
-    background: #e6fffa;
-    color: #38b2ac;
-    border: 1px solid #b2f5ea;
-}
-
-/* Ajuste para modo oscuro */
-@media (prefers-color-scheme: dark) {
-    .nota-tag.bad { background: #442a2a; color: #ff8080; border: none; }
-    .nota-tag.medium { background: #443a2a; color: #ffb347; border: none; }
-    .nota-tag.good { background: #234e52; color: #81e6d9; border: none; }
-    .serie-card-footer { background-color: rgba(255, 255, 255, 0.1); }
+    background: var(--note-good-bg);
+    color: var(--note-good-text);
+    border: 1px solid var(--note-good-border);
 }
 
 /* Añade esto a tu style.css */
@@ -242,14 +314,14 @@ h1 {
 
 /* Específico Pendiente (Azul) */
 .badge-pendiente {
-    background-color: #ebf5ff;
-    color: #0070f3;
+    background-color: var(--accent-soft);
+    color: var(--accent-strong);
 }
 
 /* Específico Visto (Verde) */
 .badge-visto {
-    background-color: #e6fffa;
-    color: #38b2ac;
+    background-color: var(--note-good-bg);
+    color: var(--note-good-text);
 }
 
 .badge-slowmode {
@@ -280,17 +352,7 @@ h1 {
     color:var(--final-status-text);
 }
 
-/* Modo Oscuro */
-@media (prefers-color-scheme: dark) {
-    .badge-visto {
-        background-color: #1a2e2c;
-        color: #81e6d9;
-    }
-    .badge-pendiente {
-        background-color: #1e1e1e;
-        color: #70baff;
-    }
-}
+
 
 /* Estilo para las series vistas (más discretas) */
 .serie-card:has(.badge-visto) {
@@ -301,61 +363,58 @@ h1 {
 /* Estilo para las series pendientes (bloques individuales) */
 .serie-card:has(.badge-pendiente) {
     opacity: 1;
-    background-color: rgba(0, 112, 243, 0.03); /* Un azul casi invisible */
-    border-left: 4px solid var(--accent);
-    border-bottom: 1px solid transparent; /* Quitamos la línea divisoria común */
-    margin-bottom: 5px; /* ESTO crea la separación entre bloques */
-    border-radius: 0 8px 8px 0; /* Suaviza las esquinas derechas */
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.02); /* Sombra muy sutil */
+    background-color: var(--pending-card-bg);
+    border-left: 4px solid var(--pending-card-border);
+    border-bottom: 1px solid transparent;
+    margin-bottom: 5px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 10px var(--section-shadow);
 }
 
 .serie-card-body:has(.badge-pendiente) {
-    padding: 1rem; /* Más aire interno */
-}
-
-/* Ajuste para el modo oscuro */
-@media (prefers-color-scheme: dark) {
-    .serie-card:has(.badge-pendiente) {
-        background-color: rgba(0, 112, 243, 0.1);
-        box-shadow: none;
-    }
+    padding: 1rem;
 }
 
 
 /* --- SECCIONES DEL HISTÓRICO --- */
-.año-section {
-    margin-bottom: 1.5rem; /* Separación entre bloques de años */
-    border: 1px solid var(--border);
+.año-section,
+.cola-section,
+.stats-panel,
+.dropped-section {
+    margin-bottom: 1rem;
+    border: 1px solid var(--section-border);
     border-radius: 12px;
-    background: var(--bg);
+    background: var(--surface);
     overflow: hidden;
-    transition: all 0.3s ease;
+    box-shadow: var(--section-shadow);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Estado cuando está abierto */
-.año-section[open] {
+.año-section[open],
+.cola-section[open],
+.stats-panel[open] {
     border-color: var(--accent);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: var(--section-shadow-strong);
 }
 
-/* Cabecera del acordeón */
 summary {
-    padding: 1.2rem;
+    padding: 1.1rem 1.2rem;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 600;
+    color: var(--section-title);
     user-select: none;
     list-style: none;
 }
 
-summary::-webkit-details-marker { display: none; } /* Quitar flecha Safari */
+summary::-webkit-details-marker { display: none; }
 
 summary::after {
     content: "→";
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--section-muted);
     transition: transform 0.3s;
 }
 
@@ -365,13 +424,11 @@ summary::after {
     transform: rotate(90deg);
 }
 
-/* Contenedor de las series dentro del acordeón */
 .año-content {
     padding: 0.5rem;
     border-top: 1px solid var(--border);
 }
 
-/* Ajuste de las cards dentro del histórico para que no se peguen */
 .año-content .serie-card {
     border-bottom: 1px solid var(--border);
 }
@@ -384,13 +441,12 @@ summary::after {
     border-bottom: none;
 }
 
-/* Estilo para las etiquetas de cantidad */
 .count {
     font-size: 0.7rem;
-    background: var(--border);
+    background: var(--pill-bg);
     padding: 3px 10px;
     border-radius: 20px;
-    color: var(--text-muted);
+    color: var(--pill-text);
     margin-right: 10px;
 }
 
@@ -453,6 +509,47 @@ summary::after {
     text-align: right;
 }
 
+@media (min-width: 1024px) {
+    body {
+        padding: 2rem;
+    }
+
+    .container {
+        max-width: 1400px;
+    }
+
+    .dashboard-top {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+        gap: 1.25rem;
+        align-items: start;
+    }
+
+    .dashboard-main {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+        gap: 1.25rem;
+        align-items: start;
+    }
+
+    .dashboard-primary,
+    .dashboard-sidebar,
+    .history-panel {
+        min-width: 0;
+    }
+
+    .history-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+        gap: 1.25rem;
+        align-items: start;
+    }
+
+    .history-title {
+        margin-top: 0;
+    }
+}
+
 .original-year {
     font-size: 0.8rem;
     opacity: 0.5;
@@ -512,9 +609,9 @@ summary::after {
 
 /* El acordeón de dropeadas */
 .dropped-section {
-    background: var(--bg-card); /* O un gris más oscuro si estás en modo oscuro */
-    border: 1px dashed #cccccc; /* Línea discontinua para dar sensación de "descarte" */
-    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--section-border);
+    border-radius: 12px;
 }
 
 .dropped-section summary {
@@ -523,7 +620,7 @@ summary::after {
     display: flex;
     justify-content: space-between;
     font-weight: 500;
-    color: #888888; /* Texto gris */
+    color: var(--section-muted);
 }
 
 /* Tarjetas individuales de series dropeadas */
@@ -562,13 +659,13 @@ summary::after {
     margin-top: 0;
     margin-bottom: 0;
     font-size: 0.8rem;
-    color: #256a41; /* Verde oscuro para buen contraste */
-    background-color: rgba(39, 174, 96, 0.15); /* Fondo verde translúcido */
+    color: var(--estreno-text);
+    background-color: var(--estreno-bg);
     padding: 1px 4px;
     border-radius: 6px;
     display: inline-flex;
     align-items: center;
-    border: 1px solid rgba(39, 174, 96, 0.3); /* Borde sutil */
+    border: 1px solid color-mix(in srgb, var(--estreno-text) 25%, transparent);
 }
 
 .next-air strong {
@@ -576,18 +673,9 @@ summary::after {
     margin-left: 4px;
 }
 
-/* Si tu web tiene modo oscuro, puedes añadir esto para que no deslumbre */
-@media (prefers-color-scheme: dark) {
-    .next-air {
-        color: #6ee7b7; /* Verde menta claro */
-        background-color: rgba(16, 185, 129, 0.15);
-        border-color: rgba(16, 185, 129, 0.3);
-    }
-}
-
 .badge-warning {
-    background-color: #e63946;
-    color: white;
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
     font-size: 0.7rem;
     padding: 2px 6px;
     border-radius: 4px;
@@ -610,27 +698,28 @@ summary::after {
    SECCIÓN EN COLA (BACKLOG)
    ========================================================================== */
 .cola-section {
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--cola-border);
-    transition: all 0.2s ease;
+    background: var(--surface);
+    box-shadow: var(--section-shadow);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cola-section[open] {
     border-color: var(--accent-cola);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: var(--section-shadow-strong);
 }
 
 .cola-section summary {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 1.2rem;
     cursor: pointer;
     font-weight: 600;
     color: var(--cola-text);
     user-select: none;
-    transition: background-color 0.2s ease;
 }
 
 .cola-section:hover {
@@ -639,7 +728,7 @@ summary::after {
 
 /* Contenedor desplegable */
 .cola-content {
-    background-color: var(--cola-content-bg); 
+    background-color: var(--cola-content-bg);
     border-top: 1px solid var(--cola-content-border);
     padding: .5rem;
 }
@@ -654,7 +743,7 @@ summary::after {
 .serie-en-cola {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin-bottom: .5rem;
-    background-color: transparent; /* Sin color de fondo */
+    background-color: transparent;
 }
 
 .serie-en-cola .serie-card-body {
@@ -690,7 +779,7 @@ summary::after {
     display: flex;
     gap: 1.5rem;
     padding: 0.5rem 1rem;
-    background-color: #1e293b;
+    background-color: var(--status-container-bg);
     border-radius: 6px;
     font-size: 0.65rem;
     align-items: center;
@@ -701,7 +790,7 @@ summary::after {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #cbd5e1;
+    color: var(--status-item-text);
 }
 
 .status-dot {
@@ -722,7 +811,7 @@ summary::after {
 }
 
 .status-container .timestamp {
-    color: #64748b;
+    color: var(--status-timestamp);
 }
 
 /* ==========================================================================
@@ -1033,7 +1122,6 @@ summary::after {
   align-items: center;
   gap: 8px;
   width: 100%;
-  margin-top: 2rem;
   margin-bottom: 1rem;
 }
 

@@ -318,5 +318,5 @@ if __name__ == "__main__":
         # para que devuelva 'True' si envió el mensaje a Telegram, y recógelo aquí:
         # hizo_notificacion = actualizar_fechas(args.apikey)
         
-        with open('status.json', 'w', encoding='utf-8') as f:
+        with open(os.path.join(BASE_DIR, 'data', 'status.json'), 'w', encoding='utf-8') as f:
             json.dump(status_data, f, indent=2, ensure_ascii=False)

@@ -30,27 +30,40 @@ export default {
     },
     template: `
         <main class="container">
-            <StatusDashboard :status="status" />
-            <StatsBar v-if="data" :viendo="viendo" :completadas="completadas" :ano-actual="añoActual" />
+            <div class="dashboard-shell">
+                <div class="dashboard-top">
+                    <StatusDashboard :status="status" />
+                    <StatsBar v-if="data" :viendo="viendo" :completadas="completadas" :ano-actual="añoActual" />
+                </div>
 
-            <h1>📺 Viendo actualmente</h1>
-            <p v-if="loading">Cargando series...</p>
-            <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
-            <ViendoList v-else :series="viendo" />
+                <div class="dashboard-main">
+                    <section class="dashboard-primary">
+                        <h1>📺 Viendo actualmente</h1>
+                        <p v-if="loading">Cargando series...</p>
+                        <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
+                        <ViendoList v-else :series="viendo" />
 
-            <div class="last-update progress"><small>Actualizado el </small><small class="date">{{ lastUpdate }}</small></div>
+                        <div class="last-update progress"><small>Actualizado el </small><small class="date">{{ lastUpdate }}</small></div>
+                    </section>
 
-            <CalendarioEstrenos :series="[...viendo, ...enCola]"></CalendarioEstrenos>
-            <StatsPanel v-if="data" :viendo="viendo" :en-cola="enCola" :dropeadas="dropeadas" :completadas="completadas" :ano-actual="añoActual" />
-            <EnColaList :series="enCola" />
+                    <aside class="dashboard-sidebar">
+                        <StatsPanel v-if="data" :viendo="viendo" :en-cola="enCola" :dropeadas="dropeadas" :completadas="completadas" :ano-actual="añoActual" />
+                        <EnColaList :series="enCola" />
+                        <CalendarioEstrenos :series="[...viendo, ...enCola]"></CalendarioEstrenos>
+                    </aside>
+                </div>
 
-            <h1 class="history-title">✅ Completadas</h1>
-            <div class="search-wrapper">
-                <input type="search" id="history-search" v-model="searchTerm" placeholder="Buscar en el histórico...">
+                <section class="history-panel">
+                    <h1 class="history-title">✅ Completadas</h1>
+                    <div class="search-wrapper">
+                        <input type="search" id="history-search" v-model="searchTerm" placeholder="Buscar en el histórico...">
+                    </div>
+                    <div class="history-grid">
+                        <HistoricoList :completadas="completadas" :ano-actual="añoActual" :search-term="searchTerm" />
+                        <DropeadasList :series="dropeadas" :search-term="searchTerm" />
+                    </div>
+                </section>
             </div>
-            <HistoricoList :completadas="completadas" :ano-actual="añoActual" :search-term="searchTerm" />
-
-            <DropeadasList :series="dropeadas" :search-term="searchTerm" />
         </main>
     `
 }

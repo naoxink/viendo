@@ -17,10 +17,10 @@ export function useSeriesData() {
     async function loadData() {
         try {
             const [viendo, enCola, dropeadas, completadas] = await Promise.all([
-                fetch('viendo.json').then(res => res.json()),
-                fetch('en_cola.json').then(res => res.json()),
-                fetch('dropeadas.json').then(res => res.json()),
-                fetch('completadas.json').then(res => res.json())
+                fetch('data/viendo.json').then(res => res.json()),
+                fetch('data/en_cola.json').then(res => res.json()),
+                fetch('data/dropeadas.json').then(res => res.json()),
+                fetch('data/completadas.json').then(res => res.json())
             ])
 
             data.value = {
@@ -37,7 +37,7 @@ export function useSeriesData() {
 
     async function loadStatus() {
         try {
-            const res = await fetch('status.json')
+            const res = await fetch('data/status.json')
             status.value = await res.json()
         } catch (e) {
             // No es un error real: el archivo de estado puede no existir aún.
@@ -48,7 +48,7 @@ export function useSeriesData() {
 
     async function loadLastUpdate() {
         try {
-            const files = ['viendo.json', 'en_cola.json', 'dropeadas.json', 'completadas.json']
+            const files = ['data/viendo.json', 'data/en_cola.json', 'data/dropeadas.json', 'data/completadas.json']
             const responses = await Promise.all(files.map(file => fetch(file, { method: 'HEAD' })))
             const lastModified = responses
                 .map(res => res.headers.get('Last-Modified'))
