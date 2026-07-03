@@ -8,9 +8,9 @@ export default {
     },
     setup(props) {
         const scriptClase = computed(() => (props.status?.script_ok ? 'status-success' : 'status-error'))
-        const scriptTexto = computed(() => (props.status?.script_ok ? 'Sincronizado' : 'Error'))
+        const scriptTexto = computed(() => (props.status?.script_ok ? 'Sinc.' : 'Error'))
         const notifTexto = computed(() =>
-            props.status?.notificacion_enviada ? '🔔 Notificación enviada hoy' : '🔕 Sin cambios notificados'
+            props.status?.notificacion_enviada ? '🔔 Enviado' : '🔕 No enviado'
         )
         const ultimaEjecucion = computed(() => formatearFecha(props.status?.ultima_ejecucion))
 
@@ -20,13 +20,13 @@ export default {
         <div v-if="status" id="status-dashboard" class="status-container">
             <div class="status-item">
                 <span class="status-dot" :class="scriptClase"></span>
-                <span>Script: {{ scriptTexto }}</span>
+                <span>{{ scriptTexto }}</span>
             </div>
             <div class="status-item text-muted">
                 <span>{{ notifTexto }}</span>
             </div>
             <div class="status-item timestamp">
-                Refrescado: {{ ultimaEjecucion }}
+                ▶️ {{ ultimaEjecucion }}
             </div>
         </div>
     `

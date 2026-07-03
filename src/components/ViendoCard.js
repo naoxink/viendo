@@ -41,7 +41,7 @@ export default {
                 <p v-if="serie.proximaFecha" class="next-air">
                     📅 <strong>{{ proximaFechaTexto }}</strong>
                 </p>
-                <button class="details-btn" type="button" @click="abrirDetalles" aria-label="Ver detalles de la serie">Detalles</button>
+                <button class="details-btn" type="button" @click="abrirDetalles" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">ℹ</button>
             </div>
             <SerieDetailsModal :serie="serie" :visible="mostrarDetalles" @close="cerrarDetalles" />
         </div>
