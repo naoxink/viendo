@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 if __package__ in {None, ""}:
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from scripts.data_store import load_data, save_data
+from scripts.data_store import get_data_dir, load_data, save_data
 
 # CONFIGURACIÓN
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -376,5 +376,7 @@ if __name__ == "__main__":
         # para que devuelva 'True' si envió el mensaje a Telegram, y recógelo aquí:
         # hizo_notificacion = actualizar_fechas(args.apikey)
         
-        with open(os.path.join(BASE_DIR, 'data', 'status.json'), 'w', encoding='utf-8') as f:
+        status_path = get_data_dir(BASE_DIR) / 'status.json'
+        status_path.parent.mkdir(parents=True, exist_ok=True)
+        with status_path.open('w', encoding='utf-8') as f:
             json.dump(status_data, f, indent=2, ensure_ascii=False)
