@@ -74,6 +74,11 @@ export default {
     clasePorEstado(serie) {
       if (serie.capitulo === 1) return 'estado-por-empezar'; 
       else return 'estado-viendo';
+    },
+    numeroCapitulo(serie) {
+      if (serie.pendiente && serie.capitulo === 1) return `T${serie.temporada} · E${serie.capitulo}`
+      else if (serie.acumulados) return `T${serie.temporada} · E${serie.capitulo + serie.acumulados + 1}`
+      return `T${serie.temporada} · E${serie.capitulo + 1}`
     }
   },
   template: `
@@ -117,7 +122,7 @@ export default {
                     :class="clasePorEstado(serie)"
                     :title="serie.nombre || serie.titulo || 'Serie'"
                   >
-                    <span class="chip-text">📺 {{ serie.nombre || serie.titulo || serie.title }}</span>
+                    <span class="chip-text">📺 {{ serie.nombre || serie.titulo || serie.title }}<br>{{ numeroCapitulo(serie) }}</span>
                   </div>
                 </div>
               </div>

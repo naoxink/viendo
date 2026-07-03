@@ -3,11 +3,12 @@ import PosterThumb from './shared/PosterThumb.js'
 import LinksFooter from './shared/LinksFooter.js'
 import RewatchBadge from './shared/RewatchBadge.js'
 import FinalStatusBadge from './shared/FinalStatusBadge.js'
+import SerieDetailsModal from './shared/SerieDetailsModal.js'
 import { cardBgStyle, getNotaClass } from '../utils/format.js'
 
 export default {
     name: 'HistoricoCard',
-    components: { PosterThumb, LinksFooter, RewatchBadge, FinalStatusBadge },
+    components: { PosterThumb, LinksFooter, RewatchBadge, FinalStatusBadge, SerieDetailsModal },
     props: {
         serie: { type: Object, required: true }
     },
@@ -32,7 +33,9 @@ export default {
                 <LinksFooter :serie="serie" />
                 <RewatchBadge :serie="serie" />
                 <FinalStatusBadge :serie="serie" />
+                <button class="details-btn" type="button" @click="abrirDetalles" aria-label="Ver detalles de la serie">Detalles</button>
             </div>
+            <SerieDetailsModal :serie="serie" :visible="mostrarDetalles" @close="cerrarDetalles" />
         </div>
     `
 }

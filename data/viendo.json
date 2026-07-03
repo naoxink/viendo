@@ -29,7 +29,9 @@
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/403245/posters/64432dea72673.jpg",
     "poster_path": "posters/403245_Silo.jpg",
-    "proximaFecha": "2026-07-10"
+    "proximaFecha": "2026-07-10",
+    "notas": "Probando las notas, wtf, esto es nuevo.",
+    "estado_final": ""
   },
   {
     "titulo": "The Wire",
@@ -48,5 +50,21 @@
     "vistoEn": 2026,
     "acumulados": 26,
     "slow_mode": true
+  },
+  {
+    "titulo": "Trying (Ciclos)",
+    "imdb_id": "tt10982034",
+    "tvdb_id": 375903,
+    "año": 2020,
+    "vistoEn": 2026,
+    "nota": "7/10",
+    "temporada": 4,
+    "capitulo": 8,
+    "proximaFecha": "2026-07-08",
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/375903/posters/60a4c57394881.jpg",
+    "poster_path": "posters/375903_Trying_Ciclos.jpg",
+    "acumulados": 0,
+    "pendiente": false,
+    "estado_final": ""
   }
 ]

@@ -24,10 +24,10 @@ export function useSeriesData() {
             ])
 
             data.value = {
-                viendo: Array.isArray(viendo) ? viendo : [],
-                en_cola: Array.isArray(enCola) ? enCola : [],
-                dropeadas: Array.isArray(dropeadas) ? dropeadas : [],
-                completadas: Array.isArray(completadas) ? completadas : []
+                viendo: Array.isArray(viendo) ? viendo.map(s => { s.estado = 'viendo'; return s; }) : [],
+                en_cola: Array.isArray(enCola) ? enCola.map(s => { s.estado = 'enCola'; return s; }) : [],
+                dropeadas: Array.isArray(dropeadas) ? dropeadas.map(s => { s.estado = 'dropeada'; return s; }) : [],
+                completadas: Array.isArray(completadas) ? completadas.map(s => { s.estado = 'completada'; return s; }) : []
             }
         } catch (e) {
             console.error('Error cargando los archivos de datos fragmentados:', e)
