@@ -21,14 +21,15 @@
     "año": 2023,
     "vistoEn": 2026,
     "temporada": 3,
-    "capitulo": 2,
-    "pendiente": true,
+    "capitulo": 1,
+    "pendiente": false,
     "nota": "7/10",
     "tvdb_id": 403245,
     "imdb_id": "tt14688458",
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/403245/posters/64432dea72673.jpg",
-    "poster_path": "posters/403245_Silo.jpg"
+    "poster_path": "posters/403245_Silo.jpg",
+    "proximaFecha": "2026-07-10"
   },
   {
     "titulo": "The Wire",
