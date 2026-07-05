@@ -604,7 +604,7 @@ summary::after {
     border: 1px solid #3a3c96; /* Un color violeta/índigo */
     color: white;
     font-size: 0.7rem;
-    padding: 2px 8px;
+    padding: 2px 4px;
     border-radius: 4px;
     font-weight: 600;
     display: inline-flex;

@@ -1,5 +1,20 @@
 [
   {
+    "titulo": "Prison Break",
+    "temporada": 3,
+    "capitulo": 13,
+    "pendiente": false,
+    "tvdb_id": 360115,
+    "año": 2017,
+    "vistoEn": 2020,
+    "nota": "6/10",
+    "imdb_id": "",
+    "rewatch": true,
+    "veces": 2,
+    "acumulados": 0,
+    "proximaFecha": ""
+  },
+  {
     "titulo": "Halo",
     "tvdb_id": 366524,
     "año": 2022,

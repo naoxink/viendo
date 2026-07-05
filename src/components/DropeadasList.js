@@ -12,7 +12,7 @@ export default {
     setup(props) {
         const term = computed(() => props.searchTerm.trim().toLowerCase())
 
-        const ordenadas = computed(() => [...props.series].sort((a, b) => a.titulo.localeCompare(b.titulo)))
+        const ordenadas = computed(() => [...props.series].sort((a, b) => b.vistoEn - a.vistoEn))
 
         const filtradas = computed(() =>
             term.value ? ordenadas.value.filter((s) => matchesSearch(s, term.value)) : ordenadas.value

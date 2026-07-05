@@ -22,7 +22,7 @@ export default {
             <div class="serie-card-body">
                 <PosterThumb :serie="serie" />
                 <div class="info">
-                    <h2>{{ serie.titulo }} <span class="nota-tag" :class="notaClase">{{ serie.nota }}</span></h2>
+                    <h2>{{ serie.titulo }} <span class="nota-tag" :class="notaClase">{{ serie.nota || '-' }}</span></h2>
                     <p class="progress">
                         Finalizada en <b>{{ serie.vistoEn || serie.año }}</b>
                         <span class="original-year">(Estreno: {{ serie.año }})</span>
