@@ -36,7 +36,7 @@ export default {
                 <LinksFooter :serie="serie" />
                 <RewatchBadge :serie="serie" />
                 <FinalStatusBadge :serie="serie" />
-                <button class="details-btn" type="button" @click="abrirDetalles" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">ℹ</button>
+                <button class="details-btn" type="button" @click="abrirDetalles" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">?</button>
             </div>
             <SerieDetailsModal :serie="serie" :visible="mostrarDetalles" @close="cerrarDetalles" />
         </div>
