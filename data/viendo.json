@@ -2,8 +2,8 @@
   {
     "titulo": "Rick & Morty",
     "temporada": 9,
-    "capitulo": 6,
-    "pendiente": false,
+    "capitulo": 7,
+    "pendiente": true,
     "tvdb_id": 275274,
     "año": 2013,
     "vistoEn": 2026,
@@ -13,8 +13,7 @@
     "veces": 3,
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/posters/275274-2.jpg",
-    "poster_path": "posters/275274_Rick_Morty.jpg",
-    "proximaFecha": "2026-07-05"
+    "poster_path": "posters/275274_Rick_Morty.jpg"
   },
   {
     "titulo": "Silo",
