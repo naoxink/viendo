@@ -1,21 +1,19 @@
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useSeriesData } from '../composables/useSeriesData.js'
-import StatusDashboard from './StatusDashboard.js'
-import StatsBar from './StatsBar.js'
-import StatsPanel from './StatsPanel.js'
-import ViendoList from './ViendoList.js'
-import HistoricoList from './HistoricoList.js'
-import EnColaList from './EnColaList.js'
-import DropeadasList from './DropeadasList.js'
-import CalendarioEstrenos from './CalendarioEstrenos.js'
+import BottomNav from './BottomNav.js'
+import ViewViendo from './views/ViewViendo.js'
+import ViewEnCola from './views/ViewEnCola.js'
+import ViewCompletadas from './views/ViewCompletadas.js'
+import ViewStats from './views/ViewStats.js'
 
 export default {
     name: 'App',
-    components: { StatusDashboard, StatsBar, StatsPanel, ViendoList, HistoricoList, EnColaList, DropeadasList, CalendarioEstrenos },
+    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
         const searchTerm = ref('')
         const themePreference = ref('auto')
+        const activeView = ref('viendo')
 
         const applyTheme = (preference = themePreference.value) => {
             const resolvedTheme = preference === 'auto'
@@ -40,8 +38,12 @@ export default {
                 if (storedTheme === 'auto' || storedTheme === 'light' || storedTheme === 'dark') {
                     themePreference.value = storedTheme
                 }
+                const storedView = localStorage.getItem('viendo-active-view')
+                if (storedView && ['viendo', 'en-cola', 'completadas', 'stats'].includes(storedView)) {
+                    activeView.value = storedView
+                }
             } catch (error) {
-                console.warn('No se pudo leer el tema guardado:', error)
+                console.warn('No se pudo leer las preferencias guardadas:', error)
             }
 
             applyTheme(themePreference.value)
@@ -64,6 +66,14 @@ export default {
             applyTheme(value)
         })
 
+        watch(activeView, (value) => {
+            try {
+                localStorage.setItem('viendo-active-view', value)
+            } catch (error) {
+                console.warn('No se pudo guardar la vista activa:', error)
+            }
+        })
+
         const viendo = computed(() => data.value?.viendo ?? [])
         const completadas = computed(() => data.value?.completadas ?? [])
         const dropeadas = computed(() => data.value?.dropeadas ?? [])
@@ -71,11 +81,11 @@ export default {
 
         return {
             data, status, lastUpdate, loading, error, añoActual,
-            searchTerm, themePreference, viendo, completadas, dropeadas, enCola
+            searchTerm, themePreference, activeView, viendo, completadas, dropeadas, enCola
         }
     },
     template: `
-        <main class="container">
+        <main class="app-container">
             <div class="theme-selector">
                 <label for="theme-select">Tema</label>
                 <select id="theme-select" v-model="themePreference">
@@ -85,40 +95,52 @@ export default {
                 </select>
             </div>
 
-            <div class="dashboard-shell">
-                <div class="dashboard-top">
-                    <StatusDashboard :status="status" />
-                    <StatsBar v-if="data" :viendo="viendo" :completadas="completadas" :ano-actual="añoActual" />
-                </div>
-
-                <div class="dashboard-main">
-                    <section class="dashboard-primary">
-                        <h1>📺 Viendo actualmente</h1>
-                        <p v-if="loading">Cargando series...</p>
-                        <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
-                        <ViendoList v-else :series="viendo" />
-
-                        <div class="last-update progress"><small>Actualizado el </small><small class="date">{{ lastUpdate }}</small></div>
-                    </section>
-
-                    <aside class="dashboard-sidebar">
-                        <StatsPanel v-if="data" :viendo="viendo" :en-cola="enCola" :dropeadas="dropeadas" :completadas="completadas" :ano-actual="añoActual" />
-                        <EnColaList :series="enCola" />
-                        <CalendarioEstrenos :series="[...viendo, ...enCola]"></CalendarioEstrenos>
-                    </aside>
-                </div>
-
-                <section class="history-panel">
-                    <h1 class="history-title">✅ Completadas</h1>
-                    <div class="search-wrapper">
-                        <input type="search" id="history-search" v-model="searchTerm" placeholder="Buscar en el histórico...">
-                    </div>
-                    <div class="history-grid">
-                        <HistoricoList :completadas="completadas" :ano-actual="añoActual" :search-term="searchTerm" />
-                        <DropeadasList :series="dropeadas" :search-term="searchTerm" />
-                    </div>
-                </section>
+            <div class="views-container">
+                <ViewViendo 
+                    v-if="activeView === 'viendo'"
+                    :viendo="viendo"
+                    :status="status"
+                    :last-update="lastUpdate"
+                    :loading="loading"
+                    :error="error"
+                    :data="data"
+                    :completadas="completadas"
+                    :año-actual="añoActual"
+                />
+                
+                <ViewEnCola 
+                    v-if="activeView === 'en-cola'"
+                    :en-cola="enCola"
+                    :viendo="viendo"
+                    :loading="loading"
+                    :error="error"
+                />
+                
+                <ViewCompletadas 
+                    v-if="activeView === 'completadas'"
+                    :completadas="completadas"
+                    :dropeadas="dropeadas"
+                    :loading="loading"
+                    :error="error"
+                    :search-term="searchTerm"
+                    @update:search-term="searchTerm = $event"
+                    :año-actual="añoActual"
+                />
+                
+                <ViewStats 
+                    v-if="activeView === 'stats'"
+                    :viendo="viendo"
+                    :completadas="completadas"
+                    :dropeadas="dropeadas"
+                    :en-cola="enCola"
+                    :data="data"
+                    :loading="loading"
+                    :error="error"
+                    :año-actual="añoActual"
+                />
             </div>
+
+            <BottomNav :active-view="activeView" @change-view="activeView = $event" />
         </main>
     `
 }
