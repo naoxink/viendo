@@ -117,12 +117,22 @@
     box-sizing: border-box;
 }
 
+/*
+ * REGLA DE ORO PARA EVITAR EL DOBLE SCROLL:
+ * html y body NUNCA scrollean. Usamos 100dvh (viewport dinámico) en vez de
+ * 100% / 100vh para que coincida exactamente con .app-container, incluso
+ * cuando la barra de direcciones del móvil aparece/desaparece.
+ * El ÚNICO elemento que puede hacer scroll vertical en toda la página es
+ * .views-container (ver más abajo). Si en el futuro se añade otro
+ * overflow-y: auto/scroll en un contenedor que envuelva a .app-container,
+ * volverá el problema del doble scroll.
+ */
 html, body {
     width: 100%;
     max-width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
     -webkit-text-size-adjust: 100%;
 }
 
@@ -131,13 +141,6 @@ body {
     background-color: var(--bg);
     color: var(--text);
     margin: 0;
-    /* Use safe-area insets for notch devices (iPhone X and similar) */
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    padding-left: calc(1.5rem + env(safe-area-inset-left));
-    padding-right: calc(1.5rem + env(safe-area-inset-right));
-    display: flex;
-    justify-content: center;
 }
 
 .theme-selector {
@@ -608,6 +611,9 @@ summary::after {
     text-align: right;
 }
 
+/* ==========================================================================
+   ESCRITORIO GRANDE (≥ 1024px) — layout del dashboard en columnas
+   ========================================================================== */
 @media (min-width: 1024px) {
     body {
         padding: 2rem;
@@ -682,13 +688,8 @@ summary::after {
     border-radius: 4px;
 }
 
-/* Ajuste para que en el móvil no se amontone */
+/* MÓVIL PEQUEÑO (< 480px) — Ajuste para que no se amontone */
 @media (max-width: 480px) {
-    body {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
     .theme-selector {
         display: none;
     }
@@ -954,6 +955,7 @@ summary::after {
     text-decoration: none;
 }
 
+/* MÓVIL — Modal de detalles (< 640px): apilamos la ficha en una columna */
 @media (max-width: 640px) {
     .details-sheet {
         grid-template-columns: 1fr;
@@ -972,9 +974,7 @@ summary::after {
     .details-field-value {
         text-align: left;
     }
-}
 
-@media (max-width: 640px) {
     .details-grid {
         grid-template-columns: 1fr;
     }
@@ -1154,6 +1154,7 @@ summary::after {
     padding-top: 1rem;
 }
 
+/* MÓVIL PEQUEÑO (< 480px) — KPIs en 2 columnas en vez de 4 */
 @media (max-width: 480px) {
     .stats-kpi-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1246,6 +1247,7 @@ summary::after {
     min-width: 0;
 }
 
+/* MÓVIL PEQUEÑO (< 480px) — las dos columnas de stats pasan a apilarse */
 @media (max-width: 480px) {
     .stats-section--split {
         grid-template-columns: 1fr;
@@ -1476,10 +1478,9 @@ summary::after {
 /* Fondo oscuro filtrado */
 .cal-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
   background-color: color-mix(in srgb, var(--bg) 85%, transparent);
   backdrop-filter: blur(6px);
   z-index: 9999;
@@ -1569,7 +1570,7 @@ summary::after {
   }
 
   .cal-modal-content {
-    height: 100vh;
+    height: 100dvh;
     border-radius: 0;
     border: none;
   }
@@ -1677,14 +1678,13 @@ summary::after {
     -webkit-overflow-scrolling: touch;
     padding: 1.5rem;
     padding-bottom: 5rem;
-    margin: 0 auto;
     box-sizing: border-box;
 }
 
 .view {
     width: 100%;
     max-width: 460px;
-    min-width: 385px;
+    min-width: 0;
     margin: 0 auto;
     box-sizing: border-box;
     animation: fadeInView 0.3s ease-in-out;
@@ -1812,17 +1812,18 @@ summary::after {
 /* ==========================================
    MEDIA QUERIES: RESPONSIVE BOTTOM NAV
    ========================================== */
+/* ==========================================================================
+   MÓVIL (por defecto hasta 768px)
+   El contenido ocupa el 100% del ancho; el "aire" en los bordes lo da
+   el padding de .views-container (1.5rem), no un max-width fijo.
+   ========================================================================== */
 @media (max-width: 768px) {
-    body {
-        padding: 0;
-    }
-
     .container {
         max-width: 100%;
     }
 
     .app-container {
-        height: 100vh;
+        height: 100dvh;
     }
 
     .views-container {
@@ -1830,8 +1831,8 @@ summary::after {
         padding-bottom: calc(5rem + env(safe-area-inset-bottom));
     }
 
-    .view.view-stats {
-        max-width: 90%;
+    .view {
+        max-width: 100%;
     }
 
     .bottom-nav {
@@ -1845,7 +1846,24 @@ summary::after {
     }
 }
 
+/* ==========================================================================
+   TABLET / ESCRITORIO (a partir de 769px)
+   Aquí sí queremos un ancho de lectura cómodo, no que ocupe toda la pantalla.
+   ========================================================================== */
+
 @media (min-width: 769px) {
+    /*
+     * En escritorio abandonamos el patrón "app-shell" (viewport fijo +
+     * scroll interno) y volvemos al scroll normal de página: por eso
+     * html/body pasan a height:auto y overflow visible. El único scroll
+     * en desktop es el de la propia ventana.
+     */
+    html, body {
+        height: auto;
+        min-height: 100dvh;
+        overflow: visible;
+    }
+
     body {
         padding: 1.5rem;
     }
@@ -1857,6 +1875,7 @@ summary::after {
     }
 
     .views-container {
+        overflow-y: visible;
         padding-bottom: 6rem;
     }
 
