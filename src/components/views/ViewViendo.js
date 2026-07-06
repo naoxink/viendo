@@ -19,7 +19,6 @@ export default {
         <div class="view view-viendo">
             <div class="view-header">
                 <StatusDashboard :status="status" />
-                <StatsBar v-if="data" :viendo="viendo" :completadas="completadas" :ano-actual="añoActual" />
             </div>
 
             <section class="view-content">

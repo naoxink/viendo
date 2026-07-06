@@ -18,8 +18,9 @@ export default {
             <section class="view-content">
                 <h1>✅ Completadas y dropeadas</h1>
                 <div class="search-wrapper">
-                    <input 
-                        type="search" 
+                    <input
+                        type="search"
+                        id="history-search"
                         v-model="searchTerm"
                         @input="$emit('update:searchTerm', $event.target.value)"
                         placeholder="Buscar en el histórico..."

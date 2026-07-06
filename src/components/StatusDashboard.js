@@ -20,13 +20,10 @@ export default {
         <div v-if="status" id="status-dashboard" class="status-container">
             <div class="status-item">
                 <span class="status-dot" :class="scriptClase"></span>
-                <span>{{ scriptTexto }}</span>
+                <span class="text-muted timestamp">{{ ultimaEjecucion }}</span>
             </div>
             <div class="status-item text-muted">
                 <span>{{ notifTexto }}</span>
-            </div>
-            <div class="status-item timestamp">
-                ▶️ {{ ultimaEjecucion }}
             </div>
         </div>
     `

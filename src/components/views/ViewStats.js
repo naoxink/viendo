@@ -19,12 +19,12 @@ export default {
                 <h1>📊 Estadísticas</h1>
                 <p v-if="loading">Cargando estadísticas...</p>
                 <p v-else-if="error">No se ha podido cargar los datos. Revisa la consola para más detalles.</p>
-                <StatsPanel 
+                <StatsPanel
                     v-else
-                    :viendo="viendo" 
-                    :en-cola="enCola" 
-                    :dropeadas="dropeadas" 
-                    :completadas="completadas" 
+                    :viendo="viendo"
+                    :en-cola="enCola"
+                    :dropeadas="dropeadas"
+                    :completadas="completadas"
                     :ano-actual="añoActual"
                 />
             </section>

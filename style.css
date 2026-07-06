@@ -186,6 +186,41 @@ h1 {
     margin-bottom: .5rem;
     position: relative;
     border: 1px solid var(--border);
+    background-color: var(--surface) !important;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#en-cola-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-sizing: border-box;
+}
+
+#en-cola-container > h3 {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#en-cola-container .serie-card {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    opacity: .99;
+}
+
+.serie-card {
+    overflow: hidden;
+    margin-bottom: .5rem;
+    position: relative;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .serie-card::before {
@@ -241,10 +276,6 @@ h1 {
     border-radius: 6px;
     flex-shrink: 0;
     background: var(--border);
-}
-
-.info {
-    flex: 1;
 }
 
 .info h2 {
@@ -401,7 +432,7 @@ h1 {
 
 /* Estilo para las series pendientes (bloques individuales) */
 .serie-card:has(.badge-pendiente) {
-    opacity: 1;
+    opacity: .99;
     background-color: var(--pending-card-bg);
     border-left: 4px solid var(--pending-card-border);
     border-bottom: 1px solid transparent;
@@ -435,7 +466,18 @@ h1 {
     box-shadow: var(--section-shadow-strong);
 }
 
+details,
+.año-section,
+.cola-section,
+.stats-panel,
+.dropped-section {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 summary {
+    width: 100%;
     padding: 1.1rem 1.2rem;
     cursor: pointer;
     display: flex;
@@ -445,6 +487,7 @@ summary {
     color: var(--section-title);
     user-select: none;
     list-style: none;
+    box-sizing: border-box;
 }
 
 summary::-webkit-details-marker { display: none; }
@@ -670,15 +713,27 @@ summary::after {
 .serie-card-dropped {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background-color: var(--surface-elevated);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.serie-card-dropped:last-child {
+    margin-bottom: 0;
 }
 
 .serie-card-dropped h3 {
     margin: 0;
     font-size: 1rem;
     color: #666666;
+    line-height: 1.2;
 }
 
 .dropped-meta {
@@ -1135,11 +1190,50 @@ summary::after {
     min-width: 0;
 }
 
-.stats-rank-list li {
-    overflow-wrap: anywhere;
+.stats-rank-list {
+    list-style: none;
+    counter-reset: stats-rank;
+    min-width: 0;
+    padding-left: 0;
+    margin: 0;
 }
 
-.stats-rank-list {
+.stats-rank-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    counter-increment: stats-rank;
+    position: relative;
+    padding: 0.4rem 0;
+    color: var(--text);
+}
+
+.stats-rank-list li::before {
+    content: counter(stats-rank) ".";
+    color: var(--text-muted);
+    min-width: 1.4rem;
+    text-align: right;
+    margin-right: 0.75rem;
+}
+
+.stats-rank-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.stats-rank-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.stats-rank-leader {
+    flex: 1;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.22);
     min-width: 0;
 }
 
@@ -1570,14 +1664,38 @@ summary::after {
     overflow-x: hidden;
     padding: 1.5rem;
     padding-bottom: 5rem;
-    max-width: 460px;
+    width: 460px;
     margin: 0 auto;
-    width: 100%;
     box-sizing: border-box;
 }
 
 .view {
+    width: 100%;
+    max-width: 460px;
+    min-width: 0;
+    margin: 0 auto;
+    box-sizing: border-box;
     animation: fadeInView 0.3s ease-in-out;
+}
+
+.view-content,
+.view .view-content,
+.view-content > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.view section,
+.view div,
+.view article,
+.view header,
+.view footer {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 @keyframes fadeInView {

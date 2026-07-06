@@ -21,7 +21,7 @@ export default {
         return { bgStyle, proximaFechaTexto, mostrarDetalles, abrirDetalles, cerrarDetalles }
     },
     template: `
-        <div class="serie-card serie-en-cola" :style="bgStyle">
+        <div class="serie-card" :style="bgStyle">
             <div class="serie-card-body">
                 <PosterThumb :serie="serie" />
                 <div class="info">
