@@ -7,7 +7,7 @@ export default {
         series: { type: Array, default: () => [] }
     },
     template: `
-        <div id="en-cola-container">
+        <div id="series-list" class="grid">
             <h3>⏳ En Cola / Pendientes <span class="count">{{ series.length }} series</span></h3>
             <EnColaCard v-for="serie in series" :key="serie.titulo" :serie="serie" />
         </div>

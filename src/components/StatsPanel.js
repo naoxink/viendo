@@ -160,6 +160,7 @@ export default {
             <div style="padding: 0.85rem 1.2rem 0.25rem;">
                 <span class="stats-section-title">{{ totalTrackeadas }} series</span>
             </div>
+
             <div class="stats-panel-content">
 
             <div class="stats-kpi-grid">
@@ -229,7 +230,11 @@ export default {
                     <h3 class="stats-section-title">Más revisitadas</h3>
                     <ol class="stats-rank-list">
                         <li v-for="s in masRevisitadas" :key="s.titulo">
-                            {{ s.titulo }} <span class="badge-rewatch">x{{ s.veces }}</span>
+                            <span class="stats-rank-inner">
+                                <span class="stats-rank-title">{{ s.titulo }}</span>
+                                <span class="stats-rank-leader"></span>
+                            </span>
+                            <span class="badge-rewatch">x{{ s.veces }}</span>
                         </li>
                     </ol>
                 </div>
