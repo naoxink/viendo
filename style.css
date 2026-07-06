@@ -1809,6 +1809,18 @@ summary::after {
     gap: 1rem;
 }
 
+h4.fecha-separador {
+    background-color: var(--estreno-bg);
+    padding: .5rem;
+    margin-bottom: 0;
+    color: var(--estreno-text);
+    border-radius: .5rem .5rem 0 0;
+}
+
+.fecha-group:first-child > h4.fecha-separador {
+    margin-top: 0;
+}
+
 /* ==========================================
    MEDIA QUERIES: RESPONSIVE BOTTOM NAV
    ========================================== */
