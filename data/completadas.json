@@ -26,7 +26,14 @@
     "tvdb_id": 401003,
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/401003/posters/6415dbaec770c.jpg",
-    "poster_path": "posters/401003_From.jpg"
+    "poster_path": "posters/401003_From.jpg",
+    "duracionMedia": 51,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10
+    }
   },
   {
     "titulo": "Severance",
@@ -40,7 +47,12 @@
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/371980/posters/621096b26f0e2.jpg",
     "poster_path": "posters/371980_Severance.jpg",
-    "nota": "8.5/10"
+    "nota": "8.5/10",
+    "duracionMedia": 49,
+    "capitulosPorTemporada": {
+      "1": 9,
+      "2": 10
+    }
   },
   {
     "titulo": "Widow's Bay",
@@ -54,7 +66,11 @@
     "imdb_id": "tt33332385",
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/454109/posters/69d1a63ba34e6.jpg",
-    "poster_path": "posters/454109_Widow_s_Bay.jpg"
+    "poster_path": "posters/454109_Widow_s_Bay.jpg",
+    "duracionMedia": 38,
+    "capitulosPorTemporada": {
+      "1": 10
+    }
   },
   {
     "titulo": "Machos Alfa",
@@ -68,7 +84,15 @@
     "tvdb_id": 417478,
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/417478/posters/63b824a00c2cd.jpg",
-    "poster_path": "posters/417478_Machos_Alfa.jpg"
+    "poster_path": "posters/417478_Machos_Alfa.jpg",
+    "duracionMedia": 35,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 6,
+      "5": 6
+    }
   },
   {
     "titulo": "Barrio Esperanza",
@@ -80,7 +104,11 @@
     "imdb_id": "tt37439565",
     "tvdb_id": 476159,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/476159/posters/69e398474e94b.jpg",
-    "poster_path": "posters/476159_Barrio_Esperanza.jpg"
+    "poster_path": "posters/476159_Barrio_Esperanza.jpg",
+    "duracionMedia": 76,
+    "capitulosPorTemporada": {
+      "1": 8
+    }
   },
   {
     "titulo": "Margo tiene problemas de dinero",
@@ -95,7 +123,11 @@
     "proximaFecha": "TBA",
     "nota": "07/10",
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/445651/posters/69aecbd28602c.jpg",
-    "poster_path": "posters/445651_Margo_tiene_problemas_de_dinero.jpg"
+    "poster_path": "posters/445651_Margo_tiene_problemas_de_dinero.jpg",
+    "duracionMedia": 39,
+    "capitulosPorTemporada": {
+      "1": 8
+    }
   },
   {
     "titulo": "Stranger Things: Relatos del 85",
@@ -107,7 +139,11 @@
     "veces": 0,
     "tvdb_id": 462906,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/462906/posters/69de7aadd9a74.jpg",
-    "poster_path": "posters/462906_Stranger_Things_Relatos_del_85.jpg"
+    "poster_path": "posters/462906_Stranger_Things_Relatos_del_85.jpg",
+    "duracionMedia": 29,
+    "capitulosPorTemporada": {
+      "1": 10
+    }
   },
   {
     "titulo": "Pluribus",
@@ -119,7 +155,11 @@
     "veces": 0,
     "tvdb_id": 436457,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/436457/posters/68e7e3997a36a.jpg",
-    "poster_path": "posters/436457_Pluribus.jpg"
+    "poster_path": "posters/436457_Pluribus.jpg",
+    "duracionMedia": 50,
+    "capitulosPorTemporada": {
+      "1": 9
+    }
   },
   {
     "titulo": "Hijack",
@@ -131,7 +171,12 @@
     "veces": 0,
     "tvdb_id": 419254,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/419254/posters/693b2eb546705.jpg",
-    "poster_path": "posters/419254_Hijack.jpg"
+    "poster_path": "posters/419254_Hijack.jpg",
+    "duracionMedia": 47,
+    "capitulosPorTemporada": {
+      "1": 7,
+      "2": 8
+    }
   },
   {
     "titulo": "Stranger Things",
@@ -156,7 +201,26 @@
     "veces": 3,
     "tvdb_id": 82753,
     "image_url": "https://artworks.thetvdb.com/banners/posters/82753-4.jpg",
-    "poster_path": "posters/82753_La_que_se_avecina.jpg"
+    "poster_path": "posters/82753_La_que_se_avecina.jpg",
+    "duracionMedia": 79,
+    "capitulosPorTemporada": {
+      "1": 13,
+      "2": 15,
+      "3": 14,
+      "4": 12,
+      "5": 13,
+      "6": 13,
+      "7": 13,
+      "8": 16,
+      "9": 19,
+      "10": 13,
+      "11": 13,
+      "12": 16,
+      "13": 8,
+      "14": 8,
+      "15": 8,
+      "16": 8
+    }
   },
   {
     "titulo": "Breaking Bad",
@@ -285,7 +349,12 @@
     "veces": 0,
     "tvdb_id": 437173,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/437173/posters/66abf85044ca1.jpg",
-    "poster_path": "posters/437173_Respira.jpg"
+    "poster_path": "posters/437173_Respira.jpg",
+    "duracionMedia": 49,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8
+    }
   },
   {
     "titulo": "Sin gluten",
@@ -297,7 +366,11 @@
     "veces": 0,
     "tvdb_id": 468877,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/468877/posters/68df762655a08.jpg",
-    "poster_path": "posters/468877_Sin_gluten.jpg"
+    "poster_path": "posters/468877_Sin_gluten.jpg",
+    "duracionMedia": 51,
+    "capitulosPorTemporada": {
+      "1": 8
+    }
   },
   {
     "titulo": "La Caza",
@@ -477,7 +550,20 @@
     "rewatch": true,
     "veces": 1,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 25,
+    "capitulosPorTemporada": {
+      "1": 39,
+      "2": 35,
+      "3": 33,
+      "4": 32,
+      "5": 26,
+      "6": 29,
+      "7": 25,
+      "8": 34,
+      "9": 38
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "The Hunt (2019)",
@@ -492,7 +578,15 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 61,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 8,
+      "4": 8
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Generation Kill",
@@ -507,7 +601,12 @@
     "rewatch": true,
     "veces": 3,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 67,
+    "capitulosPorTemporada": {
+      "1": 7
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Spartacus",
@@ -522,7 +621,14 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 60,
+    "capitulosPorTemporada": {
+      "1": 13,
+      "2": 10,
+      "3": 10
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Dark Tourist",
@@ -535,7 +641,12 @@
     "nota": "6/10",
     "imdb_id": "",
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 41,
+    "capitulosPorTemporada": {
+      "1": 8
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "I'm Alive!",
@@ -550,7 +661,15 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 71,
+    "capitulosPorTemporada": {
+      "1": 13,
+      "2": 13,
+      "3": 13,
+      "4": 13
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "The Fresh Prince of Bel-Air",
@@ -565,7 +684,17 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 25,
+    "capitulosPorTemporada": {
+      "1": 25,
+      "2": 24,
+      "3": 24,
+      "4": 26,
+      "5": 25,
+      "6": 24
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "The Tribe",
@@ -578,7 +707,16 @@
     "nota": "5/10",
     "imdb_id": "",
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 25,
+    "capitulosPorTemporada": {
+      "1": 52,
+      "2": 52,
+      "3": 52,
+      "4": 52,
+      "5": 52
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Chernobyl",
@@ -593,7 +731,12 @@
     "rewatch": true,
     "veces": 1,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 65,
+    "capitulosPorTemporada": {
+      "1": 5
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "The Hot Zone",
@@ -608,7 +751,13 @@
     "rewatch": true,
     "veces": 1,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 47,
+    "capitulosPorTemporada": {
+      "1": 6,
+      "2": 6
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Sonic X",
@@ -622,7 +771,14 @@
     "imdb_id": "",
     "rewatch": false,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 25,
+    "capitulosPorTemporada": {
+      "1": 26,
+      "2": 26,
+      "3": 26
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Vikings: Valhalla",
@@ -636,7 +792,14 @@
     "imdb_id": "",
     "rewatch": false,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 49,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 8
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "American Gods",
@@ -651,7 +814,14 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 54,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 10
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Misfits",
@@ -666,7 +836,16 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 47,
+    "capitulosPorTemporada": {
+      "1": 6,
+      "2": 7,
+      "3": 8,
+      "4": 8,
+      "5": 8
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Solar Opposites",
@@ -681,7 +860,17 @@
     "rewatch": true,
     "veces": 1,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 23,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 11,
+      "4": 11,
+      "5": 11,
+      "6": 10
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Dragon Ball Super",
@@ -696,7 +885,16 @@
     "rewatch": true,
     "veces": 1,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 25,
+    "capitulosPorTemporada": {
+      "1": 14,
+      "2": 13,
+      "3": 19,
+      "4": 30,
+      "5": 55
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Lost",
@@ -711,7 +909,17 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 45,
+    "capitulosPorTemporada": {
+      "1": 24,
+      "2": 24,
+      "3": 23,
+      "4": 14,
+      "5": 17,
+      "6": 18
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "Ink Master",
@@ -738,7 +946,15 @@
     "imdb_id": "",
     "rewatch": false,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 69,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 13,
+      "3": 13,
+      "4": 8
+    },
+    "estado_final": "Ended"
   },
   {
     "titulo": "La casa de papel",
@@ -753,6 +969,13 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 57,
+    "capitulosPorTemporada": {
+      "1": 15,
+      "2": 16,
+      "3": 10
+    },
+    "estado_final": "Ended"
   }
 ]
