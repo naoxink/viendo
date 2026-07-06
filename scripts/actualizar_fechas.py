@@ -227,8 +227,11 @@ def actualizar_fechas(api_key):
             res_info = requests.get(url_info, headers=headers, timeout=10)
             series_data = res_info.json().get('data', {})
             estado_serie = series_data.get('status', {}).get('name', 'Unknown')
+            serie['duracionMedia'] = series_data.get('averageRuntime') or series_data.get('runtime') or 0
         except (requests.exceptions.RequestException, KeyError, ValueError):
             estado_serie = "Unknown"
+            serie['duracionMedia'] = 0
+
 
         remote_image_url = resolver_url_imagen(series_data.get('image'))
         serie['image_url'] = remote_image_url
@@ -256,7 +259,15 @@ def actualizar_fechas(api_key):
         # Filtrar y ordenar
         valid_eps = [e for e in episodes if e.get('seasonNumber', 0) > 0 and e.get('aired')]
         valid_eps.sort(key=lambda x: (x['seasonNumber'], x['number']))
+
+        caps_por_temporada = {}
+        for ep in valid_eps:
+            temporada_str = str(ep['seasonNumber'])
+            # Sumamos 1 al contador de esa temporada por cada episodio válido encontrado
+            caps_por_temporada[temporada_str] = caps_por_temporada.get(temporada_str, 0) + 1
         
+        serie['capitulosPorTemporada'] = caps_por_temporada
+
         user_s = serie.get('temporada', 1)
         user_e = serie.get('capitulo', 0)
         esta_pendiente = serie.get('pendiente', False)

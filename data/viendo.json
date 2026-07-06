@@ -13,7 +13,20 @@
     "veces": 3,
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/posters/275274-2.jpg",
-    "poster_path": "posters/275274_Rick_Morty.jpg"
+    "poster_path": "posters/275274_Rick_Morty.jpg",
+    "duracionMedia": 22,
+    "capitulosPorTemporada": {
+      "1": 11,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 10,
+      "6": 10,
+      "7": 10,
+      "8": 10,
+      "9": 10
+    },
+    "proximaFecha": "2026-07-12"
   },
   {
     "titulo": "Silo",
@@ -30,7 +43,13 @@
     "poster_path": "posters/403245_Silo.jpg",
     "proximaFecha": "2026-07-10",
     "notas": "Probando las notas, wtf, esto es nuevo.",
-    "estado_final": ""
+    "estado_final": "",
+    "duracionMedia": 50,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 10,
+      "3": 10
+    }
   },
   {
     "titulo": "The Wire",
@@ -48,7 +67,15 @@
     "estado_final": "Ended",
     "vistoEn": 2026,
     "acumulados": 25,
-    "slow_mode": true
+    "slow_mode": true,
+    "duracionMedia": 60,
+    "capitulosPorTemporada": {
+      "1": 13,
+      "2": 12,
+      "3": 12,
+      "4": 13,
+      "5": 10
+    }
   },
   {
     "titulo": "Trying (Ciclos)",
@@ -64,6 +91,14 @@
     "poster_path": "posters/375903_Trying_Ciclos.jpg",
     "acumulados": 0,
     "pendiente": false,
-    "estado_final": ""
+    "estado_final": "",
+    "duracionMedia": 28,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 8,
+      "4": 8,
+      "5": 8
+    }
   }
 ]

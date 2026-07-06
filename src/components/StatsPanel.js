@@ -156,8 +156,11 @@ export default {
         }
     },
     template: `
-        <span class="stats-section-title">{{ totalTrackeadas }} series</span>
-        <div class="stats-panel-content">
+        <div class="stats-panel">
+            <div style="padding: 0.85rem 1.2rem 0.25rem;">
+                <span class="stats-section-title">{{ totalTrackeadas }} series</span>
+            </div>
+            <div class="stats-panel-content">
 
             <div class="stats-kpi-grid">
                 <div class="stats-kpi">
