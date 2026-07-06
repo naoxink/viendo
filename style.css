@@ -210,6 +210,7 @@ h1 {
     background-color: var(--surface) !important;
     width: 100%;
     box-sizing: border-box;
+    opacity: .99;
 }
 
 #en-cola-container {
@@ -231,7 +232,6 @@ h1 {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    opacity: .99;
 }
 
 .serie-card {
