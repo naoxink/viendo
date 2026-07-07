@@ -1743,7 +1743,9 @@ summary::after {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: var(--surface);
+    background-color: color-mix(in srgb, var(--surface), transparent 80%);
+    -webkit-backdrop-filter: blur(10px); /* Safari/iOS */
+    backdrop-filter: blur(10px);         /* Estándar */
     border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-around;
