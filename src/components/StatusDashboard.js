@@ -12,7 +12,16 @@ export default {
         const notifTexto = computed(() =>
             props.status?.notificacion_enviada ? '🔔 Enviado' : '🔕 No enviado'
         )
-        const ultimaEjecucion = computed(() => formatearFecha(props.status?.ultima_ejecucion))
+        const ultimaEjecucion = computed(() => {
+            const hoy = new Date();
+            const hoyLocal = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${String(hoy.getDate()).padStart(2, "0")}`;
+            
+            if (props.status?.ultima_ejecucion.substring(0, 10) === hoyLocal) {
+                return 'Hoy'
+            }
+
+            return formatearFecha(props.status?.ultima_ejecucion)
+        })
 
         return { scriptClase, scriptTexto, notifTexto, ultimaEjecucion }
     },
