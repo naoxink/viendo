@@ -1,8 +1,8 @@
-import EnColaCard from './EnColaCard.js'
+import ProximamenteCard from './ProximamenteCard.js'
 
 export default {
     name: 'ProximamenteList',
-    components: { EnColaCard },
+    components: { ProximamenteCard },
     props: {
         // Objeto tipo { "2026-07-06": [serie1, serie2], "2026-07-07": [serie3] }
         series: { type: Object, default: () => ({}) },
@@ -41,17 +41,19 @@ export default {
             if (diffDias === 0) return 'Hoy';
             if (diffDias === 1) return 'Mañana';
             if (diffDias === -1) return 'Ayer';
-            if (diffDias > 1) return `En ${diffDias} días`;
+            if (diffDias > 1 && diffDias < 7) return `En ${diffDias} días`;
+            if (diffDias >= 7 && diffDias < 30) return `En ${Math.floor(diffDias / 7)} semana${Math.floor(diffDias / 7) > 1 ? 's' : ''}`;
+            if (diffDias >= 30) return `En ${Math.floor(diffDias / 30)} mes${Math.floor(diffDias / 30) > 1 ? 'es' : ''}`;
             return `Hace ${Math.abs(diffDias)} días`;
         }
     },
     template: `
-        <div id="series-list" class="grid">
+        <div id="series-list" class="proximamente-list" class="grid">
             <h3>{{ titulo }} <span class="count">{{ totalSeries }} series</span></h3>
 
             <div v-for="grupo in gruposPorFecha" :key="grupo.fecha" class="fecha-group">
                 <h4 class="fecha-separador">{{ grupo.label }}</h4>
-                <EnColaCard v-for="serie in grupo.series" :key="serie.titulo" :serie="serie" />
+                <ProximamenteCard v-for="serie in grupo.series" :key="serie.titulo" :serie="serie" />
             </div>
         </div>
     `

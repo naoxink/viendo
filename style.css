@@ -211,6 +211,11 @@ h1 {
     width: 100%;
     box-sizing: border-box;
     opacity: .99;
+    border-radius: 10px;
+}
+
+.proximamente-list .fecha-group .serie-card:first-of-type {
+    border-radius: 0 0 10px 10px;
 }
 
 #en-cola-container {
@@ -1817,6 +1822,7 @@ h4.fecha-separador {
     margin-bottom: 0;
     color: var(--estreno-text);
     border-radius: .5rem .5rem 0 0;
+    border: 1px solid var(--estreno-bg);
 }
 
 .fecha-group:first-child > h4.fecha-separador {

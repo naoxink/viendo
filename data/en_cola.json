@@ -8,12 +8,19 @@
     "tvdb_id": 441201,
     "rewatch": false,
     "veces": 0,
-    "temporada": 4,
-    "capitulo": 1,
+    "temporada": 3,
+    "capitulo": 6,
+    "pendiente": false,
     "proximaFecha": "2026-08-07",
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/441201/posters/65f2d24670c1e.jpg",
     "poster_path": "posters/441201_Muertos_S.L._Death_Inc..jpg",
-    "acumulados": 0
+    "acumulados": 0,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 6,
+      "3": 6,
+      "4": 6
+    }
   },
   {
     "titulo": "The Boys",
