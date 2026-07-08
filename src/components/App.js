@@ -6,6 +6,16 @@ import ViewEnCola from './views/ViewEnCola.js'
 import ViewCompletadas from './views/ViewCompletadas.js'
 import ViewStats from './views/ViewStats.js'
 
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('admin_token');
+
+if (token) {
+  sessionStorage.setItem('isAdmin', 'true');
+  sessionStorage.setItem('adminToken', token);
+  // Limpiar la URL para que el token no se quede ahí visible
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
 export default {
     name: 'App',
     components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats },

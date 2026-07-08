@@ -15,6 +15,7 @@ export default {
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
         const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proximaFecha))
+        const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true');
         const mostrarDetalles = ref(false)
         const abrirDetalles = () => { mostrarDetalles.value = true }
         const cerrarDetalles = () => { mostrarDetalles.value = false }
@@ -33,7 +34,24 @@ export default {
                 return (props.serie.capitulo / capsTemporada) * 100;
             }
         });
-        return { bgStyle, proximaFechaTexto, mostrarDetalles, abrirDetalles, cerrarDetalles, progreso }
+        return { bgStyle, proximaFechaTexto, mostrarDetalles, abrirDetalles, cerrarDetalles, progreso, isAdmin }
+    },
+    methods: {
+        async marcarComoVisto(serie) {
+            const token = sessionStorage.getItem('adminToken');
+            await fetch('/api/update', {
+                method: 'POST',
+                headers: {
+                'Authorization': token, // Aquí va el token que desbloqueaste
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    tvdbId: serie.tvdb_id,
+                    temporada: serie.temporada,
+                    capitulo: serie.capitulo
+                })
+            });
+        }
     },
     template: `
         <div class="serie-card" :style="bgStyle">
@@ -48,6 +66,9 @@ export default {
                     </p>
                     <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
                 </div>
+                <button v-if="isAdmin" @click="marcarComoVisto(serie.tvdb)">
+                    ✅ Marcar visto
+                </button>
             </div>
             <div class="serie-card-footer">
                 <LinksFooter :serie="serie" />

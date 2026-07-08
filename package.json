@@ -1,0 +1,6 @@
+{
+  "name": "viendo-api",
+  "dependencies": {
+    "@octokit/rest": "^20.0.0"
+  }
+}

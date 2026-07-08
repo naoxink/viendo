@@ -1,0 +1,32 @@
+import { Octokit } from "@octokit/rest";
+
+export default async function handler(req, res) {
+  if (req.headers['authorization'] !== process.env.ADMIN_TOKEN) return res.status(401).end();
+
+  const { tvdbId, temporada, capitulo } = req.body;
+  const octokit = new Octokit({ auth: process.env.GITHUB_PAT });
+  const path = 'data/viendo.json'; // O el archivo que toque
+
+  try {
+    // 1. Leer archivo actual
+    const { data: fileData } = await octokit.repos.getContent({ owner: 'naoxink', repo: 'viendo', path });
+    const content = JSON.parse(Buffer.from(fileData.content, 'base64').toString());
+
+    // 2. Modificar el JSON
+    const serie = content.find(s => s.tvdb === tvdbId); // Asumiendo que tu JSON usa la clave 'tvdb'
+    if (serie) {
+        serie.temporada_actual = temporada;
+        serie.capitulo_actual = capitulo + 1;
+    }
+
+    // 3. Guardar
+    // await octokit.repos.createOrUpdateFileContents({
+    //   owner: 'naoxink', repo: 'viendo', path,
+    //   message: `Update: ${serieNombre} T${temporada} E${capitulo}`,
+    //   content: Buffer.from(JSON.stringify(content, null, 2)).toString('base64'),
+    //   sha: fileData.sha
+    // });
+
+    res.status(200).json({ success: true, serie });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+}
