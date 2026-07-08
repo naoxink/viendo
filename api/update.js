@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     const content = JSON.parse(Buffer.from(fileData.content, 'base64').toString());
 
     // 2. Modificar el JSON
-    const serie = content.find(s => s.tvdb === tvdbId); // Asumiendo que tu JSON usa la clave 'tvdb'
+    const serie = content.find(s => s.tvdb_id === tvdbId);
     if (serie) {
         // TODO: Calcular temporada, capítulo y pendiente según los capítulos por temporada y la fecha de próximo capítulo
         serie.temporada = temporada;
