@@ -15,8 +15,12 @@ export default async function handler(req, res) {
     // 2. Modificar el JSON
     const serie = content.find(s => s.tvdb === tvdbId); // Asumiendo que tu JSON usa la clave 'tvdb'
     if (serie) {
-        serie.temporada_actual = temporada;
-        serie.capitulo_actual = capitulo + 1;
+        // TODO: Calcular temporada, capítulo y pendiente según los capítulos por temporada y la fecha de próximo capítulo
+        serie.temporada = temporada;
+        serie.capitulo = capitulo + 1;
+        serie.pendiente = true
+    } else {
+        res.status(200).json({ success: false, error: 'Serie no encontrada' })
     }
 
     // 3. Guardar
