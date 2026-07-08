@@ -66,7 +66,7 @@ export default {
                     </p>
                     <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
                 </div>
-                <button v-if="isAdmin" @click="marcarComoVisto(serie.tvdb)">
+                <button v-if="isAdmin" @click="marcarComoVisto(serie)">
                     ✅ Marcar visto
                 </button>
             </div>
