@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import StatBarList from './shared/StatBarList.js'
-import { parseNota, getNotaClass, formatProximaFecha } from '../utils/format.js'
+import { parseNota, getNotaClass, formatProximaFecha, formatNumero, formatDuracion } from '../utils/format.js'
 
 /** A partir de un objeto { clave: cantidad }, genera filas listas para StatBarList */
 function construirBarras(cuentas, formatearEtiqueta) {
@@ -26,7 +26,7 @@ export default {
     methods: {
         getNotaClass(nota) {
             return getNotaClass(nota)
-        }
+        },
     },
     setup(props) {
         const todas = computed(() => [
@@ -58,8 +58,119 @@ export default {
         })
 
         const totalRevisitas = computed(() =>
-            todas.value.reduce((acc, s) => acc + (s.rewatch ? (s.veces || 0) : 0), 0)
-        )
+            todas.value.reduce((acc, s) => {
+                // Si no es rewatch, sumamos 0
+                if (!s.rewatch) return acc;
+
+                // Calculamos el total de capítulos de la serie sumando los valores del objeto
+                const totalCapitulosSerie = s.capitulosPorTemporada 
+                    ? Object.values(s.capitulosPorTemporada).reduce((sum, count) => sum + count, 0)
+                    : 0;
+
+                // Multiplicamos por el número de veces que se ha visto (s.veces)
+                return acc + (totalCapitulosSerie * (s.veces || 1));
+            }, 0)
+        );
+
+        const totalCapitulosVistos = computed(() => {
+            return todas.value.reduce((acc, s) => {
+                // Validación inicial: si no hay estructura de temporadas, no sumamos nada
+                if (!s.capitulosPorTemporada || typeof s.capitulosPorTemporada !== 'object') {
+                    return acc;
+                }
+
+                // 1. Caso Rewatch: sumamos todos los capítulos
+                if (s.rewatch) {
+                    const totalSerie = Object.values(s.capitulosPorTemporada).reduce((a, b) => (a || 0) + (b || 0), 0);
+                    return acc + totalSerie;
+                }
+
+                // 2. Caso Seguimiento activo
+                // Convertimos a número con fallback a 0 si el campo falta o es inválido
+                const tempActual = parseInt(s.temporada) || 0;
+                const capActual = parseInt(s.capitulo) || 0;
+                const esPendiente = !!s.pendiente;
+
+                let vistos = 0;
+
+                // Sumamos temporadas anteriores (desde 1 hasta tempActual - 1)
+                for (let i = 1; i < tempActual; i++) {
+                    const capsEnEstaTemp = parseInt(s.capitulosPorTemporada[i]) || 0;
+                    vistos += capsEnEstaTemp;
+                }
+
+                // Sumamos lo visto en la temporada actual
+                // Si es pendiente, el último capítulo no cuenta (capActual - 1)
+                let vistosEnTempActual = esPendiente ? (capActual - 1) : capActual;
+
+                // Aseguramos que no sea negativo (por si capActual es 0 o 1)
+                vistos += Math.max(0, vistosEnTempActual);
+
+                return acc + vistos;
+            }, 0);
+        });
+
+        const tiempoTotalInvertido = computed(() => {
+            return todas.value.reduce((acc, s) => {
+                // Validación: Necesitamos estructura de temporadas y duración
+                if (!s.capitulosPorTemporada || typeof s.capitulosPorTemporada !== 'object') {
+                    return acc;
+                }
+
+                // Duración media por capítulo (fallback a 30 min si no existe)
+                const duracion = parseInt(s.duracionMedia) || 30;
+
+                // 1. Caso Rewatch: sumamos todos los capítulos * duración
+                if (s.rewatch) {
+                    const totalCaps = Object.values(s.capitulosPorTemporada).reduce((a, b) => (a || 0) + (b || 0), 0);
+                    return acc + (totalCaps * duracion);
+                }
+
+                // 2. Caso Seguimiento activo
+                const tempActual = parseInt(s.temporada) || 0;
+                const capActual = parseInt(s.capitulo) || 0;
+                const esPendiente = !!s.pendiente;
+
+                let totalCapsVistos = 0;
+
+                // Sumar temporadas completas anteriores
+                for (let i = 1; i < tempActual; i++) {
+                    totalCapsVistos += (parseInt(s.capitulosPorTemporada[i]) || 0);
+                }
+
+                // Sumar capítulos temporada actual
+                const vistosEnTempActual = esPendiente ? (capActual - 1) : capActual;
+                totalCapsVistos += Math.max(0, vistosEnTempActual);
+
+                return acc + (totalCapsVistos * duracion);
+            }, 0);
+        });
+
+        const tiempoTotalPendiente = computed(() => {
+            const seriesPendientes = [...props.enCola, ...props.viendo];
+
+            return seriesPendientes.reduce((acc, s) => {
+                if (!s.capitulosPorTemporada) return acc;
+
+                const duracion = parseInt(s.duracionMedia) || 30;
+                const tempActual = parseInt(s.temporada) || 1;
+                const capActual = parseInt(s.capitulo) || 0;
+                
+                // 1. Calcular capítulos restantes en la temporada actual
+                const totalEnTempActual = parseInt(s.capitulosPorTemporada[tempActual]) || 0;
+                const pendientesEnTempActual = Math.max(0, totalEnTempActual - capActual);
+
+                // 2. Calcular capítulos de temporadas futuras
+                const temporadas = Object.keys(s.capitulosPorTemporada).map(Number);
+                const pendientesEnFuturas = temporadas
+                    .filter(t => t > tempActual)
+                    .reduce((sum, t) => sum + parseInt(s.capitulosPorTemporada[t]), 0);
+
+                // 3. Sumar y convertir a tiempo
+                const totalPendientes = pendientesEnTempActual + pendientesEnFuturas;
+                return acc + (totalPendientes * duracion);
+            }, 0);
+        });
 
         const totalAcumulados = computed(() =>
             props.viendo.reduce((acc, s) => acc + (s.acumulados || 0), 0)
@@ -152,7 +263,8 @@ export default {
             mejorValoradas, peorValoradas, distribucionNotas,
             completadasPorAno, decadas,
             masRevisitadas, notaMediaRewatch, notaMediaPrimeraVez,
-            masAtrasadas, proximosEstrenos
+            masAtrasadas, proximosEstrenos, totalCapitulosVistos, tiempoTotalInvertido,
+            tiempoTotalPendiente, formatNumero, formatDuracion
         }
     },
     template: `
@@ -174,13 +286,28 @@ export default {
                 </div>
                 <div class="stats-kpi">
                     <span class="stats-kpi-value">{{ totalRevisitas }}</span>
-                    <span class="stats-kpi-label">Capítulos en rewatch</span>
+                    <span class="stats-kpi-label">Capítulos re-vistos</span>
                 </div>
                 <div class="stats-kpi">
                     <span class="stats-kpi-value">{{ totalAcumulados }}</span>
                     <span class="stats-kpi-label">Episodios acumulados</span>
                 </div>
             </div>
+
+            <ul class="stats-list">
+                <li>
+                    <span class="label">Capítulos vistos</span>
+                    <span class="value">{{ formatNumero(totalCapitulosVistos) }}</span>
+                </li>
+                <li>
+                    <span class="label">Tiempo invertido</span>
+                    <span class="value">{{ formatDuracion(tiempoTotalInvertido) }}</span>
+                </li>
+                <li>
+                    <span class="label">Tiempo de contenido pendiente</span>
+                    <span class="value">{{ formatDuracion(tiempoTotalPendiente) }}</span>
+                </li>
+            </ul>
 
             <div class="stats-section" v-if="distribucionNotas.length">
                 <h3 class="stats-section-title">Distribución de notas</h3>

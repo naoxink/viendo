@@ -18,7 +18,22 @@ export default {
         const mostrarDetalles = ref(false)
         const abrirDetalles = () => { mostrarDetalles.value = true }
         const cerrarDetalles = () => { mostrarDetalles.value = false }
-        return { bgStyle, proximaFechaTexto, mostrarDetalles, abrirDetalles, cerrarDetalles }
+        const progreso = computed(() => {
+            const caps = props.serie.capitulosPorTemporada;
+            if (!caps || Object.keys(caps).length === 0) return 0;
+
+            if (props.serie.rewatch) {
+                // Progreso de toda la serie
+                const totalCaps = Object.values(caps).reduce((a, b) => a + b, 0);
+                // Asumimos que necesitas trackear el capítulo global actual
+                return (props.serie.capitulo / totalCaps) * 100;
+            } else {
+                // Progreso de la temporada actual
+                const capsTemporada = caps[props.serie.temporada] || 1;
+                return (props.serie.capitulo / capsTemporada) * 100;
+            }
+        });
+        return { bgStyle, proximaFechaTexto, mostrarDetalles, abrirDetalles, cerrarDetalles, progreso }
     },
     template: `
         <div class="serie-card" :style="bgStyle">
@@ -44,6 +59,9 @@ export default {
                 <button class="details-btn" type="button" @click="abrirDetalles" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">?</button>
             </div>
             <SerieDetailsModal :serie="serie" :visible="mostrarDetalles" @close="cerrarDetalles" />
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" :style="{ width: progreso + '%' }"></div>
+            </div>
         </div>
     `
 }
