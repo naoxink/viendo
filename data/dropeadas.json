@@ -12,7 +12,18 @@
     "rewatch": true,
     "veces": 2,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 45,
+    "capitulosPorTemporada": {
+      "1": 22,
+      "2": 22,
+      "3": 13,
+      "4": 22,
+      "5": 9
+    },
+    "estado_final": true,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/5c9e0957ce5be.jpg",
+    "poster_path": "posters/360115_Prison_Break.jpg"
   },
   {
     "titulo": "Halo",
@@ -24,7 +35,13 @@
     "pendiente": true,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/366524/posters/621558d61fc2d.jpg",
     "poster_path": "posters/366524_Halo.jpg",
-    "acumulados": 13
+    "acumulados": 13,
+    "duracionMedia": 52,
+    "capitulosPorTemporada": {
+      "1": 9,
+      "2": 8
+    },
+    "estado_final": true
   },
   {
     "titulo": "Paradise",
@@ -37,7 +54,13 @@
     "pendiente": true,
     "acumulados": 13,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/454565/posters/6768b8f58e0fa.jpg",
-    "poster_path": "posters/454565_Paradise.jpg"
+    "poster_path": "posters/454565_Paradise.jpg",
+    "duracionMedia": 52,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8
+    },
+    "estado_final": false
   },
   {
     "titulo": "Euphoria",
@@ -83,7 +106,18 @@
     "rewatch": false,
     "veces": 0,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 26,
+    "capitulosPorTemporada": {
+      "1": 26,
+      "2": 7,
+      "3": 11,
+      "4": 11,
+      "5": 8
+    },
+    "estado_final": true,
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/348545/posters/60908d475f49a.jpg",
+    "poster_path": "posters/348545_Demon_Slayer_Kimetsu_no_Yaiba.jpg"
   },
   {
     "titulo": "Girls",
@@ -98,7 +132,19 @@
     "rewatch": false,
     "veces": 0,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 30,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 10,
+      "3": 12,
+      "4": 10,
+      "5": 10,
+      "6": 10
+    },
+    "estado_final": true,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/220411-7.jpg",
+    "poster_path": "posters/220411_Girls.jpg"
   },
   {
     "titulo": "Next Level Chef (ES)",
@@ -143,7 +189,23 @@
     "rewatch": false,
     "veces": 0,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 43,
+    "capitulosPorTemporada": {
+      "1": 22,
+      "2": 22,
+      "3": 23,
+      "4": 22,
+      "5": 22,
+      "6": 22,
+      "7": 19,
+      "8": 22,
+      "9": 22,
+      "10": 22
+    },
+    "estado_final": true,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/6401e88074c96.jpg",
+    "poster_path": "posters/266189_The_Blacklist.jpg"
   },
   {
     "titulo": "Barry",
@@ -158,7 +220,17 @@
     "rewatch": false,
     "veces": 0,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 30,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 8,
+      "4": 8
+    },
+    "estado_final": true,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/333072-3.jpg",
+    "poster_path": "posters/333072_Barry.jpg"
   },
   {
     "titulo": "The Walking Dead",
@@ -173,7 +245,24 @@
     "rewatch": false,
     "veces": 0,
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 46,
+    "capitulosPorTemporada": {
+      "1": 6,
+      "2": 13,
+      "3": 16,
+      "4": 16,
+      "5": 16,
+      "6": 16,
+      "7": 16,
+      "8": 16,
+      "9": 16,
+      "10": 22,
+      "11": 24
+    },
+    "estado_final": true,
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/153021/posters/60fd8577d1a96.jpg",
+    "poster_path": "posters/153021_The_Walking_Dead.jpg"
   },
   {
     "titulo": "House of David",
@@ -201,6 +290,15 @@
     "nota": "",
     "imdb_id": "",
     "acumulados": 0,
-    "proximaFecha": ""
+    "proximaFecha": "",
+    "duracionMedia": 53,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 8
+    },
+    "estado_final": true,
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/361565/posters/61126bd10a396.jpg",
+    "poster_path": "posters/361565_See.jpg"
   }
 ]

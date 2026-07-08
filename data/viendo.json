@@ -26,7 +26,8 @@
       "8": 10,
       "9": 10
     },
-    "proximaFecha": "2026-07-12"
+    "proximaFecha": "2026-07-12",
+    "estado_final": false
   },
   {
     "titulo": "Silo",

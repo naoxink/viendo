@@ -12,7 +12,15 @@
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/403294/posters/62cb2fad70271.jpg",
     "poster_path": "posters/403294_The_Bear.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 35,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 8
+    }
   },
   {
     "titulo": "From",
@@ -33,7 +41,8 @@
       "2": 10,
       "3": 10,
       "4": 10
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Severance",
@@ -52,7 +61,8 @@
     "capitulosPorTemporada": {
       "1": 9,
       "2": 10
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Widow's Bay",
@@ -70,7 +80,8 @@
     "duracionMedia": 38,
     "capitulosPorTemporada": {
       "1": 10
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Machos Alfa",
@@ -92,7 +103,8 @@
       "3": 10,
       "4": 6,
       "5": 6
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Barrio Esperanza",
@@ -108,7 +120,8 @@
     "duracionMedia": 76,
     "capitulosPorTemporada": {
       "1": 8
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Margo tiene problemas de dinero",
@@ -127,7 +140,8 @@
     "duracionMedia": 39,
     "capitulosPorTemporada": {
       "1": 8
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Stranger Things: Relatos del 85",
@@ -143,7 +157,8 @@
     "duracionMedia": 29,
     "capitulosPorTemporada": {
       "1": 10
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Pluribus",
@@ -159,7 +174,8 @@
     "duracionMedia": 50,
     "capitulosPorTemporada": {
       "1": 9
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Hijack",
@@ -176,7 +192,8 @@
     "capitulosPorTemporada": {
       "1": 7,
       "2": 8
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Stranger Things",
@@ -189,7 +206,15 @@
     "tvdb_id": 305288,
     "image_url": "https://artworks.thetvdb.com/banners/posters/305288-4.jpg",
     "poster_path": "posters/305288_Stranger_Things.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 65,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 9,
+      "3": 8,
+      "4": 9,
+      "5": 8
+    }
   },
   {
     "titulo": "La que se avecina",
@@ -220,7 +245,8 @@
       "14": 8,
       "15": 8,
       "16": 8
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Breaking Bad",
@@ -233,7 +259,15 @@
     "image_url": "https://artworks.thetvdb.com/banners/posters/81189-10.jpg",
     "poster_path": "posters/81189_Breaking_Bad.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2019
+    "vistoEn": 2019,
+    "duracionMedia": 48,
+    "capitulosPorTemporada": {
+      "1": 7,
+      "2": 13,
+      "3": 13,
+      "4": 13,
+      "5": 16
+    }
   },
   {
     "titulo": "Better Call Saul",
@@ -246,7 +280,16 @@
     "tvdb_id": 273181,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/273181/posters/625dca9d408d4.jpg",
     "poster_path": "posters/273181_Better_Call_Saul.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 50,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 10,
+      "6": 13
+    }
   },
   {
     "titulo": "Vikings",
@@ -259,7 +302,16 @@
     "image_url": "https://artworks.thetvdb.com/banners/posters/260449-3.jpg",
     "poster_path": "posters/260449_Vikings.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2020
+    "vistoEn": 2020,
+    "duracionMedia": 46,
+    "capitulosPorTemporada": {
+      "1": 9,
+      "2": 10,
+      "3": 10,
+      "4": 20,
+      "5": 20,
+      "6": 20
+    }
   },
   {
     "titulo": "Mr. Robot",
@@ -272,7 +324,14 @@
     "image_url": "https://artworks.thetvdb.com/banners/posters/289590-12.jpg",
     "poster_path": "posters/289590_Mr._Robot.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2022
+    "vistoEn": 2022,
+    "duracionMedia": 50,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 12,
+      "3": 10,
+      "4": 13
+    }
   },
   {
     "titulo": "Dexter",
@@ -285,7 +344,18 @@
     "image_url": "https://artworks.thetvdb.com/banners/posters/79349-2.jpg",
     "poster_path": "posters/79349_Dexter.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2025
+    "vistoEn": 2025,
+    "duracionMedia": 53,
+    "capitulosPorTemporada": {
+      "1": 12,
+      "2": 12,
+      "3": 12,
+      "4": 12,
+      "5": 12,
+      "6": 12,
+      "7": 12,
+      "8": 12
+    }
   },
   {
     "titulo": "Apagón",
@@ -298,7 +368,11 @@
     "tvdb_id": 412401,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/412401/posters/63237db5b0cb5.jpg",
     "poster_path": "posters/412401_Apag_n.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 45,
+    "capitulosPorTemporada": {
+      "1": 5
+    }
   },
   {
     "titulo": "Dead Set",
@@ -311,7 +385,11 @@
     "tvdb_id": 83427,
     "image_url": "https://artworks.thetvdb.com/banners/posters/83427-2.jpg",
     "poster_path": "posters/83427_Dead_Set.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 27,
+    "capitulosPorTemporada": {
+      "1": 5
+    }
   },
   {
     "titulo": "Antidisturbios",
@@ -324,7 +402,11 @@
     "image_url": "https://artworks.thetvdb.com/banners/series/377307/posters/5f9773ea9067c.jpg",
     "poster_path": "posters/377307_Antidisturbios.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2023
+    "vistoEn": 2023,
+    "duracionMedia": 52,
+    "capitulosPorTemporada": {
+      "1": 6
+    }
   },
   {
     "titulo": "Spartacus",
@@ -337,7 +419,13 @@
     "image_url": "https://artworks.thetvdb.com/banners/posters/129261-11.jpg",
     "poster_path": "posters/129261_Spartacus.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2022
+    "vistoEn": 2022,
+    "duracionMedia": 60,
+    "capitulosPorTemporada": {
+      "1": 13,
+      "2": 10,
+      "3": 10
+    }
   },
   {
     "titulo": "Respira",
@@ -354,7 +442,8 @@
     "capitulosPorTemporada": {
       "1": 8,
       "2": 8
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "Sin gluten",
@@ -370,7 +459,8 @@
     "duracionMedia": 51,
     "capitulosPorTemporada": {
       "1": 8
-    }
+    },
+    "estado_final": false
   },
   {
     "titulo": "La Caza",
@@ -383,7 +473,14 @@
     "tvdb_id": 356952,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/356952/posters/64371a3a77459.jpg",
     "poster_path": "posters/356952_La_Caza.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 61,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 8,
+      "4": 8
+    }
   },
   {
     "titulo": "Bel-Air",
@@ -396,7 +493,14 @@
     "tvdb_id": 388151,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/388151/posters/690f7c4eab718.jpg",
     "poster_path": "posters/388151_Bel-Air.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 48,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 8
+    }
   },
   {
     "titulo": "Boots",
@@ -409,7 +513,11 @@
     "tvdb_id": 434473,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/434473/posters/68e28477a7753.jpg",
     "poster_path": "posters/434473_Boots.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 43,
+    "capitulosPorTemporada": {
+      "1": 8
+    }
   },
   {
     "titulo": "Solar Opposites",
@@ -422,7 +530,16 @@
     "tvdb_id": 375892,
     "image_url": "https://artworks.thetvdb.com/banners/series/375892/posters/6012f8c994922.jpg",
     "poster_path": "posters/375892_Solar_Opposites.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 23,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 11,
+      "4": 11,
+      "5": 11,
+      "6": 10
+    }
   },
   {
     "titulo": "Upload",
@@ -435,7 +552,14 @@
     "image_url": "https://artworks.thetvdb.com/banners/series/368211/posters/5ed2cb98d3f6b.jpg",
     "poster_path": "posters/368211_Upload.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2024
+    "vistoEn": 2024,
+    "duracionMedia": 33,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 7,
+      "3": 8,
+      "4": 4
+    }
   },
   {
     "titulo": "El refugio atómico",
@@ -448,7 +572,11 @@
     "tvdb_id": 454715,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/454715/posters/68d55c5be13ba.jpg",
     "poster_path": "posters/454715_El_refugio_at_mico.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 55,
+    "capitulosPorTemporada": {
+      "1": 8
+    }
   },
   {
     "titulo": "El juego del calamar",
@@ -461,7 +589,13 @@
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/383275/posters/6151351c5420c.jpg",
     "poster_path": "posters/383275_El_juego_del_calamar.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2024
+    "vistoEn": 2024,
+    "duracionMedia": 59,
+    "capitulosPorTemporada": {
+      "1": 9,
+      "2": 7,
+      "3": 6
+    }
   },
   {
     "titulo": "Motorheads",
@@ -474,7 +608,11 @@
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/450314/posters/681bd9815031d.jpg",
     "poster_path": "posters/450314_Motorheads.jpg",
     "estado_final": "Ended",
-    "vistoEn": 2024
+    "vistoEn": 2024,
+    "duracionMedia": 52,
+    "capitulosPorTemporada": {
+      "1": 10
+    }
   },
   {
     "titulo": "Entrepreneurs",
@@ -487,7 +625,11 @@
     "tvdb_id": 467341,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/467341/posters/68b0591adf8b8.jpg",
     "poster_path": "posters/467341_Entrepreneurs.jpg",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 28,
+    "capitulosPorTemporada": {
+      "1": 10
+    }
   },
   {
     "titulo": "Evil",
@@ -503,7 +645,16 @@
     "veces": 2,
     "acumulados": 0,
     "proximaFecha": "",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 50,
+    "capitulosPorTemporada": {
+      "1": 13,
+      "2": 13,
+      "3": 10,
+      "4": 14
+    },
+    "image_url": "https://artworks.thetvdb.com/banners/posters/5d6aa98c09572.jpg",
+    "poster_path": "posters/363955_Evil.jpg"
   },
   {
     "titulo": "Fringe",
@@ -519,7 +670,17 @@
     "veces": 3,
     "acumulados": 0,
     "proximaFecha": "",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 45,
+    "capitulosPorTemporada": {
+      "1": 20,
+      "2": 23,
+      "3": 22,
+      "4": 22,
+      "5": 13
+    },
+    "image_url": "https://artworks.thetvdb.com/banners/posters/82066-1.jpg",
+    "poster_path": "posters/82066_Fringe.jpg"
   },
   {
     "titulo": "30 Coins",
@@ -535,7 +696,14 @@
     "veces": 2,
     "acumulados": 0,
     "proximaFecha": "",
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "duracionMedia": 57,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8
+    },
+    "image_url": "https://artworks.thetvdb.com/banners/series/369414/posters/5fa12926b500f.jpg",
+    "poster_path": "posters/369414_30_Coins.jpg"
   },
   {
     "titulo": "Dragon Ball Z",
@@ -563,7 +731,9 @@
       "8": 34,
       "9": 38
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/81472-7.jpg",
+    "poster_path": "posters/81472_Dragon_Ball_Z.jpg"
   },
   {
     "titulo": "The Hunt (2019)",
@@ -586,7 +756,9 @@
       "3": 8,
       "4": 8
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/356952/posters/64371a3a77459.jpg",
+    "poster_path": "posters/356952_The_Hunt_2019.jpg"
   },
   {
     "titulo": "Generation Kill",
@@ -606,7 +778,9 @@
     "capitulosPorTemporada": {
       "1": 7
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/82109-8.jpg",
+    "poster_path": "posters/82109_Generation_Kill.jpg"
   },
   {
     "titulo": "Spartacus",
@@ -628,7 +802,9 @@
       "2": 10,
       "3": 10
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/129261-11.jpg",
+    "poster_path": "posters/129261_Spartacus.jpg"
   },
   {
     "titulo": "Dark Tourist",
@@ -646,7 +822,9 @@
     "capitulosPorTemporada": {
       "1": 8
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/series/350264/posters/5eafd262ada2e.jpg",
+    "poster_path": "posters/350264_Dark_Tourist.jpg"
   },
   {
     "titulo": "I'm Alive!",
@@ -669,7 +847,9 @@
       "3": 13,
       "4": 13
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/334427-1.jpg",
+    "poster_path": "posters/334427_I_m_Alive.jpg"
   },
   {
     "titulo": "The Fresh Prince of Bel-Air",
@@ -694,7 +874,9 @@
       "5": 25,
       "6": 24
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/series/76738/posters/62065766.jpg",
+    "poster_path": "posters/76738_The_Fresh_Prince_of_Bel-Air.jpg"
   },
   {
     "titulo": "The Tribe",
@@ -716,7 +898,9 @@
       "4": 52,
       "5": 52
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/76656-1.jpg",
+    "poster_path": "posters/76656_The_Tribe.jpg"
   },
   {
     "titulo": "Chernobyl",
@@ -736,7 +920,9 @@
     "capitulosPorTemporada": {
       "1": 5
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/5d218b09c7dc3.jpg",
+    "poster_path": "posters/360893_Chernobyl.jpg"
   },
   {
     "titulo": "The Hot Zone",
@@ -757,7 +943,9 @@
       "1": 6,
       "2": 6
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/5cc12d0f7cdd0.jpg",
+    "poster_path": "posters/359477_The_Hot_Zone.jpg"
   },
   {
     "titulo": "Sonic X",
@@ -778,7 +966,9 @@
       "2": 26,
       "3": 26
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/72459-2.jpg",
+    "poster_path": "posters/72459_Sonic_X.jpg"
   },
   {
     "titulo": "Vikings: Valhalla",
@@ -799,7 +989,9 @@
       "2": 8,
       "3": 8
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/v4/series/372700/posters/61e6ef8cb2759.jpg",
+    "poster_path": "posters/372700_Vikings_Valhalla.jpg"
   },
   {
     "titulo": "American Gods",
@@ -821,7 +1013,9 @@
       "2": 8,
       "3": 10
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/253573-3.jpg",
+    "poster_path": "posters/253573_American_Gods.jpg"
   },
   {
     "titulo": "Misfits",
@@ -845,7 +1039,9 @@
       "4": 8,
       "5": 8
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/124051-4.jpg",
+    "poster_path": "posters/124051_Misfits.jpg"
   },
   {
     "titulo": "Solar Opposites",
@@ -870,7 +1066,9 @@
       "5": 11,
       "6": 10
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/series/375892/posters/6012f8c994922.jpg",
+    "poster_path": "posters/375892_Solar_Opposites.jpg"
   },
   {
     "titulo": "Dragon Ball Super",
@@ -894,7 +1092,9 @@
       "4": 30,
       "5": 55
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/295068-9.jpg",
+    "poster_path": "posters/295068_Dragon_Ball_Super.jpg"
   },
   {
     "titulo": "Lost",
@@ -919,7 +1119,9 @@
       "5": 17,
       "6": 18
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/73739-11.jpg",
+    "poster_path": "posters/73739_Lost.jpg"
   },
   {
     "titulo": "Ink Master",
@@ -954,7 +1156,9 @@
       "3": 13,
       "4": 8
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/292262-1.jpg",
+    "poster_path": "posters/292262_The_Ministry_of_Time.jpg"
   },
   {
     "titulo": "La casa de papel",
@@ -976,6 +1180,8 @@
       "2": 16,
       "3": 10
     },
-    "estado_final": "Ended"
+    "estado_final": "Ended",
+    "image_url": "https://artworks.thetvdb.com/banners/posters/5d30cc0b4a75d.jpg",
+    "poster_path": "posters/327417_La_casa_de_papel.jpg"
   }
 ]

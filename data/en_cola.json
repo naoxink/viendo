@@ -20,7 +20,9 @@
       "2": 6,
       "3": 6,
       "4": 6
-    }
+    },
+    "duracionMedia": 30,
+    "estado_final": false
   },
   {
     "titulo": "The Boys",
@@ -28,7 +30,16 @@
     "año": 2019,
     "temporada": 5,
     "image_url": "https://artworks.thetvdb.com/banners/posters/5c5c402b075cc.jpg",
-    "poster_path": "posters/355567_The_Boys.jpg"
+    "poster_path": "posters/355567_The_Boys.jpg",
+    "duracionMedia": 64,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 8,
+      "4": 8,
+      "5": 8
+    },
+    "estado_final": true
   },
   {
     "titulo": "Acapulco",
@@ -36,27 +47,61 @@
     "año": 2021,
     "temporada": 4,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/393155/posters/63467793dd0e9.jpg",
-    "poster_path": "posters/393155_Acapulco.jpg"
+    "poster_path": "posters/393155_Acapulco.jpg",
+    "duracionMedia": 32,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10
+    },
+    "estado_final": true
   },
   {
     "titulo": "Atasco",
     "tvdb_id": 449580,
     "año": 2024,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/449580/posters/6a33465102b18.jpg",
-    "poster_path": "posters/449580_Atasco.jpg"
+    "poster_path": "posters/449580_Atasco.jpg",
+    "duracionMedia": 25,
+    "capitulosPorTemporada": {
+      "1": 6,
+      "2": 6,
+      "3": 6,
+      "4": 6
+    },
+    "estado_final": false
   },
   {
     "titulo": "Yellowstone",
     "tvdb_id": 341164,
     "año": 2018,
     "image_url": "https://artworks.thetvdb.com/banners/posters/5d1bfa6c30c50.jpg",
-    "poster_path": "posters/341164_Yellowstone.jpg"
+    "poster_path": "posters/341164_Yellowstone.jpg",
+    "duracionMedia": 51,
+    "capitulosPorTemporada": {
+      "1": 9,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 14
+    },
+    "estado_final": true
   },
   {
     "titulo": "Fargo",
     "tvdb_id": 269613,
     "año": 2014,
     "image_url": "https://artworks.thetvdb.com/banners/posters/269613-3.jpg",
-    "poster_path": "posters/269613_Fargo.jpg"
+    "poster_path": "posters/269613_Fargo.jpg",
+    "duracionMedia": 52,
+    "capitulosPorTemporada": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 11,
+      "5": 10
+    },
+    "estado_final": false
   }
 ]
