@@ -1,7 +1,14 @@
 import { Octokit } from "@octokit/rest";
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://naoxink.github.io');
+// 1. Cabecera dinámica: permite al sitio que hace la petición
+  const origin = req.headers.origin;
+  const allowedOrigins = ['https://naoxink.github.io']; // Cambia esto por tu URL real de GitHub Pages
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
