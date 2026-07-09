@@ -1624,6 +1624,16 @@ summary::after {
   background-color: color-mix(in srgb, var(--accent) 8%, var(--bg));
 }
 
+a.link {
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
+}
+
 /* ==========================================
    MEDIA QUERY: RESPONSIVE EN MÓVILES
    ========================================== */

@@ -13,6 +13,14 @@ export default {
         error: String,
         añoActual: Number
     },
+    methods: {
+        promptAdminToken() {
+            const token = prompt('Token de autenticación')
+            if (token) {
+                location.href = `https://naoxink-viendo.vercel.app?admin_token=${token}`
+            }
+        }
+    },
     template: `
         <div class="view view-stats">
             <section class="view-content">
@@ -28,6 +36,9 @@ export default {
                     :ano-actual="añoActual"
                 />
             </section>
+            <div class="text-center">
+                <a ref="javascript:() => false" class="link" @click="promptAdminToken">Administración</a>
+            </div>
         </div>
     `
 }
