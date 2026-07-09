@@ -1,11 +1,23 @@
 [
   {
+    "titulo": "Sunny",
+    "año": 2024,
+    "vistoEn": 2024,
+    "temporada": 1,
+    "capitulo": 10,
+    "pendiente": false,
+    "nota": "6/10",
+    "imdb_id": "tt18070898",
+    "tvdb_id": 415975,
+    "acumulados": 0
+  },
+  {
     "titulo": "The Bear",
     "año": 2022,
     "vistoEn": 2026,
     "temporada": 5,
     "capitulo": 8,
-    "pendiente": true,
+    "pendiente": false,
     "nota": "8.5/10",
     "imdb_id": "tt14452776",
     "tvdb_id": 403294,
