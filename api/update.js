@@ -31,11 +31,52 @@ export default async function handler(req, res) {
 
     // 2. Modificar el JSON
     const serie = content.find(s => s.tvdb_id === tvdbId);
+
     if (serie) {
-        // TODO: Calcular temporada, capítulo y pendiente según los capítulos por temporada y la fecha de próximo capítulo
-        serie.temporada = temporada;
-        serie.capitulo = capitulo + 1;
-        serie.pendiente = true
+      const totalEnTemporada = serie.capitulosPorTemporada[serie.temporada] || 0;
+          
+      // Asumimos que marcamos 1 capítulo como visto
+      let nextCap = serie.capitulo + 1;
+      let nextTemp = serie.temporada;
+
+      // 1. Lógica de cambio de temporada
+      if (nextCap > totalEnTemporada) {
+          nextCap = 1;
+          nextTemp += 1;
+          
+          if (serie.capitulosPorTemporada[nextTemp]) {
+              // Hay nueva temporada, por defecto está pendiente de empezar
+              serie.pendiente = true;
+          } else {
+              // No hay más temporadas registradas (Finalizada o Cancelada)
+              serie.pendiente = false;
+          }
+      } else {
+          // 2. Lógica dentro de la misma temporada
+          if (serie.acumulados > 0) {
+              serie.acumulados -= 1;
+              // Si tras restar 1 aún quedan acumulados, sigue pendiente. Si no, no.
+              serie.pendiente = (serie.acumulados > 0); 
+          } else {
+              // No hay acumulados. Comprobamos la fecha de emisión del próximo
+              // Asumimos formato ISO 'YYYY-MM-DD' en serie.proximaFecha
+              if (serie.proximaFecha) {
+                  const hoy = new Date();
+                  const fechaProximo = new Date(serie.proximaFecha);
+                  
+                  // Si la fecha del próximo es en el futuro, no hay nada que ver hoy -> Pendiente = false (al día)
+                  // Si la fecha es pasada o igual a hoy, ya se emitió -> Pendiente = true (tienes que verlo)
+                  serie.pendiente = (fechaProximo <= hoy);
+              } else {
+                  // Si no hay fecha definida y no hay acumulados, asumimos que no hay nada pendiente
+                  serie.pendiente = false;
+              }
+          }
+      }
+
+      // Actualizamos los campos en el objeto original
+      serie.temporada = nextTemp;
+      serie.capitulo = nextCap;
     } else {
         res.status(200).json({ success: false, error: 'Serie no encontrada' })
     }

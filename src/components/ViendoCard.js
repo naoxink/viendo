@@ -39,19 +39,40 @@ export default {
     methods: {
         async marcarComoVisto(serie) {
             const token = sessionStorage.getItem('adminToken');
-            const res = await fetch('/api/update', {
-                method: 'POST',
-                headers: {
-                'Authorization': token, // Aquí va el token que desbloqueaste
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    tvdbId: serie.tvdb_id,
-                    temporada: serie.temporada,
-                    capitulo: serie.capitulo
-                })
-            });
-            serie.pendiente = res.pendiente || false
+            
+            try {
+                const res = await fetch('/api/update', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        tvdbId: serie.tvdb_id,
+                        temporada: serie.temporada,
+                        capitulo: serie.capitulo
+                    })
+                });
+
+                if (!res.ok) {
+                    throw new Error(`Error en el servidor: ${res.status}`);
+                }
+
+                // 1. Deserializar la respuesta para obtener los datos reales
+                const data = await res.json(); 
+
+                if (data.success) {
+                    // 2. Actualizar el objeto con los nuevos datos del backend.
+                    const datosActualizados = data.serie;
+                    
+                    Object.assign(serie, datosActualizados);
+                } else {
+                    console.error('La API devolvió un error:', data.error);
+                }
+
+            } catch (error) {
+                console.error('Error al marcar como visto:', error);
+            }
         }
     },
     template: `
