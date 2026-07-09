@@ -48,7 +48,7 @@
     --rewatch-badge-bg: #6366f1;
     --rewatch-badge-border: #4f46e5;
     --rewatch-badge-text: #eef2ff;
-    --warning-bg: #dc2626;
+    --warning-bg: #dc2626be;
     --warning-text: #fff1f2;
     --status-container-bg: #0f172a1a;
     --status-item-text: #404347;
@@ -102,7 +102,7 @@
     --rewatch-badge-bg: #818cf8;
     --rewatch-badge-border: #6366f1;
     --rewatch-badge-text: #eef2ff;
-    --warning-bg: #ef4444;
+    --warning-bg: #dc2626be;
     --warning-text: #fef2f2;
     --status-container-bg: #111827;
     --status-item-text: #e2e8f0;
