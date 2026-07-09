@@ -39,7 +39,7 @@ export default {
     methods: {
         async marcarComoVisto(serie) {
             const token = sessionStorage.getItem('adminToken');
-            await fetch('/api/update', {
+            const res = await fetch('/api/update', {
                 method: 'POST',
                 headers: {
                 'Authorization': token, // Aquí va el token que desbloqueaste
@@ -51,6 +51,7 @@ export default {
                     capitulo: serie.capitulo
                 })
             });
+            serie.pendiente = res.pendiente || false
         }
     },
     template: `
@@ -66,9 +67,7 @@ export default {
                     </p>
                     <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
                 </div>
-                <button v-if="isAdmin" @click="marcarComoVisto(serie)">
-                    ✅ Marcar visto
-                </button>
+                <button v-if="isAdmin" aria-label="Marcar como visto" class="btn-check" :class="{ 'visto': !serie.pendiente }" @click="marcarComoVisto(serie)"></button>
             </div>
             <div class="serie-card-footer">
                 <LinksFooter :serie="serie" />
