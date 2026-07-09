@@ -1,6 +1,16 @@
 import { Octokit } from "@octokit/rest";
 
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://naoxink.github.io');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // EL TRUCO PARA EL NAVEGADOR:
+  // Si es una petición de comprobación (OPTIONS), respondemos OK inmediatamente
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.headers['authorization'] !== process.env.ADMIN_TOKEN) return res.status(401).end();
 
   const { tvdbId, temporada, capitulo } = req.body;
