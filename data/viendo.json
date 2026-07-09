@@ -60,7 +60,7 @@
     "rewatch": true,
     "veces": 2,
     "temporada": 4,
-    "capitulo": 1,
+    "capitulo": 2,
     "pendiente": true,
     "tvdb_id": 79126,
     "image_url": "https://artworks.thetvdb.com/banners/posters/79126-2.jpg",
@@ -90,7 +90,7 @@
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/375903/posters/60a4c57394881.jpg",
     "poster_path": "posters/375903_Trying_Ciclos.jpg",
     "acumulados": 0,
-    "pendiente": true,
+    "pendiente": false,
     "estado_final": "",
     "duracionMedia": 28,
     "capitulosPorTemporada": {
