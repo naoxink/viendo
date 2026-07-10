@@ -88,7 +88,7 @@ export default {
                     </p>
                     <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
                 </div>
-                <button v-if="isAdmin" aria-label="Marcar como visto" class="btn-check" :class="{ 'visto': !serie.pendiente }" @click="marcarComoVisto(serie)"></button>
+                <button v-if="isAdmin && serie.pendiente" aria-label="Marcar como visto" class="btn-check" :class="{ 'visto': !serie.pendiente }" @click="marcarComoVisto(serie)"></button>
             </div>
             <div class="serie-card-footer">
                 <LinksFooter :serie="serie" />
