@@ -82,12 +82,12 @@ export default async function handler(req, res) {
     }
 
     // 3. Guardar
-    // await octokit.repos.createOrUpdateFileContents({
-    //   owner: 'naoxink', repo: 'viendo', path,
-    //   message: `Update: ${serieNombre} T${temporada} E${capitulo}`,
-    //   content: Buffer.from(JSON.stringify(content, null, 2)).toString('base64'),
-    //   sha: fileData.sha
-    // });
+    await octokit.repos.createOrUpdateFileContents({
+      owner: 'naoxink', repo: 'viendo', path,
+      message: `Update: ${serieNombre} T${temporada} E${capitulo}`,
+      content: Buffer.from(JSON.stringify(content, null, 2)).toString('base64'),
+      sha: fileData.sha
+    });
 
     res.status(200).json({ success: true, serie });
   } catch (e) { res.status(500).json({ error: e.message }); }
