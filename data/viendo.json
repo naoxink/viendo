@@ -34,15 +34,14 @@
     "año": 2023,
     "vistoEn": 2026,
     "temporada": 3,
-    "capitulo": 1,
-    "pendiente": false,
+    "capitulo": 2,
+    "pendiente": true,
     "nota": "7/10",
     "tvdb_id": 403245,
     "imdb_id": "tt14688458",
     "acumulados": 0,
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/403245/posters/64432dea72673.jpg",
     "poster_path": "posters/403245_Silo.jpg",
-    "proximaFecha": "2026-07-10",
     "notas": "Probando las notas, wtf, esto es nuevo.",
     "estado_final": "",
     "duracionMedia": 50,
@@ -67,7 +66,7 @@
     "poster_path": "posters/79126_The_Wire.jpg",
     "estado_final": "Ended",
     "vistoEn": 2026,
-    "acumulados": 22,
+    "acumulados": 21,
     "slow_mode": true,
     "duracionMedia": 60,
     "capitulosPorTemporada": {
@@ -99,6 +98,7 @@
       "3": 8,
       "4": 8,
       "5": 8
-    }
+    },
+    "proximaFecha": "2026-07-15"
   }
 ]
