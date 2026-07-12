@@ -2,8 +2,8 @@
   {
     "titulo": "Rick & Morty",
     "temporada": 9,
-    "capitulo": 7,
-    "pendiente": false,
+    "capitulo": 8,
+    "pendiente": true,
     "tvdb_id": 275274,
     "año": 2013,
     "vistoEn": 2026,
@@ -26,7 +26,6 @@
       "8": 10,
       "9": 10
     },
-    "proximaFecha": "2026-07-12",
     "estado_final": false
   },
   {
@@ -49,7 +48,8 @@
       "1": 10,
       "2": 10,
       "3": 10
-    }
+    },
+    "proximaFecha": "2026-07-17"
   },
   {
     "titulo": "The Wire",
