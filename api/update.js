@@ -70,7 +70,7 @@ export default async function handler(req, res) {
               } else {
                   // Si no hay fecha definida y no hay acumulados, asumimos que no hay nada pendiente
                   serie.pendiente = false;
-                  serie.capitulo -= 1; // Retrocedemos el capítulo porque no hay nada pendiente
+                  nextCap -= 1; // Retrocedemos el capítulo porque no hay nada pendiente
               }
           }
       }
