@@ -3,7 +3,7 @@
     "titulo": "Rick & Morty",
     "temporada": 9,
     "capitulo": 8,
-    "pendiente": true,
+    "pendiente": false,
     "tvdb_id": 275274,
     "año": 2013,
     "vistoEn": 2026,
