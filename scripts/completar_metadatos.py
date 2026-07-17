@@ -139,8 +139,9 @@ def completar_metadatos(api_key):
                     # -- C. Actualizar Estado Final --
                     if falta_estado_final:
                         estado_api = api_data.get('status', {}).get('name', '')
-                        serie['estado_final'] = estado_api in ['Ended', 'Canceled']
-                        print(f"   + estado_final: {serie['estado_final']} ({estado_api})")
+                        if estado_api in ['Ended', 'Canceled']:
+                            serie['estado_final'] = estado_api
+                            print(f"   + estado_final: {serie['estado_final']} ({estado_api})")
 
                     # -- D. Descargar Póster (usando tu nueva lógica) --
                     if falta_poster:

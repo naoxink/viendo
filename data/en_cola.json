@@ -22,7 +22,7 @@
       "4": 6
     },
     "duracionMedia": 30,
-    "estado_final": false
+    
   },
   {
     "titulo": "The Boys",
@@ -39,7 +39,7 @@
       "4": 8,
       "5": 8
     },
-    "estado_final": true
+    
   },
   {
     "titulo": "Acapulco",
@@ -55,7 +55,7 @@
       "3": 10,
       "4": 10
     },
-    "estado_final": true
+    
   },
   {
     "titulo": "Atasco",
@@ -70,7 +70,7 @@
       "3": 6,
       "4": 6
     },
-    "estado_final": false
+    
   },
   {
     "titulo": "Yellowstone",
@@ -86,7 +86,7 @@
       "4": 10,
       "5": 14
     },
-    "estado_final": true
+    
   },
   {
     "titulo": "Fargo",
@@ -102,6 +102,6 @@
       "4": 11,
       "5": 10
     },
-    "estado_final": false
+    
   }
 ]

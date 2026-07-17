@@ -21,7 +21,7 @@
       "4": 22,
       "5": 9
     },
-    "estado_final": true,
+    
     "image_url": "https://artworks.thetvdb.com/banners/posters/5c9e0957ce5be.jpg",
     "poster_path": "posters/360115_Prison_Break.jpg"
   },
@@ -41,7 +41,7 @@
       "1": 9,
       "2": 8
     },
-    "estado_final": true
+    
   },
   {
     "titulo": "Paradise",
@@ -60,7 +60,7 @@
       "1": 8,
       "2": 8
     },
-    "estado_final": false
+    
   },
   {
     "titulo": "Euphoria",
@@ -115,7 +115,7 @@
       "4": 11,
       "5": 8
     },
-    "estado_final": true,
+    
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/348545/posters/60908d475f49a.jpg",
     "poster_path": "posters/348545_Demon_Slayer_Kimetsu_no_Yaiba.jpg"
   },
@@ -142,7 +142,7 @@
       "5": 10,
       "6": 10
     },
-    "estado_final": true,
+    
     "image_url": "https://artworks.thetvdb.com/banners/posters/220411-7.jpg",
     "poster_path": "posters/220411_Girls.jpg"
   },
@@ -203,7 +203,7 @@
       "9": 22,
       "10": 22
     },
-    "estado_final": true,
+    
     "image_url": "https://artworks.thetvdb.com/banners/posters/6401e88074c96.jpg",
     "poster_path": "posters/266189_The_Blacklist.jpg"
   },
@@ -228,7 +228,7 @@
       "3": 8,
       "4": 8
     },
-    "estado_final": true,
+    
     "image_url": "https://artworks.thetvdb.com/banners/posters/333072-3.jpg",
     "poster_path": "posters/333072_Barry.jpg"
   },
@@ -260,7 +260,7 @@
       "10": 22,
       "11": 24
     },
-    "estado_final": true,
+    
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/153021/posters/60fd8577d1a96.jpg",
     "poster_path": "posters/153021_The_Walking_Dead.jpg"
   },
@@ -297,7 +297,7 @@
       "2": 8,
       "3": 8
     },
-    "estado_final": true,
+    
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/361565/posters/61126bd10a396.jpg",
     "poster_path": "posters/361565_See.jpg"
   }
