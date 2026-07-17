@@ -73,6 +73,9 @@ export default {
             } catch (error) {
                 console.error('Error al marcar como visto:', error);
             }
+        },
+        totalCapsTemporada(serie) {
+            return serie.capitulosPorTemporada[serie.temporada] || 0;
         }
     },
     template: `
@@ -85,6 +88,7 @@ export default {
                         T{{ serie.temporada }} • E{{ serie.capitulo }}
                         <span v-if="serie.pendiente" class="badge-pendiente">Pendiente</span>
                         <span v-else class="badge-visto">Visto</span>
+                        <div></div>
                     </p>
                     <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
                 </div>
@@ -100,7 +104,7 @@ export default {
                 <button class="details-btn" type="button" @click="abrirDetalles" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">?</button>
             </div>
             <SerieDetailsModal :serie="serie" :visible="mostrarDetalles" @close="cerrarDetalles" />
-            <div class="progress-bar-container">
+            <div class="progress-bar-container" :title="totalCapsTemporada(serie) + ' capítulos esta temporada ' + serie.temporada">
                 <div class="progress-bar-fill" :style="{ width: progreso + '%' }"></div>
             </div>
         </div>
