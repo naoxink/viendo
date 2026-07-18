@@ -239,9 +239,13 @@ export default {
         // --- Backlog (episodios acumulados sin ver) ---
         const masAtrasadas = computed(() =>
             props.viendo
-                .filter((s) => s.acumulados && s.acumulados > 0)
+                .filter((s) => (s.acumulados && s.acumulados > 0) || s.pendiente)
                 .sort((a, b) => b.acumulados - a.acumulados)
                 .slice(0, 5)
+                .map(s => ({
+                    ...s,
+                    acumulados: s.acumulados + (s.pendiente ? 1 : 0) || 0
+                }))
         )
 
         // --- Próximos estrenos ---
