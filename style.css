@@ -1976,6 +1976,22 @@ h4.fecha-separador {
   transform: rotate(45deg) translateY(-2px) scale(0.9);
 }
 
+.thetvdbattribution {
+    display: flex;
+    margin: 5px 0;
+    padding: 15px;
+    background-color: #365658;
+    border: 1px solid #0d1313;
+    min-height: 80px;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #6CD591;
+    text-decoration: none;
+    gap: 15px;
+    border-radius: 10px;
+}
+
 /* ==========================================
    MEDIA QUERIES: RESPONSIVE BOTTOM NAV
    ========================================== */
