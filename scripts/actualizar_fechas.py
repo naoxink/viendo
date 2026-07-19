@@ -42,7 +42,7 @@ def obtener_fecha_hora_emision(ep, hora_default=None):
     except ValueError:
         return None
 
-    hora_str = ep.get('airTime') or ep.get('airedTime') or hora_default
+    hora_str = ep.get('airsTime') or ep.get('airedTime') or hora_default
     if hora_str:
         for fmt in ('%H:%M', '%H:%M:%S', '%I:%M %p', '%I:%M%p'):
             try:
