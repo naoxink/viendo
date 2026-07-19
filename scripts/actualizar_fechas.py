@@ -283,6 +283,10 @@ def actualizar_fechas(api_key):
 
         for ep in valid_eps:
             hora_serie = serie_data.get('airsTime') or serie_data.get('airTime') or serie_data.get('airs', {}).get('time') or hora_serie
+
+            if hora_serie is not None:
+                serie['hora_emision'] = hora_serie
+
             if es_emision_futura(ep, ahora, hora_default=hora_serie):
                 futuros.append(ep)
             else:
