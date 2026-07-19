@@ -1,5 +1,19 @@
 [
   {
+    "titulo": "Worst neighbor ever",
+    "temporada": 1,
+    "capitulo": 1,
+    "pendiente": true,
+    "nota": "",
+    "vistoEn": "",
+    "tvdb_id": "479249",
+    "imdb_id": "tt43476716",
+    "rewatch": false,
+    "slow_mode": false,
+    "proximaFecha": "",
+    "estado_final": ""
+  },
+  {
     "titulo": "Muertos S.L. (Death Inc.)",
     "año": 2024,
     "vistoEn": 2026,
@@ -22,22 +36,6 @@
       "4": 6
     },
     "duracionMedia": 30
-  },
-  {
-    "titulo": "The Boys",
-    "tvdb_id": 355567,
-    "año": 2019,
-    "temporada": 5,
-    "image_url": "https://artworks.thetvdb.com/banners/posters/5c5c402b075cc.jpg",
-    "poster_path": "posters/355567_The_Boys.jpg",
-    "duracionMedia": 64,
-    "capitulosPorTemporada": {
-      "1": 8,
-      "2": 8,
-      "3": 8,
-      "4": 8,
-      "5": 8
-    }
   },
   {
     "titulo": "Acapulco",

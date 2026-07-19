@@ -291,5 +291,28 @@
     },
     "image_url": "https://artworks.thetvdb.com/banners/v4/series/361565/posters/61126bd10a396.jpg",
     "poster_path": "posters/361565_See.jpg"
+  },
+  {
+    "titulo": "The Boys",
+    "tvdb_id": 355567,
+    "año": 2019,
+    "temporada": 5,
+    "image_url": "https://artworks.thetvdb.com/banners/posters/5c5c402b075cc.jpg",
+    "poster_path": "posters/355567_The_Boys.jpg",
+    "duracionMedia": 64,
+    "capitulosPorTemporada": {
+      "1": 8,
+      "2": 8,
+      "3": 8,
+      "4": 8,
+      "5": 8
+    },
+    "capitulo": 1,
+    "vistoEn": 2025,
+    "pendiente": true,
+    "nota": "",
+    "imdb_id": "",
+    "proximaFecha": "",
+    "estado_final": ""
   }
 ]

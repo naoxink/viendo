@@ -1,5 +1,33 @@
 [
   {
+    "titulo": "Alien: Earth",
+    "temporada": 1,
+    "capitulo": 8,
+    "pendiente": false,
+    "nota": "8/10",
+    "vistoEn": 2025,
+    "tvdb_id": "458912",
+    "imdb_id": "",
+    "rewatch": false,
+    "slow_mode": false,
+    "proximaFecha": "",
+    "estado_final": ""
+  },
+  {
+    "titulo": "We own this city",
+    "temporada": 1,
+    "capitulo": 6,
+    "pendiente": false,
+    "nota": "7.5/10",
+    "vistoEn": 2022,
+    "tvdb_id": "398140",
+    "imdb_id": "",
+    "rewatch": false,
+    "slow_mode": false,
+    "proximaFecha": "",
+    "estado_final": "Ended"
+  },
+  {
     "titulo": "Sunny",
     "año": 2024,
     "vistoEn": 2024,
