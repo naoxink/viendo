@@ -25,57 +25,55 @@ print("OK")
 
 print()
 
-print("Buscando Rick And Morty...")
+# print("Buscando Rick And Morty...")
 
-series = provider.search("Rick And Morty")
+# series = provider.search("Rick And Morty")
 
-print(series)
+# print(series)
 
-print()
+# print()
 
-serie = provider.get_series("Rick And Morty")
+# serie = provider.get_series("Rick And Morty")
+
+# print(serie)
+
+# print()
+
+serie = provider.get_series_by_id(
+    275274
+)
 
 print(serie)
 
-print()
+# print()
 
-serie = provider.get_series_by_id(
-    serie["id"]
-)
+# episodes = provider.get_episodes(
+#     serie["id"]
+# )
 
-print(serie["name"])
-print(serie["year"])
-print(serie["image"])
+# print(len(episodes))
 
-print()
+# episode = provider.get_episode(
+#     serie["id"],
+#     1,
+#     1
+# )
 
-episodes = provider.get_episodes(
-    serie["id"]
-)
+# print()
 
-print(len(episodes))
+# print(episode)
 
-episode = provider.get_episode(
-    serie["id"],
-    1,
-    1
-)
+# print()
 
-print()
+# for season in provider.get_seasons(
+#     serie["id"]
+# ):
 
-print(episode)
+#     print(season)
 
-print()
+# provider.download_poster(
+#     serie,
+#     "poster.jpg"
+# )
 
-for season in provider.get_seasons(
-    serie["id"]
-):
-
-    print(season)
-
-provider.download_poster(
-    serie,
-    "poster.jpg"
-)
-
-print("Poster descargado.")
+# print("Poster descargado.")

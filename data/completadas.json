@@ -250,37 +250,6 @@
     }
   },
   {
-    "titulo": "La que se avecina",
-    "año": 2007,
-    "vistoEn": 2024,
-    "nota": "8/10",
-    "imdb_id": "tt0922037",
-    "rewatch": true,
-    "veces": 3,
-    "tvdb_id": 82753,
-    "image_url": "https://artworks.thetvdb.com/banners/posters/82753-4.jpg",
-    "poster_path": "posters/82753_La_que_se_avecina.jpg",
-    "duracionMedia": 79,
-    "capitulosPorTemporada": {
-      "1": 13,
-      "2": 15,
-      "3": 14,
-      "4": 12,
-      "5": 13,
-      "6": 13,
-      "7": 13,
-      "8": 16,
-      "9": 19,
-      "10": 13,
-      "11": 13,
-      "12": 16,
-      "13": 8,
-      "14": 8,
-      "15": 8,
-      "16": 8
-    }
-  },
-  {
     "titulo": "Breaking Bad",
     "año": 2008,
     "nota": "10/10",
