@@ -48,7 +48,8 @@
       "1": 10,
       "2": 10,
       "3": 10
-    }
+    },
+    "proximaFecha": "2026-07-24"
   },
   {
     "titulo": "Trying (Ciclos)",
@@ -105,9 +106,9 @@
       "16": 8
     },
     "temporada": 16,
-    "capitulo": 1,
-    "pendiente": false,
-    "proximaFecha": "",
-    "estado_final": ""
+    "capitulo": 2,
+    "pendiente": true,
+    "estado_final": "",
+    "acumulados": 6
   }
 ]
