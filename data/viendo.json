@@ -106,7 +106,7 @@
     },
     "temporada": 16,
     "capitulo": 1,
-    "pendiente": true,
+    "pendiente": false,
     "proximaFecha": "",
     "estado_final": ""
   }
