@@ -51,32 +51,6 @@
     }
   },
   {
-    "titulo": "The Wire",
-    "año": 2002,
-    "nota": "10/10",
-    "imdb_id": "tt0306414",
-    "rewatch": true,
-    "veces": 2,
-    "temporada": 4,
-    "capitulo": 6,
-    "pendiente": true,
-    "tvdb_id": 79126,
-    "image_url": "https://artworks.thetvdb.com/banners/posters/79126-2.jpg",
-    "poster_path": "posters/79126_The_Wire.jpg",
-    "estado_final": "Ended",
-    "vistoEn": 2026,
-    "acumulados": 17,
-    "slow_mode": true,
-    "duracionMedia": 60,
-    "capitulosPorTemporada": {
-      "1": 13,
-      "2": 12,
-      "3": 12,
-      "4": 13,
-      "5": 10
-    }
-  },
-  {
     "titulo": "Trying (Ciclos)",
     "imdb_id": "tt10982034",
     "tvdb_id": 375903,
@@ -99,5 +73,19 @@
       "5": 8
     },
     "proximaFecha": "2026-07-22"
+  },
+  {
+    "titulo": "Worst neighbor ever",
+    "temporada": 1,
+    "capitulo": 1,
+    "pendiente": true,
+    "nota": "",
+    "vistoEn": "",
+    "tvdb_id": "479249",
+    "imdb_id": "tt43476716",
+    "rewatch": false,
+    "slow_mode": false,
+    "proximaFecha": "",
+    "estado_final": ""
   }
 ]

@@ -1,13 +1,13 @@
 [
   {
-    "titulo": "Worst neighbor ever",
+    "titulo": "Te encontraré",
     "temporada": 1,
     "capitulo": 1,
-    "pendiente": true,
+    "pendiente": false,
     "nota": "",
-    "vistoEn": "",
-    "tvdb_id": "479249",
-    "imdb_id": "tt43476716",
+    "vistoEn": 2026,
+    "tvdb_id": "457173",
+    "imdb_id": "",
     "rewatch": false,
     "slow_mode": false,
     "proximaFecha": "",
