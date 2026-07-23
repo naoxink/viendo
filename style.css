@@ -2066,3 +2066,69 @@ h4.fecha-separador {
         border-radius: 12px 12px 0 0;
     }
 }
+
+
+.details-seasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: .5rem;
+}
+
+.details-season {
+    min-width: 0;   /* importante para que pueda encoger */
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: .45rem .65rem;
+
+    border: 1px solid var(--border-color);
+    background-color: var(--accent-soft);
+    border-radius: 6px;
+}
+
+.details-season::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    width: var(--progress);
+
+    background: color-mix(in srgb, var(--note-good-text) 25%, transparent);
+
+    transition: width .3s;
+}
+
+.details-season span {
+    position: relative;
+    z-index: 1;
+}
+
+.details-seasons summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    cursor: pointer;
+    user-select: none;
+    font-weight: normal;
+    list-style: none;
+
+    padding: .5rem 0 1rem 0;
+}
+
+.details-seasons summary::-webkit-details-marker {
+    display: none;
+}
+
+.details-seasons summary::after {
+    content: "▸";
+    transition: transform .2s;
+}
+
+.details-seasons[open] summary::after {
+    transform: rotate(90deg);
+}

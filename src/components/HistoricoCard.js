@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import PosterThumb from './shared/PosterThumb.js'
 import LinksFooter from './shared/LinksFooter.js'
 import RewatchBadge from './shared/RewatchBadge.js'
@@ -15,7 +15,10 @@ export default {
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
         const notaClase = computed(() => getNotaClass(props.serie.nota))
-        return { bgStyle, notaClase }
+        const mostrarDetalles = ref(false)
+        const abrirDetalles = () => { mostrarDetalles.value = true }
+        const cerrarDetalles = () => { mostrarDetalles.value = false }
+        return { bgStyle, notaClase, mostrarDetalles, abrirDetalles, cerrarDetalles }
     },
     template: `
         <div class="serie-card" :style="bgStyle">
