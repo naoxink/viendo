@@ -33,8 +33,8 @@
     "año": 2023,
     "vistoEn": 2026,
     "temporada": 3,
-    "capitulo": 3,
-    "pendiente": false,
+    "capitulo": 4,
+    "pendiente": true,
     "nota": "7/10",
     "tvdb_id": 403245,
     "imdb_id": "tt14688458",
@@ -48,8 +48,7 @@
       "1": 10,
       "2": 10,
       "3": 10
-    },
-    "proximaFecha": "2026-07-24"
+    }
   },
   {
     "titulo": "Trying (Ciclos)",
