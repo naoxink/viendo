@@ -2,8 +2,8 @@
   {
     "titulo": "Rick & Morty",
     "temporada": 9,
-    "capitulo": 9,
-    "pendiente": false,
+    "capitulo": 10,
+    "pendiente": true,
     "tvdb_id": 275274,
     "año": 2013,
     "vistoEn": 2026,
@@ -25,8 +25,7 @@
       "7": 10,
       "8": 10,
       "9": 10
-    },
-    "proximaFecha": "2026-07-26"
+    }
   },
   {
     "titulo": "Silo",
