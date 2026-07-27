@@ -42,7 +42,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         
         # Añadimos la carpeta de pósters y el archivo de estado
-        git add posters/ status.json
+        git add posters/ data/status.json
         
         # El "|| echo" evita que falle si no hay cambios que guardar hoy
         git commit -m "🤖 Sincronización diaria: actualización de pósters y status" || echo "No hay cambios locales que actualizar hoy."
