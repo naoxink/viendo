@@ -12,7 +12,7 @@ export default {
         searchTerm: String,
         añoActual: Number
     },
-    emits: ['update:searchTerm'],
+    emits: ['update:searchTerm', 'select-serie'],
     template: `
         <div class="view view-completadas">
             <section class="view-content">
@@ -29,8 +29,8 @@ export default {
                 <p v-if="loading">Cargando series...</p>
                 <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
                 <div v-else class="history-grid">
-                    <HistoricoList :completadas="completadas" :ano-actual="añoActual" :search-term="searchTerm" />
-                    <DropeadasList :series="dropeadas" :search-term="searchTerm" />
+                    <HistoricoList :completadas="completadas" :ano-actual="añoActual" :search-term="searchTerm" @select-serie="$emit('select-serie', $event)" />
+                    <DropeadasList :series="dropeadas" :search-term="searchTerm" @select-serie="$emit('select-serie', $event)" />
                 </div>
             </section>
         </div>

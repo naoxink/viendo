@@ -9,6 +9,7 @@ export default {
         series: { type: Array, default: () => [] },
         searchTerm: { type: String, default: '' }
     },
+    emits: ['select-serie'],
     setup(props) {
         const term = computed(() => props.searchTerm.trim().toLowerCase())
 
@@ -34,7 +35,7 @@ export default {
                     <span class="count">{{ filtradas.length }} series</span>
                 </summary>
                 <div class="año-content">
-                    <DropeadaCard v-for="serie in filtradas" :key="serie.titulo" :serie="serie" />
+                    <DropeadaCard v-for="serie in filtradas" :key="serie.titulo" :serie="serie" @select-serie="$emit('select-serie', $event)" />
                 </div>
             </details>
         </div>

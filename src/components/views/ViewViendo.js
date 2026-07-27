@@ -15,6 +15,7 @@ export default {
         completadas: Array,
         añoActual: Number
     },
+    emits: ['select-serie'],
     template: `
         <div class="view view-viendo">
             <div class="view-header">
@@ -25,7 +26,7 @@ export default {
                 <h1>📺 Viendo actualmente</h1>
                 <p v-if="loading">Cargando series...</p>
                 <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
-                <ViendoList v-else :series="viendo" />
+                <ViendoList v-else :series="viendo" @select-serie="$emit('select-serie', $event)" />
                 <div class="last-update progress"><small>Actualizado el </small><small class="date">{{ lastUpdate }}</small></div>
             </section>
         </div>

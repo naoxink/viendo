@@ -44,7 +44,7 @@ export default {
                     <span class="count">{{ grupo.series.length }} series</span>
                 </summary>
                 <div class="año-content">
-                    <HistoricoCard v-for="serie in grupo.series" :key="serie.titulo" :serie="serie" />
+                    <HistoricoCard v-for="serie in grupo.series" :key="serie.titulo" :serie="serie" @select-serie="$emit('select-serie', $event)" />
                 </div>
             </details>
         </div>

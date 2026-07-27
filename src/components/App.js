@@ -5,6 +5,7 @@ import ViewViendo from './views/ViewViendo.js'
 import ViewEnCola from './views/ViewEnCola.js'
 import ViewCompletadas from './views/ViewCompletadas.js'
 import ViewStats from './views/ViewStats.js'
+import ViewSerieDetail from './views/ViewSerieDetail.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const token = urlParams.get('admin_token');
@@ -18,12 +19,13 @@ if (token) {
 
 export default {
     name: 'App',
-    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats },
+    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
         const searchTerm = ref('')
         const themePreference = ref('auto')
         const activeView = ref('viendo')
+        const selectedSerie = ref(null)
 
         const applyTheme = (preference = themePreference.value) => {
             const resolvedTheme = preference === 'auto'
@@ -49,7 +51,7 @@ export default {
                     themePreference.value = storedTheme
                 }
                 const storedView = localStorage.getItem('viendo-active-view')
-                if (storedView && ['viendo', 'en-cola', 'completadas', 'stats'].includes(storedView)) {
+                if (storedView && ['viendo', 'en-cola', 'completadas', 'stats', 'detalle'].includes(storedView)) {
                     activeView.value = storedView
                 }
             } catch (error) {
@@ -78,11 +80,27 @@ export default {
 
         watch(activeView, (value) => {
             try {
+                if (value !== 'detalle') {
+                    selectedSerie.value = null
+                }
                 localStorage.setItem('viendo-active-view', value)
             } catch (error) {
                 console.warn('No se pudo guardar la vista activa:', error)
             }
         })
+
+        // Método para abrir el detalle de una serie desde cualquier vista
+        const abrirDetalle = (serie) => {
+            console.log('Abriendo detalle de la serie:', serie.titulo);
+            selectedSerie.value = serie
+            activeView.value = 'detalle'
+        }
+
+        // Método para volver a la vista anterior o principal
+        const volverAtras = () => {
+            selectedSerie.value = null
+            activeView.value = 'viendo' // O la vista por defecto que prefieras
+        }
 
         const viendo = computed(() => data.value?.viendo ?? [])
         const completadas = computed(() => data.value?.completadas ?? [])
@@ -91,7 +109,7 @@ export default {
 
         return {
             data, status, lastUpdate, loading, error, añoActual,
-            searchTerm, themePreference, activeView, viendo, completadas, dropeadas, enCola
+            searchTerm, themePreference, activeView, viendo, completadas, dropeadas, enCola, abrirDetalle, volverAtras, selectedSerie
         }
     },
     template: `
@@ -116,6 +134,7 @@ export default {
                     :data="data"
                     :completadas="completadas"
                     :año-actual="añoActual"
+                    @select-serie="abrirDetalle"
                 />
                 
                 <ViewEnCola 
@@ -124,6 +143,7 @@ export default {
                     :viendo="viendo"
                     :loading="loading"
                     :error="error"
+                    @select-serie="abrirDetalle"
                 />
                 
                 <ViewCompletadas 
@@ -135,6 +155,7 @@ export default {
                     :search-term="searchTerm"
                     @update:search-term="searchTerm = $event"
                     :año-actual="añoActual"
+                    @select-serie="abrirDetalle"
                 />
                 
                 <ViewStats 
@@ -147,6 +168,14 @@ export default {
                     :loading="loading"
                     :error="error"
                     :año-actual="añoActual"
+                    @select-serie="abrirDetalle"
+                />
+                
+                <!-- Nueva vista de detalle de serie -->
+                <ViewSerieDetail
+                    v-if="activeView === 'detalle' && selectedSerie"
+                    :serie="selectedSerie"
+                    @back="volverAtras"
                 />
             </div>
 

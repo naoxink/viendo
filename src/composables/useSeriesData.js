@@ -1,35 +1,30 @@
 import { ref, computed } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 
-// Inicializa Supabase con tus credenciales públicas (anon key)
-// Nota: Puedes mover esto a un archivo de configuración compartido si lo prefieres
 const SUPABASE_URL = 'https://pfssrcyxpmnofezfnrct.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmc3NyY3l4cG1ub2ZlemZucmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxNDM1MTIsImV4cCI6MjEwMDcxOTUxMn0.AtMp0cNUrSGcjrEZqT1C_iZEhfnF2x555dSl_ZrHiUI' // Recuerda usar la clave 'anon' pública en el cliente web
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmc3NyY3l4cG1ub2ZlemZucmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxNDM1MTIsImV4cCI6MjEwMDcxOTUxMn0.AtMp0cNUrSGcjrEZqT1C_iZEhfnF2x555dSl_ZrHiUI'
 
 const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-/**
- * Encapsula todo el acceso a datos mediante Supabase.
- */
-export function useSeriesData() {
-    const data = ref(null)
-    const status = ref(null) // Si usas status.json para algo externo, puedes mantenerlo o adaptarlo
-    const lastUpdate = ref('')
-    const loading = ref(true)
-    const error = ref(null)
+// --- ESTADO GLOBAL COMPARTIDO (Singleton) ---
+const data = ref(null)
+const status = ref(null)
+const lastUpdate = ref('')
+const loading = ref(true)
+const error = ref(null)
+// -------------------------------------------
 
+export function useSeriesData() {
     const añoActual = computed(() => new Date().getFullYear())
 
     async function loadData() {
         try {
-            // Hacemos una única petición a Supabase para traernos todas las series de la tabla
             const { data: rows, error: err } = await _supabase
                 .from('series')
                 .select('*')
 
             if (err) throw err
 
-            // Inicializamos la estructura que espera tu aplicación
             const agrupado = {
                 viendo: [],
                 en_cola: [],
@@ -37,9 +32,7 @@ export function useSeriesData() {
                 completadas: []
             }
 
-            // Mapeamos los estados de la base de datos a las claves de tu objeto frontend
             rows.forEach(item => {
-                // Adaptamos las claves de la base de datos de vuelta a lo que espera tu app si difieren
                 const serieMapeada = {
                     ...item,
                     año: item.anio,
@@ -48,7 +41,6 @@ export function useSeriesData() {
                     capitulosPorTemporada: item.capitulos_por_temporada
                 }
 
-                // Dependiendo de lo que guardaras en la columna 'estado', lo metemos en su array correspondiente
                 if (item.estado === 'viendo') {
                     serieMapeada.estado = 'viendo'
                     agrupado.viendo.push(serieMapeada)
@@ -82,8 +74,6 @@ export function useSeriesData() {
 
     async function loadLastUpdate() {
         try {
-            // Como ahora los datos vienen de Supabase, podemos consultar la fecha de la última modificación 
-            // consultando el registro más reciente o usando la fecha actual de sincronización.
             const { data: row, error } = await _supabase
                 .from('series')
                 .select('created_at')
@@ -107,5 +97,54 @@ export function useSeriesData() {
         loading.value = false
     }
 
-    return { data, status, lastUpdate, loading, error, añoActual, loadAll }
+    async function updateShowStatus(id, estadoNuevo) {
+        try {
+            let estadoDb = estadoNuevo
+            if (estadoNuevo === 'enCola') estadoDb = 'en_cola'
+            if (estadoNuevo === 'dropeada') estadoDb = 'dropeadas'
+            if (estadoNuevo === 'completada') estadoDb = 'completadas'
+
+            const { data: updatedRow, error: err } = await _supabase
+                .from('series')
+                .update({ estado: estadoDb })
+                .eq('id', id)
+                .select()
+                .single()
+
+            if (err) throw err
+
+            // Al estar 'data' fuera, recargar los datos actualiza al instante a cualquier componente conectado
+            await loadData()
+
+            return { success: true, data: updatedRow }
+        } catch (e) {
+            console.error('Error al actualizar el estado de la serie en Supabase:', e)
+            error.value = e
+            return { success: false, error: e.message }
+        }
+    }
+
+    async function updateShowField(id, campoDb, valorNuevo) {
+        try {
+            const { data: updatedRow, error: err } = await _supabase
+                .from('series')
+                .update({ [campoDb]: valorNuevo })
+                .eq('id', id)
+                .select()
+                .single()
+
+            if (err) throw err
+
+            // Recargamos los datos globales para que se refleje instantáneamente en toda la app
+            await loadData()
+
+            return { success: true, data: updatedRow }
+        } catch (e) {
+            console.error(`Error al actualizar el campo ${campoDb} en Supabase:`, e)
+            error.value = e
+            return { success: false, error: e.message }
+        }
+    }
+
+    return { data, status, lastUpdate, loading, error, añoActual, loadAll, updateShowStatus, updateShowField }
 }

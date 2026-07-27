@@ -2132,3 +2132,37 @@ h4.fecha-separador {
 .details-seasons[open] summary::after {
     transform: rotate(90deg);
 }
+
+.view-serie-detail {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-top-bar {
+    padding: 1rem;
+    background: var(--surface, #202024);
+    border-bottom: 1px solid var(--border, #27272a);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.admin-select-input {
+    background-color: var(--surface-alt, #27272a);
+    color: var(--text, #ffffff);
+    border: 1px solid var(--border, #3f3f46);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}

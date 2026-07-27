@@ -3,38 +3,32 @@ import PosterThumb from './shared/PosterThumb.js'
 import LinksFooter from './shared/LinksFooter.js'
 import RewatchBadge from './shared/RewatchBadge.js'
 import SlowModeBadge from './shared/SlowModeBadge.js'
-import SerieDetailsModal from './shared/SerieDetailsModal.js'
 import { cardBgStyle, formatProximaFecha } from '../utils/format.js'
 
 export default {
     name: 'ViendoCard',
-    components: { PosterThumb, LinksFooter, RewatchBadge, SlowModeBadge, SerieDetailsModal },
+    components: { PosterThumb, LinksFooter, RewatchBadge, SlowModeBadge },
     props: {
         serie: { type: Object, required: true }
     },
+    emits: ['select-serie'],
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
         const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proximaFecha))
         const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true');
-        const mostrarDetalles = ref(false)
-        const abrirDetalles = () => { mostrarDetalles.value = true }
-        const cerrarDetalles = () => { mostrarDetalles.value = false }
         const progreso = computed(() => {
             const caps = props.serie.capitulosPorTemporada;
             if (!caps || Object.keys(caps).length === 0) return 0;
 
             if (props.serie.rewatch) {
-                // Progreso de toda la serie
                 const totalCaps = Object.values(caps).reduce((a, b) => a + b, 0);
-                // Asumimos que necesitas trackear el capítulo global actual
                 return (props.serie.capitulo / totalCaps) * 100;
             } else {
-                // Progreso de la temporada actual
                 const capsTemporada = caps[props.serie.temporada] || 1;
                 return (props.serie.capitulo / capsTemporada) * 100;
             }
         });
-        return { bgStyle, proximaFechaTexto, mostrarDetalles, abrirDetalles, cerrarDetalles, progreso, isAdmin }
+        return { bgStyle, proximaFechaTexto, progreso, isAdmin }
     },
     methods: {
         async marcarComoVisto(serie) {
@@ -58,14 +52,10 @@ export default {
                     throw new Error(`Error en el servidor: ${res.status}`);
                 }
 
-                // 1. Deserializar la respuesta para obtener los datos reales
                 const data = await res.json(); 
 
                 if (data.success) {
-                    // 2. Actualizar el objeto con los nuevos datos del backend.
-                    const datosActualizados = data.serie;
-                    
-                    Object.assign(serie, datosActualizados);
+                    Object.assign(serie, data.serie);
                 } else {
                     console.error('La API devolvió un error:', data.error);
                 }
@@ -76,6 +66,10 @@ export default {
         },
         totalCapsTemporada(serie) {
             return serie.capitulosPorTemporada[serie.temporada] || 0;
+        },
+        seleccionarSerie(serie) {
+            console.log('Seleccionando serie:', serie.titulo);
+            this.$emit('select-serie', serie)
         }
     },
     template: `
@@ -101,9 +95,8 @@ export default {
                 <p v-if="serie.proximaFecha" class="next-air">
                     📅 <strong>{{ proximaFechaTexto }}</strong>
                 </p>
-                <button class="details-btn" type="button" @click="abrirDetalles" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">?</button>
+                <button class="details-btn" type="button" @click="seleccionarSerie(serie)" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">?</button>
             </div>
-            <SerieDetailsModal :serie="serie" :visible="mostrarDetalles" @close="cerrarDetalles" />
             <div class="progress-bar-container" :title="totalCapsTemporada(serie) + ' capítulos esta temporada ' + serie.temporada">
                 <div class="progress-bar-fill" :style="{ width: progreso + '%' }"></div>
             </div>

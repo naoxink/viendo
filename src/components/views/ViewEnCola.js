@@ -12,6 +12,7 @@ export default {
         loading: Boolean,
         error: String
     },
+    emits: ['select-serie'],
     computed: {
         proximamente() {
             const todas = [ ...this.viendo, ...this.enCola ]
@@ -30,12 +31,12 @@ export default {
     template: `
         <div class="view view-en-cola">
             <section class="view-content">
-                <ProximamenteList :series="proximamente" titulo="👀 Próximamente" />
+                <ProximamenteList :series="proximamente" titulo="👀 Próximamente" @select-serie="$emit('select-serie', $event)" />
 
                 <p v-if="loading">Cargando series...</p>
                 <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
                 <template v-else>
-                    <EnColaList :series="enCola" titulo="📅 Series en cola" />
+                    <EnColaList :series="enCola" titulo="📅 Series en cola" @select-serie="$emit('select-serie', $event)" />
                     <CalendarioEstrenos :series="[...viendo, ...enCola]"></CalendarioEstrenos>
                 </template>
             </section>

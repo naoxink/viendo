@@ -6,6 +6,7 @@ export default {
     props: {
         serie: { type: Object, required: true }
     },
+    emits: ['select-serie'],
     template: `
         <div class="serie-card-dropped">
             <div class="info">
@@ -17,6 +18,7 @@ export default {
             </div>
             <div>
                 <LinksFooter :serie="serie" />
+                <button class="details-btn" type="button" @click="$emit('select-serie', serie)" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">?</button>
             </div>
         </div>
     `

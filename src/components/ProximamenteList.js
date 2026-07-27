@@ -8,6 +8,7 @@ export default {
         series: { type: Object, default: () => ({}) },
         titulo: { type: String, default: () => "" }
     },
+    emits: ['select-serie'],
     computed: {
         // Ordena las fechas cronológicamente y añade la etiqueta relativa
         gruposPorFecha() {
@@ -53,7 +54,7 @@ export default {
 
             <div v-for="grupo in gruposPorFecha" :key="grupo.fecha" class="fecha-group">
                 <h4 class="fecha-separador">{{ grupo.label }}</h4>
-                <ProximamenteCard v-for="serie in grupo.series" :key="serie.titulo" :serie="serie" />
+                <ProximamenteCard v-for="serie in grupo.series" :key="serie.titulo" :serie="serie" @select-serie="$emit('select-serie', $event)" />
             </div>
         </div>
     `
