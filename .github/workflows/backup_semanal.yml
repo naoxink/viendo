@@ -1,0 +1,46 @@
+name: Backup Semanal de Supabase a JSON
+
+on:
+  schedule:
+    # Se ejecuta todos los lunes a las 03:00 UTC
+    - cron: '0 3 * * 1'
+  workflow_dispatch: # Permite lanzarlo manualmente desde la web de GitHub
+
+permissions:
+  contents: write # Permiso necesario para hacer commit y push de los archivos JSON
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests supabase
+
+    - name: Ejecutar script de backup
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      run: |
+        python scripts/hacer_backup.py # Ajusta el nombre si tu script se llama diferente
+
+    - name: Guardar y subir los JSON actualizados al repositorio
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # Añadimos los archivos generados (tanto el histórico en backups/ como el latest/principales)
+        git add backups/ data/
+        
+        git commit -m "🤖 Backup semanal automático: actualización de archivos JSON" || echo "No hay cambios en los JSON que respaldar hoy."
+        git push
