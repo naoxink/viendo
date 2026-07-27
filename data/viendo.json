@@ -1,9 +1,9 @@
 [
   {
     "titulo": "Rick & Morty",
-    "temporada": 9,
-    "capitulo": 10,
-    "pendiente": true,
+    "temporada": 10,
+    "capitulo": 1,
+    "pendiente": false,
     "tvdb_id": 275274,
     "año": 2013,
     "vistoEn": 2026,
