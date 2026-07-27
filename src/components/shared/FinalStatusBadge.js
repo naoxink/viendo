@@ -4,7 +4,7 @@ export default {
         serie: { type: Object, required: true }
     },
     template: `
-        <span v-if="serie.estado_final" class="badge-final-status">
+        <span v-if="serie.estado_final && !['true', 'false'].includes(serie.estado_final.toString())" class="badge-final-status">
             {{ serie.estado_final }}
         </span>
     `
