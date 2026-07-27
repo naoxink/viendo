@@ -32,7 +32,7 @@ jobs:
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       run: |
-        python scripts/backup_semanal.py
+        python scripts/supabase_json_backup.py
 
     - name: Guardar y subir los JSON actualizados al repositorio
       run: |
