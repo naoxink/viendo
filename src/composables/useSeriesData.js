@@ -1,13 +1,19 @@
 import { ref, computed } from 'vue'
+import { createClient } from '@supabase/supabase-js'
+
+// Inicializa Supabase con tus credenciales públicas (anon key)
+// Nota: Puedes mover esto a un archivo de configuración compartido si lo prefieres
+const SUPABASE_URL = 'https://pfssrcyxpmnofezfnrct.supabase.co'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmc3NyY3l4cG1ub2ZlemZucmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxNDM1MTIsImV4cCI6MjEwMDcxOTUxMn0.AtMp0cNUrSGcjrEZqT1C_iZEhfnF2x555dSl_ZrHiUI' // Recuerda usar la clave 'anon' pública en el cliente web
+
+const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 /**
- * Encapsula todo el acceso a los JSON estáticos del sitio.
- *
- * Ahora carga cada colección desde su propio archivo JSON fragmentado.
+ * Encapsula todo el acceso a datos mediante Supabase.
  */
 export function useSeriesData() {
     const data = ref(null)
-    const status = ref(null)
+    const status = ref(null) // Si usas status.json para algo externo, puedes mantenerlo o adaptarlo
     const lastUpdate = ref('')
     const loading = ref(true)
     const error = ref(null)
@@ -16,21 +22,51 @@ export function useSeriesData() {
 
     async function loadData() {
         try {
-            const [viendo, enCola, dropeadas, completadas] = await Promise.all([
-                fetch('data/viendo.json').then(res => res.json()),
-                fetch('data/en_cola.json').then(res => res.json()),
-                fetch('data/dropeadas.json').then(res => res.json()),
-                fetch('data/completadas.json').then(res => res.json())
-            ])
+            // Hacemos una única petición a Supabase para traernos todas las series de la tabla
+            const { data: rows, error: err } = await _supabase
+                .from('series')
+                .select('*')
 
-            data.value = {
-                viendo: Array.isArray(viendo) ? viendo.map(s => { s.estado = 'viendo'; return s; }) : [],
-                en_cola: Array.isArray(enCola) ? enCola.map(s => { s.estado = 'enCola'; return s; }) : [],
-                dropeadas: Array.isArray(dropeadas) ? dropeadas.map(s => { s.estado = 'dropeada'; return s; }) : [],
-                completadas: Array.isArray(completadas) ? completadas.map(s => { s.estado = 'completada'; return s; }) : []
+            if (err) throw err
+
+            // Inicializamos la estructura que espera tu aplicación
+            const agrupado = {
+                viendo: [],
+                en_cola: [],
+                dropeadas: [],
+                completadas: []
             }
+
+            // Mapeamos los estados de la base de datos a las claves de tu objeto frontend
+            rows.forEach(item => {
+                // Adaptamos las claves de la base de datos de vuelta a lo que espera tu app si difieren
+                const serieMapeada = {
+                    ...item,
+                    año: item.anio,
+                    vistoEn: item.visto_en,
+                    duracionMedia: item.duracion_media,
+                    capitulosPorTemporada: item.capitulos_por_temporada
+                }
+
+                // Dependiendo de lo que guardaras en la columna 'estado', lo metemos en su array correspondiente
+                if (item.estado === 'viendo') {
+                    serieMapeada.estado = 'viendo'
+                    agrupado.viendo.push(serieMapeada)
+                } else if (item.estado === 'en_cola' || item.estado === 'enCola') {
+                    serieMapeada.estado = 'enCola'
+                    agrupado.en_cola.push(serieMapeada)
+                } else if (item.estado === 'dropeadas' || item.estado === 'dropeada') {
+                    serieMapeada.estado = 'dropeada'
+                    agrupado.dropeadas.push(serieMapeada)
+                } else if (item.estado === 'completadas' || item.estado === 'completada') {
+                    serieMapeada.estado = 'completada'
+                    agrupado.completadas.push(serieMapeada)
+                }
+            })
+
+            data.value = agrupado
         } catch (e) {
-            console.error('Error cargando los archivos de datos fragmentados:', e)
+            console.error('Error cargando los datos desde Supabase:', e)
             error.value = e
         }
     }
@@ -40,25 +76,26 @@ export function useSeriesData() {
             const res = await fetch('data/status.json')
             status.value = await res.json()
         } catch (e) {
-            // No es un error real: el archivo de estado puede no existir aún.
-            console.log('Aún no existe el archivo de estados:', e)
             status.value = null
         }
     }
 
     async function loadLastUpdate() {
         try {
-            const files = ['data/viendo.json', 'data/en_cola.json', 'data/dropeadas.json', 'data/completadas.json']
-            const responses = await Promise.all(files.map(file => fetch(file, { method: 'HEAD' })))
-            const lastModified = responses
-                .map(res => res.headers.get('Last-Modified'))
-                .filter(Boolean)
-                .map(value => new Date(value).getTime())
-                .sort((a, b) => b - a)[0]
+            // Como ahora los datos vienen de Supabase, podemos consultar la fecha de la última modificación 
+            // consultando el registro más reciente o usando la fecha actual de sincronización.
+            const { data: row, error } = await _supabase
+                .from('series')
+                .select('created_at')
+                .order('created_at', { ascending: false })
+                .limit(1)
 
-            lastUpdate.value = lastModified
-                ? new Date(lastModified).toLocaleDateString('es-ES')
-                : 'desconocida'
+            if (error || !row || row.length === 0) {
+                lastUpdate.value = 'desconocida'
+                return
+            }
+
+            lastUpdate.value = new Date(row[0].created_at).toLocaleDateString('es-ES')
         } catch (e) {
             lastUpdate.value = 'desconocida'
         }

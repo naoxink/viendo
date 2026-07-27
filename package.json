@@ -1,6 +1,7 @@
 {
   "name": "viendo-api",
   "dependencies": {
-    "@octokit/rest": "^20.0.0"
+    "@octokit/rest": "^20.0.0",
+    "@supabase/supabase-js": "^2.39.0"
   }
 }

@@ -1,0 +1,49 @@
+name: Revisión Mensual de Series Completadas (Supabase)
+
+on:
+  schedule:
+    # Se ejecuta el día 1 de cada mes a las 04:25 UTC (06:25 AM en España en verano)
+    - cron: '25 4 1 * *'
+  workflow_dispatch: # Te permite ejecutarlo a mano desde la web de GitHub cuando quieras
+
+permissions:
+  contents: write
+
+jobs:
+  check-completed:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests supabase
+
+    - name: Ejecutar escáner de completadas
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        TVDB_API_KEY: ${{ secrets.TVDB_API_KEY }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        python scripts/revisar_completadas.py
+
+    - name: Guardar nuevos pósters en el repositorio (si los hay)
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # Como los cambios de estado ocurren en Supabase, solo commiteamos nuevos pósters si se descargan
+        git add posters/
+        
+        git commit -m "🤖 Mantenimiento mensual: actualización de pósters" || echo "Sin cambios en pósters este mes."
+        git push

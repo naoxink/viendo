@@ -1,0 +1,49 @@
+name: Sincronización Diaria de Series (Supabase)
+
+on:
+  schedule:
+    - cron: '15 0 * * *'
+  workflow_dispatch: # Permite ejecutar el workflow manualmente desde la web de GitHub
+
+permissions:
+  contents: write # Permiso para commitear cambios en posters o archivos de estado
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar el código del repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar entorno de Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Instalar dependencias necesarias
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests supabase
+
+    - name: Ejecutar script de actualización diaria
+      env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          TVDB_API_KEY: ${{ secrets.TVDB_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        python scripts/actualizar_fechas.py
+
+    - name: Guardar cambios locales (pósters y status.json) en el repositorio
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # Añadimos la carpeta de pósters y el archivo de estado
+        git add posters/ status.json
+        
+        # El "|| echo" evita que falle si no hay cambios que guardar hoy
+        git commit -m "🤖 Sincronización diaria: actualización de pósters y status" || echo "No hay cambios locales que actualizar hoy."
+        git push
