@@ -6,7 +6,7 @@ from supabase import create_client, Client
 
 # CONFIGURACIÓN DE SUPABASE
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pfssrcyxpmnofezfnrct.supabase.co")
-SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmc3NyY3l4cG1ub2ZlemZucmN0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NTE0MzUxMiwiZXhwIjoyMTAwNzE5NTEyfQ.Utz69UFiM2_3iYGHPLT28nH16VU9PfDCTx0IZngcMRw") # Usa service_role para scripts de backend
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
