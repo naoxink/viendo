@@ -59,8 +59,8 @@ export default {
         return { hasNotas, nextAirText, volver, notaClase, isAdmin, cambiarEstado, actualizarCampo }
     },
     methods: {
-        estadoTexto(serie) {
-            switch(serie.estado) {
+        estadoTexto(estado) {
+            switch(estado) {
                 case 'viendo': return 'Viendo';
                 case 'enCola': return 'En cola';
                 case 'completada': return 'Completada';
@@ -120,23 +120,15 @@ export default {
 
                             <div class="details-field" v-if="serie.proximaFecha">
                                 <span class="details-field-label">Próximo episodio</span>
-                                <span class="details-field-value">{{ nextAirText }}</span>
+                                <span v-if="isAdmin" class="details-field-value">
+                                    <input type="date" :value="serie.proximaFecha" @change="actualizarCampo('proximaFecha', $event)" class="admin-input-small" />
+                                </span>
+                                <span v-else class="details-field-value">{{ nextAirText }}</span>
                             </div>
 
                             <div class="details-field" v-if="serie.temporada && serie.estado === 'viendo'">
                                 <span class="details-field-label">Progreso</span>
                                 <span class="details-field-value">{{ 'T' + serie.temporada + ' · ' + 'E' + serie.capitulo }} ({{ serie.capitulo }}/{{ serie.capitulosPorTemporada[serie.temporada] }})</span>
-                            </div>
-
-                            <div class="details-field" v-if="serie.temporada && serie.capitulo && serie.capitulosPorTemporada">
-                                <span class="details-field-label">Progreso de la temporada</span>
-                                <span class="details-field-value">
-                                    <progress
-                                        v-if="serie.capitulosPorTemporada?.[serie.temporada]"
-                                        :value="serie.capitulo"
-                                        :max="serie.capitulosPorTemporada[serie.temporada]"
-                                    ></progress>
-                                </span>
                             </div>
 
                             <details class="details-seasons" v-if="serie.capitulosPorTemporada">
@@ -173,7 +165,12 @@ export default {
 
                             <div class="details-field" v-if="serie.vistoEn">
                                 <span class="details-field-label">Completada en</span>
-                                <span class="details-field-value">{{ serie.vistoEn }}</span>
+                                <span class="details-field-value">
+                                    <template v-if="isAdmin">
+                                        <input type="text" :value="serie.vistoEn" @change="actualizarCampo('vistoEn', $event)" class="admin-input-small" />
+                                    </template>
+                                    <template v-else>{{ serie.vistoEn }}</template>
+                                 </span>
                             </div>
 
                             <div class="details-field" v-if="serie.temporada">
@@ -198,14 +195,27 @@ export default {
                                     <template v-if="!isAdmin">
                                         <span class="nota-tag" :class="notaClase">{{ serie.nota || '-' }}</span>
                                     </template>
-                                    <input v-else type="text" :value="serie.nota" @change="actualizarCampo('nota', $event)" class="admin-input" />
+                                    <input v-else type="text" :value="serie.nota" @change="actualizarCampo('nota', $event)" class="admin-input-small" />
                                 </span>
                             </div>
 
                             <div class="details-field" v-if="serie.rewatch !== undefined">
                                 <span class="details-field-label">Rewatch</span>
                                 <span class="details-field-value">
-                                    <RewatchBadge :serie="serie" />
+                                    <RewatchBadge v-if="!isAdmin" :serie="serie" />
+                                    <label v-else class="admin-checkbox-label">
+                                        <input type="checkbox" :checked="serie.rewatch" @change="actualizarCampo('rewatch', $event)" />
+                                        Sí
+                                    </label>
+                                </span>
+                            </div>
+
+                            <div class="details-field" v-if="isAdmin && serie.rewatch !== undefined">
+                                <span class="details-field-label">Veces vista</span>
+                                <span class="details-field-value">
+                                    <label class="admin-checkbox-label">
+                                        <input type="number" class="admin-input-small" :value="serie.veces" @change="actualizarCampo('veces', $event)" />
+                                    </label>
                                 </span>
                             </div>
 

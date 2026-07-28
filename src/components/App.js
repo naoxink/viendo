@@ -67,6 +67,11 @@ export default {
             onBeforeUnmount(() => {
                 mediaQuery.removeEventListener?.('change', syncSystemTheme)
             })
+
+            // Si el estado activo es 'detalle' pero no hay serie seleccionada, evitamos el bloqueo
+            if (activeView.value === 'detalle' && !selectedSerie.value) {
+                activeView.value = 'viendo'
+            }
         })
 
         watch(themePreference, (value) => {
@@ -80,6 +85,10 @@ export default {
         })
 
         watch(activeView, (value) => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Cambia a 'auto' si prefieres que salte de golpe sin animación
+            })
             try {
                 if (value !== 'detalle') {
                     selectedSerie.value = null
@@ -134,7 +143,7 @@ export default {
 
             <div class="views-container">
                 <ViewViendo 
-                    v-if="activeView === 'viendo'"
+                    v-if="activeView === 'viendo' || (activeView === 'detalle' && !selectedSerie)"
                     :viendo="viendo"
                     :status="status"
                     :last-update="lastUpdate"
