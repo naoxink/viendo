@@ -146,5 +146,26 @@ export function useSeriesData() {
         }
     }
 
-    return { data, status, lastUpdate, loading, error, añoActual, loadAll, updateShowStatus, updateShowField }
+    async function insertShow(serieEsqueleto) {
+        try {
+            const { data: insertedRow, error: err } = await _supabase
+                .from('series')
+                .insert([serieEsqueleto])
+                .select()
+                .single()
+
+            if (err) throw err
+
+            // Recargamos los datos globales para que aparezca instantáneamente en la app
+            await loadData()
+
+            return { success: true, data: insertedRow }
+        } catch (e) {
+            console.error("Error al insertar la nueva serie en Supabase:", e)
+            error.value = e
+            return { success: false, error: e.message }
+        }
+    }
+
+    return { data, status, lastUpdate, loading, error, añoActual, loadAll, updateShowStatus, updateShowField, insertShow }
 }

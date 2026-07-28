@@ -6,6 +6,7 @@ import ViewEnCola from './views/ViewEnCola.js'
 import ViewCompletadas from './views/ViewCompletadas.js'
 import ViewStats from './views/ViewStats.js'
 import ViewSerieDetail from './views/ViewSerieDetail.js'
+import ViewAddSerie from './views/ViewAddSerie.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const token = urlParams.get('admin_token');
@@ -19,7 +20,7 @@ if (token) {
 
 export default {
     name: 'App',
-    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail },
+    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail, ViewAddSerie },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
         const searchTerm = ref('')
@@ -102,6 +103,13 @@ export default {
             activeView.value = 'viendo' // O la vista por defecto que prefieras
         }
 
+        const cambiarVista = vista => {
+            if (vista !== 'detalle') {
+                selectedSerie.value = null
+            }
+            activeView.value = vista
+        }
+
         const viendo = computed(() => data.value?.viendo ?? [])
         const completadas = computed(() => data.value?.completadas ?? [])
         const dropeadas = computed(() => data.value?.dropeadas ?? [])
@@ -109,7 +117,8 @@ export default {
 
         return {
             data, status, lastUpdate, loading, error, añoActual,
-            searchTerm, themePreference, activeView, viendo, completadas, dropeadas, enCola, abrirDetalle, volverAtras, selectedSerie
+            searchTerm, themePreference, activeView, viendo, completadas,
+            dropeadas, enCola, abrirDetalle, volverAtras, selectedSerie, cambiarVista
         }
     },
     template: `
@@ -144,6 +153,7 @@ export default {
                     :loading="loading"
                     :error="error"
                     @select-serie="abrirDetalle"
+                    @cambiar-vista="cambiarVista"
                 />
                 
                 <ViewCompletadas 
@@ -176,6 +186,10 @@ export default {
                     v-if="activeView === 'detalle' && selectedSerie"
                     :serie="selectedSerie"
                     @back="volverAtras"
+                />
+
+                <ViewAddSerie
+                    v-if="activeView === 'add-serie'"
                 />
             </div>
 

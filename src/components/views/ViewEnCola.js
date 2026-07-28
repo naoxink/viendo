@@ -12,7 +12,7 @@ export default {
         loading: Boolean,
         error: String
     },
-    emits: ['select-serie'],
+    emits: ['select-serie', 'cambiar-vista'],
     computed: {
         proximamente() {
             const todas = [ ...this.viendo, ...this.enCola ]
@@ -26,6 +26,9 @@ export default {
                 return acc
             }, {})
             return proximamente
+        },
+        isAdmin() {
+            return sessionStorage.getItem('isAdmin') === 'true'
         }
     },
     template: `
@@ -39,6 +42,10 @@ export default {
                     <EnColaList :series="enCola" titulo="📅 Series en cola" @select-serie="$emit('select-serie', $event)" />
                     <CalendarioEstrenos :series="[...viendo, ...enCola]"></CalendarioEstrenos>
                 </template>
+
+                <button v-if="isAdmin" @click="$emit('cambiar-vista', 'add-serie')" class="btn-add-header">
+                    + Añadir
+                </button>
             </section>
         </div>
     `
