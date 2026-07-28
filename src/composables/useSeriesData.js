@@ -98,70 +98,113 @@ export function useSeriesData() {
     }
 
     async function updateShowStatus(id, estadoNuevo) {
+        const token = sessionStorage.getItem('adminToken')
+        if (!token) {
+            return { success: false, error: 'No se encontró el token de administrador' }
+        }
+
         try {
             let estadoDb = estadoNuevo
             if (estadoNuevo === 'enCola') estadoDb = 'en_cola'
             if (estadoNuevo === 'dropeada') estadoDb = 'dropeadas'
             if (estadoNuevo === 'completada') estadoDb = 'completadas'
 
-            const { data: updatedRow, error: err } = await _supabase
-                .from('series')
-                .update({ estado: estadoDb })
-                .eq('id', id)
-                .select()
-                .single()
+            const res = await fetch('/api/update-status', { // Ajusta la ruta exacta de tu endpoint de estado
+                method: 'POST',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id, estadoNuevo: estadoDb })
+            })
 
-            if (err) throw err
+            if (!res.ok) {
+                throw new Error(`Error en el servidor: ${res.status}`)
+            }
 
-            // Al estar 'data' fuera, recargar los datos actualiza al instante a cualquier componente conectado
+            const data = await res.json()
+
+            if (!data.success) {
+                throw new Error(data.error || 'Error desconocido en la API')
+            }
+
             await loadData()
 
-            return { success: true, data: updatedRow }
+            return { success: true, data: data.serie }
         } catch (e) {
-            console.error('Error al actualizar el estado de la serie en Supabase:', e)
+            console.error('Error al actualizar el estado de la serie:', e)
             error.value = e
             return { success: false, error: e.message }
         }
     }
 
     async function updateShowField(id, campoDb, valorNuevo) {
+        const token = sessionStorage.getItem('adminToken')
+        if (!token) {
+            return { success: false, error: 'No se encontró el token de administrador' }
+        }
+
         try {
-            const { data: updatedRow, error: err } = await _supabase
-                .from('series')
-                .update({ [campoDb]: valorNuevo })
-                .eq('id', id)
-                .select()
-                .single()
+            const res = await fetch('/api/update-field', { // Ajusta la ruta exacta de tu endpoint de campos
+                method: 'POST',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id, campoDb, valorNuevo })
+            })
 
-            if (err) throw err
+            if (!res.ok) {
+                throw new Error(`Error en el servidor: ${res.status}`)
+            }
 
-            // Recargamos los datos globales para que se refleje instantáneamente en toda la app
+            const data = await res.json()
+
+            if (!data.success) {
+                throw new Error(data.error || 'Error desconocido en la API')
+            }
+
             await loadData()
 
-            return { success: true, data: updatedRow }
+            return { success: true, data: data.data }
         } catch (e) {
-            console.error(`Error al actualizar el campo ${campoDb} en Supabase:`, e)
+            console.error(`Error al actualizar el campo ${campoDb}:`, e)
             error.value = e
             return { success: false, error: e.message }
         }
     }
 
     async function insertShow(serieEsqueleto) {
+        const token = sessionStorage.getItem('adminToken')
+        if (!token) {
+            return { success: false, error: 'No se encontró el token de administrador' }
+        }
+
         try {
-            const { data: insertedRow, error: err } = await _supabase
-                .from('series')
-                .insert([serieEsqueleto])
-                .select()
-                .single()
+            const res = await fetch('/api/add-show', {
+                method: 'POST',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(serieEsqueleto)
+            })
 
-            if (err) throw err
+            if (!res.ok) {
+                throw new Error(`Error en el servidor: ${res.status}`)
+            }
 
-            // Recargamos los datos globales para que aparezca instantáneamente en la app
+            const data = await res.json()
+
+            if (!data.success) {
+                throw new Error(data.error || 'Error desconocido en la API')
+            }
+
             await loadData()
 
-            return { success: true, data: insertedRow }
+            return { success: true, data: data.serie }
         } catch (e) {
-            console.error("Error al insertar la nueva serie en Supabase:", e)
+            console.error("Error al insertar la nueva serie:", e)
             error.value = e
             return { success: false, error: e.message }
         }
