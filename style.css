@@ -1980,7 +1980,7 @@ h4.fecha-separador {
     display: flex;
     margin: 5px 0;
     padding: 15px;
-    background-color: #365658;
+    /* background-color: #365658; */
     border: 1px solid #0d1313;
     min-height: 80px;
     align-items: center;
