@@ -76,6 +76,14 @@ export default async function handler(req, res) {
         }
     }
 
+    // Si es rewatch (o es una serie finalizada) tomamos todos los capítulos de 'capitulos_por_temporada'
+    // y los sumamos a acumulados restando los que llevamos vistos
+    if ((serie.rewatch || serie.estado_final === 'Ended') && serie.capitulos_por_temporada) {
+        const totalCapitulos = Object.values(serie.capitulos_por_temporada || {}).reduce((acc, val) => acc + val, 0);
+        nextAcumulados = totalCapitulos - (nextTemp - 1) * totalEnTemporada - nextCap;
+        nextPendiente = (nextAcumulados > 0);
+    }
+
     const datosActualizados = {
         temporada: nextTemp,
         capitulo: nextCap,
