@@ -13,14 +13,7 @@ export default {
         error: String,
         añoActual: Number
     },
-    methods: {
-        promptAdminToken() {
-            const token = prompt('Token de autenticación')
-            if (token) {
-                location.href = `https://naoxink-viendo.vercel.app?admin_token=${token}`
-            }
-        }
-    },
+    emits: ['show-login'],
     template: `
         <div class="view view-stats">
             <section class="view-content">
@@ -37,7 +30,7 @@ export default {
                 />
             </section>
             <div class="text-center">
-                <a ref="javascript:() => false" class="link" @click="promptAdminToken">Administración</a>
+                <a ref="javascript:() => false" class="link" @click="$emit('show-login')">Login</a>
             </div>
         </div>
     `

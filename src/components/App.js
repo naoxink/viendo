@@ -7,20 +7,14 @@ import ViewCompletadas from './views/ViewCompletadas.js'
 import ViewStats from './views/ViewStats.js'
 import ViewSerieDetail from './views/ViewSerieDetail.js'
 import ViewAddSerie from './views/ViewAddSerie.js'
+import ViewLogin from './views/ViewLogin.js'
 
 const urlParams = new URLSearchParams(window.location.search);
-const token = urlParams.get('admin_token');
-
-if (token) {
-  sessionStorage.setItem('isAdmin', 'true');
-  sessionStorage.setItem('adminToken', token);
-  // Limpiar la URL para que el token no se quede ahí visible
-  window.history.replaceState({}, document.title, window.location.pathname);
-}
+const token = ''
 
 export default {
     name: 'App',
-    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail, ViewAddSerie },
+    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail, ViewAddSerie, ViewLogin },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
         const searchTerm = ref('')
@@ -141,6 +135,11 @@ export default {
                 </select>
             </div>
 
+            <ViewLogin
+                v-if="activeView === 'login'" 
+                @login-success="activeView = 'viendo'"
+            ></ViewLogin>
+
             <div class="views-container">
                 <ViewViendo 
                     v-if="activeView === 'viendo' || (activeView === 'detalle' && !selectedSerie)"
@@ -188,6 +187,7 @@ export default {
                     :error="error"
                     :año-actual="añoActual"
                     @select-serie="abrirDetalle"
+                    @show-login="activeView = 'login'"
                 />
                 
                 <!-- Nueva vista de detalle de serie -->

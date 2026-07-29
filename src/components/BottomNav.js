@@ -38,6 +38,7 @@ export default {
                 :class="{ active: activeView === 'stats' }"
                 @click="$emit('change-view', 'stats')"
                 title="Estadísticas y dashboard"
+                @show-login="currentView = 'login'"
             >
                 <span class="nav-icon">📊</span>
                 <span class="nav-label">Stats</span>

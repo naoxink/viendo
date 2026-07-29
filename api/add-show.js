@@ -6,30 +6,28 @@ const supabase = createClient(
 );
 
 export default async function handler(req, res) {
-  // 1. Cabecera dinámica para CORS
-  const origin = req.headers.origin;
-  const allowedOrigins = ['https://naoxink.github.io'];
-
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  
+  // 1. Cabeceras CORS (Permitiendo tu GitHub Pages)
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', 'https://naoxink.github.io');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
+  );
 
-  // Responder inmediatamente a las peticiones preflight de CORS
+  // 2. Interceptar el Preflight (OPTIONS)
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
+  }
+
+  // 3. Solo permitimos método POST para el login
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, error: 'Método no permitido' });
   }
 
   // Validar token de seguridad
   if (req.headers['authorization'] !== process.env.ADMIN_TOKEN) {
     return res.status(401).end();
-  }
-
-  // Solo permitimos método POST
-  if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, error: 'Método no permitido' });
   }
 
   // Recibimos los datos básicos de la nueva serie
