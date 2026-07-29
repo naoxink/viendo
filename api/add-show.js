@@ -54,7 +54,7 @@ export default async function handler(req, res) {
     capitulo: 0,
     veces: 0,
     poster_path: '',
-    vistoEn: new Date().getFullYear(),
+    visto_en: new Date().getFullYear(),
     duracionMedia: 0,
     capitulosPorTemporada: {}
   };
