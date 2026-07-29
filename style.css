@@ -2157,7 +2157,7 @@ h4.fecha-separador {
 
 /* Botón de retroceso adaptado a la barra */
 .btn-back {
-    background-color: var(--surface-alt, #27272a);
+    background-color: var(--surface, #27272a);
     color: var(--text, #f4f4f5);
     border: 1px solid var(--border, #3f3f46);
     padding: 0.4rem 0.8rem;
