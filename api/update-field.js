@@ -40,7 +40,7 @@ export default async function handler(req, res) {
   // Lista blanca de campos permitidos para actualizar por seguridad
   const camposPermitidos = [
     'titulo', 'estado', 'temporada', 'capitulo', 'rewatch', 'veces', 
-    'nota', 'pendiente', 'duracion_media', 'visto_en', 'notas', 'slow_mode'
+    'nota', 'pendiente', 'duracion_media', 'visto_en', 'notas', 'slow_mode', 'proximaFecha'
   ];
 
   if (!camposPermitidos.includes(campoDb)) {

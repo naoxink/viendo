@@ -167,7 +167,7 @@ export default {
                                 <span class="details-field-label">Completada en</span>
                                 <span class="details-field-value">
                                     <template v-if="isAdmin">
-                                        <input type="text" :value="serie.vistoEn" @change="actualizarCampo('vistoEn', $event)" class="admin-input-small" />
+                                        <input type="text" :value="serie.vistoEn" @change="actualizarCampo('visto_en', $event)" class="admin-input-small" />
                                     </template>
                                     <template v-else>{{ serie.vistoEn }}</template>
                                  </span>
