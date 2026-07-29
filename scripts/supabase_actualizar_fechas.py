@@ -306,7 +306,7 @@ def actualizar_fechas(api_key):
                 
                 # CASO: SERIE FINALIZADA Y USUARIO AL DÍA
                 if not futuros and estado_serie in ["Ended", "Canceled"]:
-                    serie['proximaFecha'] = "TBA"
+                    serie['proximaFecha'] = None
                     serie['estado_final'] = estado_serie
                     serie['visto_en'] = hoy.year
                     if not serie.get('nota'):
@@ -315,7 +315,7 @@ def actualizar_fechas(api_key):
                     serie['estado'] = "completadas" # Cambia de estado en Supabase
                     
                     update_payload.update({
-                        "proximaFecha": "TBA",
+                        "proximaFecha": None,
                         "estado_final": estado_serie,
                         "visto_en": hoy.year,
                         "nota": serie['nota'],
@@ -329,7 +329,7 @@ def actualizar_fechas(api_key):
                         serie['proximaFecha'] = futuros[0]['aired']
                         print(f"   📅 Al día. Próximo estreno el: {serie['proximaFecha']}")
                     else:
-                        serie['proximaFecha'] = "TBA"
+                        serie['proximaFecha'] = None
                         print("   📅 Al día. Sin fecha de regreso confirmada (TBA).")
                     
                     update_payload["proximaFecha"] = serie['proximaFecha']
@@ -344,7 +344,12 @@ def actualizar_fechas(api_key):
             print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
 
         # Ejecutamos el update en Supabase para esta serie concreta
-        supabase.table("series").update(update_payload).eq("id", serie_id).execute()
+        res = supabase.table("series").update(update_payload).eq("id", serie_id).execute()
+
+        # CHIVATO DE SEGURIDAD: Verificamos si realmente se ha modificado la fila
+        if not res.data:
+            print(f"   ⚠️ ¡ALERTA! Supabase ha devuelto un array vacío para '{serie['titulo']}'. La base de datos no se ha actualizado. Revisa si estás usando la clave 'service_role' o si RLS está bloqueando la escritura.")
+            notificaciones.append(f"   ⚠️ ¡ALERTA! Supabase ha devuelto un array vacío para '{serie['titulo']}'. La base de datos no se ha actualizado. Revisa si estás usando la clave 'service_role' o si RLS está bloqueando la escritura.")
 
     print("\n💾 ¡La base de datos en Supabase ha sido sincronizada con éxito!")
 
