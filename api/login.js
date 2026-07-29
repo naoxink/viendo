@@ -1,4 +1,10 @@
 import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+);
 
 export default async function handler(req, res) {
   // 1. Cabeceras CORS (Permitiendo tu GitHub Pages)
