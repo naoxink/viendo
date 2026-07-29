@@ -52,7 +52,7 @@ export default async function handler(req, res) {
     estado,
     temporada: 1,
     capitulo: 1,
-    capitulosPorTemporada: {}
+    capitulos_por_temporada: {}
   };
 
   try {
