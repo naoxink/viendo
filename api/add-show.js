@@ -51,11 +51,7 @@ export default async function handler(req, res) {
     tvdb_id,
     estado,
     temporada: 1,
-    capitulo: 0,
-    veces: 0,
-    poster_path: '',
-    visto_en: new Date().getFullYear(),
-    duracionMedia: 0,
+    capitulo: 1,
     capitulosPorTemporada: {}
   };
 
