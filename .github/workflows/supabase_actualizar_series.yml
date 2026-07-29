@@ -34,7 +34,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
-        python scripts/actualizar_fechas.py --apikey "${{ secrets.TVDB_API_KEY }}"
+        python scripts/supabase_actualizar_series.py --apikey "${{ secrets.TVDB_API_KEY }}"
 
     - name: Guardar cambios locales (pósters y status.json) en el repositorio
       run: |
