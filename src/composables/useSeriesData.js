@@ -2,10 +2,7 @@ import { ref, computed } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 import { CONFIG } from '../utils/config.js'
 
-const SUPABASE_URL = 'https://pfssrcyxpmnofezfnrct.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmc3NyY3l4cG1ub2ZlemZucmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxNDM1MTIsImV4cCI6MjEwMDcxOTUxMn0.AtMp0cNUrSGcjrEZqT1C_iZEhfnF2x555dSl_ZrHiUI'
-
-const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+const _supabase = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY)
 
 // --- ESTADO GLOBAL COMPARTIDO (Singleton) ---
 const data = ref(null)
