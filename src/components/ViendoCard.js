@@ -4,6 +4,7 @@ import LinksFooter from './shared/LinksFooter.js'
 import RewatchBadge from './shared/RewatchBadge.js'
 import SlowModeBadge from './shared/SlowModeBadge.js'
 import { cardBgStyle, formatProximaFecha } from '../utils/format.js'
+import { CONFIG } from '../utils/config.js'
 
 export default {
     name: 'ViendoCard',
@@ -35,7 +36,7 @@ export default {
             const token = sessionStorage.getItem('adminToken');
             
             try {
-                const res = await fetch('/api/update', {
+                const res = await fetch(`${CONFIG.API_BASE_URL}/api/update`, {
                     method: 'POST',
                     headers: {
                         'Authorization': token,

@@ -1,3 +1,5 @@
+import { CONFIG } from '../../utils/config.js'
+
 export default {
   name: 'ViewLogin',
   template: `
@@ -76,7 +78,7 @@ export default {
 
       try {
         // Aquí atacaremos a tu futuro endpoint de Vercel/Supabase
-        const response = await fetch('/api/login', {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/api/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { createClient } from '@supabase/supabase-js'
+import { CONFIG } from '../utils/config'
 
 const SUPABASE_URL = 'https://pfssrcyxpmnofezfnrct.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmc3NyY3l4cG1ub2ZlemZucmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxNDM1MTIsImV4cCI6MjEwMDcxOTUxMn0.AtMp0cNUrSGcjrEZqT1C_iZEhfnF2x555dSl_ZrHiUI'
@@ -109,7 +110,7 @@ export function useSeriesData() {
             if (estadoNuevo === 'dropeada') estadoDb = 'dropeadas'
             if (estadoNuevo === 'completada') estadoDb = 'completadas'
 
-            const res = await fetch('/api/update-status', { // Ajusta la ruta exacta de tu endpoint de estado
+            const res = await fetch(`${CONFIG.API_BASE_URL}/api/update-status`, {
                 method: 'POST',
                 headers: {
                     'Authorization': token,
@@ -145,7 +146,7 @@ export function useSeriesData() {
         }
 
         try {
-            const res = await fetch('/api/update-field', { // Ajusta la ruta exacta de tu endpoint de campos
+            const res = await fetch(`${CONFIG.API_BASE_URL}/api/update-field`, {
                 method: 'POST',
                 headers: {
                     'Authorization': token,
@@ -181,7 +182,7 @@ export function useSeriesData() {
         }
 
         try {
-            const res = await fetch('/api/add-show', {
+            const res = await fetch(`${CONFIG.API_BASE_URL}/api/add-show`, {
                 method: 'POST',
                 headers: {
                     'Authorization': token,
