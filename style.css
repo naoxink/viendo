@@ -2489,3 +2489,29 @@ h4.fecha-separador {
     color: #16a34a;
     border: 1px solid rgba(22, 163, 74, 0.2);
 }
+
+
+
+
+
+/* Campo de notas en bloque vertical */
+.details-field.details-field-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    grid-column: 1 / -1; /* Si usas Grid, esto hace que ocupe todo el ancho de la tarjeta */
+    align-items: flex-start;
+}
+
+.admin-textarea-block {
+    width: 100%;
+    resize: vertical;
+    box-sizing: border-box;
+    font-family: inherit; /* Hereda la tipografía de la app */
+}
+
+.details-notas-texto {
+    white-space: pre-wrap; /* Respeta los saltos de línea si los hubiera */
+    color: var(--text-muted, inherit);
+    margin: 0;
+}

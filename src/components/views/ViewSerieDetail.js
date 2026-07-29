@@ -258,9 +258,23 @@ export default {
 
                         </div>
 
-                        <div class="details-field" v-if="hasNotas">
-                            <span class="details-field-label">Notas</span><br>
-                            <span>{{ serie.notas }}</span>
+                        <div class="details-field details-field-block">
+                            <span class="details-field-label">NOTAS</span>
+                            
+                            <!-- Modo lectura para usuarios normales -->
+                            <template v-if="!isAdmin">
+                                <p class="details-notas-texto">{{ serie.notas || 'Sin notas' }}</p>
+                            </template>
+                            
+                            <!-- Modo edición para el admin -->
+                            <textarea 
+                                v-else 
+                                :value="serie.notas" 
+                                @change="actualizarCampo('notas', $event)" 
+                                class="admin-input admin-textarea-block"
+                                placeholder="Añade tus notas personales..."
+                                rows="3"
+                            ></textarea>
                         </div>
 
                         <div class="details-links">
