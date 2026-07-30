@@ -2,12 +2,13 @@ import { computed } from 'vue'
 import PosterThumb from '../shared/PosterThumb.js'
 import LinksFooter from '../shared/LinksFooter.js'
 import RewatchBadge from '../shared/RewatchBadge.js'
+import SlowModeBadge from '../shared/SlowModeBadge.js'
 import { formatProximaFecha, cardBgStyle, getNotaClass } from '../../utils/format.js'
 import { useSeriesData } from '../../composables/useSeriesData.js'
 
 export default {
     name: 'ViewSerieDetail',
-    components: { PosterThumb, LinksFooter, RewatchBadge },
+    components: { PosterThumb, LinksFooter, RewatchBadge, SlowModeBadge },
     props: {
         serie: { type: Object, required: true }
     },
@@ -215,6 +216,18 @@ export default {
                                 <span class="details-field-value">
                                     <label class="admin-checkbox-label">
                                         <input type="number" class="admin-input-small" :value="serie.veces" @change="actualizarCampo('veces', $event)" />
+                                    </label>
+                                </span>
+                            </div>
+
+                            <div class="details-field">
+                                <span class="details-field-label">Modo tranqui</span>
+                                <span class="details-field-value">
+                                    <SlowModeBadge v-if="!isAdmin" :serie="serie" />
+                                    <template v-if="!serie.slowmode && !isAdmin">No</template>
+                                    <label v-else class="admin-checkbox-label">
+                                        <input type="checkbox" :checked="serie.slowmode" @change="actualizarCampo('slowmode', $event)" />
+                                        Sí
                                     </label>
                                 </span>
                             </div>
