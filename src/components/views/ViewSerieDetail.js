@@ -226,7 +226,7 @@ export default {
                                     <SlowModeBadge v-if="!isAdmin" :serie="serie" />
                                     <template v-if="!serie.slowmode && !isAdmin">No</template>
                                     <label v-else class="admin-checkbox-label">
-                                        <input type="checkbox" :checked="serie.slowmode" @change="actualizarCampo('slowmode', $event)" />
+                                        <input type="checkbox" :checked="serie.slowmode" @change="actualizarCampo('slow_mode', $event)" />
                                         Sí
                                     </label>
                                 </span>
