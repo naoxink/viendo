@@ -17,7 +17,7 @@ export default {
             const hoyLocal = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${String(hoy.getDate()).padStart(2, "0")}`;
             
             if (props.status?.updated.substring(0, 10) === hoyLocal) {
-                return 'Hoy'
+                return 'Hoy ' + props.status?.updated.substring(11)
             }
 
             return formatearFecha(props.status?.ultima_ejecucion)
