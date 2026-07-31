@@ -10,13 +10,13 @@ export default {
         const scriptClase = computed(() => (props.status?.script_ok ? 'status-success' : 'status-error'))
         const scriptTexto = computed(() => (props.status?.script_ok ? 'Sinc.' : 'Error'))
         const notifTexto = computed(() =>
-            props.status?.notificacion_enviada ? '🔔 Enviado' : '🔕 No enviado'
+            props.status?.notification_sent ? '🔔 Enviado' : '🔕 No enviado'
         )
         const ultimaEjecucion = computed(() => {
             const hoy = new Date();
             const hoyLocal = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${String(hoy.getDate()).padStart(2, "0")}`;
             
-            if (props.status?.ultima_ejecucion.substring(0, 10) === hoyLocal) {
+            if (props.status?.updated.substring(0, 10) === hoyLocal) {
                 return 'Hoy'
             }
 
