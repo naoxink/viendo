@@ -373,13 +373,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     status_data = {
-        "ultima_ejecucion": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "updated": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         "script_ok": False,
-        "notificacion_enviada": False
+        "notification_sent": False
     }
     
     try:
-        status_data["notificacion_enviada"] = actualizar_fechas(args.apikey)
+        status_data["notification_sent"] = actualizar_fechas(args.apikey)
         status_data["script_ok"] = True
 
     except Exception as e:
@@ -390,10 +390,3 @@ if __name__ == "__main__":
         res = supabase.table("status").update(status_data).eq("viendo", True).execute()
         if not res.data:
             print(f"   ⚠️ ¡ALERTA! Supabase ha devuelto un array vacío para 'status'. La base de datos no se ha actualizado.")
-        # Como ya no guardamos status.json localmente de la misma forma, 
-        # puedes optar por seguir escribiéndolo localmente si lo usas o subirlo también. 
-        # Aquí lo mantenemos local para que tu app web lo siga leyendo si recurre al fetch de status.json.
-        status_path = os.path.join(BASE_DIR, 'data', 'status.json')
-        os.makedirs(os.path.dirname(status_path), exist_ok=True)
-        with open(status_path, 'w', encoding='utf-8') as f:
-            json.dump(status_data, f, indent=2, ensure_ascii=False)
