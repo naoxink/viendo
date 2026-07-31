@@ -5,6 +5,9 @@ on:
     - cron: '15 0 * * *'
   workflow_dispatch: # Permite ejecutar el workflow manualmente desde la web de GitHub
 
+env:
+  TZ: 'Europe/Madrid'
+
 permissions:
   contents: write # Permiso para commitear cambios en posters o archivos de estado
 

@@ -63,10 +63,19 @@ export function useSeriesData() {
 
     async function loadStatus() {
         try {
-            const res = await fetch('data/status.json')
-            status.value = await res.json()
+            const { data: row, error } = await _supabase
+                .from('status')
+                .select('*')
+                .eq('viendo', true)
+                .limit(1)
+
+            if (error || !row || row.length === 0) {
+                status.value = null
+                return
+            }
         } catch (e) {
-            status.value = null
+            console.error('Error cargando el estado desde Supabase:', e)
+            error.value = e
         }
     }
 
