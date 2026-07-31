@@ -387,7 +387,9 @@ if __name__ == "__main__":
         status_data["script_ok"] = False
         
     finally:
-        res = supabase.table("status").update(status_data).execute()
+        res = supabase.table("status").update(status_data).eq("viendo", True).execute()
+        if not res.data:
+            print(f"   ⚠️ ¡ALERTA! Supabase ha devuelto un array vacío para 'status'. La base de datos no se ha actualizado.")
         # Como ya no guardamos status.json localmente de la misma forma, 
         # puedes optar por seguir escribiéndolo localmente si lo usas o subirlo también. 
         # Aquí lo mantenemos local para que tu app web lo siga leyendo si recurre al fetch de status.json.
