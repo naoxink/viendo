@@ -73,6 +73,8 @@ export function useSeriesData() {
                 status.value = null
                 return
             }
+
+            status.value = row[0]
         } catch (e) {
             console.error('Error cargando el estado desde Supabase:', e)
             error.value = e
