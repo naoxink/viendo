@@ -36,7 +36,14 @@ def enviar_telegram(token, chat_id, mensaje):
 
 def revisar_completadas():
     # 1. Cargamos las series completadas directamente desde Supabase
-    res_completadas = supabase.table("series").select("*").eq("estado", "completadas").execute()
+    res_completadas = (
+        supabase.table("series")
+        .select("*")
+        .eq("estado", "completadas")
+        .neq("estado_final", "Ended")
+        .neq("estado_final", "Canceled")
+        .execute()
+    )
     completadas = res_completadas.data or []
 
     if not completadas:
