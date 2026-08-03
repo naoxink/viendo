@@ -1,60 +1,5 @@
 [
     {
-        "id": 316,
-        "titulo": "Muertos S.L. (Death Inc.)",
-        "anio": 2024,
-        "visto_en": 2026,
-        "temporada": 3,
-        "capitulo": 6,
-        "pendiente": false,
-        "nota": "7/10",
-        "tvdb_id": 441201,
-        "imdb_id": "tt29614148",
-        "acumulados": 0,
-        "image_url": "https://artworks.thetvdb.com/banners/v4/series/441201/posters/65f2d24670c1e.jpg",
-        "poster_path": "posters/441201_Muertos_S.L._Death_Inc..jpg",
-        "notas": null,
-        "estado_final": "false",
-        "duracion_media": 30,
-        "capitulos_por_temporada": {
-            "1": 8,
-            "2": 6,
-            "3": 6,
-            "4": 6
-        },
-        "created_at": "2026-07-27T11:12:59.708047+00:00",
-        "estado": "en_cola",
-        "proximaFecha": null
-    },
-    {
-        "id": 317,
-        "titulo": "The Boys",
-        "anio": 2019,
-        "visto_en": null,
-        "temporada": 5,
-        "capitulo": null,
-        "pendiente": false,
-        "nota": null,
-        "tvdb_id": 355567,
-        "imdb_id": null,
-        "acumulados": 0,
-        "image_url": "https://artworks.thetvdb.com/banners/posters/5c5c402b075cc.jpg",
-        "poster_path": "posters/355567_The_Boys.jpg",
-        "notas": null,
-        "estado_final": "true",
-        "duracion_media": 64,
-        "capitulos_por_temporada": {
-            "1": 8,
-            "2": 8,
-            "3": 8,
-            "4": 8,
-            "5": 8
-        },
-        "created_at": "2026-07-27T11:12:59.708047+00:00",
-        "estado": "en_cola",
-        "proximaFecha": null
-    },
-    {
         "id": 318,
         "titulo": "Acapulco",
         "anio": 2021,
@@ -79,7 +24,10 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "en_cola",
-        "proximaFecha": null
+        "proximaFecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false
     },
     {
         "id": 319,
@@ -106,7 +54,10 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "en_cola",
-        "proximaFecha": null
+        "proximaFecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false
     },
     {
         "id": 320,
@@ -134,7 +85,10 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "en_cola",
-        "proximaFecha": null
+        "proximaFecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false
     },
     {
         "id": 321,
@@ -162,6 +116,36 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "en_cola",
-        "proximaFecha": null
+        "proximaFecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false
+    },
+    {
+        "id": 337,
+        "titulo": "Te encontraré",
+        "anio": null,
+        "visto_en": 2026,
+        "temporada": 1,
+        "capitulo": 1,
+        "pendiente": true,
+        "nota": null,
+        "tvdb_id": 457173,
+        "imdb_id": null,
+        "acumulados": 0,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/457173/posters/6a1ec3f3676a1.jpg",
+        "poster_path": "posters/457173_Te_encontrar.jpg",
+        "notas": null,
+        "estado_final": null,
+        "duracion_media": 41,
+        "capitulos_por_temporada": {
+            "1": 8
+        },
+        "created_at": "2026-07-28T05:54:59.409633+00:00",
+        "estado": "en_cola",
+        "proximaFecha": null,
+        "rewatch": false,
+        "veces": 0,
+        "slow_mode": false
     }
 ]
