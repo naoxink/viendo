@@ -75,6 +75,7 @@ export default async function handler(req, res) {
                 nextPendiente = (fechaProximo <= hoy);
             } else {
                 nextPendiente = false;
+                nextCap -= 1; // Ajuste para no avanzar si no hay capítulos pendientes
             }
         }
     }
