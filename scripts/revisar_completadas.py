@@ -149,7 +149,7 @@ def revisar_completadas():
             futuros.sort(key=lambda x: x['aired'])
             fecha_regreso = futuros[0]['aired']
 
-            serie['proximaFecha'] = fecha_regreso
+            serie['proxima_fecha'] = fecha_regreso
             serie['pendiente'] = False
             serie['acumulados'] = 0
             serie.pop('estado_final', None)

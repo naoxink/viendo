@@ -17,10 +17,10 @@ export default {
         proximamente() {
             const todas = [ ...this.viendo, ...this.enCola ]
             let proximamente = sortViendo(todas)
-            proximamente = proximamente.filter(s => s.proximaFecha)
+            proximamente = proximamente.filter(s => s.proxima_fecha)
             // Hacer objeto en base a las fechas
             proximamente = proximamente.reduce((acc, s) => {
-                const fecha = s.proximaFecha
+                const fecha = s.proxima_fecha
                 if (!acc[fecha]) acc[fecha] = []
                 acc[fecha].push(s)
                 return acc

@@ -14,7 +14,7 @@ export default {
     emits: ['close'],
     setup(props, { emit }) {
         const hasNotas = computed(() => Boolean(props.serie?.notas?.toString().trim()))
-        const nextAirText = computed(() => formatProximaFecha(props.serie?.proximaFecha))
+        const nextAirText = computed(() => formatProximaFecha(props.serie?.proxima_fecha))
         const notaClase = computed(() => getNotaClass(props.serie.nota))
 
         const cerrar = () => emit('close')
@@ -67,7 +67,7 @@ export default {
                                     <span class="details-field-value">{{ estadoTexto(serie) }}</span>
                                 </div>
 
-                                <div class="details-field" v-if="serie.proximaFecha">
+                                <div class="details-field" v-if="serie.proxima_fecha">
                                     <span class="details-field-label">Próximo episodio</span>
                                     <span class="details-field-value">{{ nextAirText }}</span>
                                 </div>

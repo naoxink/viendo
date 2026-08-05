@@ -107,15 +107,15 @@ def limpiar_fechas_pasadas_en_cola(ahora=None):
         ahora = datetime.now()
 
     # Traemos las series que están en cola
-    res = supabase.table("series").select("id, proximaFecha, estado").eq("estado", "en_cola").execute()
+    res = supabase.table("series").select("id, proxima_fecha, estado").eq("estado", "en_cola").execute()
     en_cola = res.data or []
 
     for serie in en_cola:
-        proxima_fecha = serie.get('proximaFecha')
+        proxima_fecha = serie.get('proxima_fecha')
         fecha_parsed = _parsear_fecha_proxima(proxima_fecha)
         if fecha_parsed is not None and fecha_parsed <= ahora:
-            # Actualizamos en Supabase poniendo proximaFecha a null o eliminándola
-            supabase.table("series").update({"proximaFecha": None}).eq("id", serie["id"]).execute()
+            # Actualizamos en Supabase poniendo proxima_fecha a null o eliminándola
+            supabase.table("series").update({"proxima_fecha": None}).eq("id", serie["id"]).execute()
 
 
 def guardar_poster_local(serie, image_url):
@@ -288,14 +288,14 @@ def actualizar_fechas(api_key):
                 serie['capitulo'] = siguiente['number']
                 serie['pendiente'] = True
                 serie['acumulados'] = len(nuevos_emitidos) - 1
-                serie['proximaFecha'] = None
+                serie['proxima_fecha'] = None
                 
                 update_payload.update({
                     "temporada": serie['temporada'],
                     "capitulo": serie['capitulo'],
                     "pendiente": True,
                     "acumulados": serie['acumulados'],
-                    "proximaFecha": None
+                    "proxima_fecha": None
                 })
                 
                 print(f"   ✨ ¡Nuevo capítulo detectado! Avanzado a T{serie['temporada']}E{serie['capitulo']} (Pendiente).")
@@ -306,7 +306,7 @@ def actualizar_fechas(api_key):
                 
                 # CASO: SERIE FINALIZADA Y USUARIO AL DÍA
                 if not futuros and estado_serie in ["Ended", "Canceled"]:
-                    serie['proximaFecha'] = None
+                    serie['proxima_fecha'] = None
                     serie['estado_final'] = estado_serie
                     serie['visto_en'] = hoy.year
                     if not serie.get('nota'):
@@ -315,7 +315,7 @@ def actualizar_fechas(api_key):
                     serie['estado'] = "completadas" # Cambia de estado en Supabase
                     
                     update_payload.update({
-                        "proximaFecha": None,
+                        "proxima_fecha": None,
                         "estado_final": estado_serie,
                         "visto_en": hoy.year,
                         "nota": serie['nota'],
@@ -326,20 +326,20 @@ def actualizar_fechas(api_key):
                     notificaciones.append(f"   🏆 ¡Serie terminada ({estado_serie})! Movida a Completadas automáticamente en {hoy.year}.")
                 else:
                     if futuros:
-                        serie['proximaFecha'] = futuros[0]['aired']
-                        print(f"   📅 Al día. Próximo estreno el: {serie['proximaFecha']}")
+                        serie['proxima_fecha'] = futuros[0]['aired']
+                        print(f"   📅 Al día. Próximo estreno el: {serie['proxima_fecha']}")
                     else:
-                        serie['proximaFecha'] = None
+                        serie['proxima_fecha'] = None
                         print("   📅 Al día. Sin fecha de regreso confirmada (TBA).")
                     
-                    update_payload["proximaFecha"] = serie['proximaFecha']
+                    update_payload["proxima_fecha"] = serie['proxima_fecha']
         else:
             serie['acumulados'] = len(nuevos_emitidos)
-            serie['proximaFecha'] = None
+            serie['proxima_fecha'] = None
             
             update_payload.update({
                 "acumulados": serie['acumulados'],
-                "proximaFecha": None
+                "proxima_fecha": None
             })
             print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
 

@@ -14,7 +14,7 @@ export default {
     emits: ['select-serie'],
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
-        const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proximaFecha))
+        const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proxima_fecha))
         const mostrarDetalles = ref(false)
         const abrirDetalles = () => { mostrarDetalles.value = true }
         const cerrarDetalles = () => { mostrarDetalles.value = false }
@@ -27,7 +27,7 @@ export default {
                 <div class="info">
                     <h2>{{ serie.titulo }}</h2>
                     <p class="progress">Por empezar • Temporada {{ serie.temporada || 1 }}</p>
-                    <p v-if="serie.proximaFecha" class="next-air">
+                    <p v-if="serie.proxima_fecha" class="next-air">
                         📅 <strong>{{ proximaFechaTexto }}</strong>
                     </p>
                 </div>

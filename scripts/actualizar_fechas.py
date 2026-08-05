@@ -116,13 +116,13 @@ def limpiar_fechas_pasadas_en_cola(data, ahora=None):
         if not isinstance(serie, dict):
             continue
 
-        proxima_fecha = serie.get('proximaFecha')
+        proxima_fecha = serie.get('proxima_fecha')
         fecha_parsed = _parsear_fecha_proxima(proxima_fecha)
         if fecha_parsed is None:
             continue
 
         if fecha_parsed <= ahora:
-            serie.pop('proximaFecha', None)
+            serie.pop('proxima_fecha', None)
             cambiado = True
 
     return cambiado
@@ -305,7 +305,7 @@ def actualizar_fechas(api_key):
                 serie['capitulo'] = siguiente['number']
                 serie['pendiente'] = True
                 serie['acumulados'] = len(nuevos_emitidos) - 1
-                serie.pop('proximaFecha', None)
+                serie.pop('proxima_fecha', None)
                 print(f"   ✨ ¡Nuevo capítulo detectado! Avanzado a T{serie['temporada']}E{serie['capitulo']} (Pendiente).")
                 nuevas_viendo.append(serie)
                 notificaciones.append(f"✨ *{serie['titulo']}*: ¡Nuevo capítulo disponible! Avanzado a T{serie['temporada']}E{serie['capitulo']}.")
@@ -315,7 +315,7 @@ def actualizar_fechas(api_key):
                 # CASO: SERIE FINALIZADA Y USUARIO AL DÍA
                 if not futuros and estado_serie in ["Ended", "Canceled"]:
                     # Mantenemos los campos de seguimiento vivos
-                    serie['proximaFecha'] = "TBA" # Reemplazamos fechas antiguas por TBA
+                    serie['proxima_fecha'] = "TBA" # Reemplazamos fechas antiguas por TBA
                     serie['estado_final'] = estado_serie
                     serie['vistoEn'] = hoy.year # Archiva en 2026 (o el año actual) para el render
                     
@@ -327,20 +327,20 @@ def actualizar_fechas(api_key):
                     notificaciones.append(f"   🏆 ¡Serie terminada ({estado_serie})! Movida a Completadas automáticamente en {hoy.year} conservando su progreso.")
                 else:
                     if futuros:
-                        serie['proximaFecha'] = futuros[0]['aired']
-                        print(f"   📅 Al día. Próximo estreno el: {serie['proximaFecha']}")
+                        serie['proxima_fecha'] = futuros[0]['aired']
+                        print(f"   📅 Al día. Próximo estreno el: {serie['proxima_fecha']}")
                         # Si la fecha ha cambiado respecto a la que tenías guardada, puedes avisar:
                         fecha_nueva = futuros[0]['aired']
-                        if serie.get('proximaFecha') != fecha_nueva:
+                        if serie.get('proxima_fecha') != fecha_nueva:
                             notificaciones.append(f"📅 *{serie['titulo']}*: Nueva fecha de estreno confirmada para el *{fecha_nueva}*.")
                     else:
-                        serie['proximaFecha'] = "TBA"
+                        serie['proxima_fecha'] = "TBA"
                         print("   📅 Al día. Sin fecha de regreso confirmada (TBA).")
                     nuevas_viendo.append(serie)
                     
         else:
             serie['acumulados'] = len(nuevos_emitidos)
-            serie.pop('proximaFecha', None)
+            serie.pop('proxima_fecha', None)
             print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
             nuevas_viendo.append(serie)
 

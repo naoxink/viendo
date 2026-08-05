@@ -15,7 +15,7 @@ export default {
     emits: ['select-serie'],
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
-        const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proximaFecha))
+        const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proxima_fecha))
         const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true');
         const progreso = computed(() => {
             const caps = props.serie.capitulosPorTemporada;
@@ -93,7 +93,7 @@ export default {
                 <LinksFooter :serie="serie" />
                 <RewatchBadge :serie="serie" />
                 <SlowModeBadge :serie="serie" />
-                <p v-if="serie.proximaFecha" class="next-air">
+                <p v-if="serie.proxima_fecha" class="next-air">
                     📅 <strong>{{ proximaFechaTexto }}</strong>
                 </p>
                 <button class="details-btn" type="button" @click="seleccionarSerie(serie)" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">?</button>

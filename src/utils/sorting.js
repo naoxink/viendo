@@ -15,8 +15,8 @@ export function sortViendo(lista) {
         const pendienteB = b.pendiente === true ? 1 : 0
         if (pendienteA !== pendienteB) return pendienteB - pendienteA
 
-        const fechaA = a.proximaFecha && a.proximaFecha !== 'TBA' ? Date.parse(a.proximaFecha) : -Infinity
-        const fechaB = b.proximaFecha && b.proximaFecha !== 'TBA' ? Date.parse(b.proximaFecha) : -Infinity
+        const fechaA = a.proxima_fecha && a.proxima_fecha !== 'TBA' ? Date.parse(a.proxima_fecha) : -Infinity
+        const fechaB = b.proxima_fecha && b.proxima_fecha !== 'TBA' ? Date.parse(b.proxima_fecha) : -Infinity
 
         const actualOPasadaA = pendienteA === 0 && fechaA !== -Infinity && fechaA <= todayTimestamp
         const actualOPasadaB = pendienteB === 0 && fechaB !== -Infinity && fechaB <= todayTimestamp

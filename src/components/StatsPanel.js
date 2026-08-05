@@ -251,11 +251,11 @@ export default {
         // --- Próximos estrenos ---
         const proximosEstrenos = computed(() =>
             [...props.viendo, ...props.enCola]
-                .filter((s) => s.proximaFecha && s.proximaFecha !== 'TBA')
+                .filter((s) => s.proxima_fecha && s.proxima_fecha !== 'TBA')
                 .map((s) => ({
                     ...s,
-                    fechaTexto: formatProximaFecha(s.proximaFecha),
-                    fechaTs: Date.parse(s.proximaFecha)
+                    fechaTexto: formatProximaFecha(s.proxima_fecha),
+                    fechaTs: Date.parse(s.proxima_fecha)
                 }))
                 .filter((s) => !isNaN(s.fechaTs))
                 .sort((a, b) => a.fechaTs - b.fechaTs)

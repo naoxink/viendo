@@ -31,8 +31,8 @@ export default {
     estrenosPorDia() {
       const mapa = {};
       this.seriesFormateadas.forEach(serie => {
-        if (serie && serie.proximaFecha) {
-          const fechaKey = String(serie.proximaFecha).trim(); 
+        if (serie && serie.proxima_fecha) {
+          const fechaKey = String(serie.proxima_fecha).trim(); 
           if (!mapa[fechaKey]) mapa[fechaKey] = [];
           mapa[fechaKey].push(serie);
         }

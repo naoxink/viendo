@@ -32,7 +32,7 @@ export default {
         }
 
         const hasNotas = computed(() => Boolean(props.serie?.notas?.toString().trim()))
-        const nextAirText = computed(() => formatProximaFecha(props.serie?.proximaFecha))
+        const nextAirText = computed(() => formatProximaFecha(props.serie?.proxima_fecha))
         const notaClase = computed(() => getNotaClass(props.serie.nota))
         const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true')
 
@@ -119,10 +119,10 @@ export default {
                                 </span>
                             </div>
 
-                            <div class="details-field" v-if="serie.proximaFecha">
+                            <div class="details-field" v-if="serie.proxima_fecha">
                                 <span class="details-field-label">Próximo episodio</span>
                                 <span v-if="isAdmin" class="details-field-value">
-                                    <input type="date" :value="serie.proximaFecha" @change="actualizarCampo('proximaFecha', $event)" class="admin-input-small" />
+                                    <input type="date" :value="serie.proxima_fecha" @change="actualizarCampo('proxima_fecha', $event)" class="admin-input-small" />
                                 </span>
                                 <span v-else class="details-field-value">{{ nextAirText }}</span>
                             </div>

@@ -39,8 +39,8 @@ def test_usar_hora_de_la_serie_cuando_el_capitulo_no_la_tiene():
 def test_limpiar_fechas_pasadas_en_cola_elimina_proxima_fecha_vencida():
     data = {
         "en_cola": [
-            {"titulo": "Serie A", "proximaFecha": "2024-10-14"},
-            {"titulo": "Serie B", "proximaFecha": "2024-10-16"},
+            {"titulo": "Serie A", "proxima_fecha": "2024-10-14"},
+            {"titulo": "Serie B", "proxima_fecha": "2024-10-16"},
         ]
     }
     ahora = datetime(2024, 10, 15, 20, 0)
@@ -48,8 +48,8 @@ def test_limpiar_fechas_pasadas_en_cola_elimina_proxima_fecha_vencida():
     modificada = actualizar_fechas.limpiar_fechas_pasadas_en_cola(data, ahora)
 
     assert modificada is True
-    assert "proximaFecha" not in data["en_cola"][0]
-    assert data["en_cola"][1]["proximaFecha"] == "2024-10-16"
+    assert "proxima_fecha" not in data["en_cola"][0]
+    assert data["en_cola"][1]["proxima_fecha"] == "2024-10-16"
 
 
 def test_script_puede_ejecutarse_directamente_desde_la_raiz_del_repo():

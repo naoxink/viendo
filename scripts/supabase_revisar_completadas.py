@@ -149,7 +149,7 @@ def revisar_completadas():
 
             # La serie vuelve a la vida: pasa a estado 'viendo', actualizamos fechas y limpiamos campos de finalizada
             update_payload.update({
-                'proximaFecha': fecha_regreso,
+                'proxima_fecha': fecha_regreso,
                 'pendiente': False,
                 'acumulados': 0,
                 'estado_final': None,
