@@ -47,6 +47,10 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, error: 'Campo no permitido para actualización' });
   }
 
+  if (campoDb === 'proxima_fecha' && valorNuevo === '') {
+    valorNuevo = null;
+  }
+
   try {
     const { data: updatedRow, error: updateError } = await supabase
       .from('series')
