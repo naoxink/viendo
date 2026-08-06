@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Optional
+from datetime import date, datetime, timedelta
+import itertools
 
 import requests
 
@@ -196,6 +198,333 @@ class TheTVDB:
 
         return series
 
+
+
+    def get_trending(
+        self,
+        limit: int = 20,
+        min_score: float = 0.0,
+        country: Optional[str] = None,
+        languages: tuple[str, ...] = ("spa", "eng"),
+        include_upcoming: bool = True,
+        upcoming_ratio: float = 0.3,
+        recent_days: int = 60,
+        search_limit: int = 12
+    ) -> list[dict]:
+        """
+        Series "trending" reales: popularidad (score) PERO solo entre las que
+        tienen actividad de emisión reciente (recent_days hacia atrás/adelante).
+        Esto evita que series antiguas con score alto pero inactivas dominen
+        el resultado.
+        """
+
+        # Sobre-pedimos bastante más de lo pedido, porque el filtro de
+        # recencia va a descartar muchísimas series "viejas con score alto".
+        fetch_limit = limit * 6
+
+        popular = self._fetch_series_filtered_multilang(
+            sort="score",
+            sort_type="desc",
+            country=country,
+            languages=languages,
+            status=None,
+            min_score=min_score,
+            limit=fetch_limit
+        )
+
+        popular = [
+            item for item in popular
+            if self._is_currently_active(item, recent_days)
+        ]
+        popular = popular[:limit]
+
+        if not include_upcoming:
+            return popular
+
+        n_upcoming = max(1, int(limit * upcoming_ratio))
+
+        upcoming = self._fetch_series_filtered_multilang(
+            sort="firstAired",
+            sort_type="asc",
+            country=country,
+            languages=languages,
+            status="upcoming",
+            min_score=0.0,
+            limit=n_upcoming
+        )
+
+        seen_ids = {item["id"] for item in popular}
+        merged = list(popular)
+
+        for item in upcoming:
+            if item["id"] in seen_ids:
+                continue
+            seen_ids.add(item["id"])
+            merged.append(item)
+            if len(merged) >= limit:
+                break
+
+        return merged[:limit]
+
+
+    def _is_currently_active(self, series: dict, recent_days: int) -> bool:
+        """
+        Determina si una serie tiene actividad de emisión reciente:
+        - último episodio emitido dentro de la ventana, o
+        - próximo episodio programado dentro de la ventana, o
+        - estado "continuing" (en emisión activa)
+        """
+
+        status = (series.get("status") or "").lower()
+
+        if status == "continuing":
+            return True
+
+        today = date.today()
+        window_start = today - timedelta(days=recent_days)
+        window_end = today + timedelta(days=recent_days)
+
+        for field in ("last_aired", "next_aired", "first_aired"):
+
+            raw = series.get(field)
+
+            if not raw:
+                continue
+
+            try:
+                parsed = datetime.strptime(raw[:10], "%Y-%m-%d").date()
+            except (ValueError, TypeError):
+                continue
+
+            if window_start <= parsed <= window_end:
+                return True
+
+        return False
+
+    def _fetch_series_filtered(
+        self,
+        sort: str,
+        sort_type: str,
+        country: Optional[str],
+        lang: str,
+        min_score: float,
+        limit: int,
+        status_filter: Optional[str] = None,
+        year: Optional[int] = None,
+        max_pages: int = 15
+    ) -> list[dict]:
+
+        params = {
+            "sort": sort,
+            "sortType": sort_type,
+            "lang": lang
+        }
+
+        if country:
+            params["country"] = country
+        if year:
+            params["year"] = year
+
+        fetch_target = limit * 3 if (min_score or status_filter) else limit
+
+        results: list[dict] = []
+        page = 0
+
+        try:
+            while len(results) < fetch_target and page < max_pages:
+
+                response = self._request(
+                    "GET",
+                    "/series/filter",
+                    params={**params, "page": page}
+                )
+
+                items = response.get("data") or []
+                if not items:
+                    break
+
+                for item in items:
+
+                    score = item.get("score") or 0
+                    if min_score and score < min_score:
+                        continue
+
+                    normalized = self._normalize_series(item)
+
+                    if status_filter and (normalized.get("status") or "").lower() != status_filter.lower():
+                        continue
+
+                    results.append(normalized)
+
+                links = response.get("links", {})
+                if links.get("next") is None:
+                    break
+
+                page += 1
+
+        except Exception as exc:  # pylint: disable=broad-except
+            print(f"⚠️ /series/filter falló ({status_filter or 'popular'}): {exc}")
+            return self._fallback_search(min_score, limit, status_filter)
+
+        return results[:limit]
+    def _fallback_search(
+        self,
+        min_score: float,
+        limit: int,
+        status_filter: Optional[str] = None
+    ) -> list[dict]:
+        """
+        Fallback cuando /series/filter falla: búsqueda amplia por letras
+        comunes, filtrando en cliente por score y status.
+        """
+
+        query_terms = ["a", "e", "i", "o", "u"]
+        found: dict[int, dict] = {}
+
+        for term in query_terms:
+
+            results = self.search(term, limit=limit)
+
+            for item in results:
+
+                series_id = item.get("id")
+                if series_id is None or series_id in found:
+                    continue
+
+                score = item.get("score") or 0
+                if min_score and score < min_score:
+                    continue
+
+                if status_filter and (item.get("status") or "").lower() != status_filter.lower():
+                    continue
+
+                found[series_id] = item
+
+        ordered = sorted(
+            found.values(),
+            key=lambda item: item.get("score") or 0,
+            reverse=True
+        )
+
+        return ordered[:limit]
+
+
+    def _fetch_series_filtered_multilang(
+        self,
+        sort: str,
+        sort_type: str,
+        country: Optional[str],
+        languages: tuple[str, ...],
+        status: Optional[str],
+        min_score: float,
+        limit: int
+    ) -> list[dict]:
+        """
+        Llama a /series/filter una vez por cada idioma y fusiona resultados.
+        El filtro de status se aplica en cliente (ver _fetch_series_filtered).
+        """
+
+        merged: dict[int, dict] = {}
+
+        for lang in languages:
+
+            items = self._fetch_series_filtered(
+                sort=sort,
+                sort_type=sort_type,
+                country=country,
+                lang=lang,
+                min_score=min_score,
+                limit=limit,
+                status_filter=status
+            )
+
+            for item in items:
+
+                series_id = item.get("id")
+                if series_id is None:
+                    continue
+
+                if item.get("language") and item["language"] not in languages:
+                    continue
+
+                merged.setdefault(series_id, item)
+
+        reverse = sort_type == "desc"
+
+        ordered = sorted(
+            merged.values(),
+            key=lambda item: item.get("score") or 0,
+            reverse=reverse
+        )
+
+        return ordered[:limit]
+
+    def get_upcoming_premieres(
+        self,
+        limit: int = 20,
+        country: Optional[str] = None,
+        languages: tuple[str, ...] = ("spa", "eng"),
+        days_ahead: int = 30,
+        order_by: str = "score"  # "score" o "date"
+    ) -> list[dict]:
+
+        today = date.today()
+        years_to_check = {today.year, today.year + 1}
+
+        candidates_by_id: dict[int, dict] = {}
+
+        for year in years_to_check:
+            for lang in languages:
+
+                items = self._fetch_series_filtered(
+                    sort="score",
+                    sort_type="desc",
+                    country=country,
+                    lang=lang,
+                    min_score=0.0,
+                    limit=limit * 5,
+                    status_filter="Upcoming",
+                    year=year
+                )
+
+                for item in items:
+                    series_id = item.get("id")
+                    if series_id is not None:
+                        candidates_by_id.setdefault(series_id, item)
+
+        window_end = today + timedelta(days=days_ahead)
+        upcoming = []
+
+        for item in candidates_by_id.values():
+
+            premiere = self._parse_date(item.get("first_aired"))
+
+            if premiere is None or premiere < today or premiere > window_end:
+                continue
+
+            item["days_until_premiere"] = (premiere - today).days
+            upcoming.append(item)
+
+        if order_by == "score":
+            upcoming.sort(key=lambda item: item.get("score") or 0, reverse=True)
+        else:
+            upcoming.sort(key=lambda item: item["days_until_premiere"])
+
+        return upcoming[:limit]
+    def _parse_date(self, raw: Optional[str]):
+        """
+        Parsea una fecha en formato YYYY-MM-DD devuelta por la API.
+        Devuelve None si no hay fecha o el formato no es el esperado.
+        """
+
+        if not raw:
+            return None
+
+        try:
+            return datetime.strptime(raw[:10], "%Y-%m-%d").date()
+        except (ValueError, TypeError):
+            return None
+
     ####################################################################
     # Normalización
     ####################################################################
@@ -203,7 +532,8 @@ class TheTVDB:
     def _normalize_series(self, data: dict) -> dict:
 
         return {
-            "id": data.get("tvdb_id"),
+            # Algunos endpoints devuelven el id en la clave `id`, otros en `tvdb_id`.
+            "id": data.get("tvdb_id") or data.get("id"),
             "name": data.get("name"),
             "slug": data.get("slug"),
             "year": data.get("year"),
@@ -225,6 +555,7 @@ class TheTVDB:
                 if isinstance(data.get("status"), dict)
                 else data.get("status")
             ),
+            "next_aired": data.get("nextAired") or data.get("next_aired"),
             "airsDays": data.get("airsDays", {}),
             "airsTime": data.get("airsTime")
         }

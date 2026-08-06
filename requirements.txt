@@ -1,0 +1,3 @@
+requests
+supabase
+# Opcional: añadir otras dependencias del proyecto aquí

@@ -1,0 +1,50 @@
+name: Poblar upcoming series
+
+on:
+  schedule:
+    # Todos los lunes a las 06:00 UTC
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Ejecutar en modo dry-run (no escribe en Supabase)"
+        type: boolean
+        default: false
+
+jobs:
+  populate-upcoming:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests supabase
+
+      - name: Ejecutar script de upcoming series
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python scripts/supabase_upcoming_thetvdb.py \
+              --thetvdb-api-key "${{ secrets.THETVDB_API_KEY }}" \
+              --limit 20 \
+              --days-ahead 30 \
+              --languages spa eng \
+              --dry-run
+          else
+            python scripts/supabase_upcoming_thetvdb.py \
+              --thetvdb-api-key "${{ secrets.THETVDB_API_KEY }}" \
+              --limit 20 \
+              --days-ahead 30 \
+              --languages spa eng
+          fi

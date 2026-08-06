@@ -8,13 +8,14 @@ import ViewStats from './views/ViewStats.js'
 import ViewSerieDetail from './views/ViewSerieDetail.js'
 import ViewAddSerie from './views/ViewAddSerie.js'
 import ViewLogin from './views/ViewLogin.js'
+import ViewDiscover from './views/ViewDiscover.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const token = ''
 
 export default {
     name: 'App',
-    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail, ViewAddSerie, ViewLogin },
+    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail, ViewAddSerie, ViewLogin, ViewDiscover },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
         const searchTerm = ref('')
@@ -195,6 +196,10 @@ export default {
                     v-if="activeView === 'detalle' && selectedSerie"
                     :serie="selectedSerie"
                     @back="volverAtras"
+                />
+
+                <ViewDiscover
+                    v-if="activeView === 'discover'"
                 />
 
                 <ViewAddSerie

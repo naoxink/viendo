@@ -43,6 +43,15 @@ export default {
                 <span class="nav-icon">📊</span>
                 <span class="nav-label">Stats</span>
             </button>
+            <button 
+                class="nav-item" 
+                :class="{ active: activeView === 'discover' }"
+                @click="$emit('change-view', 'discover')"
+                title="Descubrir series nuevas"
+            >
+                <span class="nav-icon">🔍</span>
+                <span class="nav-label">Descubrir</span>
+            </button>
         </nav>
     `
 }
