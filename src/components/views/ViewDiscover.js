@@ -2,10 +2,11 @@ import { useSeriesData } from '../../composables/useSeriesData.js'
 import PosterThumb from '../shared/PosterThumb.js'
 import { cardBgStyle, formatProximaFecha } from '../../utils/format.js'
 import { ref, onMounted } from 'vue'
+import LinksFooter from '../shared/LinksFooter.js'
 
 export default {
   name: 'ViewDiscover',
-  components: { PosterThumb },
+  components: { PosterThumb, LinksFooter },
   setup() {
     const { fetchUpcomingSeries, fetchTrendingSeries } = useSeriesData()
     
@@ -103,7 +104,7 @@ export default {
             </div>
             <div class="serie-card-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem;">
                 <span class="badge" v-if="serie.score" style="font-size: 0.75rem; color: var(--text-muted);">⭐ {{ serie.score }}</span>
-                
+                <LinksFooter :serie="serie" />
                 <!-- Botón para copiar TVDB ID -->
                 <button 
                 @click="copyTvdbId(serie.tvdb_id)" 
@@ -138,7 +139,7 @@ export default {
             </div>
             <div class="serie-card-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem;">
                 <span class="badge" style="font-size: 0.75rem; font-weight: bold; background: #f59e0b; color: #000; padding: 0.1rem 0.4rem; border-radius: 4px;">#{{ index + 1 }} Trending</span>
-                
+                <LinksFooter :serie="serie" />
                 <!-- Botón para copiar TVDB ID -->
                 <button 
                 @click="copyTvdbId(serie.tvdb_id)" 
