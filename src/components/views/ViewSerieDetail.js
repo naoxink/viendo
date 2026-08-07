@@ -103,6 +103,13 @@ export default {
 
                         <div class="details-fields">
 
+                            <div class="details-field" v-if="isAdmin">
+                                <span class="details-field-label">Título</span>
+                                <span class="details-field-value">
+                                    <input type="text" :value="serie.titulo" @change="actualizarCampo('titulo', $event)" class="admin-input-small" />
+                                </span>
+                            </div>
+
                             <!-- Campo de Estado modificable si es Admin -->
                             <div class="details-field" v-if="serie.estado">
                                 <span class="details-field-label">Estado</span>
@@ -119,7 +126,7 @@ export default {
                                 </span>
                             </div>
 
-                            <div class="details-field" v-if="serie.proxima_fecha">
+                            <div class="details-field">
                                 <span class="details-field-label">Próximo episodio</span>
                                 <span v-if="isAdmin" class="details-field-value">
                                     <input type="date" :value="serie.proxima_fecha" @change="actualizarCampo('proxima_fecha', $event)" class="admin-input-small" />
