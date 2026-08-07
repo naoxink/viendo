@@ -7,7 +7,6 @@ export default {
         const { insertShow } = useSeriesData()
 
         const nuevaSerie = reactive({
-            titulo: '',
             tvdb_id: null,
             estado: 'en_cola'
         })
@@ -21,16 +20,8 @@ export default {
             mensaje.value = ''
             
             const serieEsqueleto = {
-                titulo: nuevaSerie.titulo,
                 tvdb_id: nuevaSerie.tvdb_id,
-                estado: nuevaSerie.estado,
-                temporada: 1,
-                capitulo: 1,
-                pendiente: true,
-                veces: 0,
-                rewatch: false,
-                poster_path: '',
-                visto_en: new Date().getFullYear()
+                estado: nuevaSerie.estado
             }
 
             try {
@@ -43,7 +34,6 @@ export default {
                 tipoMensaje.value = 'success'
                 mensaje.value = '¡Serie añadida! Los metadatos se actualizarán pronto.'
                 
-                nuevaSerie.titulo = ''
                 nuevaSerie.tvdb_id = null
                 nuevaSerie.estado = 'en_cola'
                 
@@ -74,17 +64,6 @@ export default {
             
             <div class="view-content">
                 <form @submit.prevent="guardarSerie" class="form-add">
-                    
-                    <div class="form-group">
-                        <label for="titulo">Título de la serie</label>
-                        <input 
-                            type="text" 
-                            id="titulo" 
-                            v-model="nuevaSerie.titulo" 
-                            placeholder="Ej: The Last of Us" 
-                            required 
-                        />
-                    </div>
 
                     <div class="form-group">
                         <label for="tvdb_id">ID de TheTVDB</label>

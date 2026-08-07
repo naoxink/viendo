@@ -54,12 +54,10 @@ function mapSeriesExtended(d) {
   };
 }
 
-// Cuenta episodios por temporada, con límite de páginas para no
-// arriesgar el timeout de Vercel.
 async function getCapitulosPorTemporada(tvdb_id, token) {
   const conteo = {};
   let page = 0;
-  const MAX_PAGES = 3; // margen de seguridad más ajustado aquí, compartimos tiempo con el insert
+  const MAX_PAGES = 3;
 
   while (page < MAX_PAGES) {
     const json = await tvdbGet(
@@ -80,27 +78,15 @@ async function getCapitulosPorTemporada(tvdb_id, token) {
   return conteo;
 }
 
-// Trae todos los metadatos posibles de TVDB, sin lanzar excepción si algo falla.
-async function getTvdbMetadata(tvdb_id) {
-  const metadata = {};
+// Título en español. Si no hay traducción disponible, cae al nombre original.
+async function getTituloEspanol(tvdb_id, token, nombreOriginal) {
   try {
-    const token = await getTvdbToken();
-
-    const extended = await tvdbGet(`/series/${tvdb_id}/extended`, token, 3000);
-    Object.assign(metadata, mapSeriesExtended(extended.data));
-
-    try {
-      const capitulos_por_temporada = await getCapitulosPorTemporada(tvdb_id, token);
-      if (Object.keys(capitulos_por_temporada).length > 0) {
-        metadata.capitulos_por_temporada = capitulos_por_temporada;
-      }
-    } catch (e) {
-      console.warn('No se pudieron obtener episodios por temporada:', e.message);
-    }
+    const trad = await tvdbGet(`/series/${tvdb_id}/translations/spa`, token, 2500);
+    if (trad?.data?.name) return trad.data.name;
   } catch (e) {
-    console.warn('No se pudieron obtener metadatos de TVDB:', e.message);
+    console.warn('Sin traducción al español, usando nombre original:', e.message);
   }
-  return metadata;
+  return nombreOriginal || null;
 }
 
 export default async function handler(req, res) {
@@ -120,9 +106,10 @@ export default async function handler(req, res) {
     return res.status(401).end();
   }
 
-  const { titulo, tvdb_id, estado } = req.body;
-  if (!titulo || !tvdb_id || !estado) {
-    return res.status(400).json({ success: false, error: 'Faltan parámetros: se requiere "titulo", "tvdb_id" y "estado"' });
+  // Ya no recibimos "titulo" del cliente
+  const { tvdb_id, estado } = req.body;
+  if (!tvdb_id || !estado) {
+    return res.status(400).json({ success: false, error: 'Faltan parámetros: se requiere "tvdb_id" y "estado"' });
   }
 
   const estadosPermitidos = ['viendo', 'en_cola', 'completadas', 'dropeadas'];
@@ -130,8 +117,38 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, error: 'Estado no válido' });
   }
 
-  // Metadatos de TVDB (nunca lanza excepción, si falla devuelve {})
-  const metadata = await getTvdbMetadata(tvdb_id);
+  let metadata = {};
+  let titulo = null;
+
+  try {
+    const token = await getTvdbToken();
+
+    const extended = await tvdbGet(`/series/${tvdb_id}/extended`, token, 3000);
+    metadata = mapSeriesExtended(extended.data);
+    titulo = await getTituloEspanol(tvdb_id, token, extended.data.name);
+
+    try {
+      const capitulos_por_temporada = await getCapitulosPorTemporada(tvdb_id, token);
+      if (Object.keys(capitulos_por_temporada).length > 0) {
+        metadata.capitulos_por_temporada = capitulos_por_temporada;
+      }
+    } catch (e) {
+      console.warn('No se pudieron obtener episodios por temporada:', e.message);
+    }
+  } catch (e) {
+    // Sin título no podemos insertar de forma consistente: cortamos aquí
+    return res.status(502).json({
+      success: false,
+      error: 'No se pudo obtener información de TheTVDB: ' + e.message
+    });
+  }
+
+  if (!titulo) {
+    return res.status(502).json({
+      success: false,
+      error: 'TheTVDB no devolvió un título válido para este tvdb_id'
+    });
+  }
 
   const serieEsqueleto = {
     titulo,
@@ -140,7 +157,7 @@ export default async function handler(req, res) {
     temporada: 1,
     capitulo: 1,
     capitulos_por_temporada: {},
-    ...metadata // pisa anio, imdb_id, image_url, duracion_media, capitulos_por_temporada si vinieron
+    ...metadata
   };
 
   try {
