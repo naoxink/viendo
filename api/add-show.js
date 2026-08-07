@@ -23,6 +23,8 @@ async function getTvdbToken() {
   const now = Date.now();
   if (tvdbToken && now < tvdbTokenExp) return tvdbToken;
 
+  console.log('TVDB_API_KEY presente:', !!process.env.TVDB_API_KEY, 'longitud:', process.env.TVDB_API_KEY?.length);
+
   const res = await fetchWithTimeout('https://api4.thetvdb.com/v4/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
