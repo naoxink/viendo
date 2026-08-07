@@ -106,71 +106,76 @@ export default async function handler(req, res) {
     return res.status(401).end();
   }
 
-  // Ya no recibimos "titulo" del cliente
-  const { tvdb_id, estado } = req.body;
-  if (!tvdb_id || !estado) {
-    return res.status(400).json({ success: false, error: 'Faltan parámetros: se requiere "tvdb_id" y "estado"' });
-  }
-
-  const estadosPermitidos = ['viendo', 'en_cola', 'completadas', 'dropeadas'];
-  if (!estadosPermitidos.includes(estado)) {
-    return res.status(400).json({ success: false, error: 'Estado no válido' });
-  }
-
-  let metadata = {};
-  let titulo = null;
-
+  // TODO EL RESTO DE LA LÓGICA ENVUELTO EN TRY/CATCH GLOBAL
   try {
-    const token = await getTvdbToken();
+    const { tvdb_id, estado } = req.body;
+    if (!tvdb_id || !estado) {
+      return res.status(400).json({ success: false, error: 'Faltan parámetros: se requiere "tvdb_id" y "estado"' });
+    }
 
-    const extended = await tvdbGet(`/series/${tvdb_id}/extended`, token, 3000);
-    metadata = mapSeriesExtended(extended.data);
-    titulo = await getTituloEspanol(tvdb_id, token, extended.data.name);
+    const estadosPermitidos = ['viendo', 'en_cola', 'completadas', 'dropeadas'];
+    if (!estadosPermitidos.includes(estado)) {
+      return res.status(400).json({ success: false, error: 'Estado no válido' });
+    }
+
+    let metadata = {};
+    let titulo = null;
 
     try {
-      const capitulos_por_temporada = await getCapitulosPorTemporada(tvdb_id, token);
-      if (Object.keys(capitulos_por_temporada).length > 0) {
-        metadata.capitulos_por_temporada = capitulos_por_temporada;
+      const token = await getTvdbToken();
+
+      const extended = await tvdbGet(`/series/${tvdb_id}/extended`, token, 3000);
+      metadata = mapSeriesExtended(extended.data);
+      titulo = await getTituloEspanol(tvdb_id, token, extended.data.name);
+
+      try {
+        const capitulos_por_temporada = await getCapitulosPorTemporada(tvdb_id, token);
+        if (Object.keys(capitulos_por_temporada).length > 0) {
+          metadata.capitulos_por_temporada = capitulos_por_temporada;
+        }
+      } catch (e) {
+        console.warn('No se pudieron obtener episodios por temporada:', e.message);
       }
     } catch (e) {
-      console.warn('No se pudieron obtener episodios por temporada:', e.message);
+      console.error('Fallo obteniendo datos de TVDB:', e);
+      return res.status(502).json({
+        success: false,
+        error: 'No se pudo obtener información de TheTVDB: ' + e.message
+      });
     }
-  } catch (e) {
-    // Sin título no podemos insertar de forma consistente: cortamos aquí
-    return res.status(502).json({
-      success: false,
-      error: 'No se pudo obtener información de TheTVDB: ' + e.message
-    });
-  }
 
-  if (!titulo) {
-    return res.status(502).json({
-      success: false,
-      error: 'TheTVDB no devolvió un título válido para este tvdb_id'
-    });
-  }
+    if (!titulo) {
+      return res.status(502).json({
+        success: false,
+        error: 'TheTVDB no devolvió un título válido para este tvdb_id'
+      });
+    }
 
-  const serieEsqueleto = {
-    titulo,
-    tvdb_id,
-    estado,
-    temporada: 1,
-    capitulo: 1,
-    capitulos_por_temporada: {},
-    ...metadata
-  };
+    const serieEsqueleto = {
+      titulo,
+      tvdb_id,
+      estado,
+      temporada: 1,
+      capitulo: 1,
+      capitulos_por_temporada: {},
+      ...metadata
+    };
 
-  try {
     const { data: serieInsertada, error: insertError } = await supabase
       .from('series')
       .insert([serieEsqueleto])
       .select()
       .single();
+
     if (insertError || !serieInsertada) {
       throw new Error(insertError ? insertError.message : 'No se pudo insertar la serie');
     }
-    res.status(200).json({ success: true, serie: serieInsertada });
+
+    return res.status(200).json({ success: true, serie: serieInsertada });
+
   } catch (e) {
-    res.status(500).json({ success: false, error: e.message });
+    // Captura cualquier error no previsto en todo el handler
+    console.error('Error inesperado en add-show:', e);
+    return res.status(500).json({ success: false, error: e.message || 'Error desconocido' });
   }
 }
