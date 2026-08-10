@@ -25,7 +25,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -55,7 +55,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -83,7 +83,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -110,7 +110,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -141,7 +141,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -168,7 +168,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -195,7 +195,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -222,7 +222,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -249,7 +249,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -277,7 +277,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -308,7 +308,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -335,7 +335,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -362,7 +362,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -393,7 +393,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -420,7 +420,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -452,7 +452,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 3,
         "slow_mode": false
@@ -484,7 +484,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -515,7 +515,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 4,
         "slow_mode": false
@@ -545,7 +545,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 3,
         "slow_mode": false
@@ -579,7 +579,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -606,7 +606,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -634,7 +634,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -661,7 +661,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -691,7 +691,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -718,7 +718,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -750,7 +750,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -780,7 +780,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -807,7 +807,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -836,7 +836,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -863,7 +863,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -890,7 +890,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -920,7 +920,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -947,7 +947,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -977,7 +977,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1008,7 +1008,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1035,7 +1035,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1063,7 +1063,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1092,7 +1092,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1121,7 +1121,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1152,7 +1152,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1181,7 +1181,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -1211,7 +1211,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -1239,7 +1239,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -1266,7 +1266,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 3,
         "slow_mode": false
@@ -1298,7 +1298,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -1327,7 +1327,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -1352,7 +1352,7 @@
         "capitulos_por_temporada": {},
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1382,7 +1382,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
         "slow_mode": false
@@ -1417,7 +1417,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 3,
         "slow_mode": false
@@ -1448,7 +1448,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -1480,7 +1480,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -1509,7 +1509,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 2,
         "slow_mode": false
@@ -1551,7 +1551,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 3,
         "slow_mode": false
@@ -1586,7 +1586,7 @@
         },
         "created_at": "2026-07-27T11:12:59.708047+00:00",
         "estado": "completadas",
-        "proximaFecha": null,
+        "proxima_fecha": null,
         "rewatch": true,
         "veces": 3,
         "slow_mode": false
