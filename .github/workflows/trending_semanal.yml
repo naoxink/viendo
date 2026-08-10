@@ -28,4 +28,4 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
-          python3 scripts/supabase_trending_the_tvdb.py --thetvdb-api-key "${{ secrets.THETVDB_API_KEY }}" --limit 20
+          python3 scripts/supabase_trending_the_tvdb.py --thetvdb-api-key "${{ secrets.TVDB_API_KEY }}" --limit 20

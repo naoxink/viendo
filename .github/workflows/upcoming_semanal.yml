@@ -36,14 +36,14 @@ jobs:
         run: |
           if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
             python scripts/supabase_upcoming_thetvdb.py \
-              --thetvdb-api-key "${{ secrets.THETVDB_API_KEY }}" \
+              --thetvdb-api-key "${{ secrets.TVDB_API_KEY }}" \
               --limit 20 \
               --days-ahead 30 \
               --languages spa eng \
               --dry-run
           else
             python scripts/supabase_upcoming_thetvdb.py \
-              --thetvdb-api-key "${{ secrets.THETVDB_API_KEY }}" \
+              --thetvdb-api-key "${{ secrets.TVDB_API_KEY }}" \
               --limit 20 \
               --days-ahead 30 \
               --languages spa eng
