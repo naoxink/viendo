@@ -221,7 +221,12 @@ def separar_emitidos_futuros(valid_eps, ahora, hora_serie_default=None):
 
 
 def procesar_en_cola(headers, ahora):
-    """Actualiza proxima_fecha y acumulados de las series en_cola, sin tocar su estado ni progreso de visionado."""
+    """Actualiza proxima_fecha y acumulados de las series en_cola, sin tocar su estado ni progreso de visionado.
+
+    Las series ya finalizadas (Ended/Canceled) que ya se han revisado al menos una vez
+    (tienen 'acumulados' calculado) se saltan por completo para no gastar peticiones a
+    TheTVDB en shows que ya no van a publicar episodios nuevos.
+    """
     res_en_cola = supabase.table("series").select("*").eq("estado", "en_cola").execute()
     en_cola = res_en_cola.data or []
 
@@ -233,7 +238,22 @@ def procesar_en_cola(headers, ahora):
             print(f"⚠️ Saltando '{serie.get('titulo', 'Sin título')}' (en cola): no tiene tvdb_id configurado.")
             continue
 
+        # Si ya sabemos que la serie está finalizada y ya la hemos revisado antes, no hacemos nada.
+        if serie.get('estado_final') in ("Ended", "Canceled") and serie.get('acumulados') is not None:
+            print(f"⏭️ Saltando '{serie['titulo']}' (en cola): ya finalizada ({serie['estado_final']}) y ya revisada.")
+            continue
+
         print(f"🔍 Analizando (en cola): {serie['titulo']} (ID: {tvdb_id})...")
+
+        # Consultamos el estado global de la serie para saber si ya ha finalizado
+        url_info = f"https://api4.thetvdb.com/v4/series/{tvdb_id}"
+        estado_serie = "Unknown"
+        try:
+            res_info = requests.get(url_info, headers=headers, timeout=10)
+            series_data = res_info.json().get('data', {})
+            estado_serie = series_data.get('status', {}).get('name', 'Unknown')
+        except (requests.exceptions.RequestException, KeyError, ValueError):
+            pass
 
         valid_eps = obtener_episodios_validos(tvdb_id, headers)
         if not valid_eps:
@@ -256,6 +276,9 @@ def procesar_en_cola(headers, ahora):
             "acumulados": acumulados,
             "proxima_fecha": proxima_fecha
         }
+
+        if estado_serie in ("Ended", "Canceled"):
+            update_payload["estado_final"] = estado_serie
 
         res = supabase.table("series").update(update_payload).eq("id", serie_id).execute()
 
