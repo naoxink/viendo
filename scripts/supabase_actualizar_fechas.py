@@ -199,7 +199,7 @@ def obtener_episodios_validos(tvdb_id, headers):
         print("   ⚠️ No se encontraron episodios.")
         return []
 
-    valid_eps = [e for e in episodes if e.get('seasonNumber', 0) > 0 and e.get('aired')]
+    valid_eps = [e for e in episodes if (e.get('seasonNumber') or 0) > 0 and e.get('aired')]
     valid_eps.sort(key=lambda x: (x['seasonNumber'], x['number']))
     return valid_eps
 
@@ -239,8 +239,8 @@ def procesar_en_cola(headers, ahora):
         if not valid_eps:
             continue
 
-        user_s = serie.get('temporada', 1)
-        user_e = serie.get('capitulo', 0)
+        user_s = serie.get('temporada') or 1
+        user_e = serie.get('capitulo') or 0
 
         emitidos, futuros = separar_emitidos_futuros(valid_eps, ahora)
 
@@ -323,8 +323,8 @@ def actualizar_fechas(api_key):
 
         serie['capitulos_por_temporada'] = caps_por_temporada
 
-        user_s = serie.get('temporada', 1)
-        user_e = serie.get('capitulo', 0)
+        user_s = serie.get('temporada') or 1
+        user_e = serie.get('capitulo') or 0
         esta_pendiente = serie.get('pendiente', False)
 
         hora_serie = series_data.get('airsTime') or series_data.get('airTime') or series_data.get('airs', {}).get('time')
@@ -411,7 +411,7 @@ def actualizar_fechas(api_key):
         # CHIVATO DE SEGURIDAD: Verificamos si realmente se ha modificado la fila
         if not res.data:
             print(f"   ⚠️ ¡ALERTA! Supabase ha devuelto un array vacío para '{serie['titulo']}'. La base de datos no se ha actualizado. Revisa si estás usando la clave 'service_role' o si RLS está bloqueando la escritura.")
-            notificaciones.append(f"⚠️ ¡ALERTA! Supabase no actualizó '{serie['titulo']}'.")
+            notificaciones.append(f"⚠️ ¡ALERTA! Supabase no actualizó '{serie['titulo']}'. Revisa 'service_role' o RLS.")
 
     # 4. Actualizar también las series en cola (proxima_fecha y acumulados)
     # OJO: esto NO genera notificaciones de Telegram, solo actualiza la base de datos.
