@@ -10,15 +10,24 @@ export default {
     },
     emits: ['select-serie'],
     computed: {
-        // Ordena las fechas cronológicamente y añade la etiqueta relativa
+        // Agrupa por la etiqueta relativa para mostrar juntos, por ejemplo, todos los "En 1 mes"
         gruposPorFecha() {
-            return Object.keys(this.series)
-                .sort() // Como son 'YYYY-MM-DD', el orden alfabético = orden cronológico
-                .map(fecha => ({
-                    fecha,
-                    label: this.formatearFecha(fecha),
-                    series: this.series[fecha]
-                }));
+            const grupos = Object.keys(this.series).reduce((acc, fecha) => {
+                const label = this.formatearFecha(fecha);
+                if (!acc[label]) {
+                    acc[label] = { label, fechas: [], series: [] };
+                }
+                acc[label].fechas.push(fecha);
+                acc[label].series.push(...this.series[fecha]);
+                return acc;
+            }, {});
+
+            return Object.values(grupos)
+                .sort((a, b) => {
+                    const fechaA = a.fechas.sort()[0];
+                    const fechaB = b.fechas.sort()[0];
+                    return fechaA.localeCompare(fechaB);
+                });
         },
         totalSeries() {
             return Object.values(this.series)
