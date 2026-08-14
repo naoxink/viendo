@@ -54,8 +54,11 @@ function mapSeriesExtended(d) {
   };
 }
 
-async function getCapitulosPorTemporada(tvdb_id, token) {
+// Recorre los episodios, cuenta capítulos por temporada Y localiza la fecha
+// de emisión del primer capítulo (T1E1, o el más antiguo válido si no existe).
+async function getInfoEpisodios(tvdb_id, token) {
   const conteo = {};
+  let primerEpisodio = null; // { seasonNumber, number, aired }
   let page = 0;
   const MAX_PAGES = 3;
 
@@ -66,16 +69,35 @@ async function getCapitulosPorTemporada(tvdb_id, token) {
       2000
     );
     const episodios = json.data?.episodes || [];
+
     for (const ep of episodios) {
-      if (ep.seasonNumber == null) continue;
+      if (ep.seasonNumber == null || ep.seasonNumber <= 0) continue;
+
       const key = String(ep.seasonNumber);
       conteo[key] = (conteo[key] || 0) + 1;
+
+      if (!ep.aired) continue;
+
+      // Preferimos explícitamente T1E1 si la encontramos
+      const esT1E1 = ep.seasonNumber === 1 && ep.number === 1;
+      const esMasAntiguo = !primerEpisodio || ep.aired < primerEpisodio.aired;
+
+      if (esT1E1) {
+        // Si encontramos T1E1 nos quedamos con ella siempre (tiene prioridad)
+        if (!primerEpisodio || !(primerEpisodio.seasonNumber === 1 && primerEpisodio.number === 1)) {
+          primerEpisodio = ep;
+        }
+      } else if (esMasAntiguo && !(primerEpisodio && primerEpisodio.seasonNumber === 1 && primerEpisodio.number === 1)) {
+        primerEpisodio = ep;
+      }
     }
+
     const next = json.links?.next;
     if (!next) break;
     page++;
   }
-  return conteo;
+
+  return { capitulos_por_temporada: conteo, primerEpisodio };
 }
 
 // Título en español. Si no hay traducción disponible, cae al nombre original.
@@ -106,7 +128,6 @@ export default async function handler(req, res) {
     return res.status(401).end();
   }
 
-  // TODO EL RESTO DE LA LÓGICA ENVUELTO EN TRY/CATCH GLOBAL
   try {
     const { tvdb_id, estado } = req.body;
     if (!tvdb_id || !estado) {
@@ -120,6 +141,7 @@ export default async function handler(req, res) {
 
     let metadata = {};
     let titulo = null;
+    let pendiente = true; // valor por defecto/fallback si no podemos determinarlo
 
     try {
       const token = await getTvdbToken();
@@ -129,9 +151,16 @@ export default async function handler(req, res) {
       titulo = await getTituloEspanol(tvdb_id, token, extended.data.name);
 
       try {
-        const capitulos_por_temporada = await getCapitulosPorTemporada(tvdb_id, token);
+        const { capitulos_por_temporada, primerEpisodio } = await getInfoEpisodios(tvdb_id, token);
+
         if (Object.keys(capitulos_por_temporada).length > 0) {
           metadata.capitulos_por_temporada = capitulos_por_temporada;
+        }
+
+        if (primerEpisodio?.aired) {
+          const hoy = new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
+          // Pendiente = el primer capítulo ya se emitió (toca verlo)
+          pendiente = primerEpisodio.aired <= hoy;
         }
       } catch (e) {
         console.warn('No se pudieron obtener episodios por temporada:', e.message);
@@ -157,6 +186,7 @@ export default async function handler(req, res) {
       estado,
       temporada: 1,
       capitulo: 1,
+      pendiente,
       capitulos_por_temporada: {},
       ...metadata
     };
@@ -174,7 +204,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true, serie: serieInsertada });
 
   } catch (e) {
-    // Captura cualquier error no previsto en todo el handler
     console.error('Error inesperado en add-show:', e);
     return res.status(500).json({ success: false, error: e.message || 'Error desconocido' });
   }
