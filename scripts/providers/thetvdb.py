@@ -770,3 +770,58 @@ class TheTVDB:
         """
 
         return self.get_series(query) is not None
+
+    def get_recently_updated(
+        self,
+        limit: int = 20,
+        min_score: float = 60.0,
+        country: Optional[str] = None,
+        languages: tuple[str, ...] = ("spa", "eng"),
+        exclude_countries: tuple[str, ...] = ("kor", "ind", "jap"),
+        exclude_languages: tuple[str, ...] = ("kor", "hin", "jap"),
+        recent_days: int = 14
+    ) -> list[dict]:
+        """
+        Series que han emitido episodios en los últimos `recent_days` días y que
+        tienen cierta popularidad (min_score). Se excluyen países/idiomas
+        concretos (por defecto Corea e India) para dejar fuera catálogos que no
+        te interesan.
+        """
+
+        # Sobre-pedimos porque el filtro de país/idioma/fecha va a descartar bastante
+        fetch_limit = limit * 6
+
+        candidatas = self._fetch_series_filtered_multilang(
+            sort="lastAired",
+            sort_type="desc",
+            country=country,
+            languages=languages,
+            status=None,
+            min_score=min_score,
+            limit=fetch_limit
+        )
+
+        hoy = date.today()
+        ventana_inicio = hoy - timedelta(days=recent_days)
+
+        resultado = []
+
+        for item in candidatas:
+
+            pais = (item.get("country") or "").lower()
+            idioma = (item.get("language") or "").lower()
+
+            if pais in exclude_countries or idioma in exclude_languages:
+                continue
+
+            last_aired = self._parse_date(item.get("last_aired"))
+
+            if last_aired is None or last_aired < ventana_inicio or last_aired > hoy:
+                continue
+
+            resultado.append(item)
+
+            if len(resultado) >= limit:
+                break
+
+        return resultado

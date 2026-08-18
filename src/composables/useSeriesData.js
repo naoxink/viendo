@@ -221,31 +221,45 @@ export function useSeriesData() {
 
 /** Obtiene las series próximas ordenadas por fecha de estreno */
     async function fetchUpcomingSeries() {
-    const { data, error } = await _supabase
-        .from('upcoming_series')
-        .select('*')
-        .order('first_aired', { ascending: true })
-    
-    if (error) {
-        console.error('Error fetching upcoming:', error)
-        return []
-    }
-    return data
+        const { data, error } = await _supabase
+            .from('upcoming_series')
+            .select('*')
+            .order('first_aired', { ascending: true })
+        
+        if (error) {
+            console.error('Error fetching upcoming:', error)
+            return []
+        }
+        return data
     }
 
     /** Obtiene las series en tendencia ordenadas por score (popularidad) */
     async function fetchTrendingSeries() {
-    const { data, error } = await _supabase
-        .from('trending_series')
-        .select('*')
-        .order('score', { ascending: false })
-    
-    if (error) {
-        console.error('Error fetching trending:', error)
-        return []
-    }
-    return data
+        const { data, error } = await _supabase
+            .from('trending_series')
+            .select('*')
+            .order('score', { ascending: false })
+        
+        if (error) {
+            console.error('Error fetching trending:', error)
+            return []
+        }
+        return data
     }
 
-    return { data, status, lastUpdate, loading, error, añoActual, loadAll, updateShowStatus, updateShowField, insertShow, fetchUpcomingSeries, fetchTrendingSeries }
+    async function fetchRecentlyUpdated() {
+        const { data, error } = await _supabase
+            .from('updated_series')
+            .select('*')
+            .order('last_aired', { ascending: false })
+
+        if (error) {
+            console.error('Error fetching recently updated:', error)
+            return []
+        }
+        return data
+    }
+
+    return { data, status, lastUpdate, loading, error, añoActual, loadAll, updateShowStatus,
+        updateShowField, insertShow, fetchUpcomingSeries, fetchTrendingSeries, fetchRecentlyUpdated }
 }

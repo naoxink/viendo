@@ -239,10 +239,13 @@ export default {
                                 </span>
                             </div>
 
-                            <div class="details-field" v-if="serie.acumulados !== undefined">
+                            <div class="details-field">
                                 <span class="details-field-label">Capítulos acumulados</span>
-                                <span class="details-field-value">
-                                    <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
+                                <span class="details-field-value" v-if="!isAdmin">
+                                    <span v-if="serie.acumulados || 0 > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
+                                </span>
+                                <span class="details-field-value" v-else>
+                                    <input type="number" class="admin-input-small" :value="serie.acumulados || 0" @change="actualizarCampo('acumulados', $event)" />
                                 </span>
                             </div>
 

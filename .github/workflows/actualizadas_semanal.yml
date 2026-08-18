@@ -1,0 +1,46 @@
+name: Series actualizadas semanal
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # Lunes 06:00 UTC semanal
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Ejecutar en modo dry-run (no escribe en Supabase)"
+        type: boolean
+        default: false
+
+jobs:
+  populate-updated:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests supabase
+
+      - name: Ejecutar script de series actualizadas
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python scripts/supabase_actualizadas_thetvdb.py \
+              --thetvdb-api-key "${{ secrets.TVDB_API_KEY }}" \
+              --limit 20 --min-score 60 --recent-days 14 \
+              --languages spa eng --dry-run
+          else
+            python scripts/supabase_actualizadas_thetvdb.py \
+              --thetvdb-api-key "${{ secrets.TVDB_API_KEY }}" \
+              --limit 20 --min-score 60 --recent-days 14 \
+              --languages spa eng
+          fi
