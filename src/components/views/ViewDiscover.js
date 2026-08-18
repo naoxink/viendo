@@ -178,14 +178,13 @@ export default {
                   <p class="progress" v-if="serie.anio">
                       Año: <strong>{{ serie.anio }}</strong>
                   </p>
-                  <p class="next-air" v-if="serie.score">
-                      🔥 Score: <strong>{{ serie.score }}</strong>
-                  </p>
                   </div>
               </div>
               <div class="serie-card-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem;">
-                  <span class="badge" style="font-size: 0.75rem; font-weight: bold; background: #f59e0b; color: #000; padding: 0.1rem 0.4rem; border-radius: 4px;">#{{ index + 1 }} Trending</span>
                   <LinksFooter :serie="serie" />
+                  <span class="next-air" v-if="serie.last_aired">
+                      <strong>{{ serie.last_aired }}</strong>
+                  </span>
                   <!-- Botón para copiar TVDB ID -->
                   <button 
                   @click="copyTvdbId(serie.tvdb_id)" 

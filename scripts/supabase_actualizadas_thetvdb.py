@@ -95,7 +95,7 @@ def main():
 
     args = parser.parse_args()
 
-    provider = TheTVDB(args.apikey)
+    provider = TheTVDB(args.apikey, language="eng")
 
     print("🌐 Solicitando series recién actualizadas desde TheTVDB...")
     actualizadas = provider.get_recently_updated(

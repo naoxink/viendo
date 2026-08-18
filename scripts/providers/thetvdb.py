@@ -777,22 +777,21 @@ class TheTVDB:
         min_score: float = 60.0,
         country: Optional[str] = None,
         languages: tuple[str, ...] = ("spa", "eng"),
-        exclude_countries: tuple[str, ...] = ("kor", "ind", "jap"),
-        exclude_languages: tuple[str, ...] = ("kor", "hin", "jap"),
+        exclude_countries: tuple[str, ...] = ("kor", "ind"),
+        exclude_languages: tuple[str, ...] = ("kor", "hin"),
         recent_days: int = 14
     ) -> list[dict]:
         """
-        Series que han emitido episodios en los últimos `recent_days` días y que
-        tienen cierta popularidad (min_score). Se excluyen países/idiomas
-        concretos (por defecto Corea e India) para dejar fuera catálogos que no
-        te interesan.
+        Series con episodios emitidos recientemente (recent_days) y cierta
+        popularidad (min_score), excluyendo países/idiomas concretos.
         """
 
-        # Sobre-pedimos porque el filtro de país/idioma/fecha va a descartar bastante
-        fetch_limit = limit * 6
+        fetch_limit = limit * 8
 
+        # Usamos "score" como sort (válido y ya probado en get_trending),
+        # y filtramos la recencia nosotros mismos comparando last_aired.
         candidatas = self._fetch_series_filtered_multilang(
-            sort="lastAired",
+            sort="score",
             sort_type="desc",
             country=country,
             languages=languages,
@@ -821,7 +820,8 @@ class TheTVDB:
 
             resultado.append(item)
 
-            if len(resultado) >= limit:
-                break
+        # Ordenamos por fecha de última emisión (lo que realmente pedías:
+        # "últimas series actualizadas"), no por score
+        resultado.sort(key=lambda item: item.get("last_aired") or "", reverse=True)
 
-        return resultado
+        return resultado[:limit]
