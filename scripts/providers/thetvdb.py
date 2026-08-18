@@ -774,7 +774,7 @@ class TheTVDB:
     def get_recently_updated(
         self,
         limit: int = 20,
-        min_score: float = 60.0,
+        min_score: float = 0.0,
         country: Optional[str] = None,
         languages: tuple[str, ...] = ("spa", "eng"),
         exclude_countries: tuple[str, ...] = ("kor", "ind"),
@@ -782,26 +782,23 @@ class TheTVDB:
         recent_days: int = 14
     ) -> list[dict]:
         """
-        Series con episodios emitidos recientemente (recent_days) y cierta
+        Series con actividad de emisión reciente (recent_days) y cierta
         popularidad (min_score), excluyendo países/idiomas concretos.
         """
 
-        fetch_limit = limit * 8
+        # Pedimos MUCHO más de lo que necesitamos: el filtro de recencia
+        # va a descartar la mayoría de "grandes históricos" que ya terminaron.
+        fetch_limit = limit * 15
 
-        # Usamos "score" como sort (válido y ya probado en get_trending),
-        # y filtramos la recencia nosotros mismos comparando last_aired.
         candidatas = self._fetch_series_filtered_multilang(
             sort="score",
             sort_type="desc",
             country=country,
             languages=languages,
             status=None,
-            min_score=min_score,
+            min_score=0.0,          # NO filtramos por score aquí todavía
             limit=fetch_limit
         )
-
-        hoy = date.today()
-        ventana_inicio = hoy - timedelta(days=recent_days)
 
         resultado = []
 
@@ -813,15 +810,18 @@ class TheTVDB:
             if pais in exclude_countries or idioma in exclude_languages:
                 continue
 
-            last_aired = self._parse_date(item.get("last_aired"))
+            # Reutilizamos la misma lógica de "actividad reciente" que get_trending:
+            # status == Continuing, o last_aired/next_aired/first_aired dentro de la ventana
+            if not self._is_currently_active(item, recent_days):
+                continue
 
-            if last_aired is None or last_aired < ventana_inicio or last_aired > hoy:
+            score = item.get("score") or 0
+            if min_score and score < min_score:
                 continue
 
             resultado.append(item)
 
-        # Ordenamos por fecha de última emisión (lo que realmente pedías:
-        # "últimas series actualizadas"), no por score
-        resultado.sort(key=lambda item: item.get("last_aired") or "", reverse=True)
+        # Orden final: lo más recientemente actualizado primero
+        resultado.sort(key=lambda item: item.get("last_aired") or item.get("first_aired") or "", reverse=True)
 
         return resultado[:limit]
