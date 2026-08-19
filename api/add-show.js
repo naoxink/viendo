@@ -54,11 +54,15 @@ function mapSeriesExtended(d) {
   };
 }
 
-// Recorre los episodios, cuenta capítulos por temporada Y localiza la fecha
-// de emisión del primer capítulo (T1E1, o el más antiguo válido si no existe).
+// Recorre los episodios, cuenta capítulos por temporada, localiza la fecha
+// de emisión del primer capítulo (T1E1, o el más antiguo válido si no existe)
+// y cuenta cuántos episodios ya se han emitido a día de hoy (para poder
+// calcular después cuántos capítulos hay "acumulados" desde el primero).
 async function getInfoEpisodios(tvdb_id, token) {
   const conteo = {};
   let primerEpisodio = null; // { seasonNumber, number, aired }
+  let emitidosCount = 0;
+  const hoy = new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
   let page = 0;
   const MAX_PAGES = 3;
 
@@ -66,7 +70,7 @@ async function getInfoEpisodios(tvdb_id, token) {
     const json = await tvdbGet(
       `/series/${tvdb_id}/episodes/default?page=${page}`,
       token,
-      2000
+      4000
     );
     const episodios = json.data?.episodes || [];
 
@@ -77,6 +81,11 @@ async function getInfoEpisodios(tvdb_id, token) {
       conteo[key] = (conteo[key] || 0) + 1;
 
       if (!ep.aired) continue;
+
+      // Contamos cualquier episodio válido (temporada > 0) que ya se haya emitido
+      if (ep.aired <= hoy) {
+        emitidosCount++;
+      }
 
       // Preferimos explícitamente T1E1 si la encontramos
       const esT1E1 = ep.seasonNumber === 1 && ep.number === 1;
@@ -97,7 +106,7 @@ async function getInfoEpisodios(tvdb_id, token) {
     page++;
   }
 
-  return { capitulos_por_temporada: conteo, primerEpisodio };
+  return { capitulos_por_temporada: conteo, primerEpisodio, emitidosCount };
 }
 
 // Título en español. Si no hay traducción disponible, cae al nombre original.
@@ -142,6 +151,7 @@ export default async function handler(req, res) {
     let metadata = {};
     let titulo = null;
     let pendiente = true; // valor por defecto/fallback si no podemos determinarlo
+    let acumulados = 0;   // capítulos ya emitidos por encima del 1x1, pendientes de ver
 
     try {
       const token = await getTvdbToken();
@@ -151,7 +161,7 @@ export default async function handler(req, res) {
       titulo = await getTituloEspanol(tvdb_id, token, extended.data.name);
 
       try {
-        const { capitulos_por_temporada, primerEpisodio } = await getInfoEpisodios(tvdb_id, token);
+        const { capitulos_por_temporada, primerEpisodio, emitidosCount } = await getInfoEpisodios(tvdb_id, token);
 
         if (Object.keys(capitulos_por_temporada).length > 0) {
           metadata.capitulos_por_temporada = capitulos_por_temporada;
@@ -162,8 +172,15 @@ export default async function handler(req, res) {
           // Pendiente = el primer capítulo ya se emitió (toca verlo)
           pendiente = primerEpisodio.aired <= hoy;
         }
+
+        // Si el primer capítulo ya está pendiente de ver, todo lo que se haya
+        // emitido POR ENCIMA de ese primer capítulo cuenta como "acumulado".
+        // Si el primer capítulo ni siquiera ha emitido aún, no hay acumulados.
+        acumulados = pendiente ? Math.max(0, emitidosCount - 1) : 0;
       } catch (e) {
-        console.warn('No se pudieron obtener episodios por temporada:', e.message);
+        // Si esto falla, la serie se guarda igualmente pero SIN capitulos_por_temporada
+        // (quedará como {} y luego "completar_metadatos"/"actualizar_fechas" la rellenarán).
+        console.error(`⚠️ No se pudieron obtener episodios de tvdb_id=${tvdb_id}:`, e.message);
       }
     } catch (e) {
       console.error('Fallo obteniendo datos de TVDB:', e);
@@ -187,8 +204,12 @@ export default async function handler(req, res) {
       temporada: 1,
       capitulo: 1,
       pendiente,
-      capitulos_por_temporada: {},
-      ...metadata
+      acumulados,
+      ...metadata,
+      // Aseguramos explícitamente (al final, sin depender del orden del spread)
+      // que si TVDB no devolvió capítulos por temporada, quede un objeto vacío
+      // en vez de "undefined" — pero si sí los tenemos, se respetan.
+      capitulos_por_temporada: metadata.capitulos_por_temporada ?? {}
     };
 
     const { data: serieInsertada, error: insertError } = await supabase
