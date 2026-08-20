@@ -46,37 +46,45 @@ export default async function handler(req, res) {
 
     // 2. Aplicar la lógica de avance de temporada y capítulo
     const totalEnTemporada = (serie.capitulos_por_temporada || {})[serie.temporada] || 0;
-        
+
     let nextCap = serie.capitulo + 1;
     let nextTemp = serie.temporada;
     let nextPendiente = serie.pendiente;
     let nextAcumulados = serie.acumulados || 0;
+    let cruzaTemporada = false;
 
     // Lógica de cambio de temporada
     if (totalEnTemporada > 0 && nextCap > totalEnTemporada) {
         nextCap = 1;
         nextTemp += 1;
-        
+        cruzaTemporada = true;
+    }
+
+    // Si ya había capítulos "acumulados" (emitidos por delante del que se
+    // acaba de marcar como visto), el siguiente capítulo (nextCap/nextTemp,
+    // haya cruzado de temporada o no) es justamente uno de esos acumulados:
+    // ya estaba emitido, así que sigue pendiente de ver. Restamos uno de los
+    // acumulados pero NO lo damos por visto de golpe.
+    //
+    // Antes, este cálculo hacía `nextPendiente = (nextAcumulados > 0)`
+    // *después* de decrementar, así que si solo quedaba 1 acumulado, al
+    // consumirlo se marcaba pendiente=false y el capítulo siguiente
+    // (que sí estaba emitido) se daba por visto de golpe sin que el
+    // usuario lo hubiera marcado.
+    if (nextAcumulados > 0) {
+        nextAcumulados -= 1;
+        nextPendiente = true;
+    } else if (cruzaTemporada) {
         const tieneSiguienteTemporada = (serie.capitulos_por_temporada || {})[nextTemp];
-        if (tieneSiguienteTemporada) {
-            nextPendiente = true;
+        nextPendiente = Boolean(tieneSiguienteTemporada);
+    } else {
+        if (serie.proxima_fecha) {
+            const hoy = new Date();
+            const fechaProximo = new Date(serie.proxima_fecha);
+            nextPendiente = (fechaProximo <= hoy);
         } else {
             nextPendiente = false;
-        }
-    } else {
-        // Lógica dentro de la misma temporada
-        if (nextAcumulados > 0) {
-            nextAcumulados -= 1;
-            nextPendiente = (nextAcumulados > 0); 
-        } else {
-            if (serie.proxima_fecha) {
-                const hoy = new Date();
-                const fechaProximo = new Date(serie.proxima_fecha);
-                nextPendiente = (fechaProximo <= hoy);
-            } else {
-                nextPendiente = false;
-                nextCap -= 1; // Ajuste para no avanzar si no hay capítulos pendientes
-            }
+            nextCap -= 1; // Ajuste para no avanzar si no hay capítulos pendientes
         }
     }
 

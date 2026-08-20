@@ -21,12 +21,14 @@ export default {
             const caps = props.serie.capitulosPorTemporada;
             if (!caps || Object.keys(caps).length === 0) return 0;
 
+            const capituloActual = props.serie.capitulo - (props.serie.pendiente ? 1 : 0);
+
             if (props.serie.rewatch) {
                 const totalCaps = Object.values(caps).reduce((a, b) => a + b, 0);
-                return (props.serie.capitulo / totalCaps) * 100;
+                return (capituloActual / totalCaps) * 100;
             } else {
                 const capsTemporada = caps[props.serie.temporada] || 1;
-                return (props.serie.capitulo / capsTemporada) * 100;
+                return (capituloActual / capsTemporada) * 100;
             }
         });
         return { bgStyle, proximaFechaTexto, progreso, isAdmin }
