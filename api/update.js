@@ -5,6 +5,10 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
+// Umbral configurable: a partir de cuántos días entre capítulo y capítulo
+// se considera "modo tranqui"
+const DIAS_UMBRAL_SLOW_MODE = 10;
+
 export default async function handler(req, res) {
   // 1. Cabeceras CORS (Permitiendo tu GitHub Pages)
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -96,11 +100,24 @@ export default async function handler(req, res) {
         nextPendiente = (nextAcumulados > 0);
     }
 
+    const ahora = new Date();
+    const ultimoVisto = serie.ultimo_capitulo_visto_en ? new Date(serie.ultimo_capitulo_visto_en) : null;
+
+    // Si no había fecha previa (primera vez que se marca algo desde el cambio),
+    // dejamos slow_mode como estaba para no marcarlo en falso el primer día.
+    let nuevoSlowMode = serie.slow_mode;
+    if (ultimoVisto) {
+        const diasTranscurridos = (ahora - ultimoVisto) / (1000 * 60 * 60 * 24);
+        nuevoSlowMode = diasTranscurridos >= DIAS_UMBRAL_SLOW_MODE;
+    }
+
     const datosActualizados = {
         temporada: nextTemp,
         capitulo: nextCap,
         pendiente: nextPendiente,
-        acumulados: nextAcumulados
+        acumulados: nextAcumulados,
+        ultimo_capitulo_visto_en: ahora.toISOString(),
+        slow_mode: nuevoSlowMode
     };
 
     // 3. Guardar los cambios directamente en Supabase
