@@ -172,13 +172,16 @@ export default {
         <div v-else-if="activeTab === 'updated'" class="series-grid">
             <div v-for="(serie, index) in updatedList" :key="serie.tvdb_id" class="serie-card" :style="getCardStyle(serie)">
               <div class="serie-card-body">
-                  <PosterThumb :serie="serie" />
-                  <div class="info">
-                  <h2>{{ serie.titulo }}</h2>
-                  <p class="progress" v-if="serie.anio">
-                      Año: <strong>{{ serie.anio }}</strong>
-                  </p>
-                  </div>
+                <PosterThumb :serie="serie" />
+                <div class="info">
+                <h2>{{ serie.titulo }}</h2>
+                <p class="progress" v-if="serie.anio">
+                    Año: <strong>{{ serie.anio }}</strong>
+                </p>
+                <p class="progress" v-if="serie.temporada && serie.capitulo">
+                    T{{ serie.temporada }} · E{{ serie.capitulo }}
+                </p>
+                </div>
               </div>
               <div class="serie-card-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem;">
                   <LinksFooter :serie="serie" />

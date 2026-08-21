@@ -2,7 +2,7 @@ import os
 import sys
 import io
 import argparse
-from datetime import datetime
+from datetime import datetime, date
 from supabase import create_client, Client
 
 from pathlib import Path
@@ -20,6 +20,34 @@ SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
 
 supabase: Client | None = None
 
+def enriquecer_con_ultimo_episodio(provider, series_list):
+    """Añade 'temporada' y 'capitulo' del último episodio ya emitido a cada serie."""
+    hoy = date.today().isoformat()
+
+    for s in series_list:
+        tvdb_id = s.get("id")
+        if not tvdb_id:
+            continue
+
+        try:
+            episodios = provider.get_episodes(tvdb_id)
+        except Exception as exc:
+            print(f"   ⚠️ No se pudieron obtener episodios de {s.get('name')} (ID {tvdb_id}): {exc}")
+            continue
+
+        emitidos = [
+            ep for ep in episodios
+            if ep.get('season') and ep['season'] > 0 and ep.get('aired') and ep['aired'] <= hoy
+        ]
+
+        if not emitidos:
+            continue
+
+        ultimo = max(emitidos, key=lambda ep: ep['aired'])
+        s['temporada'] = ultimo.get('season')
+        s['capitulo'] = ultimo.get('number')
+
+    return series_list
 
 def get_supabase_client() -> Client | None:
     global supabase
@@ -77,6 +105,8 @@ def build_payload_item(s: dict) -> dict:
         "overview": s.get("overview"),
         "image_url": resolver_url_imagen(s.get("image") or s.get("thumbnail")),
         "last_aired": s.get("last_aired"),
+        "temporada": s.get("temporada"),
+        "capitulo": s.get("capitulo"),
         "status": s.get("status"),
         "created_at": datetime.utcnow().isoformat()
     }
@@ -110,6 +140,9 @@ def main():
         return
 
     print(f"✅ Recibidos {len(actualizadas)} resultados de actualizadas.")
+
+    print("🔎 Buscando temporada/capítulo del último episodio emitido...")
+    actualizadas = enriquecer_con_ultimo_episodio(provider, actualizadas)
 
     payload = [build_payload_item(s) for s in actualizadas]
 
