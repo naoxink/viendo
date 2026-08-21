@@ -21,12 +21,12 @@ SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
 supabase: Client | None = None
 
 def enriquecer_con_ultimo_episodio(provider, series_list):
-    """Añade 'temporada' y 'capitulo' del último episodio ya emitido a cada serie."""
-    hoy = date.today().isoformat()
-
+    """Añade 'temporada' y 'capitulo' del episodio emitido en la fecha 'last_aired'."""
     for s in series_list:
         tvdb_id = s.get("id")
-        if not tvdb_id:
+        fecha_objetivo = s.get("last_aired")
+
+        if not tvdb_id or not fecha_objetivo:
             continue
 
         try:
@@ -35,17 +35,20 @@ def enriquecer_con_ultimo_episodio(provider, series_list):
             print(f"   ⚠️ No se pudieron obtener episodios de {s.get('name')} (ID {tvdb_id}): {exc}")
             continue
 
-        emitidos = [
+        # Buscamos el episodio cuya fecha de emisión coincide con last_aired
+        candidatos = [
             ep for ep in episodios
-            if ep.get('season') and ep['season'] > 0 and ep.get('aired') and ep['aired'] <= hoy
+            if ep.get('season') and ep['season'] > 0 and ep.get('aired') == fecha_objetivo
         ]
 
-        if not emitidos:
+        if not candidatos:
             continue
 
-        ultimo = max(emitidos, key=lambda ep: ep['aired'])
-        s['temporada'] = ultimo.get('season')
-        s['capitulo'] = ultimo.get('number')
+        # Si hay varios el mismo día (raro, pero por si acaso), nos quedamos
+        # con el de temporada/número más alto
+        episodio = max(candidatos, key=lambda ep: (ep['season'], ep['number']))
+        s['temporada'] = episodio.get('season')
+        s['capitulo'] = episodio.get('number')
 
     return series_list
 
