@@ -1,36 +1,5 @@
 [
     {
-        "id": 321,
-        "titulo": "Fargo",
-        "anio": 2014,
-        "visto_en": null,
-        "temporada": null,
-        "capitulo": null,
-        "pendiente": false,
-        "nota": null,
-        "tvdb_id": 269613,
-        "imdb_id": null,
-        "acumulados": 51,
-        "image_url": "https://artworks.thetvdb.com/banners/posters/269613-3.jpg",
-        "poster_path": "posters/269613_Fargo.jpg",
-        "notas": null,
-        "estado_final": "false",
-        "duracion_media": 52,
-        "capitulos_por_temporada": {
-            "1": 10,
-            "2": 10,
-            "3": 10,
-            "4": 11,
-            "5": 10
-        },
-        "created_at": "2026-07-27T11:12:59.708047+00:00",
-        "estado": "en_cola",
-        "proxima_fecha": null,
-        "rewatch": null,
-        "veces": null,
-        "slow_mode": false
-    },
-    {
         "id": 319,
         "titulo": "Atasco",
         "anio": 2024,
@@ -58,7 +27,8 @@
         "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
-        "slow_mode": false
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
     },
     {
         "id": 320,
@@ -89,7 +59,8 @@
         "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
-        "slow_mode": false
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
     },
     {
         "id": 318,
@@ -119,7 +90,40 @@
         "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
-        "slow_mode": false
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
+    },
+    {
+        "id": 321,
+        "titulo": "Fargo",
+        "anio": 2014,
+        "visto_en": null,
+        "temporada": null,
+        "capitulo": null,
+        "pendiente": false,
+        "nota": null,
+        "tvdb_id": 269613,
+        "imdb_id": null,
+        "acumulados": 51,
+        "image_url": "https://artworks.thetvdb.com/banners/posters/269613-3.jpg",
+        "poster_path": "posters/269613_Fargo.jpg",
+        "notas": null,
+        "estado_final": "false",
+        "duracion_media": 52,
+        "capitulos_por_temporada": {
+            "1": 10,
+            "2": 10,
+            "3": 10,
+            "4": 11,
+            "5": 10
+        },
+        "created_at": "2026-07-27T11:12:59.708047+00:00",
+        "estado": "en_cola",
+        "proxima_fecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
     },
     {
         "id": 337,
@@ -146,7 +150,8 @@
         "proxima_fecha": null,
         "rewatch": false,
         "veces": 0,
-        "slow_mode": false
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
     },
     {
         "id": 316,
@@ -176,7 +181,8 @@
         "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
-        "slow_mode": false
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
     },
     {
         "id": 340,
@@ -203,34 +209,8 @@
         "proxima_fecha": "2026-09-08",
         "rewatch": null,
         "veces": null,
-        "slow_mode": false
-    },
-    {
-        "id": 343,
-        "titulo": "Carrie",
-        "anio": 2026,
-        "visto_en": null,
-        "temporada": 1,
-        "capitulo": 1,
-        "pendiente": false,
-        "nota": null,
-        "tvdb_id": 455755,
-        "imdb_id": "tt11540908",
-        "acumulados": 0,
-        "image_url": "https://artworks.thetvdb.com/banners/v4/series/455755/posters/6a663b74dfcf2.jpg",
-        "poster_path": "posters/455755_Carrie.jpg",
-        "notas": null,
-        "estado_final": null,
-        "duracion_media": 0,
-        "capitulos_por_temporada": {
-            "1": 8
-        },
-        "created_at": "2026-08-10T07:29:06.621702+00:00",
-        "estado": "en_cola",
-        "proxima_fecha": "2026-10-07",
-        "rewatch": null,
-        "veces": null,
-        "slow_mode": false
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
     },
     {
         "id": 341,
@@ -257,38 +237,63 @@
         "proxima_fecha": "2026-09-25",
         "rewatch": null,
         "veces": null,
-        "slow_mode": false
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
     },
     {
-        "id": 346,
-        "titulo": "Los Soprano",
-        "anio": 1999,
+        "id": 343,
+        "titulo": "Carrie",
+        "anio": 2026,
+        "visto_en": null,
+        "temporada": 1,
+        "capitulo": 1,
+        "pendiente": false,
+        "nota": null,
+        "tvdb_id": 455755,
+        "imdb_id": "tt11540908",
+        "acumulados": 0,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/455755/posters/6a663b74dfcf2.jpg",
+        "poster_path": "posters/455755_Carrie.jpg",
+        "notas": null,
+        "estado_final": null,
+        "duracion_media": 0,
+        "capitulos_por_temporada": {
+            "1": 8
+        },
+        "created_at": "2026-08-10T07:29:06.621702+00:00",
+        "estado": "en_cola",
+        "proxima_fecha": "2026-10-07",
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
+    },
+    {
+        "id": 347,
+        "titulo": "Orgullo",
+        "anio": 2026,
         "visto_en": null,
         "temporada": 1,
         "capitulo": 1,
         "pendiente": true,
         "nota": null,
-        "tvdb_id": 75299,
-        "imdb_id": "tt0141842",
-        "acumulados": 85,
-        "image_url": "https://artworks.thetvdb.com/banners/posters/75299-17.jpg",
-        "poster_path": null,
+        "tvdb_id": 478836,
+        "imdb_id": "tt41050785",
+        "acumulados": 7,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/478836/posters/6a23112aa98ba.jpg",
+        "poster_path": "posters/478836_Orgullo.jpg",
         "notas": null,
         "estado_final": "Ended",
-        "duracion_media": 54,
+        "duracion_media": 38,
         "capitulos_por_temporada": {
-            "1": 13,
-            "2": 13,
-            "3": 13,
-            "4": 13,
-            "5": 13,
-            "6": 21
+            "1": 8
         },
-        "created_at": "2026-08-16T19:11:02.875047+00:00",
+        "created_at": "2026-08-18T05:08:13.555877+00:00",
         "estado": "en_cola",
         "proxima_fecha": null,
         "rewatch": null,
         "veces": null,
-        "slow_mode": false
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null
     }
 ]
