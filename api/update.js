@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // 3. Solo permitimos método POST para el login
+  // 3. Solo permitimos método POST
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Método no permitido' });
   }
@@ -48,79 +48,38 @@ export default async function handler(req, res) {
 
     const serie = seriesList[0];
 
-    // 2. Aplicar la lógica de avance de temporada y capítulo
+    // 2. Avanzar al siguiente capítulo. Solo miramos capitulos_por_temporada
+    // para saber si toca cruzar de temporada; ya NO calculamos aquí
+    // pendiente/acumulados/proxima_fecha — eso lo deriva el frontend en
+    // tiempo real a partir de 'fechas_episodios' + (temporada, capitulo).
     const totalEnTemporada = (serie.capitulos_por_temporada || {})[serie.temporada] || 0;
 
     let nextCap = serie.capitulo + 1;
     let nextTemp = serie.temporada;
-    let nextPendiente = serie.pendiente;
-    let nextAcumulados = serie.acumulados || 0;
-    let cruzaTemporada = false;
 
-    // Lógica de cambio de temporada
     if (totalEnTemporada > 0 && nextCap > totalEnTemporada) {
-        nextCap = 1;
-        nextTemp += 1;
-        cruzaTemporada = true;
+      nextCap = 1;
+      nextTemp += 1;
     }
 
-    // Si ya había capítulos "acumulados" (emitidos por delante del que se
-    // acaba de marcar como visto), el siguiente capítulo (nextCap/nextTemp,
-    // haya cruzado de temporada o no) es justamente uno de esos acumulados:
-    // ya estaba emitido, así que sigue pendiente de ver. Restamos uno de los
-    // acumulados pero NO lo damos por visto de golpe.
-    //
-    // Antes, este cálculo hacía `nextPendiente = (nextAcumulados > 0)`
-    // *después* de decrementar, así que si solo quedaba 1 acumulado, al
-    // consumirlo se marcaba pendiente=false y el capítulo siguiente
-    // (que sí estaba emitido) se daba por visto de golpe sin que el
-    // usuario lo hubiera marcado.
-    if (nextAcumulados > 0) {
-        nextAcumulados -= 1;
-        nextPendiente = true;
-    } else if (cruzaTemporada) {
-        const tieneSiguienteTemporada = (serie.capitulos_por_temporada || {})[nextTemp];
-        nextPendiente = Boolean(tieneSiguienteTemporada);
-    } else {
-        if (serie.proxima_fecha) {
-            const hoy = new Date();
-            const fechaProximo = new Date(serie.proxima_fecha);
-            nextPendiente = (fechaProximo <= hoy);
-        } else {
-            nextPendiente = false;
-            nextCap -= 1; // Ajuste para no avanzar si no hay capítulos pendientes
-        }
-    }
-
-    // Si es rewatch (o es una serie finalizada) tomamos todos los capítulos de 'capitulos_por_temporada'
-    // y los sumamos a acumulados restando los que llevamos vistos
-    if ((serie.rewatch || serie.estado_final === 'Ended') && serie.capitulos_por_temporada) {
-        const totalCapitulos = Object.values(serie.capitulos_por_temporada || {}).reduce((acc, val) => acc + val, 0);
-        nextAcumulados = totalCapitulos - (nextTemp - 1) * totalEnTemporada - nextCap;
-        nextPendiente = (nextAcumulados > 0);
-    }
-
+    // 3. Slow mode: igual que antes, se basa en cuánto tardas en marcar capítulos
     const ahora = new Date();
     const ultimoVisto = serie.ultimo_capitulo_visto_en ? new Date(serie.ultimo_capitulo_visto_en) : null;
 
-    // Si no había fecha previa (primera vez que se marca algo desde el cambio),
-    // dejamos slow_mode como estaba para no marcarlo en falso el primer día.
     let nuevoSlowMode = serie.slow_mode;
     if (ultimoVisto) {
-        const diasTranscurridos = (ahora - ultimoVisto) / (1000 * 60 * 60 * 24);
-        nuevoSlowMode = diasTranscurridos >= DIAS_UMBRAL_SLOW_MODE;
+      const diasTranscurridos = (ahora - ultimoVisto) / (1000 * 60 * 60 * 24);
+      nuevoSlowMode = diasTranscurridos >= DIAS_UMBRAL_SLOW_MODE;
     }
 
     const datosActualizados = {
-        temporada: nextTemp,
-        capitulo: nextCap,
-        pendiente: nextPendiente,
-        acumulados: nextAcumulados,
-        ultimo_capitulo_visto_en: ahora.toISOString(),
-        slow_mode: nuevoSlowMode
+      temporada: nextTemp,
+      capitulo: nextCap,
+      ultimo_capitulo_visto_en: ahora.toISOString(),
+      slow_mode: nuevoSlowMode
     };
 
-    // 3. Guardar los cambios directamente en Supabase
+    // 4. Guardar los cambios directamente en Supabase
     const { error: updateError } = await supabase
       .from('series')
       .update(datosActualizados)
@@ -130,11 +89,10 @@ export default async function handler(req, res) {
       throw new Error(updateError.message);
     }
 
-    // Fusionamos los datos nuevos para devolver la respuesta esperada
     const serieModificada = { ...serie, ...datosActualizados };
 
     res.status(200).json({ success: true, serie: serieModificada });
-  } catch (e) { 
-    res.status(500).json({ error: e.message }); 
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 }

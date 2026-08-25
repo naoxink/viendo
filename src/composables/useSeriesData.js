@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 import { CONFIG } from '../utils/config.js'
+import { calcularEstadoPendiente } from '../utils/episodios.js'
 
 const _supabase = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY)
 
@@ -38,6 +39,17 @@ export function useSeriesData() {
                     duracionMedia: item.duracion_media,
                     capitulosPorTemporada: item.capitulos_por_temporada
                 }
+
+                if (serieMapeada.fechas_episodios && Object.keys(serieMapeada.fechas_episodios).length > 0) {
+                    const estado = calcularEstadoPendiente(
+                        serieMapeada.fechas_episodios,
+                        serieMapeada.temporada,
+                        serieMapeada.capitulo
+                    )
+                    Object.assign(serieMapeada, estado) // sobreescribe pendiente/acumulados/proxima_fecha
+                }
+                // si no hay fechas_episodios aún (serie recién añadida, no sincronizada), se
+                // queda con lo que ya viniera de la BD como fallback
 
                 if (item.estado === 'viendo') {
                     serieMapeada.estado = 'viendo'

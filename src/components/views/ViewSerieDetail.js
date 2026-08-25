@@ -4,6 +4,7 @@ import LinksFooter from '../shared/LinksFooter.js'
 import RewatchBadge from '../shared/RewatchBadge.js'
 import SlowModeBadge from '../shared/SlowModeBadge.js'
 import { formatProximaFecha, cardBgStyle, getNotaClass } from '../../utils/format.js'
+import { calcularEstadoPendiente } from '../../utils/episodios.js'
 import { useSeriesData } from '../../composables/useSeriesData.js'
 
 export default {
@@ -15,6 +16,27 @@ export default {
     emits: ['back'],
     setup(props, { emit }) {
         const { updateShowStatus, updateShowField } = useSeriesData()
+
+        // Campos cuya edición cambia "hasta dónde ha visto el usuario", y por
+        // tanto invalidan pendiente/acumulados/proxima_fecha calculados.
+        const CAMPOS_QUE_AFECTAN_PROGRESO = ['temporada', 'capitulo']
+
+        const recalcularEstadoLocal = () => {
+            if (!props.serie.fechas_episodios) return
+
+            const estado = calcularEstadoPendiente(
+                props.serie.fechas_episodios,
+                props.serie.temporada,
+                props.serie.capitulo
+            )
+
+            // Mutamos el objeto reactivo directamente, igual que ya hace
+            // cambiarEstado() más abajo con props.serie.estado — así la
+            // vista se actualiza al instante sin esperar a un loadData().
+            props.serie.pendiente = estado.pendiente
+            props.serie.acumulados = estado.acumulados
+            props.serie.proxima_fecha = estado.proxima_fecha
+        }
 
         // Método genérico para guardar cualquier campo de admin
         const actualizarCampo = async (campoDb, evento) => {
@@ -28,6 +50,19 @@ export default {
 
             if (!resultado.success) {
                 console.error(`No se pudo actualizar ${campoDb}:`, resultado.error)
+                return
+            }
+
+            if (CAMPOS_QUE_AFECTAN_PROGRESO.includes(campoDb)) {
+                // updateShowField ya actualiza props.serie[campoDb] indirectamente
+                // vía loadData(); pero por si el recalculo se pide antes de que
+                // esa promesa resuelva del todo, forzamos también el valor
+                // local con el que acabamos de guardar.
+                props.serie[campoDb] = evento.target.type === 'number'
+                    ? Number(valor)
+                    : valor
+
+                recalcularEstadoLocal()
             }
         }
 
@@ -45,12 +80,10 @@ export default {
                 return
             }
 
-            // Llamamos al método del composable usando el identificador de la serie (id o tvdb_id según tu BD)
             const idSerie = props.serie.id || props.serie.tvdb_id
             const resultado = await updateShowStatus(idSerie, nuevoEstado)
 
             if (resultado.success) {
-                // Actualizamos el estado de manera reactiva en el objeto local actual
                 props.serie.estado = nuevoEstado
             } else {
                 console.error('No se pudo actualizar el estado:', resultado.error)
@@ -82,7 +115,6 @@ export default {
     },
     template: `
         <div class="view view-serie-detail">
-            <!-- Cabecera de la vista para poder volver atrás en móvil -->
             <header class="detail-top-bar">
                 <button class="btn-back" @click="volver">← Volver</button>
             </header>
@@ -110,7 +142,6 @@ export default {
                                 </span>
                             </div>
 
-                            <!-- Campo de Estado modificable si es Admin -->
                             <div class="details-field" v-if="serie.estado">
                                 <span class="details-field-label">Estado</span>
                                 <span class="details-field-value">
@@ -126,12 +157,10 @@ export default {
                                 </span>
                             </div>
 
+                            <!-- Solo lectura: se deriva de fechas_episodios + temporada/capitulo -->
                             <div class="details-field">
                                 <span class="details-field-label">Próximo episodio</span>
-                                <span v-if="isAdmin" class="details-field-value">
-                                    <input type="date" :value="serie.proxima_fecha" @change="actualizarCampo('proxima_fecha', $event)" class="admin-input-small" />
-                                </span>
-                                <span v-else class="details-field-value">{{ nextAirText }}</span>
+                                <span class="details-field-value">{{ nextAirText || 'Al día' }}</span>
                             </div>
 
                             <div class="details-field" v-if="serie.temporada && serie.estado === 'viendo'">
@@ -181,6 +210,9 @@ export default {
                                  </span>
                             </div>
 
+                            <!-- Editables: "hasta dónde he visto". Al cambiar,
+                                 actualizarCampo() recalcula pendiente/acumulados/
+                                 proxima_fecha automáticamente. -->
                             <div class="details-field" v-if="serie.temporada">
                                 <span class="details-field-label">Temporada actual</span>
                                 <span class="details-field-value">
@@ -239,24 +271,20 @@ export default {
                                 </span>
                             </div>
 
+                            <!-- Solo lectura: derivado -->
                             <div class="details-field">
                                 <span class="details-field-label">Capítulos acumulados</span>
-                                <span class="details-field-value" v-if="!isAdmin">
-                                    <span v-if="serie.acumulados || 0 > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
-                                </span>
-                                <span class="details-field-value" v-else>
-                                    <input type="number" class="admin-input-small" :value="serie.acumulados || 0" @change="actualizarCampo('acumulados', $event)" />
+                                <span class="details-field-value">
+                                    <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
+                                    <span v-else>Al día</span>
                                 </span>
                             </div>
 
+                            <!-- Solo lectura: derivado -->
                             <div class="details-field" v-if="serie.pendiente !== undefined">
                                 <span class="details-field-label">Pendiente</span>
                                 <span class="details-field-value">
-                                    <template v-if="!isAdmin">{{ serie.pendiente ? 'Sí' : 'No' }}</template>
-                                    <label v-else class="admin-checkbox-label">
-                                        <input type="checkbox" :checked="serie.pendiente" @change="actualizarCampo('pendiente', $event)" />
-                                        Sí
-                                    </label>
+                                    {{ serie.pendiente ? 'Sí' : 'No' }}
                                 </span>
                             </div>
 
@@ -281,15 +309,19 @@ export default {
 
                         </div>
 
+                        <p v-if="isAdmin" class="text-muted" style="font-size: 0.78rem; margin: -0.5rem 0 0.5rem;">
+                            ℹ️ Próximo episodio, acumulados y pendiente se calculan
+                            automáticamente a partir de las fechas de emisión guardadas.
+                            Para corregirlos, ajusta <b>Temporada actual</b> / <b>Capítulo actual</b>.
+                        </p>
+
                         <div class="details-field details-field-block">
                             <span class="details-field-label">NOTAS</span>
                             
-                            <!-- Modo lectura para usuarios normales -->
                             <template v-if="!isAdmin">
                                 <p class="details-notas-texto">{{ serie.notas || 'Sin notas' }}</p>
                             </template>
                             
-                            <!-- Modo edición para el admin -->
                             <textarea 
                                 v-else 
                                 :value="serie.notas" 

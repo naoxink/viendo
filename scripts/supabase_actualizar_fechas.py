@@ -1,15 +1,14 @@
 import os
 import re
 import sys
-import json
 import requests
 import argparse
-from datetime import datetime, date, time
+from datetime import datetime, date
 from urllib.parse import urlparse
 from supabase import create_client, Client
 
-# CONFIGURACIÓN DE SUPABASE
-# Puedes inyectarlas por variables de entorno o dejarlas fijas como prefieras
+from scripts.episodios_calc import construir_fechas_por_temporada, calcular_estado_pendiente
+
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pfssrcyxpmnofezfnrct.supabase.co")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
@@ -20,111 +19,19 @@ POSTERS_DIR = os.path.join(BASE_DIR, 'posters')
 
 
 def resolver_url_imagen(image_value):
-    """Convierte el campo image de TheTVDB en una URL de imagen usable."""
     if not image_value:
         return None
-
     if image_value.startswith(("http://", "https://")):
         return image_value
-
     if image_value.startswith("/"):
         return f"https://artworks.thetvdb.com{image_value}"
-
     return f"https://artworks.thetvdb.com/banners/{image_value}"
 
 
-def obtener_fecha_hora_emision(ep, hora_default=None):
-    """Devuelve la fecha y hora de emisión del episodio, usando la hora de la serie si el capítulo no la trae."""
-    aired = ep.get('aired')
-    if not aired:
-        return None
-
-    try:
-        fecha_emision = datetime.strptime(aired, '%Y-%m-%d').date()
-    except ValueError:
-        return None
-
-    hora_str = ep.get('airTime') or ep.get('airedTime') or hora_default
-    if hora_str:
-        for fmt in ('%H:%M', '%H:%M:%S', '%I:%M %p', '%I:%M%p'):
-            try:
-                hora = datetime.strptime(hora_str, fmt).time()
-                return datetime.combine(fecha_emision, hora)
-            except ValueError:
-                continue
-
-    return None
-
-
-def es_emision_futura(ep, ahora=None, hora_default=None):
-    """Comprueba si el episodio está en el futuro usando la hora cuando exista; si no, solo la fecha."""
-    if ahora is None:
-        ahora = datetime.now()
-
-    fecha_hora = obtener_fecha_hora_emision(ep, hora_default=hora_default)
-    if fecha_hora is not None:
-        return fecha_hora > ahora
-
-    aired = ep.get('aired')
-    if not aired:
-        return False
-
-    try:
-        fecha_emision = datetime.strptime(aired, '%Y-%m-%d').date()
-    except ValueError:
-        return False
-
-    return fecha_emision > ahora.date()
-
-
-def _parsear_fecha_proxima(valor):
-    """Convierte valores de fecha de emisión a un datetime comparable."""
-    if not valor or valor == 'TBA':
-        return None
-
-    if isinstance(valor, datetime):
-        return valor
-
-    if isinstance(valor, date):
-        return datetime.combine(valor, time.min)
-
-    texto = str(valor).strip()
-    if not texto:
-        return None
-
-    for fmt in ('%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d', '%Y/%m/%d'):
-        try:
-            return datetime.strptime(texto, fmt)
-        except ValueError:
-            continue
-
-    return None
-
-
-def limpiar_fechas_pasadas_en_cola(ahora=None):
-    """Elimina la fecha de próxima emisión de las series en_cola cuando ya ha pasado directamente en Supabase."""
-    if ahora is None:
-        ahora = datetime.now()
-
-    # Traemos las series que están en cola
-    res = supabase.table("series").select("id, proxima_fecha, estado").eq("estado", "en_cola").execute()
-    en_cola = res.data or []
-
-    for serie in en_cola:
-        proxima_fecha = serie.get('proxima_fecha')
-        fecha_parsed = _parsear_fecha_proxima(proxima_fecha)
-        if fecha_parsed is not None and fecha_parsed <= ahora:
-            # Actualizamos en Supabase poniendo proxima_fecha a null o eliminándola
-            supabase.table("series").update({"proxima_fecha": None}).eq("id", serie["id"]).execute()
-
-
 def guardar_poster_local(serie, image_url):
-    """Descarga la imagen de la serie en la carpeta posters si aún no existe."""
     if not image_url:
         return None
-
     os.makedirs(POSTERS_DIR, exist_ok=True)
-
     tvdb_id = serie.get('tvdb_id') or 'serie'
     titulo = serie.get('titulo', 'serie')
     slug = re.sub(r'[^A-Za-z0-9._-]+', '_', titulo).strip('_') or f"serie_{tvdb_id}"
@@ -132,10 +39,8 @@ def guardar_poster_local(serie, image_url):
     filename = f"{tvdb_id}_{slug}{extension}"
     local_path = os.path.join(POSTERS_DIR, filename)
     rel_path = os.path.join('posters', filename).replace(os.sep, '/')
-
     if os.path.exists(local_path):
         return rel_path
-
     try:
         response = requests.get(image_url, timeout=20, stream=True)
         response.raise_for_status()
@@ -151,11 +56,9 @@ def guardar_poster_local(serie, image_url):
 
 
 def obtener_token(api_key):
-    """Obtiene el token Bearer JWT v4 para autenticarse en TheTVDB."""
     url = "https://api4.thetvdb.com/v4/login"
-    payload = {"apikey": api_key}
     try:
-        response = requests.post(url, json=payload, timeout=10)
+        response = requests.post(url, json={"apikey": api_key}, timeout=10)
         response.raise_for_status()
         return response.json()['data']['token']
     except requests.exceptions.RequestException as e:
@@ -164,26 +67,54 @@ def obtener_token(api_key):
 
 
 def enviar_notificacion_telegram(token, chat_id, mensaje):
-    """Envía un mensaje de texto a un chat de Telegram."""
     if not token or not chat_id:
         return
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {
-        "chat_id": chat_id,
-        "text": mensaje,
-        "parse_mode": "Markdown"
-    }
+    payload = {"chat_id": chat_id, "text": mensaje, "parse_mode": "Markdown"}
     try:
-        response = requests.post(url, json=payload, timeout=10)
-        response.raise_for_status()
+        requests.post(url, json=payload, timeout=10)
         return True
     except requests.exceptions.RequestException as e:
         print(f"⚠️ No se pudo enviar la notificación de Telegram: {e}")
         return False
 
 
+def _parsear_fecha_proxima(valor):
+    if not valor or valor == 'TBA':
+        return None
+    texto = str(valor).strip()
+    for fmt in ('%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d'):
+        try:
+            return datetime.strptime(texto, fmt).date()
+        except ValueError:
+            continue
+    return None
+
+
+def necesita_refresh(serie, hoy):
+    """Decide, SIN llamar a la API, si merece la pena resincronizar esta
+    serie hoy. Es el filtro que evita pegarle a TheTVDB todos los días
+    para todas las series."""
+    fechas = serie.get('fechas_episodios')
+    if not fechas:
+        return True  # nunca sincronizada
+
+    estado = calcular_estado_pendiente(fechas, serie.get('temporada'), serie.get('capitulo'), hoy=hoy)
+
+    if estado['pendiente']:
+        # Ya sabemos con las fechas guardadas que hay algo por ver.
+        # No hace falta ir a la API hasta que el usuario se ponga al día.
+        return False
+
+    proxima = estado['proxima_fecha']
+    if not proxima:
+        return True  # sin fecha futura conocida: puede que TVDB ya la haya anunciado
+
+    fecha_guardada = _parsear_fecha_proxima(proxima)
+    return fecha_guardada is not None and fecha_guardada <= hoy  # esa fecha ya pasó, toca refrescar
+
+
 def obtener_episodios_validos(tvdb_id, headers):
-    """Descarga y devuelve la lista de episodios válidos (temporada > 0 y con fecha de emisión), ordenada."""
     url_eps = f"https://api4.thetvdb.com/v4/series/{tvdb_id}/episodes/default"
     try:
         res_eps = requests.get(url_eps, headers=headers, timeout=10)
@@ -194,105 +125,140 @@ def obtener_episodios_validos(tvdb_id, headers):
     except requests.exceptions.RequestException as e:
         print(f"   ❌ Error de red: {e}")
         return None
-
-    if not episodes:
-        print("   ⚠️ No se encontraron episodios.")
-        return []
-
-    valid_eps = [e for e in episodes if (e.get('seasonNumber') or 0) > 0 and e.get('aired')]
-    valid_eps.sort(key=lambda x: (x['seasonNumber'], x['number']))
-    return valid_eps
+    return [e for e in episodes if (e.get('seasonNumber') or 0) > 0]
 
 
-def separar_emitidos_futuros(valid_eps, ahora, hora_serie_default=None):
-    """Divide los episodios entre emitidos y futuros, teniendo en cuenta la hora de emisión."""
-    emitidos = []
-    futuros = []
-    hora_serie = hora_serie_default
+def sincronizar_serie(serie, headers, hoy):
+    """Refresca capitulos_por_temporada, fechas_episodios, duracion_media,
+    imagen y estado_final desde TheTVDB. Ya NO calcula ni escribe
+    pendiente/acumulados/proxima_fecha — eso lo deriva el frontend."""
+    tvdb_id = serie.get('tvdb_id')
 
+    url_info = f"https://api4.thetvdb.com/v4/series/{tvdb_id}"
+    series_data = {}
+    estado_serie = "Unknown"
+    try:
+        res_info = requests.get(url_info, headers=headers, timeout=10)
+        series_data = res_info.json().get('data', {})
+        estado_serie = series_data.get('status', {}).get('name', 'Unknown')
+    except (requests.exceptions.RequestException, KeyError, ValueError):
+        pass
+
+    valid_eps = obtener_episodios_validos(tvdb_id, headers)
+    if valid_eps is None:
+        return None
+
+    caps_por_temporada = {}
     for ep in valid_eps:
-        hora_serie = ep.get('airTime') or ep.get('airedTime') or hora_serie
-        if es_emision_futura(ep, ahora, hora_default=hora_serie):
-            futuros.append(ep)
-        else:
-            emitidos.append(ep)
+        if not ep.get('aired'):
+            continue
+        t = str(ep['seasonNumber'])
+        caps_por_temporada[t] = caps_por_temporada.get(t, 0) + 1
 
-    return emitidos, futuros
+    fechas_episodios = construir_fechas_por_temporada(valid_eps)
+    remote_image_url = resolver_url_imagen(series_data.get('image'))
+
+    update_payload = {
+        "capitulos_por_temporada": caps_por_temporada,
+        "fechas_episodios": fechas_episodios,
+        "duracion_media": series_data.get('averageRuntime') or series_data.get('runtime') or serie.get('duracion_media') or 0,
+        "image_url": remote_image_url or serie.get('image_url'),
+        "poster_path": serie.get('poster_path') or guardar_poster_local(serie, remote_image_url)
+    }
+
+    return {
+        "update_payload": update_payload,
+        "estado_serie": estado_serie,
+        "fechas_episodios": fechas_episodios
+    }
 
 
-def procesar_en_cola(headers, ahora):
-    """Actualiza proxima_fecha y acumulados de las series en_cola, sin tocar su estado ni progreso de visionado.
-
-    Las series ya finalizadas (Ended/Canceled) que ya se han revisado al menos una vez
-    (tienen 'acumulados' calculado) se saltan por completo para no gastar peticiones a
-    TheTVDB en shows que ya no van a publicar episodios nuevos.
-    """
-    res_en_cola = supabase.table("series").select("*").eq("estado", "en_cola").execute()
-    en_cola = res_en_cola.data or []
-
-    for serie in en_cola:
+def procesar_viendo(headers, ahora, hoy, notificaciones):
+    res = supabase.table("series").select("*").eq("estado", "viendo").execute()
+    for serie in (res.data or []):
+        titulo = serie.get('titulo', 'Sin título')
         tvdb_id = serie.get('tvdb_id')
         serie_id = serie.get('id')
 
         if not tvdb_id:
-            print(f"⚠️ Saltando '{serie.get('titulo', 'Sin título')}' (en cola): no tiene tvdb_id configurado.")
+            print(f"⚠️ Saltando '{titulo}': no tiene tvdb_id.")
             continue
 
-        # Si ya sabemos que la serie está finalizada y ya la hemos revisado antes, no hacemos nada.
-        if serie.get('estado_final') in ("Ended", "Canceled") and serie.get('acumulados') is not None:
-            print(f"⏭️ Saltando '{serie['titulo']}' (en cola): ya finalizada ({serie['estado_final']}) y ya revisada.")
+        if not necesita_refresh(serie, hoy):
+            print(f"⏭️ '{titulo}': sin cambios esperados hoy, no se consulta la API.")
             continue
 
-        print(f"🔍 Analizando (en cola): {serie['titulo']} (ID: {tvdb_id})...")
-
-        # Consultamos el estado global de la serie para saber si ya ha finalizado
-        url_info = f"https://api4.thetvdb.com/v4/series/{tvdb_id}"
-        estado_serie = "Unknown"
-        try:
-            res_info = requests.get(url_info, headers=headers, timeout=10)
-            series_data = res_info.json().get('data', {})
-            estado_serie = series_data.get('status', {}).get('name', 'Unknown')
-        except (requests.exceptions.RequestException, KeyError, ValueError):
-            pass
-
-        valid_eps = obtener_episodios_validos(tvdb_id, headers)
-        if not valid_eps:
+        print(f"🔍 Resincronizando: {titulo} (ID: {tvdb_id})...")
+        resultado = sincronizar_serie(serie, headers, hoy)
+        if resultado is None:
             continue
 
-        user_s = serie.get('temporada') or 1
-        user_e = serie.get('capitulo') or 0
+        update_payload = resultado["update_payload"]
+        estado_serie = resultado["estado_serie"]
+        fechas_nuevas = resultado["fechas_episodios"]
 
-        emitidos, futuros = separar_emitidos_futuros(valid_eps, ahora)
+        estado_antes = calcular_estado_pendiente(
+            serie.get('fechas_episodios') or {}, serie.get('temporada'), serie.get('capitulo'), hoy=hoy
+        )
+        estado_despues = calcular_estado_pendiente(
+            fechas_nuevas, serie.get('temporada'), serie.get('capitulo'), hoy=hoy
+        )
 
-        nuevos_emitidos = [
-            ep for ep in emitidos
-            if ep['seasonNumber'] > user_s or (ep['seasonNumber'] == user_s and ep['number'] > user_e)
-        ]
+        # ¿Ha aparecido un capítulo nuevo por ver que antes no estaba?
+        if estado_despues['pendiente'] and not estado_antes['pendiente']:
+            print(f"   ✨ ¡Nuevo capítulo detectado! T{estado_despues['temporada']}E{estado_despues['capitulo']}")
+            notificaciones.append(
+                f"✨ *{titulo}*: ¡Nuevo capítulo disponible! T{estado_despues['temporada']}E{estado_despues['capitulo']}."
+            )
 
-        acumulados = len(nuevos_emitidos)
-        proxima_fecha = futuros[0]['aired'] if futuros else None
+        # ¿La serie ha terminado y el usuario está al día?
+        if not estado_despues['pendiente'] and estado_serie in ("Ended", "Canceled"):
+            update_payload.update({
+                "estado_final": estado_serie,
+                "visto_en": hoy.year,
+                "estado": "completadas",
+                "nota": serie.get('nota') or "-"
+            })
+            print(f"   🏆 ¡Serie terminada ({estado_serie})! Movida a Completadas en {hoy.year}.")
+            notificaciones.append(f"🏆 *{titulo}*: ¡Serie terminada ({estado_serie})! Movida a Completadas en {hoy.year}.")
 
-        update_payload = {
-            "acumulados": acumulados,
-            "proxima_fecha": proxima_fecha
-        }
+        res_update = supabase.table("series").update(update_payload).eq("id", serie_id).execute()
+        if not res_update.data:
+            print(f"   ⚠️ ¡ALERTA! Supabase no actualizó '{titulo}'. Revisa 'service_role' o RLS.")
+            notificaciones.append(f"⚠️ ¡ALERTA! Supabase no actualizó '{titulo}'. Revisa 'service_role' o RLS.")
 
-        if estado_serie in ("Ended", "Canceled"):
-            update_payload["estado_final"] = estado_serie
 
-        res = supabase.table("series").update(update_payload).eq("id", serie_id).execute()
+def procesar_en_cola(headers, hoy):
+    """Igual de perezoso: solo llama a la API a las series en_cola que
+    puedan tener novedades, y solo refresca datos crudos."""
+    res = supabase.table("series").select("*").eq("estado", "en_cola").execute()
+    for serie in (res.data or []):
+        titulo = serie.get('titulo', 'Sin título')
+        tvdb_id = serie.get('tvdb_id')
+        serie_id = serie.get('id')
 
-        if not res.data:
-            print(f"   ⚠️ ¡ALERTA! Supabase ha devuelto un array vacío para '{serie['titulo']}' (en cola). Revisa 'service_role' o RLS.")
-        else:
-            print(f"   📅 Próxima fecha: {proxima_fecha or 'TBA'} | 📦 Acumulados: {acumulados}")
+        if not tvdb_id:
+            continue
+
+        if serie.get('estado_final') in ("Ended", "Canceled") and serie.get('fechas_episodios'):
+            continue  # ya finalizada y ya sincronizada: no va a cambiar
+
+        if not necesita_refresh(serie, hoy):
+            continue
+
+        print(f"🔍 Resincronizando (en cola): {titulo} (ID: {tvdb_id})...")
+        resultado = sincronizar_serie(serie, headers, hoy)
+        if resultado is None:
+            continue
+
+        update_payload = resultado["update_payload"]
+        if resultado["estado_serie"] in ("Ended", "Canceled"):
+            update_payload["estado_final"] = resultado["estado_serie"]
+
+        supabase.table("series").update(update_payload).eq("id", serie_id).execute()
 
 
 def actualizar_fechas(api_key):
-    # 1. Cargar las series que están en estado 'viendo' desde Supabase
-    res_viendo = supabase.table("series").select("*").eq("estado", "viendo").execute()
-    viendo_actual = res_viendo.data or []
-
     token = obtener_token(api_key)
     if not token:
         return False
@@ -302,162 +268,24 @@ def actualizar_fechas(api_key):
     hoy = ahora.date()
     notificaciones = []
 
-    # Limpiamos fechas pasadas en cola directamente en Supabase
-    limpiar_fechas_pasadas_en_cola(ahora=ahora)
+    procesar_viendo(headers, ahora, hoy, notificaciones)
+    procesar_en_cola(headers, hoy)
 
-    # 2. Recorrer la lista de series en seguimiento activo ('viendo')
-    for serie in viendo_actual:
-        tvdb_id = serie.get('tvdb_id')
-        serie_id = serie.get('id')  # ID interno de Supabase para actualizar con precisión
+    print("\n💾 ¡Series activas revisadas y sincronizadas donde hacía falta!")
 
-        if not tvdb_id:
-            print(f"⚠️ Saltando '{serie.get('titulo', 'Sin título')}': No tiene tvdb_id configurado.")
-            continue
-
-        print(f"🔍 Analizando: {serie['titulo']} (ID: {tvdb_id})...")
-
-        # OBTENER EL ESTADO GLOBAL DE LA SERIE
-        url_info = f"https://api4.thetvdb.com/v4/series/{tvdb_id}"
-        series_data = {}
-        try:
-            res_info = requests.get(url_info, headers=headers, timeout=10)
-            series_data = res_info.json().get('data', {})
-            estado_serie = series_data.get('status', {}).get('name', 'Unknown')
-            serie['duracion_media'] = series_data.get('averageRuntime') or series_data.get('runtime') or 0
-        except (requests.exceptions.RequestException, KeyError, ValueError):
-            estado_serie = "Unknown"
-            serie['duracion_media'] = 0
-
-        remote_image_url = resolver_url_imagen(series_data.get('image'))
-        serie['image_url'] = remote_image_url
-        serie['poster_path'] = serie.get('poster_path') or guardar_poster_local(serie, remote_image_url)
-
-        # OBTENER LOS EPISODIOS
-        valid_eps = obtener_episodios_validos(tvdb_id, headers)
-        if valid_eps is None:
-            continue
-        if not valid_eps:
-            continue
-
-        caps_por_temporada = {}
-        for ep in valid_eps:
-            temporada_str = str(ep['seasonNumber'])
-            caps_por_temporada[temporada_str] = caps_por_temporada.get(temporada_str, 0) + 1
-
-        serie['capitulos_por_temporada'] = caps_por_temporada
-
-        user_s = serie.get('temporada') or 1
-        user_e = serie.get('capitulo') or 0
-        esta_pendiente = serie.get('pendiente', False)
-
-        hora_serie = series_data.get('airsTime') or series_data.get('airTime') or series_data.get('airs', {}).get('time')
-        emitidos, futuros = separar_emitidos_futuros(valid_eps, ahora, hora_serie_default=hora_serie)
-
-        nuevos_emitidos = [
-            ep for ep in emitidos
-            if ep['seasonNumber'] > user_s or (ep['seasonNumber'] == user_s and ep['number'] > user_e)
-        ]
-
-        # 3. APLICAR REGLAS DE NEGOCIO Y ACTUALIZAR SUPABASE
-        update_payload = {
-            "duracion_media": serie.get('duracion_media'),
-            "image_url": serie.get('image_url'),
-            "poster_path": serie.get('poster_path'),
-            "capitulos_por_temporada": serie.get('capitulos_por_temporada')
-        }
-
-        if not esta_pendiente:
-            if nuevos_emitidos:
-                siguiente = nuevos_emitidos[0]
-                serie['temporada'] = siguiente['seasonNumber']
-                serie['capitulo'] = siguiente['number']
-                serie['pendiente'] = True
-                serie['acumulados'] = len(nuevos_emitidos) - 1
-                serie['proxima_fecha'] = None
-
-                update_payload.update({
-                    "temporada": serie['temporada'],
-                    "capitulo": serie['capitulo'],
-                    "pendiente": True,
-                    "acumulados": serie['acumulados'],
-                    "proxima_fecha": None
-                })
-
-                print(f"   ✨ ¡Nuevo capítulo detectado! Avanzado a T{serie['temporada']}E{serie['capitulo']} (Pendiente).")
-                notificaciones.append(f"✨ *{serie['titulo']}*: ¡Nuevo capítulo disponible! Avanzado a T{serie['temporada']}E{serie['capitulo']}.")
-            else:
-                serie['acumulados'] = 0
-                update_payload["acumulados"] = 0
-
-                # CASO: SERIE FINALIZADA Y USUARIO AL DÍA
-                if not futuros and estado_serie in ["Ended", "Canceled"]:
-                    serie['proxima_fecha'] = None
-                    serie['estado_final'] = estado_serie
-                    serie['visto_en'] = hoy.year
-                    if not serie.get('nota'):
-                        serie['nota'] = "-"
-
-                    serie['estado'] = "completadas"  # Cambia de estado en Supabase
-
-                    update_payload.update({
-                        "proxima_fecha": None,
-                        "estado_final": estado_serie,
-                        "visto_en": hoy.year,
-                        "nota": serie['nota'],
-                        "estado": "completadas"
-                    })
-
-                    print(f"   🏆 ¡Serie terminada ({estado_serie})! Movida a Completadas automáticamente en {hoy.year}.")
-                    notificaciones.append(f"🏆 *{serie['titulo']}*: ¡Serie terminada ({estado_serie})! Movida a Completadas en {hoy.year}.")
-                else:
-                    if futuros:
-                        serie['proxima_fecha'] = futuros[0]['aired']
-                        print(f"   📅 Al día. Próximo estreno el: {serie['proxima_fecha']}")
-                    else:
-                        serie['proxima_fecha'] = None
-                        print("   📅 Al día. Sin fecha de regreso confirmada (TBA).")
-
-                    update_payload["proxima_fecha"] = serie['proxima_fecha']
-        else:
-            serie['acumulados'] = len(nuevos_emitidos)
-            serie['proxima_fecha'] = None
-
-            update_payload.update({
-                "acumulados": serie['acumulados'],
-                "proxima_fecha": None
-            })
-            print(f"   ⏳ Tienes trabajo acumulado: {serie['acumulados']} capítulos pendientes extra.")
-
-        # Ejecutamos el update en Supabase para esta serie concreta
-        res = supabase.table("series").update(update_payload).eq("id", serie_id).execute()
-
-        # CHIVATO DE SEGURIDAD: Verificamos si realmente se ha modificado la fila
-        if not res.data:
-            print(f"   ⚠️ ¡ALERTA! Supabase ha devuelto un array vacío para '{serie['titulo']}'. La base de datos no se ha actualizado. Revisa si estás usando la clave 'service_role' o si RLS está bloqueando la escritura.")
-            notificaciones.append(f"⚠️ ¡ALERTA! Supabase no actualizó '{serie['titulo']}'. Revisa 'service_role' o RLS.")
-
-    # 4. Actualizar también las series en cola (proxima_fecha y acumulados)
-    # OJO: esto NO genera notificaciones de Telegram, solo actualiza la base de datos.
-    procesar_en_cola(headers, ahora)
-
-    print("\n💾 ¡La base de datos en Supabase ha sido sincronizada con éxito!")
-
-    # 5. ENVIAR NOTIFICACIONES SI HAY CAMBIOS (solo de las series 'viendo')
     tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     tg_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
 
     if notificaciones and tg_token and tg_chat_id:
         cabecera = "🤖 *Resumen de actualización de series:*\n\n"
-        mensaje_final = cabecera + "\n".join(notificaciones)
-        return enviar_notificacion_telegram(tg_token, tg_chat_id, mensaje_final)
+        return enviar_notificacion_telegram(tg_token, tg_chat_id, cabecera + "\n".join(notificaciones))
 
     return False
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Actualiza fechas de series en Supabase y gestiona finalizadas automáticamente.')
+    parser = argparse.ArgumentParser(description='Sincroniza series activas con TheTVDB solo cuando hace falta.')
     parser.add_argument('--apikey', required=True, help='API Key de TheTVDB')
-
     args = parser.parse_args()
 
     status_data = {
@@ -469,12 +297,10 @@ if __name__ == "__main__":
     try:
         status_data["notification_sent"] = actualizar_fechas(args.apikey)
         status_data["script_ok"] = True
-
     except Exception as e:
         print(f"❌ El script falló inesperadamente: {e}")
         status_data["script_ok"] = False
-
     finally:
         res = supabase.table("status").update(status_data).eq("viendo", True).execute()
         if not res.data:
-            print("   ⚠️ ¡ALERTA! Supabase ha devuelto un array vacío para 'status'. La base de datos no se ha actualizado.")
+            print("   ⚠️ ¡ALERTA! Supabase no actualizó 'status'.")

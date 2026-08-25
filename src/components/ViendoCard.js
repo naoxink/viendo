@@ -59,6 +59,15 @@ export default {
 
                 if (data.success) {
                     Object.assign(serie, data.serie);
+
+                    if (serie.fechas_episodios) {
+                        const estado = calcularEstadoPendiente(
+                            serie.fechas_episodios,
+                            serie.temporada,
+                            serie.capitulo
+                        )
+                        Object.assign(serie, estado)
+                    }
                 } else {
                     console.error('La API devolvió un error:', data.error);
                 }

@@ -5,6 +5,8 @@ import argparse
 from urllib.parse import urlparse
 from supabase import create_client, Client
 
+from scripts.episodios_calc import construir_fechas_por_temporada  # 👈 nuevo
+
 # CONFIGURACIÓN DE SUPABASE
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pfssrcyxpmnofezfnrct.supabase.co")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY") # Usa service_role para scripts de backend
@@ -101,11 +103,12 @@ def completar_metadatos(api_key):
 
         # Detectar si le falta algún dato (mapeando a los nombres de columna en Supabase)
         falta_caps = not serie.get('capitulos_por_temporada')
+        falta_fechas = not serie.get('fechas_episodios')  # 👈 nuevo
         falta_duracion = not serie.get('duracion_media') or serie.get('duracion_media') == 0
         falta_estado_final = 'estado_final' not in serie
         falta_poster = not serie.get("poster_path")
 
-        if falta_caps or falta_duracion or falta_estado_final or falta_poster:
+        if falta_caps or falta_fechas or falta_duracion or falta_estado_final or falta_poster:
             print(f"🔄 Actualizando datos faltantes para: {titulo} (ID: {tvdb_id})...")
             
             # Petición única al endpoint extendido de TheTVDB
@@ -124,23 +127,31 @@ def completar_metadatos(api_key):
                     update_payload['duracion_media'] = duracion
                     print(f"   + duracion_media: {duracion} min")
 
-                # -- B. Actualizar Capítulos por Temporada --
-                if falta_caps:
+                # -- B. Capítulos por temporada + fechas por capítulo --
+                # Reutilizamos la misma llamada a la API para rellenar ambos campos,
+                # así no gastamos una petición extra solo por las fechas.
+                if falta_caps or falta_fechas:
                     episodios = api_data.get('episodes', [])
-                    valid_eps = [ep for ep in episodios if ep.get('seasonNumber', 0) > 0 and ep.get('aired')]
-                    caps_por_temp = {}
-                    for ep in valid_eps:
-                        t = str(ep['seasonNumber'])
-                        caps_por_temp[t] = caps_por_temp.get(t, 0) + 1
-                    
-                    update_payload['capitulos_por_temporada'] = caps_por_temp
-                    print(f"   + capitulos_por_temporada: {caps_por_temp}")
+                    valid_eps = [ep for ep in episodios if ep.get('seasonNumber', 0) > 0]
+
+                    if falta_caps:
+                        caps_por_temp = {}
+                        for ep in valid_eps:
+                            if not ep.get('aired'):
+                                continue
+                            t = str(ep['seasonNumber'])
+                            caps_por_temp[t] = caps_por_temp.get(t, 0) + 1
+                        update_payload['capitulos_por_temporada'] = caps_por_temp
+                        print(f"   + capitulos_por_temporada: {caps_por_temp}")
+
+                    if falta_fechas:
+                        fechas_por_temp = construir_fechas_por_temporada(valid_eps)
+                        update_payload['fechas_episodios'] = fechas_por_temp
+                        print(f"   + fechas_episodios: {sum(len(c) for c in fechas_por_temp.values())} capítulos con fecha")
 
                 # -- C. Actualizar Estado Final --
                 if falta_estado_final:
                     estado_api = api_data.get('status', {}).get('name', '')
-                    # Guardamos el texto completo o booleano según prefieras; 
-                    # en el script anterior de Supabase guardábamos el texto del estado ("Ended", "Canceled", etc.)
                     update_payload['estado_final'] = estado_api if estado_api in ['Ended', 'Canceled'] else None
                     print(f"   + estado_final: {update_payload['estado_final']} ({estado_api})")
 
@@ -170,7 +181,7 @@ def completar_metadatos(api_key):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Completa metadatos faltantes y descarga pósters de series en Supabase."
+        description="Completa metadatos faltantes (incluyendo fechas por capítulo) y descarga pósters de series en Supabase."
     )
     parser.add_argument(
         "--apikey",
