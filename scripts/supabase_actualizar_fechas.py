@@ -16,7 +16,11 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.episodios_calc import construir_fechas_por_temporada, calcular_estado_pendiente
+from scripts.episodios_calc import (
+    construir_fechas_por_temporada,
+    calcular_estado_pendiente,
+    capitulos_estrenados_en,
+)
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pfssrcyxpmnofezfnrct.supabase.co")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
@@ -183,6 +187,8 @@ def sincronizar_serie(serie, headers, hoy):
 
 
 def procesar_viendo(headers, ahora, hoy, notificaciones):
+    hoy_str = hoy.isoformat()
+
     res = supabase.table("series").select("*").eq("estado", "viendo").execute()
     for serie in (res.data or []):
         titulo = serie.get('titulo', 'Sin título')
@@ -206,21 +212,23 @@ def procesar_viendo(headers, ahora, hoy, notificaciones):
         estado_serie = resultado["estado_serie"]
         fechas_nuevas = resultado["fechas_episodios"]
 
-        estado_antes = calcular_estado_pendiente(
-            serie.get('fechas_episodios') or {}, serie.get('temporada'), serie.get('capitulo'), hoy=hoy
+        # Notificar SOLO si hay un capítulo que se estrena hoy exactamente
+        # (no "tienes pendiente" en general, que se queda pegado en True
+        # mientras haya backlog sin ver).
+        estrenos_hoy = capitulos_estrenados_en(
+            fechas_nuevas, serie.get('temporada'), serie.get('capitulo'), hoy_str
         )
+        for ep in estrenos_hoy:
+            print(f"   ✨ ¡Estreno hoy! T{ep['temporada']}E{ep['capitulo']}")
+            notificaciones.append(
+                f"✨ *{titulo}*: ¡Nuevo capítulo hoy! T{ep['temporada']}E{ep['capitulo']}."
+            )
+
+        # ¿La serie ha terminado y el usuario está al día? (esto no depende
+        # de la fecha de hoy, sigue igual que antes)
         estado_despues = calcular_estado_pendiente(
             fechas_nuevas, serie.get('temporada'), serie.get('capitulo'), hoy=hoy
         )
-
-        # ¿Ha aparecido un capítulo nuevo por ver que antes no estaba?
-        if estado_despues['pendiente'] and not estado_antes['pendiente']:
-            print(f"   ✨ ¡Nuevo capítulo detectado! T{estado_despues['temporada']}E{estado_despues['capitulo']}")
-            notificaciones.append(
-                f"✨ *{titulo}*: ¡Nuevo capítulo disponible! T{estado_despues['temporada']}E{estado_despues['capitulo']}."
-            )
-
-        # ¿La serie ha terminado y el usuario está al día?
         if not estado_despues['pendiente'] and estado_serie in ("Ended", "Canceled"):
             update_payload.update({
                 "estado_final": estado_serie,
@@ -235,7 +243,6 @@ def procesar_viendo(headers, ahora, hoy, notificaciones):
         if not res_update.data:
             print(f"   ⚠️ ¡ALERTA! Supabase no actualizó '{titulo}'. Revisa 'service_role' o RLS.")
             notificaciones.append(f"⚠️ ¡ALERTA! Supabase no actualizó '{titulo}'. Revisa 'service_role' o RLS.")
-
 
 def procesar_en_cola(headers, hoy):
     """Igual de perezoso: solo llama a la API a las series en_cola que
