@@ -1,11 +1,20 @@
 import os
 import re
 import sys
+import json
 import requests
 import argparse
-from datetime import datetime, date
+from datetime import datetime, date, time
 from urllib.parse import urlparse
 from supabase import create_client, Client
+
+# Añadir root del proyecto al path (como en supabase_upcoming_thetvdb.py)
+# para que 'scripts.episodios_calc' se pueda importar cuando el script se
+# ejecuta directamente con `python scripts/supabase_actualizar_fechas.py`
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from scripts.episodios_calc import construir_fechas_por_temporada, calcular_estado_pendiente
 
