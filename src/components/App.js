@@ -1,6 +1,8 @@
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useSeriesData } from '../composables/useSeriesData.js'
+import { userDevice } from '../composables/userDevice.js'
 import BottomNav from './BottomNav.js'
+import ViewDashboard from './views/ViewDashboard.js'
 import ViewViendo from './views/ViewViendo.js'
 import ViewEnCola from './views/ViewEnCola.js'
 import ViewCompletadas from './views/ViewCompletadas.js'
@@ -15,9 +17,10 @@ const token = ''
 
 export default {
     name: 'App',
-    components: { BottomNav, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail, ViewAddSerie, ViewLogin, ViewDiscover },
+    components: { BottomNav, ViewDashboard, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail, ViewAddSerie, ViewLogin, ViewDiscover },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
+        const { isMobile } = userDevice()
         const searchTerm = ref('')
         const themePreference = ref('auto')
         const activeView = ref('viendo')
@@ -41,17 +44,33 @@ export default {
         onMounted(() => {
             loadAll()
 
+            let vistaGuardada = null
+
             try {
                 const storedTheme = localStorage.getItem('viendo-theme')
                 if (storedTheme === 'auto' || storedTheme === 'light' || storedTheme === 'dark') {
                     themePreference.value = storedTheme
                 }
                 const storedView = localStorage.getItem('viendo-active-view')
-                if (storedView && ['viendo', 'en-cola', 'completadas', 'stats', 'detalle'].includes(storedView)) {
-                    activeView.value = storedView
+                if (storedView && ['viendo', 'en-cola', 'completadas', 'stats', 'detalle', 'dashboard'].includes(storedView)) {
+                    vistaGuardada = storedView
                 }
             } catch (error) {
                 console.warn('No se pudo leer las preferencias guardadas:', error)
+            }
+
+            // El dashboard es exclusivo de escritorio: en móvil nunca se
+            // restaura desde el almacenamiento ni se usa como vista inicial.
+            if (vistaGuardada === 'dashboard' && isMobile.value) {
+                vistaGuardada = null
+            }
+
+            if (vistaGuardada) {
+                activeView.value = vistaGuardada
+            } else if (!isMobile.value) {
+                // En escritorio, si no había ninguna vista guardada, el
+                // dashboard es la pantalla de inicio.
+                activeView.value = 'dashboard'
             }
 
             applyTheme(themePreference.value)
@@ -79,6 +98,14 @@ export default {
             applyTheme(value)
         })
 
+        // Si la ventana pasa a tamaño móvil mientras el dashboard está
+        // abierto, salimos de él: esa vista no existe en móvil.
+        watch(isMobile, (esMobil) => {
+            if (esMobil && activeView.value === 'dashboard') {
+                activeView.value = 'viendo'
+            }
+        })
+
         watch(activeView, (value) => {
             window.scrollTo({
                 top: 0,
@@ -104,10 +131,19 @@ export default {
         // Método para volver a la vista anterior o principal
         const volverAtras = () => {
             selectedSerie.value = null
-            activeView.value = 'viendo' // O la vista por defecto que prefieras
+            if (!isMobile.value) {
+                activeView.value = 'dashboard'
+            } else {
+                activeView.value = 'viendo' // O la vista por defecto que prefieras
+            }
         }
 
         const cambiarVista = vista => {
+            // El dashboard no existe en móvil: si por lo que sea se intenta
+            // navegar a él estando en móvil, nos quedamos en 'viendo'.
+            if (vista === 'dashboard' && isMobile.value) {
+                vista = 'viendo'
+            }
             if (vista !== 'detalle') {
                 selectedSerie.value = null
             }
@@ -126,7 +162,7 @@ export default {
         }
     },
     template: `
-        <main class="app-container">
+        <main class="app-container" :class="{ 'app-container--wide': activeView === 'dashboard' }">
             <div class="theme-selector">
                 <label for="theme-select">Tema</label>
                 <select id="theme-select" v-model="themePreference">
@@ -142,6 +178,15 @@ export default {
             ></ViewLogin>
 
             <div class="views-container">
+                <ViewDashboard
+                    v-if="activeView === 'dashboard'"
+                    :viendo="viendo"
+                    :en-cola="enCola"
+                    :año-actual="añoActual"
+                    @select-serie="abrirDetalle"
+                    @show-login="activeView = 'login'"
+                />
+
                 <ViewViendo 
                     v-if="activeView === 'viendo' || (activeView === 'detalle' && !selectedSerie)"
                     :viendo="viendo"
@@ -207,7 +252,7 @@ export default {
                 />
             </div>
 
-            <BottomNav :active-view="activeView" @change-view="activeView = $event" />
+            <BottomNav :active-view="activeView" @change-view="cambiarVista" />
         </main>
     `
 }

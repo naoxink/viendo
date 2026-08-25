@@ -1,0 +1,170 @@
+/* ==========================================================================
+   DASHBOARD DE ESCRITORIO
+   Este fichero solo afecta a .view-dashboard y a los elementos de
+   navegación necesarios para acceder a ella. En móvil (< 769px) ninguna
+   regla de aquí tiene efecto: el botón de acceso permanece oculto y la
+   vista nunca se activa (la guarda vive en App.js).
+   ========================================================================== */
+
+/* Botón de acceso en la barra inferior: oculto por defecto (móvil) */
+.nav-item-desktop-only {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .nav-item-desktop-only {
+        display: flex;
+    }
+
+    /* El contenedor de la app se ensancha SOLO cuando el dashboard está
+       activo. El resto de vistas siguen limitadas a los 460px de siempre. */
+    .app-container.app-container--wide {
+        max-width: 1400px;
+    }
+
+    .app-container.app-container--wide .bottom-nav {
+        max-width: 1400px;
+    }
+
+    .view-dashboard {
+        max-width: 100%;
+    }
+}
+
+.view-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.dashboard-header h1 {
+    margin-bottom: 0;
+}
+
+.dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+        gap: 1.25rem;
+        align-items: start;
+    }
+}
+
+.dashboard-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-width: 0;
+}
+
+.dashboard-widget {
+    background: var(--surface);
+    border: 1px solid var(--section-border);
+    border-radius: 12px;
+    box-shadow: var(--section-shadow);
+    padding: 1.1rem 1.2rem;
+}
+
+.dashboard-widget-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 0.85rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--section-title);
+}
+
+.dashboard-widget-placeholder {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.dashboard-pendientes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 0.6rem;
+}
+
+.dashboard-pendientes-grid .serie-card {
+    margin-bottom: 0;
+}
+
+.dashboard-mini-list li {
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+    padding-left: 0.4rem;
+}
+
+.dashboard-mini-list li:hover {
+    background-color: var(--accent-soft);
+}
+
+/* La fila real (<a> o <span clicable>) no debe crear su propia caja: así
+   .stats-rank-inner y .next-air siguen siendo hijos flex directos del <li>
+   y se conserva el layout ya existente de .stats-rank-list */
+.dashboard-mini-list-row {
+    display: contents;
+    color: inherit;
+    text-decoration: none;
+}
+
+.dashboard-mini-list-row-static {
+    cursor: default;
+}
+
+.dashboard-mini-list li:has(.dashboard-mini-list-row-static) {
+    cursor: default;
+}
+
+.dashboard-mini-list li:has(.dashboard-mini-list-row-static):hover {
+    background-color: transparent;
+}
+
+/* Formulario compacto de "Añadir serie" */
+.dashboard-quick-add {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.dashboard-quick-add input[type="number"] {
+    flex: 1 1 160px;
+}
+
+.dashboard-quick-add select {
+    flex: 0 0 auto;
+}
+
+.dashboard-quick-add .btn-submit {
+    margin-top: 0;
+    flex: 0 0 auto;
+    padding: 10px 16px;
+    white-space: nowrap;
+}
+
+.dashboard-quick-add .mensaje {
+    flex-basis: 100%;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+}

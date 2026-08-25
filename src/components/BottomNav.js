@@ -7,6 +7,15 @@ export default {
     template: `
         <nav class="bottom-nav">
             <button 
+                class="nav-item nav-item-desktop-only" 
+                :class="{ active: activeView === 'dashboard' }"
+                @click="$emit('change-view', 'dashboard')"
+                title="Dashboard de escritorio"
+            >
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Dashboard</span>
+            </button>
+            <button 
                 class="nav-item" 
                 :class="{ active: activeView === 'viendo' }"
                 @click="$emit('change-view', 'viendo')"
