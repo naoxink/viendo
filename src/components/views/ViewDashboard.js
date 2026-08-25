@@ -1,16 +1,19 @@
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import ViendoCard from '../ViendoCard.js'
 import ProximosEstrenosMini from '../dashboard/ProximosEstrenosMini.js'
 import QuickAddSerie from '../dashboard/QuickAddSerie.js'
 import TrendingMini from '../dashboard/TrendingMini.js'
 import ActualizadasMini from '../dashboard/ActualizadasMini.js'
+import MiniSerieList from '../dashboard/MiniSerieList.js'
 
 export default {
     name: 'ViewDashboard',
-    components: { ViendoCard, ProximosEstrenosMini, QuickAddSerie, TrendingMini, ActualizadasMini },
+    components: { ViendoCard, ProximosEstrenosMini, QuickAddSerie, TrendingMini, ActualizadasMini, MiniSerieList },
     props: {
         viendo: { type: Array, default: () => [] },
         enCola: { type: Array, default: () => [] },
+        completadas: { type: Array, default: () => [] },
+        dropeadas: { type: Array, default: () => [] },
         añoActual: { type: Number, required: true }
     },
     emits: ['select-serie', 'show-login'],
@@ -22,7 +25,27 @@ export default {
         // Queda pendiente la Fase 4 (búsqueda general).
         const pendientes = computed(() => props.viendo.filter((s) => s.pendiente))
 
-        return { isAdmin, pendientes }
+        const searchQuery = ref('')
+
+        const sugerencias = computed(() => {
+            if (!searchQuery.value.trim()) return [];
+            const termino = searchQuery.value.toLowerCase().trim();
+
+            // Garantizar que ambos props sean arrays antes de desplegarlos (...)
+            const listaViendo = Array.isArray(props.viendo) ? props.viendo : [];
+            const listaEnCola = Array.isArray(props.enCola) ? props.enCola : [];
+            const listaCompletadas = Array.isArray(props.completadas) ? props.completadas : [];
+            const listaDropeadas = Array.isArray(props.dropeadas) ? props.dropeadas : [];
+
+            return [...listaViendo, ...listaEnCola, ...listaCompletadas, ...listaDropeadas]
+                .filter(s => {
+                    const tituloSerie = s.titulo || s.nombre || '';
+                    return tituloSerie.toLowerCase().includes(termino);
+                })
+                .slice(0, 5);
+        });
+
+        return { isAdmin, pendientes, searchQuery, sugerencias }
     },
     template: `
         <div class="view view-dashboard">
@@ -68,7 +91,26 @@ export default {
                             <h3 class="dashboard-widget-title">
                                 <span>🔍 Buscar en mis series</span>
                             </h3>
-                            <p class="dashboard-widget-placeholder">Próximamente (Fase 4).</p>
+                            <div class="search-wrapper" style="position: relative;">
+                                <input
+                                    type="text"
+                                    v-model="searchQuery"
+                                    placeholder="Buscar serie..."
+                                    class="admin-input"
+                                    @keyup.esc="searchQuery = ''"
+                                />
+                                
+                                <!-- Uso de encadenamiento opcional en sugerencias?.length -->
+                                <MiniSerieList
+                                    v-if="sugerencias?.length"
+                                    :items="sugerencias"
+                                    @select-serie="$emit('select-serie', $event)"
+                                />
+                                
+                                <div v-else-if="searchQuery && sugerencias && sugerencias.length === 0" class="suggestions-list empty">
+                                    No se encontraron coincidencias.
+                                </div>
+                            </div>
                         </div>
 
                     </div>

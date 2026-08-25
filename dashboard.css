@@ -168,3 +168,50 @@
     padding: 8px 12px;
     font-size: 0.85rem;
 }
+
+
+
+
+
+/* search global */
+.admin-input {
+    width: 100%;
+    background-color: var(--bg);
+    margin-bottom: 1rem;
+}
+.search-wrapper {
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+  /* Ya no necesita position: relative */
+}
+
+.suggestions-list {
+  /* Eliminamos position: absolute para que se integre en el flujo normal */
+  position: static;
+  background-color: var(--surface, #222); /* Ajusta a la variable de superficie de tu tema */
+  border: 1px solid var(--border, #444);
+  border-radius: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0; /* Margen superior para separarlo del input */
+}
+
+.suggestions-list li {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border, #444);
+  transition: background-color 0.2s ease;
+}
+
+.suggestions-list li:last-child {
+  border-bottom: none;
+}
+
+.suggestions-list li:hover {
+  background-color: var(--hover-color, rgba(255, 255, 255, 0.05));
+}
+
+.suggestions-list.empty {
+  padding: 10px 15px;
+  color: var(--text-muted, #888);
+}

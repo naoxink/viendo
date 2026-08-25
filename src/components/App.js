@@ -182,6 +182,8 @@ export default {
                     v-if="activeView === 'dashboard'"
                     :viendo="viendo"
                     :en-cola="enCola"
+                    :completadas="completadas"
+                    :dropeadas="dropeadas"
                     :año-actual="añoActual"
                     @select-serie="abrirDetalle"
                     @show-login="activeView = 'login'"
