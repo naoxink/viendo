@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.episodios_calc import construir_fechas_por_temporada
+from scripts.episodios_calc import construir_fechas_por_temporada, calcular_estado_pendiente
 
 # CONFIGURACIÓN DE SUPABASE
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pfssrcyxpmnofezfnrct.supabase.co")
