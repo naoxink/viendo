@@ -15,6 +15,7 @@ export default {
     },
     emits: ['back'],
     setup(props, { emit }) {
+        const bgStyle = computed(() => cardBgStyle(props.serie))
         const { updateShowStatus, updateShowField } = useSeriesData()
 
         // Campos cuya edición cambia "hasta dónde ha visto el usuario", y por
@@ -90,7 +91,7 @@ export default {
             }
         }
 
-        return { hasNotas, nextAirText, volver, notaClase, isAdmin, cambiarEstado, actualizarCampo }
+        return { hasNotas, nextAirText, volver, notaClase, isAdmin, cambiarEstado, actualizarCampo, bgStyle }
     },
     methods: {
         estadoTexto(estado) {
@@ -120,10 +121,10 @@ export default {
             </header>
 
             <section class="view-content">
-                <div class="details-sheet">
-                    <div class="details-poster">
+                <div class="details-sheet" :style="bgStyle">
+                    <!-- <div class="details-poster">
                         <PosterThumb :serie="serie" />
-                    </div>
+                    </div> -->
 
                     <div class="details-main">
                         <div class="details-header">

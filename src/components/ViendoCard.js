@@ -5,7 +5,7 @@ import RewatchBadge from './shared/RewatchBadge.js'
 import SlowModeBadge from './shared/SlowModeBadge.js'
 import { cardBgStyle, formatProximaFecha } from '../utils/format.js'
 import { CONFIG } from '../utils/config.js'
-import { calcularEstadoPendiente } from '../utils/estadoPendiente.js'
+import { calcularEstadoPendiente } from '../utils/episodios.js'
 
 export default {
     name: 'ViendoCard',
