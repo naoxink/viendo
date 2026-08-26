@@ -149,6 +149,7 @@
 .dashboard-mini-list--with-posters li {
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
+    padding-right: 0.6rem;
 }
 
 /* Formulario compacto de "Añadir serie" */

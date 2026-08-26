@@ -1,4 +1,5 @@
 import PosterThumb from '../shared/PosterThumb.js'
+import { getNotaClass } from '../../utils/format.js'
 
 export default {
     name: 'MiniSerieList',
@@ -12,6 +13,12 @@ export default {
         // mini-póster (PosterThumb ya se degrada solo si la serie no tiene
         // imagen). No afecta a las filas con "href".
         showPosters: { type: Boolean, default: false }
+    },
+    methods: {
+        getNotaClass(nota) {
+            if (!nota) return '';
+            return getNotaClass(nota)
+        }
     },
     emits: ['select-serie'],
     template: `
@@ -41,6 +48,7 @@ export default {
                         <span class="stats-rank-leader"></span>
                     </span>
                     <span v-if="item.meta" class="next-air">{{ item.meta }}</span>
+                    <span v-if="item.nota" class="nota-tag" :class="getNotaClass(item.nota)">{{ item.nota }}</span>
                 </span>
                 <span v-else class="dashboard-mini-list-row dashboard-mini-list-row-static">
                     <span class="stats-rank-inner">
@@ -48,6 +56,7 @@ export default {
                         <span class="stats-rank-leader"></span>
                     </span>
                     <span v-if="item.meta" class="next-air">{{ item.meta }}</span>
+                    <span v-if="item.nota" class="nota-tag" :class="getNotaClass(item.nota)">{{ item.nota }}</span>
                 </span>
             </li>
         </ol>

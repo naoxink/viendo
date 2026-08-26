@@ -46,7 +46,8 @@ export default {
                     key: coleccion + '-' + serie.titulo,
                     titulo: serie.titulo,
                     meta: [serie.año, ETIQUETAS_COLECCION[coleccion]].filter(Boolean).join(' · '),
-                    serie
+                    serie,
+                    nota: serie.nota || null
                 }))
         })
 
