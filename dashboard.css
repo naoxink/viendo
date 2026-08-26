@@ -42,8 +42,8 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    flex-wrap: wrap;
     margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
 .dashboard-header h1 {
@@ -140,6 +140,17 @@
     background-color: transparent;
 }
 
+.dashboard-mini-list-poster {
+    width: 28px;
+    height: 40px;
+    border-radius: 4px;
+}
+
+.dashboard-mini-list--with-posters li {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+}
+
 /* Formulario compacto de "Añadir serie" */
 .dashboard-quick-add {
     display: flex;
@@ -168,7 +179,6 @@
     padding: 8px 12px;
     font-size: 0.85rem;
 }
-
 
 
 
