@@ -199,8 +199,25 @@ def procesar_viendo(headers, ahora, hoy, notificaciones):
             print(f"⚠️ Saltando '{titulo}': no tiene tvdb_id.")
             continue
 
+        # 1. Notificar SIEMPRE contra lo que ya tenemos guardado en Supabase,
+        # sin depender de si hoy toca (o no) resincronizar con la API. La
+        # fecha de un estreno puede llevar semanas confirmada de antemano;
+        # no hace falta refrescar nada para darnos cuenta de que es hoy.
+        fechas_actuales = serie.get('fechas_episodios') or {}
+        estrenos_hoy = capitulos_estrenados_en(
+            fechas_actuales, serie.get('temporada'), serie.get('capitulo'), hoy_str
+        )
+        for ep in estrenos_hoy:
+            print(f"   ✨ ¡Estreno hoy! T{ep['temporada']}E{ep['capitulo']}")
+            notificaciones.append(
+                f"✨ *{titulo}*: ¡Nuevo capítulo hoy! T{ep['temporada']}E{ep['capitulo']}."
+            )
+
+        # 2. Resync con la API solo si hace falta (backlog sin ver → no hace
+        # falta; al día y sin fecha futura conocida, o esa fecha ya pasó →
+        # sí hace falta ir a buscar más).
         if not necesita_refresh(serie, hoy):
-            print(f"⏭️ '{titulo}': sin cambios esperados hoy, no se consulta la API.")
+            print(f"⏭️ '{titulo}': sin necesidad de resincronizar hoy (ya notificado si tocaba).")
             continue
 
         print(f"🔍 Resincronizando: {titulo} (ID: {tvdb_id})...")
@@ -212,20 +229,22 @@ def procesar_viendo(headers, ahora, hoy, notificaciones):
         estado_serie = resultado["estado_serie"]
         fechas_nuevas = resultado["fechas_episodios"]
 
-        # Notificar SOLO si hay un capítulo que se estrena hoy exactamente
-        # (no "tienes pendiente" en general, que se queda pegado en True
-        # mientras haya backlog sin ver).
-        estrenos_hoy = capitulos_estrenados_en(
+        # Si el resync trajo fechas nuevas que también caen hoy (por
+        # ejemplo, la serie no tenía nada guardado aún), las notificamos
+        # también aquí para no perdernos ese caso.
+        estrenos_hoy_tras_sync = capitulos_estrenados_en(
             fechas_nuevas, serie.get('temporada'), serie.get('capitulo'), hoy_str
         )
-        for ep in estrenos_hoy:
-            print(f"   ✨ ¡Estreno hoy! T{ep['temporada']}E{ep['capitulo']}")
+        ya_notificados = {(e['temporada'], e['capitulo']) for e in estrenos_hoy}
+        for ep in estrenos_hoy_tras_sync:
+            if (ep['temporada'], ep['capitulo']) in ya_notificados:
+                continue
+            print(f"   ✨ ¡Estreno hoy (detectado tras resync)! T{ep['temporada']}E{ep['capitulo']}")
             notificaciones.append(
                 f"✨ *{titulo}*: ¡Nuevo capítulo hoy! T{ep['temporada']}E{ep['capitulo']}."
             )
 
-        # ¿La serie ha terminado y el usuario está al día? (esto no depende
-        # de la fecha de hoy, sigue igual que antes)
+        # ¿La serie ha terminado y el usuario está al día?
         estado_despues = calcular_estado_pendiente(
             fechas_nuevas, serie.get('temporada'), serie.get('capitulo'), hoy=hoy
         )
