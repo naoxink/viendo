@@ -5,6 +5,17 @@ export function calcularEstadoPendiente(fechasEpisodios, temporadaActual, capitu
 
     const hoyTs = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()).getTime()
 
+    // Parseamos "YYYY-MM-DD" como fecha LOCAL (no UTC), para que coincida
+    // con hoyTs. Date.parse('2026-08-26') interpreta la cadena como UTC
+    // medianoche, que en husos horarios adelantados a UTC (p. ej. UTC+2)
+    // cae 2h DESPUÉS de la medianoche local — eso hacía que el capítulo
+    // de HOY nunca se considerase "ya emitido" hasta el día siguiente.
+    const parseFechaLocal = (fecha) => {
+        if (!fecha) return null
+        const [year, month, day] = fecha.split('-').map(Number)
+        return new Date(year, month - 1, day).getTime()
+    }
+
     const entradas = []
     for (const [t, caps] of Object.entries(fechasEpisodios || {})) {
         for (const [c, fecha] of Object.entries(caps || {})) {
@@ -15,7 +26,7 @@ export function calcularEstadoPendiente(fechasEpisodios, temporadaActual, capitu
 
     const posteriores = entradas.filter(e => e.t > temporadaActual || (e.t === temporadaActual && e.c > capituloActual))
 
-    const emitido = (e) => e.fecha && Date.parse(e.fecha) <= hoyTs
+    const emitido = (e) => e.fecha && parseFechaLocal(e.fecha) <= hoyTs
 
     const emitidos = posteriores.filter(emitido)
     const futuros = posteriores.filter(e => e.fecha && !emitido(e)).sort((a, b) => a.fecha.localeCompare(b.fecha))
