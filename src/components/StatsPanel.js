@@ -74,98 +74,86 @@ export default {
 
         const totalCapitulosVistos = computed(() => {
             return todas.value.reduce((acc, s) => {
-                // Validación inicial: si no hay estructura de temporadas, no sumamos nada
                 if (!s.capitulosPorTemporada || typeof s.capitulosPorTemporada !== 'object') {
                     return acc;
                 }
-
-                // 1. Caso Rewatch: sumamos todos los capítulos
+        
                 if (s.rewatch) {
                     const totalSerie = Object.values(s.capitulosPorTemporada).reduce((a, b) => (a || 0) + (b || 0), 0);
-                    return acc + totalSerie;
+                    return acc + (totalSerie * (s.veces || 1));
                 }
-
-                // 2. Caso Seguimiento activo
-                // Convertimos a número con fallback a 0 si el campo falta o es inválido
+        
                 const tempActual = parseInt(s.temporada) || 0;
                 const capActual = parseInt(s.capitulo) || 0;
                 const esPendiente = !!s.pendiente;
-
+        
                 let vistos = 0;
-
-                // Sumamos temporadas anteriores (desde 1 hasta tempActual - 1)
                 for (let i = 1; i < tempActual; i++) {
                     const capsEnEstaTemp = parseInt(s.capitulosPorTemporada[i]) || 0;
                     vistos += capsEnEstaTemp;
                 }
-
-                // Sumamos lo visto en la temporada actual
-                // Si es pendiente, el último capítulo no cuenta (capActual - 1)
+        
                 let vistosEnTempActual = esPendiente ? (capActual - 1) : capActual;
-
-                // Aseguramos que no sea negativo (por si capActual es 0 o 1)
                 vistos += Math.max(0, vistosEnTempActual);
-
+        
                 return acc + vistos;
             }, 0);
         });
 
         const tiempoTotalInvertido = computed(() => {
             return todas.value.reduce((acc, s) => {
-                // Validación: Necesitamos estructura de temporadas y duración
                 if (!s.capitulosPorTemporada || typeof s.capitulosPorTemporada !== 'object') {
                     return acc;
                 }
-
-                // Duración media por capítulo (fallback a 30 min si no existe)
+        
                 const duracion = parseInt(s.duracionMedia) || 30;
-
-                // 1. Caso Rewatch: sumamos todos los capítulos * duración
+        
                 if (s.rewatch) {
                     const totalCaps = Object.values(s.capitulosPorTemporada).reduce((a, b) => (a || 0) + (b || 0), 0);
-                    return acc + (totalCaps * duracion);
+                    return acc + (totalCaps * duracion * (s.veces || 1));
                 }
-
-                // 2. Caso Seguimiento activo
+        
                 const tempActual = parseInt(s.temporada) || 0;
                 const capActual = parseInt(s.capitulo) || 0;
                 const esPendiente = !!s.pendiente;
-
+        
                 let totalCapsVistos = 0;
-
-                // Sumar temporadas completas anteriores
                 for (let i = 1; i < tempActual; i++) {
                     totalCapsVistos += (parseInt(s.capitulosPorTemporada[i]) || 0);
                 }
-
-                // Sumar capítulos temporada actual
+        
                 const vistosEnTempActual = esPendiente ? (capActual - 1) : capActual;
                 totalCapsVistos += Math.max(0, vistosEnTempActual);
-
+        
                 return acc + (totalCapsVistos * duracion);
             }, 0);
         });
 
         const tiempoTotalPendiente = computed(() => {
             const seriesPendientes = [...props.enCola, ...props.viendo];
-
+        
             return seriesPendientes.reduce((acc, s) => {
                 if (!s.capitulosPorTemporada) return acc;
-
+        
                 const duracion = parseInt(s.duracionMedia) || 30;
                 const tempActual = parseInt(s.temporada) || 1;
                 const capActual = parseInt(s.capitulo) || 0;
-                
+                const esPendiente = !!s.pendiente;
+        
+                // Si está "pendiente", capActual es el PRÓXIMO capítulo por ver,
+                // no el último visto: solo hay que descontar hasta capActual - 1.
+                const vistosEnTempActual = esPendiente ? Math.max(0, capActual - 1) : capActual;
+        
                 // 1. Calcular capítulos restantes en la temporada actual
                 const totalEnTempActual = parseInt(s.capitulosPorTemporada[tempActual]) || 0;
-                const pendientesEnTempActual = Math.max(0, totalEnTempActual - capActual);
-
+                const pendientesEnTempActual = Math.max(0, totalEnTempActual - vistosEnTempActual);
+        
                 // 2. Calcular capítulos de temporadas futuras
                 const temporadas = Object.keys(s.capitulosPorTemporada).map(Number);
                 const pendientesEnFuturas = temporadas
                     .filter(t => t > tempActual)
-                    .reduce((sum, t) => sum + parseInt(s.capitulosPorTemporada[t]), 0);
-
+                    .reduce((sum, t) => sum + (parseInt(s.capitulosPorTemporada[t]) || 0), 0);
+        
                 // 3. Sumar y convertir a tiempo
                 const totalPendientes = pendientesEnTempActual + pendientesEnFuturas;
                 return acc + (totalPendientes * duracion);
@@ -240,11 +228,11 @@ export default {
         const masAtrasadas = computed(() =>
             props.viendo
                 .filter((s) => (s.acumulados && s.acumulados > 0) || s.pendiente)
-                .sort((a, b) => b.acumulados - a.acumulados)
+                .sort((a, b) => (b.acumulados || 0) - (a.acumulados || 0))
                 .slice(0, 5)
                 .map(s => ({
                     ...s,
-                    acumulados: s.acumulados + (s.pendiente ? 1 : 0) || 0
+                    acumulados: (s.acumulados || 0) + (s.pendiente ? 1 : 0)
                 }))
         )
 
