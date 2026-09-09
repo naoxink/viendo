@@ -76,7 +76,8 @@ export default async function handler(req, res) {
       temporada: nextTemp,
       capitulo: nextCap,
       ultimo_capitulo_visto_en: ahora.toISOString(),
-      slow_mode: nuevoSlowMode
+      slow_mode: nuevoSlowMode,
+      visto_en: new Date().getFullYear()
     };
 
     // 4. Guardar los cambios directamente en Supabase
