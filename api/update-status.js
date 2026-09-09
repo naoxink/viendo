@@ -44,10 +44,17 @@ export default async function handler(req, res) {
   }
 
   try {
+    const updatePayload = {
+      estado: estadoNuevo
+    }
+
+    if (['completadas', 'dropeadas'].includes(estadoNuevo)) {
+      updatePayload.visto_en = new Date().getFullYear()
+    }
     // Actualizar el estado directamente en Supabase usando el id único de la serie
     const { data: serieActualizada, error: updateError } = await supabase
       .from('series')
-      .update({ estado: estadoNuevo })
+      .update(updatePayload)
       .eq('id', id)
       .select()
       .single();
