@@ -39,15 +39,19 @@ export default async function handler(req, res) {
 
   // Lista blanca de campos permitidos para actualizar por seguridad
   const camposPermitidos = [
-    'titulo', 'estado', 'temporada', 'capitulo', 'rewatch', 'veces', 
-    'nota', 'pendiente', 'duracion_media', 'visto_en', 'notas', 'slow_mode', 'proxima_fecha'
+    'titulo', 'estado', 'temporada', 'capitulo', 'rewatch', 'veces',
+    'nota', 'pendiente', 'duracion_media', 'visto_en', 'notas', 'slow_mode',
+    'proxima_fecha', 'poster_path', 'estado_final', 'viendo_con_alguien'
   ];
 
   if (!camposPermitidos.includes(campoDb)) {
     return res.status(400).json({ success: false, error: 'Campo no permitido para actualización' });
   }
 
-  if (campoDb === 'proxima_fecha' && valorNuevo === '') {
+  if (
+    ['proxima_fecha', 'poster_path', 'estado_final', 'visto_en'].includes(campoDb) &&
+    valorNuevo === ''
+  ) {
     valorNuevo = null;
   }
 

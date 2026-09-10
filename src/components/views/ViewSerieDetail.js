@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import PosterThumb from '../shared/PosterThumb.js'
 import LinksFooter from '../shared/LinksFooter.js'
 import RewatchBadge from '../shared/RewatchBadge.js'
@@ -72,6 +72,31 @@ export default {
         const nextAirText = computed(() => formatProximaFecha(props.serie?.proxima_fecha))
         const notaClase = computed(() => getNotaClass(props.serie.nota))
         const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true')
+        const posterPathExists = ref(false)
+        const posterPathEstado = computed(() => {
+            if (!props.serie.poster_path || !props.serie.poster_path.toString().trim()) {
+                return 'Sin poster path'
+            }
+
+            return posterPathExists.value ? 'Imagen disponible' : 'Imagen no encontrada'
+        })
+
+        watch(() => props.serie.poster_path, () => {
+            posterPathExists.value = false
+        })
+
+        const vaciarPosterPath = async () => {
+            const idSerie = props.serie.id || props.serie.tvdb_id
+            const resultado = await updateShowField(idSerie, 'poster_path', '')
+
+            if (!resultado.success) {
+                console.error('No se pudo vaciar poster_path:', resultado.error)
+                return
+            }
+
+            props.serie.poster_path = ''
+            posterPathExists.value = false
+        }
 
         const volver = () => emit('back')
 
@@ -92,7 +117,19 @@ export default {
             }
         }
 
-        return { hasNotas, nextAirText, volver, notaClase, isAdmin, cambiarEstado, actualizarCampo, bgStyle }
+        return {
+            hasNotas,
+            nextAirText,
+            volver,
+            notaClase,
+            isAdmin,
+            cambiarEstado,
+            actualizarCampo,
+            bgStyle,
+            posterPathEstado,
+            vaciarPosterPath,
+            posterPathExists
+        }
     },
     methods: {
         estadoTexto(estado) {
@@ -202,14 +239,40 @@ export default {
                                 <span class="details-field-value">{{ serie.duracionMedia }} min</span>
                             </div>
 
-                            <div class="details-field" v-if="serie.vistoEn">
+                            <div class="details-field" v-if="isAdmin || serie.vistoEn">
                                 <span class="details-field-label">Completada en</span>
                                 <span class="details-field-value">
                                     <template v-if="isAdmin">
-                                        <input type="text" :value="serie.vistoEn" @change="actualizarCampo('visto_en', $event)" class="admin-input-small" />
+                                        <input type="text" :value="serie.vistoEn || ''" @change="actualizarCampo('visto_en', $event)" class="admin-input-small" />
                                     </template>
                                     <template v-else>{{ serie.vistoEn }}</template>
                                  </span>
+                            </div>
+
+                            <div class="details-field details-field--poster-path" v-if="isAdmin">
+                                <span class="details-field-label">Poster path</span>
+                                <span class="details-field-value poster-path-value">
+                                    <template v-if="serie.poster_path">
+                                        <div class="poster-path-content">
+                                            <div class="poster-path-text">{{ serie.poster_path }}</div>
+                                            <div class="poster-path-status">{{ posterPathEstado }}</div>
+                                            <button type="button" class="btn-submit poster-path-button" @click="vaciarPosterPath">
+                                                Vaciar poster path
+                                            </button>
+                                        </div>
+                                        <img
+                                            v-if="serie.poster_path"
+                                            :key="serie.poster_path"
+                                            :src="serie.poster_path"
+                                            class="poster-path-check"
+                                            @load="posterPathExists = true"
+                                            @error="posterPathExists = false"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <span class="poster-path-empty">Sin poster path</span>
+                                    </template>
+                                </span>
                             </div>
 
                             <!-- Editables: "hasta dónde he visto". Al cambiar,
@@ -273,10 +336,40 @@ export default {
                                 </span>
                             </div>
 
-                            <div class="details-field" v-if="serie.viendo_con_alguien !== undefined || serie.watching_together !== undefined || serie.watchingWith !== undefined">
+                            <div class="details-field" v-if="isAdmin || serie.viendo_con_alguien !== undefined || serie.watching_together !== undefined || serie.watchingWith !== undefined">
                                 <span class="details-field-label">Viendo con alguien</span>
                                 <span class="details-field-value">
-                                    <WatchingTogetherBadge :serie="serie" />
+                                    <template v-if="isAdmin">
+                                        <label class="admin-checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                :checked="Boolean(serie.viendo_con_alguien ?? serie.watching_together ?? serie.watchingWith)"
+                                                @change="actualizarCampo('viendo_con_alguien', $event)"
+                                            />
+                                            Sí
+                                        </label>
+                                    </template>
+                                    <template v-else>
+                                        <WatchingTogetherBadge :serie="serie" />
+                                    </template>
+                                </span>
+                            </div>
+
+                            <div class="details-field" v-if="isAdmin || serie.estado_final">
+                                <span class="details-field-label">Estado final</span>
+                                <span class="details-field-value">
+                                    <template v-if="isAdmin">
+                                        <select
+                                            :value="serie.estado_final || ''"
+                                            @change="actualizarCampo('estado_final', $event)"
+                                            class="admin-select-input"
+                                        >
+                                            <option value="">Sin estado final</option>
+                                            <option value="Continuing">Continuing</option>
+                                            <option value="Ended">Ended</option>
+                                        </select>
+                                    </template>
+                                    <template v-else>{{ serie.estado_final || '—' }}</template>
                                 </span>
                             </div>
 
