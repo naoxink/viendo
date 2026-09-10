@@ -3,13 +3,14 @@ import PosterThumb from '../shared/PosterThumb.js'
 import LinksFooter from '../shared/LinksFooter.js'
 import RewatchBadge from '../shared/RewatchBadge.js'
 import SlowModeBadge from '../shared/SlowModeBadge.js'
+import WatchingTogetherBadge from '../shared/WatchingTogetherBadge.js'
 import { formatProximaFecha, cardBgStyle, getNotaClass } from '../../utils/format.js'
 import { calcularEstadoPendiente } from '../../utils/episodios.js'
 import { useSeriesData } from '../../composables/useSeriesData.js'
 
 export default {
     name: 'ViewSerieDetail',
-    components: { PosterThumb, LinksFooter, RewatchBadge, SlowModeBadge },
+    components: { PosterThumb, LinksFooter, RewatchBadge, SlowModeBadge, WatchingTogetherBadge },
     props: {
         serie: { type: Object, required: true }
     },
@@ -269,6 +270,13 @@ export default {
                                         <input type="checkbox" :checked="serie.slowmode" @change="actualizarCampo('slow_mode', $event)" />
                                         Sí
                                     </label>
+                                </span>
+                            </div>
+
+                            <div class="details-field" v-if="serie.viendo_con_alguien !== undefined || serie.watching_together !== undefined || serie.watchingWith !== undefined">
+                                <span class="details-field-label">Viendo con alguien</span>
+                                <span class="details-field-value">
+                                    <WatchingTogetherBadge :serie="serie" />
                                 </span>
                             </div>
 

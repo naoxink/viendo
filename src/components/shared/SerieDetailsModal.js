@@ -2,11 +2,12 @@ import { computed } from 'vue'
 import PosterThumb from './PosterThumb.js'
 import LinksFooter from './LinksFooter.js'
 import RewatchBadge from './RewatchBadge.js'
+import WatchingTogetherBadge from './WatchingTogetherBadge.js'
 import { formatProximaFecha, cardBgStyle, getNotaClass } from '../../utils/format.js'
 
 export default {
     name: 'SerieDetailsModal',
-    components: { PosterThumb, LinksFooter, RewatchBadge },
+    components: { PosterThumb, LinksFooter, RewatchBadge, WatchingTogetherBadge },
     props: {
         serie: { type: Object, required: true },
         visible: { type: Boolean, required: true }
@@ -138,6 +139,13 @@ export default {
                                     <span class="details-field-label">Rewatch</span>
                                     <span class="details-field-value">
                                         <RewatchBadge :serie="serie" />
+                                    </span>
+                                </div>
+
+                                <div class="details-field" v-if="serie.viendo_con_alguien !== undefined || serie.watching_together !== undefined || serie.watchingWith !== undefined">
+                                    <span class="details-field-label">Viendo con alguien</span>
+                                    <span class="details-field-value">
+                                        <WatchingTogetherBadge :serie="serie" />
                                     </span>
                                 </div>
 

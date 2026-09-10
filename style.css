@@ -39,6 +39,8 @@
     --cola-progress-text: var(--text-muted);
     --badge-slowmode-bg: #f59e0b;
     --badge-slowmode-text: #fff7ed;
+    --badge-watching-together-bg: #0ea5e9;
+    --badge-watching-together-text: #f0f9ff;
     --estreno-bg: rgba(39, 174, 96, 0.15);
     --estreno-text: #256a41;
     --final-status-bg: #0f766e;
@@ -93,6 +95,8 @@
     --cola-progress-text: #cbd5e1;
     --badge-slowmode-bg: #d97706;
     --badge-slowmode-text: #fff7ed;
+    --badge-watching-together-bg: #0284c7;
+    --badge-watching-together-text: #f0f9ff;
     --estreno-bg: rgba(16, 185, 129, 0.15);
     --estreno-text: #6ee7b7;
     --final-status-bg: #115e59;
@@ -452,27 +456,44 @@ h1 {
     color: var(--note-good-text);
 }
 
-.badge-slowmode {
+.badge-slowmode,
+.badge-rewatch,
+.badge-watching-together {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  line-height: 1.4;
+  line-height: 1;
   white-space: nowrap;
-  padding: 2px 7px;
+  padding: 2px 5px;
   border-radius: 4px;
-  background: var(--badge-slowmode-bg);
-  color: var(--badge-slowmode-text);
   cursor: help;
+  vertical-align: middle;
+  height: 1.41rem;
+  min-height: 1.41rem;
+  box-sizing: border-box;
 }
 
-.badge-slowmode svg {
-  width: 11px;
-  height: 11px;
+.badge-slowmode {
+  background: var(--badge-slowmode-bg);
+  color: var(--badge-slowmode-text);
+}
+
+.badge-slowmode svg,
+.badge-rewatch svg,
+.badge-watching-together svg {
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
   display: block;
+}
+
+.badge-watching-together {
+  background: var(--badge-watching-together-bg);
+  color: var(--badge-watching-together-text);
 }
 
 .badge-final-status {
@@ -704,36 +725,30 @@ summary::after {
 }
 
 .badge-rewatch {
-    background-color: #5a5cdb; /* Un color violeta/índigo */
-    border: 1px solid #3a3c96; /* Un color violeta/índigo */
-    color: white;
+    background-color: var(--rewatch-badge-bg);
+    border: 1px solid var(--rewatch-badge-border);
+    color: var(--rewatch-badge-text);
     font-size: 0.7rem;
-    padding: 2px 4px;
+    padding: 2px 5px;
     border-radius: 4px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
-    text-transform: uppercase;
     cursor: help;
 }
 
-.badge-rewatch span {
-    background: rgba(0, 0, 0, 0.2);
-    margin-left: 4px;
-    padding: 0 4px;
-    border-radius: 4px;
+.badge-rewatch-count {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    line-height: 1.3;
 }
 
 /* MÓVIL PEQUEÑO (< 480px) — Ajuste para que no se amontone */
 @media (max-width: 480px) {
     .theme-selector {
         display: none;
-    }
-
-    .badge-rewatch {
-        margin-left: 0;
-        display: table; /* Para que baje a una línea propia si el título es largo */
     }
 }
 

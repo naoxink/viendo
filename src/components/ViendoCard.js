@@ -3,13 +3,14 @@ import PosterThumb from './shared/PosterThumb.js'
 import LinksFooter from './shared/LinksFooter.js'
 import RewatchBadge from './shared/RewatchBadge.js'
 import SlowModeBadge from './shared/SlowModeBadge.js'
+import WatchingTogetherBadge from './shared/WatchingTogetherBadge.js'
 import { cardBgStyle, formatProximaFecha } from '../utils/format.js'
 import { CONFIG } from '../utils/config.js'
 import { calcularEstadoPendiente } from '../utils/episodios.js'
 
 export default {
     name: 'ViendoCard',
-    components: { PosterThumb, LinksFooter, RewatchBadge, SlowModeBadge },
+    components: { PosterThumb, LinksFooter, RewatchBadge, SlowModeBadge, WatchingTogetherBadge },
     props: {
         serie: { type: Object, required: true }
     },
@@ -18,6 +19,18 @@ export default {
         const bgStyle = computed(() => cardBgStyle(props.serie))
         const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proxima_fecha))
         const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true');
+        const esFinalDeTemporada = computed(() => {
+            const caps = props.serie.capitulosPorTemporada;
+            const temporada = Number(props.serie.temporada);
+            const capitulo = Number(props.serie.capitulo);
+
+            if (!caps || !Number.isInteger(temporada) || !Number.isInteger(capitulo)) {
+                return false;
+            }
+
+            const capsTemporada = Number(caps[temporada]);
+            return Number.isFinite(capsTemporada) && capitulo >= capsTemporada;
+        });
         const progreso = computed(() => {
             const caps = props.serie.capitulosPorTemporada;
             if (!caps || Object.keys(caps).length === 0) return 0;
@@ -32,7 +45,7 @@ export default {
                 return (capituloActual / capsTemporada) * 100;
             }
         });
-        return { bgStyle, proximaFechaTexto, progreso, isAdmin }
+        return { bgStyle, proximaFechaTexto, progreso, esFinalDeTemporada, isAdmin }
     },
     methods: {
         async marcarComoVisto(serie) {
@@ -98,6 +111,7 @@ export default {
                         <div></div>
                     </p>
                     <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
+                    <span v-if="esFinalDeTemporada" class="badge-final-status" title="Este capítulo es el último de la temporada">Fin temp.</span>
                 </div>
                 <button v-if="isAdmin && serie.pendiente" aria-label="Marcar como visto" class="btn-check" :class="{ 'visto': !serie.pendiente }" @click="marcarComoVisto(serie)"></button>
             </div>
@@ -105,6 +119,7 @@ export default {
                 <LinksFooter :serie="serie" />
                 <RewatchBadge :serie="serie" />
                 <SlowModeBadge :serie="serie" />
+                <WatchingTogetherBadge :serie="serie" />
                 <p v-if="serie.proxima_fecha" class="next-air">
                     📅 <strong>{{ proximaFechaTexto }}</strong>
                 </p>
