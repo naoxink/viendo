@@ -25,7 +25,7 @@ export default {
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
         const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proxima_fecha))
-        const isAdmin = computed(() => true /* sessionStorage.getItem('isAdmin') === 'true' */);
+        const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true');
         const esFinalDeTemporada = computed(() => {
             const caps = props.serie.capitulosPorTemporada;
             const temporada = Number(props.serie.temporada);
