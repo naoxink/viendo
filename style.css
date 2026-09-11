@@ -37,17 +37,17 @@
     --cola-content-bg: var(--surface-muted);
     --cola-content-border: var(--border);
     --cola-progress-text: var(--text-muted);
-    --badge-slowmode-bg: #f59e0b;
+    --badge-slowmode-bg: #f59f0bc4;
     --badge-slowmode-text: #fff7ed;
-    --badge-watching-together-bg: #0ea5e9;
+    --badge-watching-together-bg: #0ea4e9b0;
     --badge-watching-together-text: #f0f9ff;
     --estreno-bg: rgba(39, 174, 96, 0.15);
     --estreno-text: #256a41;
-    --final-status-bg: #0f766e;
+    --final-status-bg: #0f766db9;
     --final-status-text: #f0fdfa;
     --pending-card-bg: var(--accent-soft);
     --pending-card-border: var(--accent);
-    --rewatch-badge-bg: #6366f1;
+    --rewatch-badge-bg: #6365f1bb;
     --rewatch-badge-border: #4f46e5;
     --rewatch-badge-text: #eef2ff;
     --warning-bg: #dc2626be;
@@ -93,18 +93,18 @@
     --note-good-border: #155e75;
     --cola-content-bg: var(--surface-elevated);
     --cola-progress-text: #cbd5e1;
-    --badge-slowmode-bg: #d97706;
+    --badge-slowmode-bg: #d977067e;
     --badge-slowmode-text: #fff7ed;
-    --badge-watching-together-bg: #0284c7;
+    --badge-watching-together-bg: #0285c76b;
     --badge-watching-together-text: #f0f9ff;
     --estreno-bg: rgba(16, 185, 129, 0.15);
     --estreno-text: #6ee7b7;
-    --final-status-bg: #115e59;
+    --final-status-bg: #115e59ad;
     --final-status-text: #ecfeff;
     --pending-card-bg: rgba(96, 165, 250, 0.14);
     --pending-card-border: var(--accent);
-    --rewatch-badge-bg: #818cf8;
-    --rewatch-badge-border: #6366f1;
+    --rewatch-badge-bg: #818df883;
+    --rewatch-badge-border: #6365f1b9;
     --rewatch-badge-text: #eef2ff;
     --warning-bg: #dc2626be;
     --warning-text: #fef2f2;
@@ -245,6 +245,154 @@ h1 {
     height: 8px;
 }
 
+.serie-card.mark-before,
+.serie-card.mark-after {
+    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.serie-card.mark-before {
+    animation: mark-card-soft 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.serie-card.mark-after {
+    animation: mark-card-soft 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.serie-card.mark-before::after,
+.serie-card.mark-after::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.serie-card.mark-before::after {
+    background: linear-gradient(120deg, transparent 0%, rgba(96, 165, 250, 0.45) 40%, rgba(148, 163, 184, 0.25) 52%, transparent 100%);
+    background-size: 220% 100%;
+    background-position: 200% 0;
+    animation: mark-sweep-before 0.55s ease-out forwards;
+}
+
+.serie-card.mark-after::after {
+    border: 1px solid rgba(74, 222, 128, 0.8);
+    box-shadow: 0 0 0 rgba(74, 222, 128, 0.2), 0 0 24px rgba(74, 222, 128, 0.25);
+    animation: mark-sweep-after 0.75s ease-out forwards;
+}
+
+.serie-card.mark-more-pending.mark-before {
+    border-color: rgba(96, 165, 250, 0.9);
+    box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.38), 0 0 22px rgba(96, 165, 250, 0.16);
+}
+
+.serie-card.mark-more-pending.mark-after {
+    border-color: rgba(96, 165, 250, 0.9);
+    box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.32), 0 0 24px rgba(96, 165, 250, 0.22);
+}
+
+.serie-card.mark-done.mark-before {
+    border-color: rgba(34, 197, 94, 0.9);
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3), 0 0 22px rgba(34, 197, 94, 0.16);
+}
+
+.serie-card.mark-done.mark-after {
+    border-color: rgba(34, 197, 94, 0.95);
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.38), 0 0 28px rgba(34, 197, 94, 0.3);
+}
+
+.serie-card.mark-before .btn-check,
+.serie-card.mark-after .btn-check {
+    animation: mark-button-pulse 0.45s ease;
+}
+
+.serie-card.mark-before .progress-bar-fill {
+    animation: mark-progress-drain 0.45s ease;
+}
+
+.serie-card.mark-after .progress-bar-fill {
+    filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.8));
+    animation: mark-progress-glow 0.75s ease;
+}
+
+@keyframes mark-card-soft {
+    0% {
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    45% {
+        box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.18), 0 0 18px rgba(96, 165, 250, 0.12);
+    }
+    100% {
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+@keyframes mark-sweep-before {
+    0% {
+        opacity: 0;
+        background-position: 200% 0;
+    }
+    35% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        background-position: -50% 0;
+    }
+}
+
+@keyframes mark-sweep-after {
+    0% {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    35% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes mark-button-pulse {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    35% {
+        transform: scale(1.06);
+        filter: brightness(1.08);
+    }
+    70% {
+        transform: scale(1.02);
+        filter: brightness(1.03);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+@keyframes mark-progress-drain {
+    0% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.95;
+    }
+    100% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes mark-progress-glow {
+    0% { filter: drop-shadow(0 0 0 rgba(34, 197, 94, 0)); }
+    40% { filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.9)); }
+    100% { filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.7)); }
+}
+
 .proximamente-list .fecha-group .serie-card:first-of-type {
     border-radius: 0 0 10px 10px;
 }
@@ -278,6 +426,7 @@ h1 {
     background-color: var(--surface);
     width: 100%;
     box-sizing: border-box;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
 }
 
 .serie-card::before {

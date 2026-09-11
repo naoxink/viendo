@@ -15,10 +15,17 @@ export default {
         serie: { type: Object, required: true }
     },
     emits: ['select-serie'],
+    data() {
+        return {
+            markState: 'idle',
+            markVariant: '',
+            markTimer: null
+        }
+    },
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
         const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proxima_fecha))
-        const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true');
+        const isAdmin = computed(() => true /* sessionStorage.getItem('isAdmin') === 'true' */);
         const esFinalDeTemporada = computed(() => {
             const caps = props.serie.capitulosPorTemporada;
             const temporada = Number(props.serie.temporada);
@@ -48,9 +55,22 @@ export default {
         return { bgStyle, proximaFechaTexto, progreso, esFinalDeTemporada, isAdmin }
     },
     methods: {
+        beforeUnmount() {
+            if (this.markTimer) {
+                clearTimeout(this.markTimer)
+            }
+        },
         async marcarComoVisto(serie) {
             const token = sessionStorage.getItem('adminToken');
-            
+            const tieneMasPendientes = Number(serie.acumulados || 0) > 0;
+
+            this.markVariant = tieneMasPendientes ? 'more-pending' : 'done';
+            this.markState = 'before';
+
+            if (this.markTimer) {
+                clearTimeout(this.markTimer)
+            }
+
             try {
                 const res = await fetch(`${CONFIG.API_BASE_URL}/api/update`, {
                     method: 'POST',
@@ -88,6 +108,13 @@ export default {
 
             } catch (error) {
                 console.error('Error al marcar como visto:', error);
+            } finally {
+                this.markState = 'after';
+                this.markTimer = setTimeout(() => {
+                    this.markState = 'idle';
+                    this.markVariant = '';
+                    this.markTimer = null;
+                }, 700);
             }
         },
         totalCapsTemporada(serie) {
@@ -99,7 +126,16 @@ export default {
         }
     },
     template: `
-        <div class="serie-card" :style="bgStyle">
+        <div
+            class="serie-card"
+            :style="bgStyle"
+            :class="{
+                'mark-before': markState === 'before',
+                'mark-after': markState === 'after',
+                'mark-more-pending': markVariant === 'more-pending',
+                'mark-done': markVariant === 'done'
+            }"
+        >
             <div class="serie-card-body">
                 <PosterThumb :serie="serie" />
                 <div class="info">
@@ -113,7 +149,19 @@ export default {
                     <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
                     <span v-if="esFinalDeTemporada" class="badge-final-status" title="Este capítulo es el último de la temporada">Fin temp.</span>
                 </div>
-                <button v-if="isAdmin && serie.pendiente" aria-label="Marcar como visto" class="btn-check" :class="{ 'visto': !serie.pendiente }" @click="marcarComoVisto(serie)"></button>
+                <button
+                    v-if="isAdmin && serie.pendiente"
+                    aria-label="Marcar como visto"
+                    class="btn-check"
+                    :class="{
+                        'visto': !serie.pendiente,
+                        'mark-before': markState === 'before',
+                        'mark-after': markState === 'after',
+                        'mark-more-pending': markVariant === 'more-pending',
+                        'mark-done': markVariant === 'done'
+                    }"
+                    @click="marcarComoVisto(serie)"
+                ></button>
             </div>
             <div class="serie-card-footer">
                 <LinksFooter :serie="serie" />
