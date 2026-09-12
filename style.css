@@ -138,6 +138,7 @@ html, body {
     overflow: hidden;
     overscroll-behavior: none;
     -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
 }
 
 body {
@@ -1899,6 +1900,17 @@ a.link {
    MEDIA QUERY: RESPONSIVE EN MÓVILES
    ========================================== */
 @media (max-width: 768px) {
+
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    .admin-input-small {
+        width: 80px;
+    }
+
   .btn-trigger-calendario {
     display: none; /* Por ahora en móviles no voy a enseñar el calendario, only PC */
   }
