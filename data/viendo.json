@@ -43,7 +43,8 @@
             "2": {
                 "1": "2026-09-17"
             }
-        }
+        },
+        "viendo_con_alguien": false
     },
     {
         "id": 348,
@@ -85,7 +86,8 @@
                 "9": "2026-09-17",
                 "10": "2026-09-24"
             }
-        }
+        },
+        "viendo_con_alguien": false
     },
     {
         "id": 345,
@@ -93,7 +95,7 @@
         "anio": 2026,
         "visto_en": null,
         "temporada": 1,
-        "capitulo": 6,
+        "capitulo": 7,
         "pendiente": true,
         "nota": null,
         "tvdb_id": 466198,
@@ -113,7 +115,7 @@
         "rewatch": null,
         "veces": null,
         "slow_mode": false,
-        "ultimo_capitulo_visto_en": "2026-09-03T07:00:04.9+00:00",
+        "ultimo_capitulo_visto_en": "2026-09-09T06:26:07.312+00:00",
         "fechas_episodios": {
             "1": {
                 "1": "2026-07-26",
@@ -127,15 +129,139 @@
                 "9": "2026-09-20",
                 "10": "2026-09-27"
             }
-        }
+        },
+        "viendo_con_alguien": false
+    },
+    {
+        "id": 360,
+        "titulo": "South of Hell",
+        "anio": 2015,
+        "visto_en": 2026,
+        "temporada": 1,
+        "capitulo": 5,
+        "pendiente": true,
+        "nota": null,
+        "tvdb_id": 299614,
+        "imdb_id": "tt4147780",
+        "acumulados": 7,
+        "image_url": "https://artworks.thetvdb.com/banners/posters/299614-2.jpg",
+        "poster_path": "posters/299614_South_of_Hell.jpg",
+        "notas": null,
+        "estado_final": null,
+        "duracion_media": 45,
+        "capitulos_por_temporada": {
+            "1": 8
+        },
+        "created_at": "2026-09-09T07:20:27.998356+00:00",
+        "estado": "viendo",
+        "proxima_fecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": "2026-09-11T10:56:51.834+00:00",
+        "fechas_episodios": {
+            "1": {
+                "1": "2015-11-27",
+                "2": "2015-11-27",
+                "3": "2015-11-27",
+                "4": "2015-11-27",
+                "5": "2015-11-27",
+                "6": "2015-11-27",
+                "7": "2015-11-27",
+                "8": "2015-11-27"
+            }
+        },
+        "viendo_con_alguien": false
+    },
+    {
+        "id": 318,
+        "titulo": "Acapulco",
+        "anio": 2021,
+        "visto_en": 2026,
+        "temporada": 4,
+        "capitulo": 2,
+        "pendiente": true,
+        "nota": "6.5/10",
+        "tvdb_id": 393155,
+        "imdb_id": null,
+        "acumulados": 9,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/393155/posters/63467793dd0e9.jpg",
+        "poster_path": "posters/393155_Acapulco.jpg",
+        "notas": "Entretenida. Perdimos el interés entre tercera y cuarta temporada. Demasiado tiempo entre temporadas.\n\nAl final la terminamos por terminar. Estuvo entretenida pero nada especial. ",
+        "estado_final": "Ended",
+        "duracion_media": 32,
+        "capitulos_por_temporada": {
+            "1": 10,
+            "2": 10,
+            "3": 10,
+            "4": 10
+        },
+        "created_at": "2026-07-27T11:12:59.708047+00:00",
+        "estado": "viendo",
+        "proxima_fecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": "2026-09-13T22:00:52.922+00:00",
+        "fechas_episodios": {
+            "1": {
+                "1": "2021-10-08",
+                "2": "2021-10-08",
+                "3": "2021-10-15",
+                "4": "2021-10-22",
+                "5": "2021-10-29",
+                "6": "2021-11-05",
+                "7": "2021-11-12",
+                "8": "2021-11-19",
+                "9": "2021-11-25",
+                "10": "2021-12-03"
+            },
+            "2": {
+                "1": "2022-10-21",
+                "2": "2022-10-21",
+                "3": "2022-10-28",
+                "4": "2022-11-04",
+                "5": "2022-11-11",
+                "6": "2022-11-18",
+                "7": "2022-11-23",
+                "8": "2022-12-02",
+                "9": "2022-12-09",
+                "10": "2022-12-16"
+            },
+            "3": {
+                "1": "2024-05-01",
+                "2": "2024-05-01",
+                "3": "2024-05-08",
+                "4": "2024-05-15",
+                "5": "2024-05-22",
+                "6": "2024-05-29",
+                "7": "2024-06-05",
+                "8": "2024-06-12",
+                "9": "2024-06-19",
+                "10": "2024-06-26"
+            },
+            "4": {
+                "1": "2025-07-23",
+                "2": "2025-07-23",
+                "3": "2025-07-30",
+                "4": "2025-08-06",
+                "5": "2025-08-13",
+                "6": "2025-08-20",
+                "7": "2025-08-27",
+                "8": "2025-09-03",
+                "9": "2025-09-10",
+                "10": "2025-09-17"
+            }
+        },
+        "viendo_con_alguien": true
     },
     {
         "id": 278,
         "titulo": "Vikings",
         "anio": 2013,
-        "visto_en": 2020,
+        "visto_en": 2026,
         "temporada": 6,
-        "capitulo": 4,
+        "capitulo": 10,
         "pendiente": false,
         "nota": "10/10",
         "tvdb_id": 260449,
@@ -160,7 +286,7 @@
         "rewatch": true,
         "veces": 3,
         "slow_mode": false,
-        "ultimo_capitulo_visto_en": "2026-08-29T23:59:42.923+00:00",
+        "ultimo_capitulo_visto_en": "2026-09-14T08:17:09.847+00:00",
         "fechas_episodios": {
             "1": {
                 "1": "2013-03-03",
@@ -263,46 +389,7 @@
                 "19": "2021-02-24",
                 "20": "2021-03-03"
             }
-        }
-    },
-    {
-        "id": 353,
-        "titulo": "Taboo",
-        "anio": 2017,
-        "visto_en": null,
-        "temporada": 1,
-        "capitulo": 0,
-        "pendiente": true,
-        "nota": null,
-        "tvdb_id": 292157,
-        "imdb_id": "tt3647998",
-        "acumulados": 7,
-        "image_url": "https://artworks.thetvdb.com/banners/posters/292157-1.jpg",
-        "poster_path": null,
-        "notas": null,
-        "estado_final": "Ended",
-        "duracion_media": 57,
-        "capitulos_por_temporada": {
-            "1": 8
         },
-        "created_at": "2026-08-30T10:04:26.840532+00:00",
-        "estado": "viendo",
-        "proxima_fecha": null,
-        "rewatch": null,
-        "veces": null,
-        "slow_mode": false,
-        "ultimo_capitulo_visto_en": null,
-        "fechas_episodios": {
-            "1": {
-                "1": "2017-01-07",
-                "2": "2017-01-14",
-                "3": "2017-01-21",
-                "4": "2017-01-28",
-                "5": "2017-02-04",
-                "6": "2017-02-11",
-                "7": "2017-02-18",
-                "8": "2017-02-25"
-            }
-        }
+        "viendo_con_alguien": false
     }
 ]
