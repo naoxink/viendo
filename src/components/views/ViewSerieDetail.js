@@ -17,7 +17,7 @@ export default {
     emits: ['back'],
     setup(props, { emit }) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
-        const { updateShowStatus, updateShowField } = useSeriesData()
+        const { updateShowStatus, updateShowField, deleteShow } = useSeriesData()
 
         // Campos cuya edición cambia "hasta dónde ha visto el usuario", y por
         // tanto invalidan pendiente/acumulados/proxima_fecha calculados.
@@ -117,6 +117,48 @@ export default {
             }
         }
 
+        // --- Eliminar serie (con confirmación explícita) ---
+        const mostrarConfirmarBorrado = ref(false)
+        const textoConfirmacion = ref('')
+        const borrando = ref(false)
+        const errorBorrado = ref('')
+
+        const puedeConfirmarBorrado = computed(() =>
+            textoConfirmacion.value.trim() === (props.serie.titulo || '').trim()
+            && Boolean(props.serie.id)
+        )
+
+        const pedirBorrado = () => {
+            textoConfirmacion.value = ''
+            errorBorrado.value = ''
+            mostrarConfirmarBorrado.value = true
+        }
+
+        const cancelarBorrado = () => {
+            mostrarConfirmarBorrado.value = false
+            textoConfirmacion.value = ''
+            errorBorrado.value = ''
+        }
+
+        const confirmarBorrado = async () => {
+            if (!isAdmin.value || !puedeConfirmarBorrado.value || borrando.value) return
+
+            borrando.value = true
+            errorBorrado.value = ''
+
+            const resultado = await deleteShow(props.serie.id)
+
+            borrando.value = false
+
+            if (!resultado.success) {
+                errorBorrado.value = 'No se pudo eliminar la serie: ' + resultado.error
+                return
+            }
+
+            cancelarBorrado()
+            emit('back')
+        }
+
         return {
             hasNotas,
             nextAirText,
@@ -128,7 +170,15 @@ export default {
             bgStyle,
             posterPathEstado,
             vaciarPosterPath,
-            posterPathExists
+            posterPathExists,
+            mostrarConfirmarBorrado,
+            textoConfirmacion,
+            borrando,
+            errorBorrado,
+            puedeConfirmarBorrado,
+            pedirBorrado,
+            cancelarBorrado,
+            confirmarBorrado
         }
     },
     methods: {
@@ -436,6 +486,51 @@ export default {
 
                         <div class="details-links">
                             <LinksFooter :serie="serie" />
+                        </div>
+
+                        <div v-if="isAdmin" class="danger-zone">
+                            <button
+                                v-if="!mostrarConfirmarBorrado"
+                                type="button"
+                                class="btn-danger"
+                                @click="pedirBorrado"
+                            >
+                                🗑️ Eliminar serie
+                            </button>
+
+                            <div v-else class="danger-confirm" role="alertdialog" aria-live="polite">
+                                <p class="danger-confirm-text">
+                                    Vas a eliminar <b>{{ serie.titulo }}</b> de forma permanente.
+                                    Esta acción no se puede deshacer.
+                                </p>
+                                <label class="danger-confirm-label" for="confirmar-borrado">
+                                    Escribe el título exacto para confirmar:
+                                </label>
+                                <input
+                                    id="confirmar-borrado"
+                                    type="text"
+                                    v-model="textoConfirmacion"
+                                    class="admin-input"
+                                    :placeholder="serie.titulo"
+                                    autocomplete="off"
+                                    :disabled="borrando"
+                                    @keyup.enter="confirmarBorrado"
+                                />
+                                <p v-if="errorBorrado" class="mensaje error">{{ errorBorrado }}</p>
+                                <div class="danger-confirm-actions">
+                                    <button type="button" class="btn-back" :disabled="borrando" @click="cancelarBorrado">
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn-danger"
+                                        :disabled="!puedeConfirmarBorrado || borrando"
+                                        @click="confirmarBorrado"
+                                    >
+                                        {{ borrando ? 'Eliminando…' : 'Eliminar definitivamente' }}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -231,6 +231,41 @@ export function useSeriesData() {
         }
     }
 
+    async function deleteShow(id) {
+        const token = sessionStorage.getItem('adminToken')
+        if (!token) {
+            return { success: false, error: 'No se encontró el token de administrador' }
+        }
+
+        try {
+            const res = await fetch(`${CONFIG.API_BASE_URL}/api/delete-show`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id, confirmado: true })
+            })
+
+            if (!res.ok) {
+                throw new Error(`Error en el servidor: ${res.status}`)
+            }
+
+            const data = await res.json()
+
+            if (!data.success) {
+                throw new Error(data.error || 'Error desconocido en la API')
+            }
+
+            await loadData()
+
+            return { success: true, data: data.serie }
+        } catch (e) {
+            console.error('Error al eliminar la serie:', e)
+            return { success: false, error: e.message }
+        }
+    }
+
 /** Obtiene las series próximas ordenadas por fecha de estreno */
     async function fetchUpcomingSeries() {
         const { data, error } = await _supabase
@@ -273,5 +308,5 @@ export function useSeriesData() {
     }
 
     return { data, status, lastUpdate, loading, error, añoActual, loadAll, updateShowStatus,
-        updateShowField, insertShow, fetchUpcomingSeries, fetchTrendingSeries, fetchRecentlyUpdated }
+        updateShowField, insertShow, deleteShow, fetchUpcomingSeries, fetchTrendingSeries, fetchRecentlyUpdated }
 }
