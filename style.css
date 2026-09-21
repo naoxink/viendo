@@ -1769,19 +1769,6 @@ summary::after {
   font-weight: 500;
 }
 
-/* Colores semánticos basados en tus variables de estado */
-.estado-viendo {
-  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
-  color: var(--estreno);
-  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
-}
-
-.estado-por-empezar {
-  background-color: var(--estreno-bg);
-  color: var(--estreno-text);
-  border: var(--estreno-text);
-}
-
 /* Botón para abrir el calendario en el Dashboard */
 .btn-trigger-calendario {
   background-color: var(--surface);
@@ -1910,10 +1897,6 @@ a.link {
     .admin-input-small {
         width: 80px;
     }
-
-  .btn-trigger-calendario {
-    display: none; /* Por ahora en móviles no voy a enseñar el calendario, only PC */
-  }
 
   .cal-modal-overlay {
     padding: 0;
@@ -3008,4 +2991,131 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
+}
+
+/* ==========================================
+   CALENDARIO v2
+   ========================================== */
+.cal-titulo { text-align: center; }
+.cal-resumen { color: var(--text-muted); font-size: 0.75rem; }
+
+.cal-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.btn-nav-ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 4px 12px;
+}
+.cal-toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.cal-leyenda { display: flex; gap: 0.75rem; margin-left: auto; }
+.cal-leyenda span { display: inline-flex; align-items: center; gap: 4px; }
+
+/* Puntos de estado */
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot.estado-pendiente { background: var(--accent); }
+.dot.estado-futuro    { background: var(--estreno-text); }
+.dot.estado-visto     { background: var(--text-muted); opacity: .5; }
+
+/* Chips (escritorio) */
+.chip-estreno.estado-pendiente {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.chip-estreno.estado-futuro {
+  background: var(--estreno-bg);
+  color: var(--estreno-text);
+  border: 1px solid color-mix(in srgb, var(--estreno-text) 25%, transparent);
+}
+.chip-estreno.estado-visto {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+  text-decoration: line-through;
+  opacity: .7;
+}
+.chip-estreno b { font-weight: 700; margin-left: 2px; }
+
+.dia-calendario { cursor: pointer; }
+.dia-calendario.seleccionado { outline: 2px solid var(--accent); outline-offset: -2px; }
+.dia-calendario.vacio { cursor: default; }
+
+/* Los puntos solo se ven en móvil */
+.dot-list { display: none; }
+
+/* Panel de detalle */
+.cal-detalle {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.cal-detalle h3 { margin: 0 0 0.6rem; font-size: 0.95rem; }
+.cal-detalle-vacio { margin: 0; color: var(--text-muted); font-size: 0.85rem; font-style: italic; }
+.cal-detalle-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.cal-detalle-lista li {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.25rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.cal-detalle-lista li:last-child { border-bottom: none; }
+.cal-detalle-lista li:hover { background: var(--accent-soft); }
+.cal-detalle-titulo { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cal-detalle-ep { font-family: monospace; font-size: 0.8rem; color: var(--text-muted); }
+.cal-detalle-estado {
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: .04em;
+  font-weight: 700; padding: 2px 6px; border-radius: 4px;
+}
+.cal-detalle-estado.estado-pendiente { background: var(--accent-soft); color: var(--accent-strong); }
+.cal-detalle-estado.estado-futuro    { background: var(--estreno-bg); color: var(--estreno-text); }
+.cal-detalle-estado.estado-visto     { background: var(--pill-bg); color: var(--text-muted); }
+
+/* ---------- MÓVIL ---------- */
+@media (max-width: 768px) {
+  .btn-trigger-calendario { display: inline-flex; }
+
+  /* Sube especificidad para ganar a .cal-modal-content .calendario-container (padding 4rem) */
+  .cal-modal-content .calendario-container {
+    padding: 0.75rem 0.75rem calc(1rem + env(safe-area-inset-bottom));
+    padding-top: calc(0.75rem + env(safe-area-inset-top));
+  }
+
+  .cal-modal-close { display: none; }  /* en móvil cerramos con el botón de abajo, ver nota */
+
+  .calendario-header { margin-bottom: 0.5rem; gap: 0.5rem; }
+  .calendario-header h2 { font-size: 1.15rem; }
+  .btn-nav { padding: 6px 14px; font-size: 1.2rem; line-height: 1; }
+
+  .cal-leyenda { margin-left: 0; width: 100%; justify-content: space-between; }
+
+  .cal-modal-content .calendario-grid {
+    grid-auto-rows: 3.4rem;
+    flex-grow: 0;
+    gap: 3px;
+  }
+  .dia-calendario { min-height: 0; padding: 4px; align-items: center; }
+  .numero-dia { margin-bottom: 2px; }
+
+  /* Ocultamos chips, mostramos puntos */
+  .lista-estrenos { display: none; }
+  .dot-list {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 3px; max-width: 100%;
+  }
+  .dot-list small { font-size: 0.6rem; color: var(--text-muted); line-height: 8px; }
 }
