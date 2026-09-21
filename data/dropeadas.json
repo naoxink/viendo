@@ -625,6 +625,47 @@
         "viendo_con_alguien": false
     },
     {
+        "id": 360,
+        "titulo": "South of Hell",
+        "anio": 2015,
+        "visto_en": 2026,
+        "temporada": 1,
+        "capitulo": 5,
+        "pendiente": true,
+        "nota": null,
+        "tvdb_id": 299614,
+        "imdb_id": "tt4147780",
+        "acumulados": 7,
+        "image_url": "https://artworks.thetvdb.com/banners/posters/299614-2.jpg",
+        "poster_path": "posters/299614_South_of_Hell.jpg",
+        "notas": "Es un poco meh, al principio parecía que tenía potencial pero no mejora, no. ",
+        "estado_final": null,
+        "duracion_media": 45,
+        "capitulos_por_temporada": {
+            "1": 8
+        },
+        "created_at": "2026-09-09T07:20:27.998356+00:00",
+        "estado": "dropeadas",
+        "proxima_fecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": "2026-09-11T10:56:51.834+00:00",
+        "fechas_episodios": {
+            "1": {
+                "1": "2015-11-27",
+                "2": "2015-11-27",
+                "3": "2015-11-27",
+                "4": "2015-11-27",
+                "5": "2015-11-27",
+                "6": "2015-11-27",
+                "7": "2015-11-27",
+                "8": "2015-11-27"
+            }
+        },
+        "viendo_con_alguien": false
+    },
+    {
         "id": 324,
         "titulo": "Paradise",
         "anio": 2025,
