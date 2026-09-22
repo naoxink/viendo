@@ -13,7 +13,6 @@ export default {
         error: String,
         añoActual: Number
     },
-    emits: ['show-login'],
     template: `
         <div class="view view-stats">
             <section class="view-content">
@@ -29,9 +28,6 @@ export default {
                     :ano-actual="añoActual"
                 />
             </section>
-            <div class="text-center">
-                <a ref="javascript:() => false" class="link" @click="$emit('show-login')">Login</a>
-            </div>
         </div>
     `
 }

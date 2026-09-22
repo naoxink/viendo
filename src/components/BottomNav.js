@@ -18,6 +18,7 @@ export default {
             <button 
                 class="nav-item" 
                 :class="{ active: activeView === 'viendo' }"
+                :aria-current="activeView === 'viendo' ? 'page' : null"
                 @click="$emit('change-view', 'viendo')"
                 title="Series que estoy viendo"
             >
@@ -27,15 +28,17 @@ export default {
             <button 
                 class="nav-item" 
                 :class="{ active: activeView === 'en-cola' }"
+                :aria-current="activeView === 'en-cola' ? 'page' : null"
                 @click="$emit('change-view', 'en-cola')"
                 title="Series en cola de espera"
             >
-                <span class="nav-icon">📅</span>
+                <span class="nav-icon">📥</span>
                 <span class="nav-label">En cola</span>
             </button>
             <button 
                 class="nav-item" 
                 :class="{ active: activeView === 'completadas' }"
+                :aria-current="activeView === 'completadas' ? 'page' : null"
                 @click="$emit('change-view', 'completadas')"
                 title="Series completadas y dropeadas"
             >
@@ -44,22 +47,12 @@ export default {
             </button>
             <button 
                 class="nav-item" 
-                :class="{ active: activeView === 'stats' }"
-                @click="$emit('change-view', 'stats')"
-                title="Estadísticas y dashboard"
-                @show-login="currentView = 'login'"
+                aria-haspopup="dialog"
+                @click="$emit('change-view', 'calendario')"
+                title="Calendario de estrenos"
             >
-                <span class="nav-icon">📊</span>
-                <span class="nav-label">Stats</span>
-            </button>
-            <button 
-                class="nav-item" 
-                :class="{ active: activeView === 'discover' }"
-                @click="$emit('change-view', 'discover')"
-                title="Descubrir series nuevas"
-            >
-                <span class="nav-icon">🔍</span>
-                <span class="nav-label">Descubrir</span>
+                <span class="nav-icon">🗓️</span>
+                <span class="nav-label">Calendario</span>
             </button>
         </nav>
     `

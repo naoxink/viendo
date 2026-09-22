@@ -61,7 +61,7 @@ export default {
             key: `${serie.id || serie.tvdb_id || serie.titulo}-${fecha}`,
             serie,
             eps,
-            label: this.etiquetaEpisodios(eps),
+            label: this.etiquetaEpisodios(eps, serie),
             estado
           })
         }
@@ -144,12 +144,35 @@ export default {
       return serie.pendiente ? cmp < 0 : cmp <= 0
     },
 
-    etiquetaEpisodios(eps) {
+    etiquetaEpisodios(eps, serie) {
+      if (!eps || !eps.length) return ''
+
       const primero = eps[0]
       const ultimo = eps[eps.length - 1]
-      if (eps.length === 1) return `T${primero.t}·E${primero.c}`
-      if (primero.t === ultimo.t) return `T${primero.t}·E${primero.c}–${ultimo.c}`
-      return `T${primero.t}·E${primero.c} – T${ultimo.t}·E${ultimo.c}`
+
+      const mapaTemporadas = serie && (serie.capitulosPorTemporada || serie.capitulos_por_temporada)
+      const totalCaps = mapaTemporadas && mapaTemporadas[ultimo.t]
+
+      // Detectamos si es estreno de temporada (E1) y/o final de temporada
+      const esInicio = Number(primero.c) === 1
+      const esFinal = totalCaps && Number(ultimo.c) === Number(totalCaps)
+
+      // Asignación de emojis (puedes cambiar las variables por los que prefieras)
+      const emojiInicio = esInicio ? '🚀' : ''
+      const emojiFinal = esFinal ? '🏁' : ''
+      
+      // Si coinciden en el mismo día (ej. temporada de 1 solo capítulo), mostrará ambos
+      const sufijo = (emojiInicio || emojiFinal) ? ` ${emojiInicio}${emojiFinal}` : ''
+
+      if (eps.length === 1) {
+        return `T${primero.t}·E${primero.c}${sufijo}`
+      }
+
+      if (primero.t === ultimo.t) {
+        return `T${primero.t}·E${primero.c}–${ultimo.c}${sufijo}`
+      }
+
+      return `T${primero.t}·E${primero.c} – T${ultimo.t}·E${ultimo.c}${sufijo}`
     },
 
     abrirCalendario() {
@@ -187,19 +210,31 @@ export default {
       return { pendiente: 'Pendiente', futuro: 'Próximo', visto: 'Visto' }[estado]
     },
     dotsVisibles(eventos) { return eventos.slice(0, MAX_DOTS) },
-    dotsRestantes(eventos) { return Math.max(0, eventos.length - MAX_DOTS) }
+    dotsRestantes(eventos) { return Math.max(0, eventos.length - MAX_DOTS) },
+    onKeydown(e) {
+      if (e.key === 'Escape') this.cerrarCalendario()
+    },
+    abrirCalendario() {
+      this.fechaReferencia = new Date()
+      this.selectedDia = this.hoyTexto
+      this.mostrarModal = true
+      document.body.style.overflow = 'hidden'
+      window.addEventListener('keydown', this.onKeydown)
+    },
+    cerrarCalendario() {
+      this.mostrarModal = false
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', this.onKeydown)
+    }
   },
   beforeUnmount() {
     document.body.style.overflow = ''
+    window.removeEventListener('keydown', this.onKeydown)
   },
-  template: `
+    template: `
     <div class="calendario-wrapper">
-      <button @click="abrirCalendario" class="btn-trigger-calendario">
-        📅 Ver Calendario de Estrenos
-      </button>
-
       <div v-if="mostrarModal" class="cal-modal-overlay" @click.self="cerrarCalendario">
-        <div class="cal-modal-content">
+        <div class="cal-modal-content" role="dialog" aria-modal="true" aria-label="Calendario de estrenos">
 
           <button @click="cerrarCalendario" class="cal-modal-close" aria-label="Cerrar calendario">&times;</button>
 
@@ -256,7 +291,10 @@ export default {
                     :class="'estado-' + ev.estado"
                     :title="ev.serie.titulo + ' · ' + ev.label"
                   >
-                    <span class="chip-text">{{ ev.serie.titulo }} <b>{{ ev.label }}</b></span>
+                    <span class="chip-text">{{ ev.serie.titulo }}
+                      <br>
+                      <b>{{ ev.label }}</b>
+                    </span>
                   </div>
                 </div>
 

@@ -15,7 +15,12 @@ export default {
         completadas: Array,
         añoActual: Number
     },
-    emits: ['select-serie'],
+    computed: {
+        isAdmin() {
+            return sessionStorage.getItem('isAdmin') === 'true'
+        }
+    },
+    emits: ['show-login', 'select-serie'],
     template: `
         <div class="view view-viendo">
             <div class="view-header">
@@ -28,6 +33,11 @@ export default {
                 <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
                 <ViendoList v-else :series="viendo" @select-serie="$emit('select-serie', $event)" />
                 <div class="last-update progress"><small>Actualizado el </small><small class="date">{{ lastUpdate }}</small></div>
+
+
+                <div class="text-center" v-if="!isAdmin">
+                    <a ref="javascript:() => false" class="link" @click="$emit('show-login')">Login</a>
+                </div>
             </section>
         </div>
     `

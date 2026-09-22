@@ -12,7 +12,7 @@ export default {
         searchTerm: String,
         añoActual: Number
     },
-    emits: ['update:searchTerm', 'select-serie'],
+    emits: ['update:searchTerm', 'select-serie', 'cambiar-vista'],
     template: `
         <div class="view view-completadas">
             <section class="view-content">
@@ -32,6 +32,10 @@ export default {
                     <HistoricoList :completadas="completadas" :ano-actual="añoActual" :search-term="searchTerm" @select-serie="$emit('select-serie', $event)" />
                     <DropeadasList :series="dropeadas" :search-term="searchTerm" @select-serie="$emit('select-serie', $event)" />
                 </div>
+
+                <button @click="$emit('cambiar-vista', 'stats')" class="btn-trigger-calendario">
+                    📊 Ver estadísticas
+                </button>
             </section>
         </div>
     `

@@ -1,11 +1,10 @@
 import EnColaList from '../EnColaList.js'
-import CalendarioEstrenos from '../CalendarioEstrenos.js'
 import { sortViendo } from '../../utils/sorting.js'
 import ProximamenteList from '../ProximamenteList.js'
 
 export default {
     name: 'ViewEnCola',
-    components: { EnColaList, CalendarioEstrenos, ProximamenteList },
+    components: { EnColaList, ProximamenteList },
     props: {
         enCola: Array,
         viendo: Array,
@@ -40,7 +39,6 @@ export default {
                 <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
                 <template v-else>
                     <EnColaList :series="enCola" titulo="📅 Series en cola" @select-serie="$emit('select-serie', $event)" />
-                    <CalendarioEstrenos :series="[...viendo, ...enCola]" @select-serie="$emit('select-serie', $event)"></CalendarioEstrenos>
                 </template>
 
                 <button v-if="isAdmin" @click="$emit('cambiar-vista', 'add-serie')" class="btn-add-header">

@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useSeriesData } from '../composables/useSeriesData.js'
 import { userDevice } from '../composables/userDevice.js'
 import BottomNav from './BottomNav.js'
@@ -6,18 +6,18 @@ import ViewDashboard from './views/ViewDashboard.js'
 import ViewViendo from './views/ViewViendo.js'
 import ViewEnCola from './views/ViewEnCola.js'
 import ViewCompletadas from './views/ViewCompletadas.js'
-import ViewStats from './views/ViewStats.js'
 import ViewSerieDetail from './views/ViewSerieDetail.js'
 import ViewAddSerie from './views/ViewAddSerie.js'
 import ViewLogin from './views/ViewLogin.js'
-import ViewDiscover from './views/ViewDiscover.js'
+import CalendarioEstrenos from './CalendarioEstrenos.js'
+import ViewStats from './views/ViewStats.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const token = ''
 
 export default {
     name: 'App',
-    components: { BottomNav, ViewDashboard, ViewViendo, ViewEnCola, ViewCompletadas, ViewStats, ViewSerieDetail, ViewAddSerie, ViewLogin, ViewDiscover },
+    components: { BottomNav, ViewDashboard, ViewViendo, ViewEnCola, ViewCompletadas, ViewSerieDetail, ViewAddSerie, ViewLogin, CalendarioEstrenos, ViewStats },
     setup() {
         const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
         const { isMobile } = userDevice()
@@ -25,6 +25,7 @@ export default {
         const themePreference = ref('auto')
         const activeView = ref('viendo')
         const selectedSerie = ref(null)
+        const calendarioRef = ref(null)
 
         const applyTheme = (preference = themePreference.value) => {
             const resolvedTheme = preference === 'auto'
@@ -106,11 +107,7 @@ export default {
             }
         })
 
-        watch(activeView, (value) => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth' // Cambia a 'auto' si prefieres que salte de golpe sin animación
-            })
+        watch(activeView, async (value) => {
             try {
                 if (value !== 'detalle') {
                     selectedSerie.value = null
@@ -119,11 +116,15 @@ export default {
             } catch (error) {
                 console.warn('No se pudo guardar la vista activa:', error)
             }
-        })
+
+            // Espera a que el DOM esté completamente actualizado
+            await nextTick()
+
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }, { flush: 'post' })
 
         // Método para abrir el detalle de una serie desde cualquier vista
         const abrirDetalle = (serie) => {
-            console.log('Abriendo detalle de la serie:', serie.titulo);
             selectedSerie.value = serie
             activeView.value = 'detalle'
         }
@@ -134,11 +135,19 @@ export default {
             if (!isMobile.value) {
                 activeView.value = 'dashboard'
             } else {
-                activeView.value = 'viendo' // O la vista por defecto que prefieras
+                activeView.value = 'viendo'
             }
         }
 
         const cambiarVista = vista => {
+            console.log('Cambiando vista a:', vista)
+            // El calendario ya no es una "vista" propia: es un modal que se
+            // abre por encima de la vista actual, así que no tocamos activeView.
+            if (vista === 'calendario') {
+                calendarioRef.value?.abrirCalendario()
+                return
+            }
+
             // El dashboard no existe en móvil: si por lo que sea se intenta
             // navegar a él estando en móvil, nos quedamos en 'viendo'.
             if (vista === 'dashboard' && isMobile.value) {
@@ -158,7 +167,8 @@ export default {
         return {
             data, status, lastUpdate, loading, error, añoActual,
             searchTerm, themePreference, activeView, viendo, completadas,
-            dropeadas, enCola, abrirDetalle, volverAtras, selectedSerie, cambiarVista
+            dropeadas, enCola, abrirDetalle, volverAtras, selectedSerie, cambiarVista,
+            calendarioRef
         }
     },
     template: `
@@ -200,6 +210,7 @@ export default {
                     :completadas="completadas"
                     :año-actual="añoActual"
                     @select-serie="abrirDetalle"
+                    @show-login="activeView = 'login'"
                 />
                 
                 <ViewEnCola 
@@ -222,6 +233,7 @@ export default {
                     @update:search-term="searchTerm = $event"
                     :año-actual="añoActual"
                     @select-serie="abrirDetalle"
+                    @cambiar-vista="cambiarVista"
                 />
                 
                 <ViewStats 
@@ -235,7 +247,6 @@ export default {
                     :error="error"
                     :año-actual="añoActual"
                     @select-serie="abrirDetalle"
-                    @show-login="activeView = 'login'"
                 />
                 
                 <!-- Nueva vista de detalle de serie -->
@@ -253,6 +264,12 @@ export default {
                     v-if="activeView === 'add-serie'"
                 />
             </div>
+
+            <CalendarioEstrenos
+                ref="calendarioRef"
+                :series="[...viendo, ...enCola]"
+                @select-serie="abrirDetalle"
+            />
 
             <BottomNav :active-view="activeView" @change-view="cambiarVista" />
         </main>
