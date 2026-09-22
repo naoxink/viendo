@@ -71,7 +71,7 @@ export default {
         const hasNotas = computed(() => Boolean(props.serie?.notas?.toString().trim()))
         const nextAirText = computed(() => formatProximaFecha(props.serie?.proxima_fecha))
         const notaClase = computed(() => getNotaClass(props.serie.nota))
-        const isAdmin = computed(() => true /*sessionStorage.getItem('isAdmin') === 'true'*/)
+        const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true')
         const posterPathExists = ref(false)
         const posterPathEstado = computed(() => {
             if (!props.serie.poster_path || !props.serie.poster_path.toString().trim()) {
