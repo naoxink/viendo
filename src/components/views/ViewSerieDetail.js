@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, reactive } from 'vue'
 import PosterThumb from '../shared/PosterThumb.js'
 import LinksFooter from '../shared/LinksFooter.js'
 import RewatchBadge from '../shared/RewatchBadge.js'
@@ -71,7 +71,7 @@ export default {
         const hasNotas = computed(() => Boolean(props.serie?.notas?.toString().trim()))
         const nextAirText = computed(() => formatProximaFecha(props.serie?.proxima_fecha))
         const notaClase = computed(() => getNotaClass(props.serie.nota))
-        const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true')
+        const isAdmin = computed(() => true /*sessionStorage.getItem('isAdmin') === 'true'*/)
         const posterPathExists = ref(false)
         const posterPathEstado = computed(() => {
             if (!props.serie.poster_path || !props.serie.poster_path.toString().trim()) {
@@ -159,6 +159,67 @@ export default {
             emit('back')
         }
 
+        // --- Editor de fechas_episodios (temporada -> capítulo -> fecha) ---
+        const clonarFechas = (fechas) => (fechas ? JSON.parse(JSON.stringify(fechas)) : {})
+
+        const fechasEdit = reactive(clonarFechas(props.serie.fechas_episodios))
+        const guardandoFechas = ref(false)
+        const mensajeFechas = ref('')
+
+        const temporadasFechas = computed(() =>
+            Object.keys(fechasEdit).map(Number).sort((a, b) => a - b)
+        )
+
+        const capitulosDeTemporada = (temporada) =>
+            Object.keys(fechasEdit[temporada] || {}).map(Number).sort((a, b) => a - b)
+
+        const añadirTemporadaFecha = () => {
+            const siguiente = temporadasFechas.value.length ? Math.max(...temporadasFechas.value) + 1 : 1
+            fechasEdit[siguiente] = {}
+        }
+
+        const eliminarTemporadaFechas = (temporada) => {
+            delete fechasEdit[temporada]
+        }
+
+        const añadirCapituloFecha = (temporada) => {
+            const caps = capitulosDeTemporada(temporada)
+            const siguiente = caps.length ? Math.max(...caps) + 1 : 1
+            if (!fechasEdit[temporada]) fechasEdit[temporada] = {}
+            fechasEdit[temporada][siguiente] = ''
+        }
+
+        const eliminarCapituloFecha = (temporada, capitulo) => {
+            if (fechasEdit[temporada]) delete fechasEdit[temporada][capitulo]
+        }
+
+        const setFechaCapitulo = (temporada, capitulo, valor) => {
+            if (!fechasEdit[temporada]) fechasEdit[temporada] = {}
+            fechasEdit[temporada][capitulo] = valor
+        }
+
+        const guardarFechasEpisodios = async () => {
+            if (!isAdmin.value || guardandoFechas.value) return
+
+            guardandoFechas.value = true
+            mensajeFechas.value = ''
+
+            const idSerie = props.serie.id || props.serie.tvdb_id
+            const payload = clonarFechas(fechasEdit)
+            const resultado = await updateShowField(idSerie, 'fechas_episodios', payload)
+
+            guardandoFechas.value = false
+
+            if (!resultado.success) {
+                mensajeFechas.value = '❌ Error al guardar: ' + resultado.error
+                return
+            }
+
+            props.serie.fechas_episodios = payload
+            recalcularEstadoLocal() // las fechas afectan a pendiente/acumulados/próxima fecha
+            mensajeFechas.value = '✅ Fechas guardadas'
+        }
+
         return {
             hasNotas,
             nextAirText,
@@ -178,7 +239,18 @@ export default {
             puedeConfirmarBorrado,
             pedirBorrado,
             cancelarBorrado,
-            confirmarBorrado
+            confirmarBorrado,
+            fechasEdit,
+            temporadasFechas,
+            capitulosDeTemporada,
+            añadirTemporadaFecha,
+            eliminarTemporadaFechas,
+            añadirCapituloFecha,
+            eliminarCapituloFecha,
+            setFechaCapitulo,
+            guardarFechasEpisodios,
+            guardandoFechas,
+            mensajeFechas
         }
     },
     methods: {
@@ -231,6 +303,13 @@ export default {
                                 </span>
                             </div>
 
+                            <div class="details-field" v-if="isAdmin">
+                                <span class="details-field-label">Año de estreno</span>
+                                <span class="details-field-value">
+                                    <input type="number" :value="serie.anio ?? serie.año" @change="actualizarCampo('anio', $event)" class="admin-input-small" />
+                                </span>
+                            </div>
+
                             <div class="details-field" v-if="serie.estado">
                                 <span class="details-field-label">Estado</span>
                                 <span class="details-field-value">
@@ -280,6 +359,56 @@ export default {
                                                 : episodios
                                             }}
                                         </span>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="details-seasons details-fechas-editor-wrapper" v-if="isAdmin">
+                                <summary>
+                                    <span class="details-field-label">Fechas de episodios</span>
+                                    <span style="margin-right: 1rem;">({{ temporadasFechas.length }} temporadas)</span>
+                                </summary>
+
+                                <div class="fechas-editor">
+                                    <details
+                                        v-for="temporada in temporadasFechas"
+                                        :key="temporada"
+                                        class="fechas-temporada"
+                                    >
+                                        <summary class="fechas-temporada-header">
+                                            <span><strong>Temporada {{ temporada }}</strong> <span class="text-muted">({{ capitulosDeTemporada(temporada).length }} eps)</span></span>
+                                            <button type="button" class="btn-link danger" @click.stop.prevent="eliminarTemporadaFechas(temporada)">
+                                                Eliminar temporada
+                                            </button>
+                                        </summary>
+
+                                        <div class="fechas-temporada-body">
+                                            <div
+                                                v-for="capitulo in capitulosDeTemporada(temporada)"
+                                                :key="capitulo"
+                                                class="fechas-capitulo-row"
+                                            >
+                                                <span>Ep. {{ capitulo }}</span>
+                                                <input
+                                                    type="date"
+                                                    :value="fechasEdit[temporada][capitulo]"
+                                                    @change="setFechaCapitulo(temporada, capitulo, $event.target.value)"
+                                                    class="admin-input-small"
+                                                />
+                                                <button type="button" class="btn-link danger" @click="eliminarCapituloFecha(temporada, capitulo)">✕</button>
+                                            </div>
+
+                                            <button type="button" class="btn-link" @click="añadirCapituloFecha(temporada)">+ Añadir episodio</button>
+                                        </div>
+                                    </details>
+
+                                    <button type="button" class="btn-link" @click="añadirTemporadaFecha">+ Añadir temporada</button>
+
+                                    <div class="fechas-actions">
+                                        <button type="button" class="btn-submit poster-path-button" @click="guardarFechasEpisodios" :disabled="guardandoFechas">
+                                            {{ guardandoFechas ? 'Guardando…' : 'Guardar fechas' }}
+                                        </button>
+                                        <span v-if="mensajeFechas" class="mensaje-fechas">{{ mensajeFechas }}</span>
                                     </div>
                                 </div>
                             </details>

@@ -41,7 +41,8 @@ export default async function handler(req, res) {
   const camposPermitidos = [
     'titulo', 'estado', 'temporada', 'capitulo', 'rewatch', 'veces',
     'nota', 'pendiente', 'duracion_media', 'visto_en', 'notas', 'slow_mode',
-    'proxima_fecha', 'poster_path', 'estado_final', 'viendo_con_alguien'
+    'proxima_fecha', 'poster_path', 'estado_final', 'viendo_con_alguien',
+    'anio', 'fechas_episodios'
   ];
 
   if (!camposPermitidos.includes(campoDb)) {

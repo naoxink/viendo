@@ -3119,3 +3119,101 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
   }
   .dot-list small { font-size: 0.6rem; color: var(--text-muted); line-height: 8px; }
 }
+
+.fechas-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.fechas-temporada {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 0.75rem;
+    overflow: hidden;
+}
+
+.fechas-temporada summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.55rem 0;
+    font-weight: normal;
+}
+
+.fechas-temporada summary::-webkit-details-marker {
+    display: none;
+}
+
+.fechas-temporada-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+.fechas-temporada-header::after {
+    content: "▸";
+    color: var(--section-muted);
+    transition: transform 0.2s;
+    margin-left: 0.4rem;
+}
+
+.fechas-temporada[open] .fechas-temporada-header::after {
+    transform: rotate(90deg);
+}
+
+.fechas-temporada-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0 0 0.65rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.5rem;
+}
+
+.fechas-capitulo-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.fechas-capitulo-row span {
+    min-width: 3.2rem;
+    color: var(--text-muted);
+}
+
+.fechas-capitulo-row input[type="date"] {
+    flex: 1;
+}
+
+.fechas-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+    flex-wrap: wrap;
+}
+
+.mensaje-fechas {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.8rem;
+    text-decoration: underline;
+}
+
+.btn-link.danger {
+    color: var(--note-bad-text);
+}
