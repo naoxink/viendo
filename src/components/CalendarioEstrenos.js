@@ -13,7 +13,7 @@ export default {
       mostrarModal: false,
       fechaReferencia: new Date(),
       selectedDia: null,
-      verVistos: true,
+      verVistos: false,
       touchStartX: null,
       diasSemana: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
       nombresMeses: [
