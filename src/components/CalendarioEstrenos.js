@@ -42,7 +42,8 @@ export default {
     eventosPorDia() {
       const mapa = {}
       const hoy = this.hoyTexto
-      const orden = { pendiente: 0, futuro: 1, visto: 2 }
+      // Añadimos 'inicio' y 'fin' al objeto de orden si ordenas el mapa posteriormente
+      const orden = { inicio: 0, fin: 1, pendiente: 2, futuro: 3, visto: 4 }
 
       for (const serie of this.seriesFormateadas) {
         if (!serie || !serie.titulo) continue
@@ -52,9 +53,28 @@ export default {
           eps.sort((a, b) => a.t - b.t || a.c - b.c)
 
           const todosVistos = eps.every((ep) => this.esVisto(serie, ep))
-          const estado = todosVistos ? 'visto' : (fecha <= hoy ? 'pendiente' : 'futuro')
 
-          if (!this.verVistos && estado === 'visto') continue
+          // Si no queremos ver eventos vistos y todos están vistos, saltamos
+          if (!this.verVistos && todosVistos) continue
+
+          // 1. Calculamos el estado base habitual
+          let estado = todosVistos ? 'visto' : (fecha <= hoy ? 'pendiente' : 'futuro')
+
+          // 2. Comprobamos si es inicio o final de temporada
+          const primero = eps[0]
+          const ultimo = eps[eps.length - 1]
+          const mapaTemporadas = serie && (serie.capitulosPorTemporada || serie.capitulos_por_temporada)
+          const totalCaps = mapaTemporadas && mapaTemporadas[ultimo.t]
+
+          const esInicio = Number(primero.c) === 1
+          const esFinal = totalCaps && Number(ultimo.c) === Number(totalCaps)
+
+          // 3. Asignamos 'inicio' o 'fin' según corresponda
+          if (esFinal) {
+            estado = 'fin'
+          } else if (esInicio) {
+            estado = 'inicio'
+          }
 
           if (!mapa[fecha]) mapa[fecha] = []
           mapa[fecha].push({
@@ -67,11 +87,6 @@ export default {
         }
       }
 
-      for (const lista of Object.values(mapa)) {
-        lista.sort((a, b) =>
-          orden[a.estado] - orden[b.estado] || a.serie.titulo.localeCompare(b.serie.titulo)
-        )
-      }
       return mapa
     },
 
@@ -207,7 +222,7 @@ export default {
       delta < 0 ? this.mesSiguiente() : this.mesAnterior()
     },
     textoEstado(estado) {
-      return { pendiente: 'Pendiente', futuro: 'Próximo', visto: 'Visto' }[estado]
+      return { pendiente: 'Pendiente', futuro: 'Próximo', visto: 'Visto', fin: 'Final de temporada', inicio: 'Inicio de temporada' }[estado]
     },
     dotsVisibles(eventos) { return eventos.slice(0, MAX_DOTS) },
     dotsRestantes(eventos) { return Math.max(0, eventos.length - MAX_DOTS) },

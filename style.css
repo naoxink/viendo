@@ -3026,8 +3026,25 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
   flex-shrink: 0;
 }
 .dot.estado-pendiente { background: var(--accent); }
-.dot.estado-futuro    { background: var(--estreno-text); }
+.dot.estado-futuro    { background: var(--accent); }
 .dot.estado-visto     { background: var(--text-muted); opacity: .5; }
+.dot.estado-inicio { background-color: var(--estreno-text); }
+.dot.estado-fin { background-color: var(--note-bad-text); }
+
+/* Clases para los nuevos estados en badges y texto */
+.estado-inicio {
+  background-color: var(--estreno-bg);
+  color: var(--estreno-text);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.estado-fin {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--note-bad-text);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Color para los puntos (.dot) indicador de estado */
 
 /* Chips (escritorio) */
 .chip-estreno.estado-pendiente {
@@ -3036,8 +3053,8 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
 }
 .chip-estreno.estado-futuro {
-  background: var(--estreno-bg);
-  color: var(--estreno-text);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
   border: 1px solid color-mix(in srgb, var(--estreno-text) 25%, transparent);
 }
 .chip-estreno.estado-visto {
@@ -3081,8 +3098,8 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
   font-size: 0.65rem; text-transform: uppercase; letter-spacing: .04em;
   font-weight: 700; padding: 2px 6px; border-radius: 4px;
 }
-.cal-detalle-estado.estado-pendiente { background: var(--accent-soft); color: var(--accent-strong); }
-.cal-detalle-estado.estado-futuro    { background: var(--estreno-bg); color: var(--estreno-text); }
+.cal-detalle-estado.estado-pendiente,
+.cal-detalle-estado.estado-futuro { background: var(--accent-soft); color: var(--accent-strong); }
 .cal-detalle-estado.estado-visto     { background: var(--pill-bg); color: var(--text-muted); }
 
 /* ---------- MÓVIL ---------- */
