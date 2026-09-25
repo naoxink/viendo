@@ -31,7 +31,7 @@ export default async function handler(req, res) {
   }
 
   // Recibimos los datos de la petición
-  const { id, campoDb, valorNuevo } = req.body;
+  let { id, campoDb, valorNuevo } = req.body;
 
   if (!id || !campoDb || valorNuevo === undefined) {
     return res.status(400).json({ success: false, error: 'Faltan parámetros: se requiere "id", "campoDb" y "valorNuevo"' });
