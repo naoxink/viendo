@@ -41,6 +41,60 @@
         "viendo_con_alguien": false
     },
     {
+        "id": 271,
+        "titulo": "Stranger Things: Relatos del 85",
+        "anio": 2026,
+        "visto_en": 2026,
+        "temporada": 2,
+        "capitulo": 8,
+        "pendiente": false,
+        "nota": "07.5/10",
+        "tvdb_id": 462906,
+        "imdb_id": "tt27486290",
+        "acumulados": 0,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/462906/posters/69de7aadd9a74.jpg",
+        "poster_path": "posters/462906_Stranger_Things_Relatos_del_85.jpg",
+        "notas": null,
+        "estado_final": null,
+        "duracion_media": 29,
+        "capitulos_por_temporada": {
+            "1": 10,
+            "2": 8
+        },
+        "created_at": "2026-07-27T11:12:59.708047+00:00",
+        "estado": "completadas",
+        "proxima_fecha": "2026-09-17",
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": "2026-09-24T11:33:57.727+00:00",
+        "fechas_episodios": {
+            "1": {
+                "1": "2026-04-23",
+                "2": "2026-04-23",
+                "3": "2026-04-23",
+                "4": "2026-04-23",
+                "5": "2026-04-23",
+                "6": "2026-04-23",
+                "7": "2026-04-23",
+                "8": "2026-04-23",
+                "9": "2026-04-23",
+                "10": "2026-04-23"
+            },
+            "2": {
+                "1": "2026-09-17",
+                "2": "2026-09-17",
+                "3": "2026-09-17",
+                "4": "2026-09-17",
+                "5": "2026-09-17",
+                "6": "2026-09-17",
+                "7": "2026-09-17",
+                "8": "2026-09-17"
+            }
+        },
+        "viendo_con_alguien": false
+    },
+    {
         "id": 263,
         "titulo": "Sunny",
         "anio": 2024,
@@ -1491,6 +1545,49 @@
         "viendo_con_alguien": false
     },
     {
+        "id": 348,
+        "titulo": "Stuart no consigue salvar el universo",
+        "anio": 2026,
+        "visto_en": 2026,
+        "temporada": 1,
+        "capitulo": 10,
+        "pendiente": false,
+        "nota": "07/10",
+        "tvdb_id": 465664,
+        "imdb_id": "tt27497393",
+        "acumulados": 0,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/465664/posters/6a1b667081f64.jpg",
+        "poster_path": "posters/465664_Stuart_no_consigue_salvar_el_universo.jpg",
+        "notas": null,
+        "estado_final": null,
+        "duracion_media": 22,
+        "capitulos_por_temporada": {
+            "1": 10
+        },
+        "created_at": "2026-08-18T05:08:53.729839+00:00",
+        "estado": "completadas",
+        "proxima_fecha": "2026-08-27",
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": "2026-09-25T15:50:10.776+00:00",
+        "fechas_episodios": {
+            "1": {
+                "1": "2026-07-23",
+                "2": "2026-07-30",
+                "3": "2026-08-06",
+                "4": "2026-08-13",
+                "5": "2026-08-20",
+                "6": "2026-08-27",
+                "7": "2026-09-03",
+                "8": "2026-09-10",
+                "9": "2026-09-17",
+                "10": "2026-09-24"
+            }
+        },
+        "viendo_con_alguien": false
+    },
+    {
         "id": 260,
         "titulo": "Silo",
         "anio": 2023,
@@ -1626,6 +1723,80 @@
             }
         },
         "viendo_con_alguien": true
+    },
+    {
+        "id": 363,
+        "titulo": "La caza (2019)",
+        "anio": 2019,
+        "visto_en": 2026,
+        "temporada": 4,
+        "capitulo": 8,
+        "pendiente": true,
+        "nota": "7.5/10",
+        "tvdb_id": 356952,
+        "imdb_id": "tt8787372",
+        "acumulados": 31,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/356952/posters/64371a3a77459.jpg",
+        "poster_path": "posters/356952_La_caza_2019.jpg",
+        "notas": null,
+        "estado_final": null,
+        "duracion_media": 61,
+        "capitulos_por_temporada": {
+            "1": 8,
+            "2": 8,
+            "3": 8,
+            "4": 8
+        },
+        "created_at": "2026-09-21T06:51:33.142879+00:00",
+        "estado": "completadas",
+        "proxima_fecha": null,
+        "rewatch": true,
+        "veces": 2,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null,
+        "fechas_episodios": {
+            "1": {
+                "1": "2019-03-25",
+                "2": "2019-04-01",
+                "3": "2019-04-08",
+                "4": "2019-04-15",
+                "5": "2019-04-29",
+                "6": "2019-05-06",
+                "7": "2019-05-13",
+                "8": "2019-05-20"
+            },
+            "2": {
+                "1": "2021-01-13",
+                "2": "2021-01-20",
+                "3": "2021-01-27",
+                "4": "2021-02-03",
+                "5": "2021-02-10",
+                "6": "2021-02-17",
+                "7": "2021-02-24",
+                "8": "2021-03-03"
+            },
+            "3": {
+                "1": "2023-03-16",
+                "2": "2023-03-23",
+                "3": "2023-03-30",
+                "4": "2023-03-30",
+                "5": "2023-04-06",
+                "6": "2023-04-06",
+                "7": "2023-04-13",
+                "8": "2023-04-20"
+            },
+            "4": {
+                "1": "2025-09-04",
+                "2": "2025-09-04",
+                "3": "2025-09-04",
+                "4": "2025-09-04",
+                "5": "2025-09-04",
+                "6": "2025-09-04",
+                "7": "2025-09-04",
+                "8": "2025-09-04"
+            }
+        },
+        "viendo_con_alguien": false
     },
     {
         "id": 264,
@@ -5439,39 +5610,6 @@
                 "11": "2025-11-27"
             }
         },
-        "viendo_con_alguien": false
-    },
-    {
-        "id": 363,
-        "titulo": "La caza (2019)",
-        "anio": 2019,
-        "visto_en": 2026,
-        "temporada": 4,
-        "capitulo": 8,
-        "pendiente": true,
-        "nota": "7.5/10",
-        "tvdb_id": 356952,
-        "imdb_id": "tt8787372",
-        "acumulados": 31,
-        "image_url": "https://artworks.thetvdb.com/banners/v4/series/356952/posters/64371a3a77459.jpg",
-        "poster_path": null,
-        "notas": null,
-        "estado_final": null,
-        "duracion_media": 61,
-        "capitulos_por_temporada": {
-            "1": 8,
-            "2": 8,
-            "3": 8,
-            "4": 8
-        },
-        "created_at": "2026-09-21T06:51:33.142879+00:00",
-        "estado": "completadas",
-        "proxima_fecha": null,
-        "rewatch": true,
-        "veces": 2,
-        "slow_mode": false,
-        "ultimo_capitulo_visto_en": null,
-        "fechas_episodios": {},
         "viendo_con_alguien": false
     }
 ]

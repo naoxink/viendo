@@ -39,6 +39,47 @@
         "viendo_con_alguien": false
     },
     {
+        "id": 337,
+        "titulo": "Te encontraré",
+        "anio": 2026,
+        "visto_en": 2026,
+        "temporada": 1,
+        "capitulo": 0,
+        "pendiente": true,
+        "nota": null,
+        "tvdb_id": 457173,
+        "imdb_id": null,
+        "acumulados": 7,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/457173/posters/6a1ec3f3676a1.jpg",
+        "poster_path": "posters/457173_Te_encontrar.jpg",
+        "notas": null,
+        "estado_final": "Ended",
+        "duracion_media": 41,
+        "capitulos_por_temporada": {
+            "1": 8
+        },
+        "created_at": "2026-07-28T05:54:59.409633+00:00",
+        "estado": "en_cola",
+        "proxima_fecha": null,
+        "rewatch": false,
+        "veces": 0,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": null,
+        "fechas_episodios": {
+            "1": {
+                "1": "2026-06-18",
+                "2": "2026-06-18",
+                "3": "2026-06-18",
+                "4": "2026-06-18",
+                "5": "2026-06-18",
+                "6": "2026-06-18",
+                "7": "2026-06-18",
+                "8": "2026-06-18"
+            }
+        },
+        "viendo_con_alguien": false
+    },
+    {
         "id": 321,
         "titulo": "Fargo",
         "anio": 2014,
@@ -130,90 +171,6 @@
                 "8": "2024-01-02",
                 "9": "2024-01-09",
                 "10": "2024-01-16"
-            }
-        },
-        "viendo_con_alguien": false
-    },
-    {
-        "id": 337,
-        "titulo": "Te encontraré",
-        "anio": null,
-        "visto_en": 2026,
-        "temporada": 1,
-        "capitulo": 0,
-        "pendiente": true,
-        "nota": null,
-        "tvdb_id": 457173,
-        "imdb_id": null,
-        "acumulados": 7,
-        "image_url": "https://artworks.thetvdb.com/banners/v4/series/457173/posters/6a1ec3f3676a1.jpg",
-        "poster_path": "posters/457173_Te_encontrar.jpg",
-        "notas": null,
-        "estado_final": "Ended",
-        "duracion_media": 41,
-        "capitulos_por_temporada": {
-            "1": 8
-        },
-        "created_at": "2026-07-28T05:54:59.409633+00:00",
-        "estado": "en_cola",
-        "proxima_fecha": null,
-        "rewatch": false,
-        "veces": 0,
-        "slow_mode": false,
-        "ultimo_capitulo_visto_en": null,
-        "fechas_episodios": {
-            "1": {
-                "1": "2026-06-18",
-                "2": "2026-06-18",
-                "3": "2026-06-18",
-                "4": "2026-06-18",
-                "5": "2026-06-18",
-                "6": "2026-06-18",
-                "7": "2026-06-18",
-                "8": "2026-06-18"
-            }
-        },
-        "viendo_con_alguien": false
-    },
-    {
-        "id": 341,
-        "titulo": "S.W.A.T. Exiles",
-        "anio": null,
-        "visto_en": null,
-        "temporada": 1,
-        "capitulo": 0,
-        "pendiente": false,
-        "nota": null,
-        "tvdb_id": 463828,
-        "imdb_id": null,
-        "acumulados": 0,
-        "image_url": "https://artworks.thetvdb.com/banners/v4/series/463828/posters/6a8a93c7b8e05.jpg",
-        "poster_path": "posters/463828_S.W.A.T._Exiles.jpg",
-        "notas": null,
-        "estado_final": null,
-        "duracion_media": 0,
-        "capitulos_por_temporada": {
-            "1": 10
-        },
-        "created_at": "2026-08-07T05:48:53.873312+00:00",
-        "estado": "en_cola",
-        "proxima_fecha": "2026-09-25",
-        "rewatch": null,
-        "veces": null,
-        "slow_mode": false,
-        "ultimo_capitulo_visto_en": null,
-        "fechas_episodios": {
-            "1": {
-                "1": "2026-09-25",
-                "2": "2026-10-02",
-                "3": "2026-10-09",
-                "4": "2026-10-16",
-                "5": "2026-10-23",
-                "6": "2026-10-30",
-                "7": "2026-11-06",
-                "8": "2026-11-13",
-                "9": "2026-11-20",
-                "10": "2026-11-27"
             }
         },
         "viendo_con_alguien": false
@@ -326,80 +283,44 @@
         "viendo_con_alguien": false
     },
     {
-        "id": 361,
-        "titulo": "Merlí",
-        "anio": 2015,
+        "id": 341,
+        "titulo": "S.W.A.T. Exiles",
+        "anio": 2026,
         "visto_en": null,
         "temporada": 1,
-        "capitulo": 1,
-        "pendiente": true,
+        "capitulo": 0,
+        "pendiente": false,
         "nota": null,
-        "tvdb_id": 300428,
-        "imdb_id": "tt4580372",
-        "acumulados": 39,
-        "image_url": "https://artworks.thetvdb.com/banners/posters/300428-2.jpg",
-        "poster_path": "posters/300428_Merl.jpg",
+        "tvdb_id": 463828,
+        "imdb_id": null,
+        "acumulados": 0,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/463828/posters/6a8a93c7b8e05.jpg",
+        "poster_path": "posters/463828_S.W.A.T._Exiles.jpg",
         "notas": null,
         "estado_final": null,
-        "duracion_media": 50,
+        "duracion_media": 44,
         "capitulos_por_temporada": {
-            "1": 13,
-            "2": 13,
-            "3": 14
+            "1": 10
         },
-        "created_at": "2026-09-11T06:10:47.113804+00:00",
+        "created_at": "2026-08-07T05:48:53.873312+00:00",
         "estado": "en_cola",
-        "proxima_fecha": null,
+        "proxima_fecha": "2026-09-25",
         "rewatch": null,
         "veces": null,
         "slow_mode": false,
         "ultimo_capitulo_visto_en": null,
         "fechas_episodios": {
             "1": {
-                "1": "2015-09-14",
-                "2": "2015-09-21",
-                "3": "2015-09-28",
-                "4": "2015-10-05",
-                "5": "2015-10-12",
-                "6": "2015-10-19",
-                "7": "2015-10-26",
-                "8": "2015-11-02",
-                "9": "2015-11-09",
-                "10": "2015-11-16",
-                "11": "2015-11-23",
-                "12": "2015-11-30",
-                "13": "2015-12-07"
-            },
-            "2": {
-                "1": "2016-09-19",
-                "2": "2016-09-26",
-                "3": "2016-10-03",
-                "4": "2016-10-10",
-                "5": "2016-10-17",
-                "6": "2016-10-24",
-                "7": "2016-10-31",
-                "8": "2016-11-07",
-                "9": "2016-11-14",
-                "10": "2016-11-21",
-                "11": "2016-11-28",
-                "12": "2016-12-05",
-                "13": "2016-12-12"
-            },
-            "3": {
-                "1": "2017-09-18",
-                "2": "2017-09-25",
-                "3": "2017-10-02",
-                "4": "2017-10-09",
-                "5": "2017-10-23",
-                "6": "2017-10-30",
-                "7": "2017-11-06",
-                "8": "2017-11-13",
-                "9": "2017-11-20",
-                "10": "2017-11-27",
-                "11": "2017-12-04",
-                "12": "2017-12-11",
-                "13": "2018-01-08",
-                "14": "2018-01-15"
+                "1": "2026-09-25",
+                "2": "2026-10-02",
+                "3": "2026-10-09",
+                "4": "2026-10-16",
+                "5": "2026-10-23",
+                "6": "2026-10-30",
+                "7": "2026-11-06",
+                "8": "2026-11-13",
+                "9": "2026-11-20",
+                "10": "2026-11-27"
             }
         },
         "viendo_con_alguien": false
@@ -747,6 +668,51 @@
         "viendo_con_alguien": false
     },
     {
+        "id": 354,
+        "titulo": "Konosuba: ¡Explosión en un mundo maravilloso!",
+        "anio": 2023,
+        "visto_en": 2026,
+        "temporada": 1,
+        "capitulo": 0,
+        "pendiente": true,
+        "nota": null,
+        "tvdb_id": 420657,
+        "imdb_id": "tt27329086",
+        "acumulados": 11,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/420657/posters/641801078b890.jpg",
+        "poster_path": "posters/420657_Konosuba_Explosi_n_en_un_mundo_maravilloso.jpg",
+        "notas": null,
+        "estado_final": "Ended",
+        "duracion_media": 24,
+        "capitulos_por_temporada": {
+            "1": 12
+        },
+        "created_at": "2026-08-30T10:10:31.799504+00:00",
+        "estado": "en_cola",
+        "proxima_fecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": "2026-09-25T14:28:40.846+00:00",
+        "fechas_episodios": {
+            "1": {
+                "1": "2023-04-06",
+                "2": "2023-04-13",
+                "3": "2023-04-20",
+                "4": "2023-04-27",
+                "5": "2023-05-04",
+                "6": "2023-05-11",
+                "7": "2023-05-18",
+                "8": "2023-05-25",
+                "9": "2023-06-01",
+                "10": "2023-06-08",
+                "11": "2023-06-15",
+                "12": "2023-06-22"
+            }
+        },
+        "viendo_con_alguien": false
+    },
+    {
         "id": 357,
         "titulo": "Represalias",
         "anio": 2016,
@@ -779,51 +745,6 @@
                 "2": "2016-08-30",
                 "3": "2016-09-06",
                 "4": "2016-09-13"
-            }
-        },
-        "viendo_con_alguien": false
-    },
-    {
-        "id": 354,
-        "titulo": "Konosuba: ¡Explosión en un mundo maravilloso!",
-        "anio": 2023,
-        "visto_en": null,
-        "temporada": 1,
-        "capitulo": 1,
-        "pendiente": true,
-        "nota": null,
-        "tvdb_id": 420657,
-        "imdb_id": "tt27329086",
-        "acumulados": 11,
-        "image_url": "https://artworks.thetvdb.com/banners/v4/series/420657/posters/641801078b890.jpg",
-        "poster_path": "posters/420657_Konosuba_Explosi_n_en_un_mundo_maravilloso.jpg",
-        "notas": null,
-        "estado_final": "Ended",
-        "duracion_media": 24,
-        "capitulos_por_temporada": {
-            "1": 12
-        },
-        "created_at": "2026-08-30T10:10:31.799504+00:00",
-        "estado": "en_cola",
-        "proxima_fecha": null,
-        "rewatch": null,
-        "veces": null,
-        "slow_mode": false,
-        "ultimo_capitulo_visto_en": null,
-        "fechas_episodios": {
-            "1": {
-                "1": "2023-04-06",
-                "2": "2023-04-13",
-                "3": "2023-04-20",
-                "4": "2023-04-27",
-                "5": "2023-05-04",
-                "6": "2023-05-11",
-                "7": "2023-05-18",
-                "8": "2023-05-25",
-                "9": "2023-06-01",
-                "10": "2023-06-08",
-                "11": "2023-06-15",
-                "12": "2023-06-22"
             }
         },
         "viendo_con_alguien": false
