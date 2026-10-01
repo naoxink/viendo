@@ -147,19 +147,19 @@ def revisar_completadas():
             futuros.sort(key=lambda x: x['aired'])
             fecha_regreso = futuros[0]['aired']
 
-            # La serie vuelve a la vida: pasa a estado 'viendo', actualizamos fechas y limpiamos campos de finalizada
+            # La serie vuelve a la vida: pasa a estado 'en_cola', actualizamos fechas y limpiamos campos de finalizada
             update_payload.update({
                 'proxima_fecha': fecha_regreso,
                 'pendiente': False,
                 'acumulados': 0,
                 'estado_final': None,
                 'visto_en': None,
-                'estado': 'viendo'
+                'estado': 'en_cola'
             })
             
-            notificaciones.append(f"🔄 *{serie['titulo']}*: ¡Vuelve a la vida! Próxima emisión el *{fecha_regreso}*. Movida a Viendo.")
+            notificaciones.append(f"🔄 *{serie['titulo']}*: ¡Vuelve a la vida! Próxima emisión el *{fecha_regreso}*. Movida a En cola.")
             
-            print(f"   🎉 '{serie['titulo']}' ha anunciado nueva temporada para el {fecha_regreso}. Movida a Viendo.")
+            print(f"   🎉 '{serie['titulo']}' ha anunciado nueva temporada para el {fecha_regreso}. Movida a En cola.")
         else:
             # Si hay cambios menores (duración o capítulos), los guardamos
             pass
