@@ -7,6 +7,7 @@ import WatchingTogetherBadge from '../shared/WatchingTogetherBadge.js'
 import { formatProximaFecha, cardBgStyle, getNotaClass } from '../../utils/format.js'
 import { calcularEstadoPendiente } from '../../utils/episodios.js'
 import { useSeriesData } from '../../composables/useSeriesData.js'
+import { shareSerieImage } from '../../utils/shareImage.js'
 
 export default {
     name: 'ViewSerieDetail',
@@ -220,6 +221,25 @@ export default {
             mensajeFechas.value = '✅ Fechas guardadas'
         }
 
+        // --- Compartir imagen de progreso ---
+        const compartiendo = ref(false)
+        const mensajeCompartir = ref('')
+
+        const compartirSerie = async () => {
+            if (compartiendo.value) return
+            compartiendo.value = true
+            mensajeCompartir.value = ''
+            try {
+                const resultado = await shareSerieImage(props.serie)
+                if (resultado === 'downloaded') mensajeCompartir.value = '✅ Imagen descargada'
+            } catch (e) {
+                console.error('Error al compartir:', e)
+                mensajeCompartir.value = '❌ No se pudo generar la imagen'
+            } finally {
+                compartiendo.value = false
+            }
+        }
+
         return {
             hasNotas,
             nextAirText,
@@ -250,7 +270,10 @@ export default {
             setFechaCapitulo,
             guardarFechasEpisodios,
             guardandoFechas,
-            mensajeFechas
+            mensajeFechas,
+            compartiendo,
+            mensajeCompartir,
+            compartirSerie
         }
     },
     methods: {
@@ -507,9 +530,9 @@ export default {
                                 <span class="details-field-label">Modo tranqui</span>
                                 <span class="details-field-value">
                                     <SlowModeBadge v-if="!isAdmin" :serie="serie" />
-                                    <template v-if="!serie.slowmode && !isAdmin">No</template>
+                                    <template v-if="!serie.slow_mode && !isAdmin">No</template>
                                     <label v-else class="admin-checkbox-label">
-                                        <input type="checkbox" :checked="serie.slowmode" @change="actualizarCampo('slow_mode', $event)" />
+                                        <input type="checkbox" :checked="serie.slow_mode" @change="actualizarCampo('slow_mode', $event)" />
                                         Sí
                                     </label>
                                 </span>
@@ -615,6 +638,13 @@ export default {
 
                         <div class="details-links">
                             <LinksFooter :serie="serie" />
+                        </div>
+
+                        <div class="share-zone">
+                            <button type="button" class="btn-back" :disabled="compartiendo" @click="compartirSerie">
+                                📤 {{ compartiendo ? 'Generando…' : 'Compartir progreso' }}
+                            </button>
+                            <span v-if="mensajeCompartir" class="mensaje-fechas">{{ mensajeCompartir }}</span>
                         </div>
 
                         <div v-if="isAdmin" class="danger-zone">
