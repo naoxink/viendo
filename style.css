@@ -3266,3 +3266,34 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
     opacity: 0.6;
     cursor: wait;
 }
+
+.switch-con-alguien {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0.75rem 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+}
+.switch-con-alguien input { display: none; }
+.switch-track {
+    width: 34px; height: 20px;
+    background: var(--border-strong);
+    border-radius: 999px;
+    position: relative;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+}
+.switch-thumb {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+.switch-con-alguien input:checked + .switch-track { background: var(--accent); }
+.switch-con-alguien input:checked + .switch-track .switch-thumb { transform: translateX(14px); }
+.switch-label small { margin-left: 4px; opacity: 0.8; }

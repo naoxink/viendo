@@ -22,10 +22,6 @@ export default {
                 :serie="serie"
                 @select-serie="$emit('select-serie', $event)"
             />
-            <a class="thetvdbattribution" style="" href="https://thetvdb.com/subscribe">
-                    <img src="https://www.thetvdb.com/images/attribution/logo1.png" height="45">
-                    Metadata provided by TheTVDB. Please consider adding missing information or subscribing.
-            </a>
         </div>
     `
 }

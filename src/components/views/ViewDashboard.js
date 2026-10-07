@@ -5,10 +5,12 @@ import QuickAddSerie from '../dashboard/QuickAddSerie.js'
 import TrendingMini from '../dashboard/TrendingMini.js'
 import ActualizadasMini from '../dashboard/ActualizadasMini.js'
 import SearchGeneral from '../dashboard/SearchGeneral.js'
+import ViendoConAlguienSwitch from '../shared/ViendoConAlguienSwitch.js'
+import { useViendoFilter } from '../../composables/useViendoFilter.js'
 
 export default {
     name: 'ViewDashboard',
-    components: { ViendoCard, ProximosEstrenosMini, QuickAddSerie, TrendingMini, ActualizadasMini, SearchGeneral },
+    components: { ViendoCard, ProximosEstrenosMini, QuickAddSerie, TrendingMini, ActualizadasMini, SearchGeneral, ViendoConAlguienSwitch },
     props: {
         viendo: { type: Array, default: () => [] },
         enCola: { type: Array, default: () => [] },
@@ -19,12 +21,8 @@ export default {
     emits: ['select-serie', 'show-login'],
     setup(props) {
         const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true')
-
-        // Fase 1: pendientes. Fase 2: próximos estrenos + quick-add.
-        // Fase 3: trending + actualizadas.
-        // Queda pendiente la Fase 4 (búsqueda general).
-        const pendientes = computed(() => props.viendo.filter((s) => s.pendiente))
-
+        const { filtrar } = useViendoFilter()
+        const pendientes = computed(() => filtrar(props.viendo).filter((s) => s.pendiente))
         return { isAdmin, pendientes }
     },
     template: `
@@ -54,6 +52,7 @@ export default {
                                 />
                             </div>
                             <p v-else class="dashboard-widget-placeholder">No tienes capítulos pendientes ahora mismo.</p>
+                            <ViendoConAlguienSwitch :series="viendo" />
                         </div>
 
                         <div class="dashboard-widget">
