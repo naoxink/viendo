@@ -2,6 +2,9 @@ import EnColaList from '../EnColaList.js'
 import { sortViendo } from '../../utils/sorting.js'
 import ProximamenteList from '../ProximamenteList.js'
 
+// Máximo de días hacia delante que se muestran en "Próximamente" (mes y medio)
+const DIAS_MAX_PROXIMAMENTE = 45
+
 export default {
     name: 'ViewEnCola',
     components: { EnColaList, ProximamenteList },
@@ -13,10 +16,26 @@ export default {
     },
     emits: ['select-serie', 'cambiar-vista'],
     computed: {
-        proximamente() {
+        proximamente() {
             const todas = [ ...this.viendo, ...this.enCola ]
+
+            // Límite superior: hoy (a medianoche local) + 45 días
+            const hoy = new Date()
+            const limite = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + DIAS_MAX_PROXIMAMENTE).getTime()
+
+            // Parseo "YYYY-MM-DD" como fecha local para evitar desfases por UTC
+            const aTimestamp = (fecha) => {
+                const [y, m, d] = fecha.split('-').map(Number)
+                return new Date(y, m - 1, d).getTime()
+            }
+
             let proximamente = sortViendo(todas)
-            proximamente = proximamente.filter(s => s.proxima_fecha)
+            proximamente = proximamente.filter(s => {
+                if (!s.proxima_fecha || s.proxima_fecha === 'TBA') return false
+                const ts = aTimestamp(s.proxima_fecha)
+                return !isNaN(ts) && ts <= limite
+            })
+
             // Hacer objeto en base a las fechas
             proximamente = proximamente.reduce((acc, s) => {
                 const fecha = s.proxima_fecha
