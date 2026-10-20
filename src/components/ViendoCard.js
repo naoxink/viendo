@@ -4,7 +4,7 @@ import LinksFooter from './shared/LinksFooter.js'
 import RewatchBadge from './shared/RewatchBadge.js'
 import SlowModeBadge from './shared/SlowModeBadge.js'
 import WatchingTogetherBadge from './shared/WatchingTogetherBadge.js'
-import { cardBgStyle, formatProximaFecha } from '../utils/format.js'
+import { cardBgStyle, formatProximaFecha, formatProximaFechaRelativa } from '../utils/format.js'
 import { CONFIG } from '../utils/config.js'
 import { calcularEstadoPendiente } from '../utils/episodios.js'
 
@@ -24,7 +24,8 @@ export default {
     },
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
-        const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proxima_fecha))
+        const proximaFechaTexto = computed(() => formatProximaFechaRelativa(props.serie.proxima_fecha))
+        const proximaFechaCompleta = computed(() => formatProximaFecha(props.serie.proxima_fecha))
         const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true');
         const esFinalDeTemporada = computed(() => {
             const caps = props.serie.capitulosPorTemporada;
@@ -52,7 +53,7 @@ export default {
                 return (capituloActual / capsTemporada) * 100;
             }
         });
-        return { bgStyle, proximaFechaTexto, progreso, esFinalDeTemporada, isAdmin }
+        return { bgStyle, proximaFechaTexto, proximaFechaCompleta, progreso, esFinalDeTemporada, isAdmin }
     },
     methods: {
         beforeUnmount() {
@@ -168,7 +169,7 @@ export default {
                 <RewatchBadge :serie="serie" />
                 <SlowModeBadge :serie="serie" />
                 <WatchingTogetherBadge :serie="serie" />
-                <p v-if="serie.proxima_fecha" class="next-air">
+                <p v-if="serie.proxima_fecha" class="next-air" :title="proximaFechaCompleta">
                     📅 <strong>{{ proximaFechaTexto }}</strong>
                 </p>
                 <button class="details-btn" type="button" @click="seleccionarSerie(serie)" aria-label="Ver detalles de la serie" title="Ver detalles de la serie">?</button>

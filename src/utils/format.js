@@ -84,3 +84,22 @@ export const formatDuracion = (totalMinutos) => {
 
     return partes.join(', ');
 };
+
+/** "Hoy", "Mañana", "En 3 días" y, pasado el umbral, la fecha completa */
+export function formatProximaFechaRelativa(fecha, maxDias = 5) {
+    if (!fecha) return ''
+    if (fecha === 'TBA') return 'Sin fecha'
+
+    const [y, m, d] = fecha.split('-').map(Number)
+    if (!y || !m || !d) return fecha
+
+    // Fechas locales (no UTC) para no desfasar un día
+    const hoy = new Date()
+    const hoyTs = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()).getTime()
+    const dias = Math.round((new Date(y, m - 1, d).getTime() - hoyTs) / 86400000)
+
+    if (dias === 0) return 'Hoy'
+    if (dias === 1) return 'Mañana'
+    if (dias > 1 && dias <= maxDias) return `En ${dias} días`
+    return formatProximaFecha(fecha)
+}
