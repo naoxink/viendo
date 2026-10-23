@@ -3297,3 +3297,146 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
 .switch-con-alguien input:checked + .switch-track { background: var(--accent); }
 .switch-con-alguien input:checked + .switch-track .switch-thumb { transform: translateX(14px); }
 .switch-label small { margin-left: 4px; opacity: 0.8; }
+
+/* ==========================================================================
+   EN COLA — añadir al final de style.css
+   Reutiliza .cola-section / .cola-content / summary que ya existen.
+   ========================================================================== */
+
+/* Cabecera con acciones */
+.cola-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.cola-header h1 {
+    margin: 0;
+}
+
+/* .view div fuerza width:100%; este selector lo anula para los botones */
+.view .cola-header .cola-actions {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.btn-discover-header {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-discover-header:hover {
+    background: var(--accent-soft);
+}
+
+.btn-discover-header:active {
+    transform: scale(0.95);
+}
+
+/* Descripción corta de cada sección */
+.cola-section-hint {
+    margin: 0 0 0.6rem;
+    padding: 0 0.25rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.cola-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+/* Card compacta */
+.cola-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.cola-card:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.cola-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.cola-card .serie-thumb {
+    width: 40px;
+    height: 60px;
+}
+
+.cola-card .serie-thumb-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-elevated);
+    border: 1px dashed var(--border-strong);
+    color: var(--text-muted);
+    border-radius: 6px;
+}
+
+.cola-card .serie-thumb-placeholder svg {
+    width: 18px;
+    height: 18px;
+}
+
+.cola-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.cola-card-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cola-card-status {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.cola-card-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+    flex-shrink: 0;
+}
+
+.cola-card-side .next-air {
+    white-space: nowrap;
+}
+
+.cola-card-rel {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}

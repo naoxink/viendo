@@ -1,68 +1,56 @@
-import EnColaList from '../EnColaList.js'
-import { sortViendo } from '../../utils/sorting.js'
-import ProximamenteList from '../ProximamenteList.js'
-
-// Máximo de días hacia delante que se muestran en "Próximamente" (mes y medio)
-const DIAS_MAX_PROXIMAMENTE = 45
+import { computed } from 'vue'
+import EnColaSection from '../EnColaSection.js'
+import { agruparEnCola } from '../../utils/enCola.js'
 
 export default {
     name: 'ViewEnCola',
-    components: { EnColaList, ProximamenteList },
+    components: { EnColaSection },
     props: {
-        enCola: Array,
-        viendo: Array,
+        enCola: { type: Array, default: () => [] },
         loading: Boolean,
-        error: String
+        error: [String, Object]
     },
     emits: ['select-serie', 'cambiar-vista'],
-    computed: {
-        proximamente() {
-            const todas = [ ...this.viendo, ...this.enCola ]
-
-            // Límite superior: hoy (a medianoche local) + 45 días
-            const hoy = new Date()
-            const limite = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + DIAS_MAX_PROXIMAMENTE).getTime()
-
-            // Parseo "YYYY-MM-DD" como fecha local para evitar desfases por UTC
-            const aTimestamp = (fecha) => {
-                const [y, m, d] = fecha.split('-').map(Number)
-                return new Date(y, m - 1, d).getTime()
-            }
-
-            let proximamente = sortViendo(todas)
-            proximamente = proximamente.filter(s => {
-                if (!s.proxima_fecha || s.proxima_fecha === 'TBA') return false
-                const ts = aTimestamp(s.proxima_fecha)
-                return !isNaN(ts) && ts <= limite
-            })
-
-            // Hacer objeto en base a las fechas
-            proximamente = proximamente.reduce((acc, s) => {
-                const fecha = s.proxima_fecha
-                if (!acc[fecha]) acc[fecha] = []
-                acc[fecha].push(s)
-                return acc
-            }, {})
-            return proximamente
-        },
-        isAdmin() {
-            return sessionStorage.getItem('isAdmin') === 'true'
-        }
+    setup(props) {
+        const secciones = computed(() => agruparEnCola(props.enCola))
+        const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true')
+        return { secciones, isAdmin }
     },
     template: `
         <div class="view view-en-cola">
             <section class="view-content">
-                <ProximamenteList :series="proximamente" titulo="👀 Próximamente" @select-serie="$emit('select-serie', $event)" />
+                <div class="cola-header">
+                    <h1>📥 En cola</h1>
+                    <div class="cola-actions">
+                        <button type="button" class="btn-discover-header" @click="$emit('cambiar-vista', 'discover')">
+                            🔭 Descubrir
+                        </button>
+                        <button v-if="isAdmin" type="button" class="btn-add-header" @click="$emit('cambiar-vista', 'add-serie')">
+                            + Añadir
+                        </button>
+                    </div>
+                </div>
 
                 <p v-if="loading">Cargando series...</p>
                 <p v-else-if="error">No se ha podido cargar los datos de series. Revisa la consola para más detalles.</p>
-                <template v-else>
-                    <EnColaList :series="enCola" titulo="📅 Series en cola" @select-serie="$emit('select-serie', $event)" />
-                </template>
 
-                <button v-if="isAdmin" @click="$emit('cambiar-vista', 'add-serie')" class="btn-add-header">
-                    + Añadir
-                </button>
+                <template v-else>
+                    <div v-if="secciones.length" class="cola-sections">
+                        <EnColaSection
+                            v-for="seccion in secciones"
+                            :key="seccion.key"
+                            :titulo="seccion.titulo"
+                            :descripcion="seccion.descripcion"
+                            :series="seccion.series"
+                            :abierta="seccion.abierta"
+                            @select-serie="$emit('select-serie', $event)"
+                        />
+                    </div>
+                    <div v-else class="no-content">
+                        Tu cola está vacía.
+                        <button type="button" class="btn-link" @click="$emit('cambiar-vista', 'discover')">Descubre series nuevas</button>
+                    </div>
+                </template>
             </section>
         </div>
     `

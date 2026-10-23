@@ -1,5 +1,5 @@
 export default {
-    name: 'RewatchBadge',
+    name: 'FinalStatusBadge',
     props: {
         serie: { type: Object, required: true }
     },

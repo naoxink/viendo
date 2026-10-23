@@ -11,13 +11,14 @@ import ViewAddSerie from './views/ViewAddSerie.js'
 import ViewLogin from './views/ViewLogin.js'
 import CalendarioEstrenos from './CalendarioEstrenos.js'
 import ViewStats from './views/ViewStats.js'
+import ViewDiscover from './views/ViewDiscover.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const token = ''
 
 export default {
     name: 'App',
-    components: { BottomNav, ViewDashboard, ViewViendo, ViewEnCola, ViewCompletadas, ViewSerieDetail, ViewAddSerie, ViewLogin, CalendarioEstrenos, ViewStats },
+    components: { BottomNav, ViewDashboard, ViewViendo, ViewEnCola, ViewCompletadas, ViewSerieDetail, ViewAddSerie, ViewLogin, CalendarioEstrenos, ViewStats, ViewDiscover  },
     setup() {
         const { data, status, loading, error, añoActual, loadAll } = useSeriesData()
         const { isMobile } = userDevice()
@@ -53,7 +54,7 @@ export default {
                     themePreference.value = storedTheme
                 }
                 const storedView = localStorage.getItem('viendo-active-view')
-                if (storedView && ['viendo', 'en-cola', 'completadas', 'stats', 'detalle', 'dashboard'].includes(storedView)) {
+                if (storedView && ['viendo', 'en-cola', 'completadas', 'stats', 'detalle', 'dashboard', 'discover'].includes(storedView)) {
                     vistaGuardada = storedView
                 }
             } catch (error) {
@@ -212,10 +213,9 @@ export default {
                     @show-login="activeView = 'login'"
                 />
                 
-                <ViewEnCola 
+                <ViewEnCola
                     v-if="activeView === 'en-cola'"
                     :en-cola="enCola"
-                    :viendo="viendo"
                     :loading="loading"
                     :error="error"
                     @select-serie="abrirDetalle"

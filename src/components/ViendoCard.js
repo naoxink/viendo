@@ -56,11 +56,6 @@ export default {
         return { bgStyle, proximaFechaTexto, proximaFechaCompleta, progreso, esFinalDeTemporada, isAdmin }
     },
     methods: {
-        beforeUnmount() {
-            if (this.markTimer) {
-                clearTimeout(this.markTimer)
-            }
-        },
         async marcarComoVisto(serie) {
             const token = sessionStorage.getItem('adminToken');
             const tieneMasPendientes = Number(serie.acumulados || 0) > 0;
@@ -178,5 +173,10 @@ export default {
                 <div class="progress-bar-fill" :style="{ width: progreso + '%' }"></div>
             </div>
         </div>
-    `
+    `,
+    beforeUnmount() {
+        if (this.markTimer) {
+            clearTimeout(this.markTimer)
+        }
+    }
 }

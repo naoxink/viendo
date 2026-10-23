@@ -15,6 +15,7 @@ export default {
     const trendingList = ref([])
     const updatedList  = ref([])
     const loading = ref(true)
+    const copiedId = ref(null)
 
     onMounted(async () => {
       loading.value = true
@@ -61,7 +62,8 @@ export default {
       updatedList,
       loading,
       getCardStyle,
-      copyTvdbId
+      copyTvdbId,
+      copiedId
     }
   },
     template: `

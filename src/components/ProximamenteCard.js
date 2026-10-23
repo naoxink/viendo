@@ -12,7 +12,7 @@ export default {
     props: {
         serie: { type: Object, required: true }
     },
-    emit: ['select-serie'],
+    emits: ['select-serie'],
     setup(props) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
         const proximaFechaTexto = computed(() => formatProximaFecha(props.serie.proxima_fecha))
