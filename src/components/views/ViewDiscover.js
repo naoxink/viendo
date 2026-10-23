@@ -1,21 +1,33 @@
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useSeriesData } from '../../composables/useSeriesData.js'
 import PosterThumb from '../shared/PosterThumb.js'
-import { cardBgStyle, formatProximaFecha } from '../../utils/format.js'
-import { ref, onMounted } from 'vue'
 import LinksFooter from '../shared/LinksFooter.js'
+import { cardBgStyle } from '../../utils/format.js'
+
+const TABS = [
+  { key: 'upcoming', label: 'Estrenos 🚀', vacio: 'No hay próximos estrenos registrados.' },
+  { key: 'trending', label: 'Trending 🔥', vacio: 'No hay series en tendencia en este momento.' },
+  { key: 'updated', label: 'Actualizadas 🆕', vacio: 'No hay series actualizadas en este momento.' }
+]
 
 export default {
   name: 'ViewDiscover',
   components: { PosterThumb, LinksFooter },
+  emits: ['back'],
   setup() {
-    const { fetchUpcomingSeries, fetchTrendingSeries, fetchRecentlyUpdated } = useSeriesData()
-    
+    const {
+      data, insertShow,
+      fetchUpcomingSeries, fetchTrendingSeries, fetchRecentlyUpdated
+    } = useSeriesData()
+
+    const isAdmin = computed(() => sessionStorage.getItem('isAdmin') === 'true')
     const activeTab = ref('upcoming')
-    const upcomingList = ref([])
-    const trendingList = ref([])
-    const updatedList  = ref([])
+    const listas = reactive({ upcoming: [], trending: [], updated: [] })
     const loading = ref(true)
-    const copiedId = ref(null)
+
+    // Estado de "añadir" por tvdb_id: 'adding' | 'added' | 'error'
+    const estados = reactive({})
+    const errores = reactive({})
 
     onMounted(async () => {
       loading.value = true
@@ -25,188 +37,160 @@ export default {
           fetchTrendingSeries(),
           fetchRecentlyUpdated()
         ])
-        upcomingList.value = upcoming
-        trendingList.value = trending
-        updatedList.value  = updated
+        listas.upcoming = upcoming
+        listas.trending = trending
+        listas.updated = updated
       } catch (err) {
-        console.error("Error al cargar descubrimientos:", err)
+        console.error('Error al cargar descubrimientos:', err)
       } finally {
         loading.value = false
       }
     })
 
-    // Función auxiliar para aplicar el estilo de fondo igual que en ProximamenteCard
-    const getCardStyle = (serie) => {
-      return cardBgStyle(serie)
+    // tvdb_id de todo lo que ya tienes (viendo, en cola, completadas, dropeadas)
+    const idsExistentes = computed(() => {
+      const ids = new Set()
+      for (const coleccion of Object.values(data.value || {})) {
+        for (const s of coleccion) {
+          if (s.tvdb_id) ids.add(Number(s.tvdb_id))
+        }
+      }
+      return ids
+    })
+
+    // Se ocultan las que ya tienes, salvo las que acabas de añadir desde aquí
+    // (así ves el "✓ En cola" en lugar de que la card desaparezca).
+    const visibles = computed(() =>
+      (listas[activeTab.value] || []).filter((s) => {
+        const id = Number(s.tvdb_id)
+        return !idsExistentes.value.has(id) || Boolean(estados[id])
+      })
+    )
+
+    const ocultas = computed(() => (listas[activeTab.value] || []).length - visibles.value.length)
+    const tabActual = computed(() => TABS.find((t) => t.key === activeTab.value))
+
+    const rangoTrending = (serie) => listas.trending.indexOf(serie) + 1
+
+    const textoBoton = (id) => {
+      switch (estados[id]) {
+        case 'adding': return 'Añadiendo…'
+        case 'added': return '✓ En cola'
+        case 'error': return 'Reintentar'
+        default: return '+ A cola'
+      }
     }
 
-    // Método para copiar al portapapeles
-    const copyTvdbId = async (tvdbId) => {
-      try {
-        await navigator.clipboard.writeText(tvdbId.toString())
-        copiedId.value = tvdbId
-        setTimeout(() => {
-          if (copiedId.value === tvdbId) {
-            copiedId.value = null
-          }
-        }, 2000) // Restablece el estado después de 2 segundos
-      } catch (err) {
-        console.error('Error al copiar al portapapeles:', err)
+    const anadir = async (serie) => {
+      const id = Number(serie.tvdb_id)
+      if (!id || estados[id] === 'adding' || estados[id] === 'added') return
+
+      estados[id] = 'adding'
+      errores[id] = ''
+
+      // insertShow ya recarga los datos al terminar, así que la serie aparece
+      // en "En cola" sin hacer nada más.
+      const resultado = await insertShow({ tvdb_id: id, estado: 'en_cola' })
+
+      if (resultado.success) {
+        estados[id] = 'added'
+      } else {
+        estados[id] = 'error'
+        errores[id] = resultado.error || 'No se pudo añadir la serie.'
       }
     }
 
     return {
-      activeTab,
-      upcomingList,
-      trendingList,
-      updatedList,
-      loading,
-      getCardStyle,
-      copyTvdbId,
-      copiedId
+      TABS, activeTab, tabActual, loading, isAdmin,
+      visibles, ocultas, estados, errores,
+      rangoTrending, textoBoton, anadir, cardBgStyle
     }
   },
-    template: `
-        <div class="view-container">
-        <!-- Cabecera y pestañas -->
-        <div class="view-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-            <h2 style="margin: 0;">Descubrir</h2>
-            <div class="discover-tabs" style="display: inline-flex; gap: 0.3rem; background-color: var(--surface); padding: 0.3rem; border-radius: 9999px; border: 1px solid var(--border);">
-            <button 
-                :class="['tab-btn', { active: activeTab === 'upcoming' }]"
-                @click="activeTab = 'upcoming'"
-                style="background: transparent; border: none; color: var(--text-muted); padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
-            >
-                Estrenos 🚀
-            </button>
-            <button 
-                :class="['tab-btn', { active: activeTab === 'trending' }]"
-                @click="activeTab = 'trending'"
-                style="background: transparent; border: none; color: var(--text-muted); padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
-            >
-                Trending 🔥
-            </button>
-            <button 
-                :class="['tab-btn', { active: activeTab === 'updated' }]"
-                @click="activeTab = 'updated'"
-                style="background: transparent; border: none; color: var(--text-muted); padding: 0.4rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600; cursor: pointer;"
-            >
-                Actualizadas 🆕
-            </button>
-            </div>
+  template: `
+    <div class="view view-discover">
+      <header class="detail-top-bar">
+        <button type="button" class="btn-back" @click="$emit('back')">← Volver</button>
+      </header>
+
+      <section class="view-content">
+        <div class="discover-header">
+          <h2>🔭 Descubrir</h2>
+          <div class="discover-tabs" role="tablist">
+            <button
+              v-for="tab in TABS"
+              :key="tab.key"
+              type="button"
+              role="tab"
+              :aria-selected="activeTab === tab.key"
+              :class="['tab-btn', { active: activeTab === tab.key }]"
+              @click="activeTab = tab.key"
+            >{{ tab.label }}</button>
+          </div>
         </div>
 
-        <div v-if="loading" style="text-align: center; padding: 3rem; color: var(--text-muted);">
-            <p>Cargando novedades...</p>
-        </div>
+        <p v-if="loading" class="discover-status">Cargando novedades...</p>
 
-        <!-- Listado de Próximos Estrenos -->
-        <div v-else-if="activeTab === 'upcoming'" class="series-grid">
-            <div v-for="serie in upcomingList" :key="serie.tvdb_id" class="serie-card" :style="getCardStyle(serie)">
-            <div class="serie-card-body">
+        <template v-else>
+          <p v-if="ocultas > 0" class="discover-status">
+            {{ ocultas }} {{ ocultas === 1 ? 'serie oculta' : 'series ocultas' }} porque ya {{ ocultas === 1 ? 'está' : 'están' }} en tu biblioteca.
+          </p>
+
+          <div v-if="visibles.length" class="series-grid">
+            <div
+              v-for="serie in visibles"
+              :key="activeTab + '-' + serie.tvdb_id"
+              class="serie-card"
+              :style="cardBgStyle(serie)"
+            >
+              <div class="serie-card-body">
                 <PosterThumb :serie="serie" />
                 <div class="info">
-                <h2>{{ serie.titulo }}</h2>
-                <p class="progress" v-if="serie.first_aired">
-                    📅 <strong>{{ serie.first_aired }}</strong>
-                </p>
-                <p class="next-air" v-if="serie.days_until_premiere !== null">
-                    ⏳ {{ serie.days_until_premiere === 0 ? '¡Estreno hoy!' : 'Faltan ' + serie.days_until_premiere + ' días' }}
-                </p>
-                </div>
-            </div>
-            <div class="serie-card-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem;">
-                <span class="badge" v-if="serie.score" style="font-size: 0.75rem; color: var(--text-muted);">⭐ {{ serie.score }}</span>
-                <LinksFooter :serie="serie" />
-                <!-- Botón para copiar TVDB ID -->
-                <button 
-                @click="copyTvdbId(serie.tvdb_id)" 
-                class="details-btn" 
-                type="button" 
-                style="font-size: 0.75rem; padding: 0.2rem 0.5rem; cursor: pointer;"
-                :title="'Copiar TVDB ID: ' + serie.tvdb_id"
-                >
-                {{ copiedId === serie.tvdb_id ? '¡Copiado! ✓' : 'ID: ' + serie.tvdb_id }}
-                </button>
-            </div>
-            </div>
-            <div v-if="upcomingList.length === 0" style="text-align: center; padding: 3rem; color: var(--text-muted);">
-            <p>No hay próximos estrenos registrados.</p>
-            </div>
-        </div>
-
-        <!-- Listado de Trending -->
-        <div v-else-if="activeTab === 'trending'" class="series-grid">
-            <div v-for="(serie, index) in trendingList" :key="serie.tvdb_id" class="serie-card" :style="getCardStyle(serie)">
-              <div class="serie-card-body">
-                  <PosterThumb :serie="serie" />
-                  <div class="info">
                   <h2>{{ serie.titulo }}</h2>
-                  <p class="progress" v-if="serie.anio">
-                      Año: <strong>{{ serie.anio }}</strong>
-                  </p>
-                  <p class="next-air" v-if="serie.score">
-                      🔥 Score: <strong>{{ serie.score }}</strong>
-                  </p>
-                  </div>
-              </div>
-              <div class="serie-card-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem;">
-                  <span class="badge" style="font-size: 0.75rem; font-weight: bold; background: #f59e0b; color: #000; padding: 0.1rem 0.4rem; border-radius: 4px;">#{{ index + 1 }} Trending</span>
-                  <LinksFooter :serie="serie" />
-                  <!-- Botón para copiar TVDB ID -->
-                  <button 
-                  @click="copyTvdbId(serie.tvdb_id)" 
-                  class="details-btn" 
-                  type="button" 
-                  style="font-size: 0.75rem; padding: 0.2rem 0.5rem; cursor: pointer;"
-                  :title="'Copiar TVDB ID: ' + serie.tvdb_id"
-                  >
-                  {{ copiedId === serie.tvdb_id ? '¡Copiado! ✓' : 'ID: ' + serie.tvdb_id }}
-                  </button>
-              </div>
-            </div>
-            <div v-if="trendingList.length === 0" style="text-align: center; padding: 3rem; color: var(--text-muted);">
-              <p>No hay series en tendencia en este momento.</p>
-            </div>
-        </div>
 
-        <!-- Listado de Actualizadas -->
-        <div v-else-if="activeTab === 'updated'" class="series-grid">
-            <div v-for="(serie, index) in updatedList" :key="serie.tvdb_id" class="serie-card" :style="getCardStyle(serie)">
-              <div class="serie-card-body">
-                <PosterThumb :serie="serie" />
-                <div class="info">
-                <h2>{{ serie.titulo }}</h2>
-                <p class="progress" v-if="serie.anio">
-                    Año: <strong>{{ serie.anio }}</strong>
-                </p>
-                <p class="progress" v-if="serie.temporada && serie.capitulo">
-                    T{{ serie.temporada }} · E{{ serie.capitulo }}
-                </p>
+                  <template v-if="activeTab === 'upcoming'">
+                    <p class="progress" v-if="serie.first_aired">📅 <strong>{{ serie.first_aired }}</strong></p>
+                    <p class="next-air" v-if="serie.days_until_premiere !== null && serie.days_until_premiere !== undefined">
+                      ⏳ {{ serie.days_until_premiere === 0 ? '¡Estreno hoy!' : 'Faltan ' + serie.days_until_premiere + ' días' }}
+                    </p>
+                  </template>
+
+                  <template v-else-if="activeTab === 'trending'">
+                    <p class="progress" v-if="serie.anio">Año: <strong>{{ serie.anio }}</strong></p>
+                    <p class="next-air" v-if="serie.score">🔥 Score: <strong>{{ serie.score }}</strong></p>
+                  </template>
+
+                  <template v-else>
+                    <p class="progress" v-if="serie.anio">Año: <strong>{{ serie.anio }}</strong></p>
+                    <p class="progress" v-if="serie.temporada && serie.capitulo">T{{ serie.temporada }} · E{{ serie.capitulo }}</p>
+                  </template>
                 </div>
               </div>
-              <div class="serie-card-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem;">
-                  <LinksFooter :serie="serie" />
-                  <span class="next-air" v-if="serie.last_aired">
-                      <strong>{{ serie.last_aired }}</strong>
-                  </span>
-                  <!-- Botón para copiar TVDB ID -->
-                  <button 
-                  @click="copyTvdbId(serie.tvdb_id)" 
-                  class="details-btn" 
-                  type="button" 
-                  style="font-size: 0.75rem; padding: 0.2rem 0.5rem; cursor: pointer;"
-                  :title="'Copiar TVDB ID: ' + serie.tvdb_id"
-                  >
-                  {{ copiedId === serie.tvdb_id ? '¡Copiado! ✓' : 'ID: ' + serie.tvdb_id }}
-                  </button>
-              </div>
-            </div>
-            <div v-if="updatedList.length === 0" style="text-align: center; padding: 3rem; color: var(--text-muted);">
-              <p>No hay series actualizadas en este momento.</p>
-            </div>
-        </div>
 
-        </div>
-    `
+              <div class="serie-card-footer">
+                <span v-if="activeTab === 'trending'" class="discover-rank">#{{ rangoTrending(serie) }}</span>
+                <span v-if="activeTab === 'upcoming' && serie.score" class="discover-score">⭐ {{ serie.score }}</span>
+                <span v-if="activeTab === 'updated' && serie.last_aired" class="next-air"><strong>{{ serie.last_aired }}</strong></span>
+                <LinksFooter :serie="serie" />
+
+                <button
+                  v-if="isAdmin && serie.tvdb_id"
+                  type="button"
+                  :class="['btn-add-card', { added: estados[serie.tvdb_id] === 'added', error: estados[serie.tvdb_id] === 'error' }]"
+                  :disabled="estados[serie.tvdb_id] === 'adding' || estados[serie.tvdb_id] === 'added'"
+                  :aria-label="'Añadir ' + serie.titulo + ' a la cola'"
+                  @click="anadir(serie)"
+                >{{ textoBoton(serie.tvdb_id) }}</button>
+              </div>
+
+              <p v-if="errores[serie.tvdb_id]" class="discover-card-error">{{ errores[serie.tvdb_id] }}</p>
+            </div>
+          </div>
+
+          <p v-else class="discover-status">
+            {{ ocultas > 0 ? 'Ya tienes todas las series de esta lista.' : tabActual.vacio }}
+          </p>
+        </template>
+      </section>
+    </div>
+  `
 }
