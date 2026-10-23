@@ -19,7 +19,7 @@ export default {
     name: 'App',
     components: { BottomNav, ViewDashboard, ViewViendo, ViewEnCola, ViewCompletadas, ViewSerieDetail, ViewAddSerie, ViewLogin, CalendarioEstrenos, ViewStats },
     setup() {
-        const { data, status, lastUpdate, loading, error, añoActual, loadAll } = useSeriesData()
+        const { data, status, loading, error, añoActual, loadAll } = useSeriesData()
         const { isMobile } = userDevice()
         const searchTerm = ref('')
         const themePreference = ref('auto')
@@ -165,7 +165,7 @@ export default {
         const enCola = computed(() => data.value?.en_cola ?? [])
 
         return {
-            data, status, lastUpdate, loading, error, añoActual,
+            data, status, loading, error, añoActual,
             searchTerm, themePreference, activeView, viendo, completadas,
             dropeadas, enCola, abrirDetalle, volverAtras, selectedSerie, cambiarVista,
             calendarioRef
@@ -203,7 +203,6 @@ export default {
                     v-if="activeView === 'viendo' || (activeView === 'detalle' && !selectedSerie)"
                     :viendo="viendo"
                     :status="status"
-                    :last-update="lastUpdate"
                     :loading="loading"
                     :error="error"
                     :data="data"

@@ -8,7 +8,6 @@ const _supabase = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY)
 // --- ESTADO GLOBAL COMPARTIDO (Singleton) ---
 const data = ref(null)
 const status = ref(null)
-const lastUpdate = ref('')
 const loading = ref(true)
 const error = ref(null)
 // -------------------------------------------
@@ -93,28 +92,9 @@ export function useSeriesData() {
         }
     }
 
-    async function loadLastUpdate() {
-        try {
-            const { data: row, error } = await _supabase
-                .from('series')
-                .select('created_at')
-                .order('created_at', { ascending: false })
-                .limit(1)
-
-            if (error || !row || row.length === 0) {
-                lastUpdate.value = 'desconocida'
-                return
-            }
-
-            lastUpdate.value = new Date(row[0].created_at).toLocaleDateString('es-ES')
-        } catch (e) {
-            lastUpdate.value = 'desconocida'
-        }
-    }
-
     async function loadAll() {
         loading.value = true
-        await Promise.allSettled([loadData(), loadStatus(), loadLastUpdate()])
+        await Promise.allSettled([loadData(), loadStatus()])
         loading.value = false
     }
 
@@ -307,6 +287,6 @@ export function useSeriesData() {
         return data
     }
 
-    return { data, status, lastUpdate, loading, error, añoActual, loadAll, updateShowStatus,
+    return { data, status, loading, error, añoActual, loadAll, updateShowStatus,
         updateShowField, insertShow, deleteShow, fetchUpcomingSeries, fetchTrendingSeries, fetchRecentlyUpdated }
 }
