@@ -3,9 +3,9 @@
         "id": 341,
         "titulo": "S.W.A.T. Exiles",
         "anio": 2026,
-        "visto_en": null,
+        "visto_en": 2026,
         "temporada": 1,
-        "capitulo": 0,
+        "capitulo": 4,
         "pendiente": false,
         "nota": null,
         "tvdb_id": 463828,
@@ -25,7 +25,7 @@
         "rewatch": null,
         "veces": null,
         "slow_mode": false,
-        "ultimo_capitulo_visto_en": null,
+        "ultimo_capitulo_visto_en": "2026-10-23T06:44:55.718+00:00",
         "fechas_episodios": {
             "1": {
                 "1": "2026-09-25",
@@ -243,7 +243,7 @@
         "anio": 2026,
         "visto_en": 2026,
         "temporada": 1,
-        "capitulo": 6,
+        "capitulo": 7,
         "pendiente": false,
         "nota": null,
         "tvdb_id": 478738,
@@ -263,7 +263,7 @@
         "rewatch": null,
         "veces": null,
         "slow_mode": false,
-        "ultimo_capitulo_visto_en": "2026-10-15T05:42:55.993+00:00",
+        "ultimo_capitulo_visto_en": "2026-10-22T05:55:41.043+00:00",
         "fechas_episodios": {
             "1": {
                 "1": "2026-09-08",
@@ -412,6 +412,47 @@
                 "8": "2026-12-18",
                 "9": "2026-12-25",
                 "10": "2027-01-01"
+            }
+        },
+        "viendo_con_alguien": false
+    },
+    {
+        "id": 368,
+        "titulo": "Dragon Ball Super: Beerus",
+        "anio": 2026,
+        "visto_en": 2026,
+        "temporada": 1,
+        "capitulo": 2,
+        "pendiente": true,
+        "nota": null,
+        "tvdb_id": 473154,
+        "imdb_id": "tt39395275",
+        "acumulados": 1,
+        "image_url": "https://artworks.thetvdb.com/banners/v4/series/473154/posters/6ad5a6232c31e.jpg",
+        "poster_path": "posters/473154_Dragon_Ball_Super_Beerus.jpg",
+        "notas": null,
+        "estado_final": null,
+        "duracion_media": 23,
+        "capitulos_por_temporada": {
+            "1": 8
+        },
+        "created_at": "2026-10-23T05:09:38.811016+00:00",
+        "estado": "viendo",
+        "proxima_fecha": null,
+        "rewatch": null,
+        "veces": null,
+        "slow_mode": false,
+        "ultimo_capitulo_visto_en": "2026-10-23T09:44:50.698+00:00",
+        "fechas_episodios": {
+            "1": {
+                "1": "2026-10-11",
+                "2": "2026-10-18",
+                "3": "2026-10-25",
+                "4": "2026-11-01",
+                "5": "2026-11-08",
+                "6": "2026-11-15",
+                "7": "2026-11-22",
+                "8": "2026-11-29"
             }
         },
         "viendo_con_alguien": false
