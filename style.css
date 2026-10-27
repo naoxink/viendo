@@ -3440,3 +3440,124 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
     font-size: 0.7rem;
     color: var(--text-muted);
 }
+
+/* ==========================================================================
+   DESCUBRIR
+   ========================================================================== */
+
+.discover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.discover-header h2 {
+    margin: 0;
+}
+
+/* .view div fuerza width:100%; lo anulamos para que las pestañas no se estiren */
+.view .discover-tabs {
+    width: auto;
+    display: inline-flex;
+    gap: 0.3rem;
+    padding: 0.3rem;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+}
+
+.discover-tabs .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.discover-tabs .tab-btn:hover {
+    color: var(--text);
+}
+
+.discover-tabs .tab-btn.active {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+}
+
+.discover-status {
+    margin: 0 0 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.discover-rank {
+    font-size: 0.75rem;
+    font-weight: bold;
+    background: #f59e0b;
+    color: #000;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+}
+
+.discover-score {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Botón "A cola" en la card */
+.btn-add-card {
+    margin-left: auto;
+    background: var(--accent);
+    color: #ffffff;
+    border: 1px solid var(--accent);
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.1s ease;
+}
+
+.btn-add-card:hover:not(:disabled) {
+    filter: brightness(1.1);
+}
+
+.btn-add-card:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.btn-add-card:disabled {
+    cursor: default;
+    opacity: 0.8;
+}
+
+.btn-add-card.added {
+    background: var(--note-good-bg);
+    color: var(--note-good-text);
+    border-color: var(--note-good-border);
+    opacity: 1;
+}
+
+.btn-add-card.error {
+    background: var(--note-bad-bg);
+    color: var(--note-bad-text);
+    border-color: var(--note-bad-border);
+}
+
+.discover-card-error {
+    margin: 0;
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    color: var(--note-bad-text);
+    background: var(--note-bad-bg);
+    border-top: 1px solid var(--note-bad-border);
+}

@@ -257,6 +257,7 @@ export default {
 
                 <ViewDiscover
                     v-if="activeView === 'discover'"
+                    @back="cambiarVista('en-cola')"
                 />
 
                 <ViewAddSerie
