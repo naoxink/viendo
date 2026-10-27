@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 6 * * 1' # Lunes 06:00 UTC semanal
   workflow_dispatch: # Te permite ejecutarlo a mano desde la web de GitHub cuando quieras
+    inputs:
+      dry_run:
+        description: "Ejecutar en modo dry-run (no escribe en Supabase)"
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -14,18 +19,23 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install requests supabase
 
       - name: Run trending script
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: |
-          python3 scripts/supabase_trending_the_tvdb.py --thetvdb-api-key "${{ secrets.TVDB_API_KEY }}" --limit 20
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python scripts/supabase_trending_tmdb.py --limit 20 --dry-run
+          else
+            python scripts/supabase_trending_tmdb.py --limit 20
+          fi

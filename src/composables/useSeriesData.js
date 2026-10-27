@@ -265,7 +265,7 @@ export function useSeriesData() {
         const { data, error } = await _supabase
             .from('trending_series')
             .select('*')
-            .order('score', { ascending: false })
+            .order('rank', { ascending: true })
         
         if (error) {
             console.error('Error fetching trending:', error)
