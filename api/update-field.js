@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     'titulo', 'estado', 'temporada', 'capitulo', 'rewatch', 'veces',
     'nota', 'pendiente', 'duracion_media', 'visto_en', 'notas', 'slow_mode',
     'proxima_fecha', 'poster_path', 'estado_final', 'viendo_con_alguien',
-    'anio', 'fechas_episodios'
+    'anio', 'fechas_episodios', 'tvdb_id', 'imdb_id'
   ];
 
   if (!camposPermitidos.includes(campoDb)) {
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
   }
 
   if (
-    ['proxima_fecha', 'poster_path', 'estado_final', 'visto_en'].includes(campoDb) &&
+    ['proxima_fecha', 'poster_path', 'estado_final', 'visto_en', 'tvdb_id', 'imdb_id'].includes(campoDb) &&
     valorNuevo === ''
   ) {
     valorNuevo = null;

@@ -333,6 +333,20 @@ export default {
                                 </span>
                             </div>
 
+                            <div class="details-field" v-if="isAdmin">
+                                <span class="details-field-label">ID de TheTVDB</span>
+                                <span class="details-field-value">
+                                    <input type="number" :value="serie.tvdb_id" @change="actualizarCampo('tvdb_id', $event)" class="admin-input-small" />
+                                </span>
+                            </div>
+
+                            <div class="details-field" v-if="isAdmin">
+                                <span class="details-field-label">ID de IMDb</span>
+                                <span class="details-field-value">
+                                    <input type="text" :value="serie.imdb_id" @change="actualizarCampo('imdb_id', $event)" class="admin-input-small" />
+                                </span>
+                            </div>
+
                             <div class="details-field" v-if="serie.estado">
                                 <span class="details-field-label">Estado</span>
                                 <span class="details-field-value">
