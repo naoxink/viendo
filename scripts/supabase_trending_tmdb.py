@@ -194,6 +194,7 @@ def main() -> int:
 
     payload: list[dict] = []
     descartes: Counter = Counter()
+    tvdb_ids_procesados: set[int] = set()
 
     for item in trending:
         if len(payload) >= args.limit:
@@ -217,6 +218,13 @@ def main() -> int:
         if motivo:
             descartes[motivo] += 1
             continue
+
+        # Evitar duplicados dentro de la misma ejecución
+        if tvdb_id in tvdb_ids_procesados:
+            descartes["tvdb_id duplicado"] += 1
+            continue
+
+        tvdb_ids_procesados.add(tvdb_id)
 
         payload.append(construir_payload(detalle, tvdb_id, len(payload) + 1))
 
