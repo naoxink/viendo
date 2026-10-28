@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useSeriesData } from '../composables/useSeriesData.js'
 import { userDevice } from '../composables/userDevice.js'
 import BottomNav from './BottomNav.js'
@@ -13,46 +13,26 @@ import CalendarioEstrenos from './CalendarioEstrenos.js'
 import ViewStats from './views/ViewStats.js'
 import ViewDiscover from './views/ViewDiscover.js'
 
-const urlParams = new URLSearchParams(window.location.search);
-const token = ''
-
 export default {
     name: 'App',
-    components: { BottomNav, ViewDashboard, ViewViendo, ViewEnCola, ViewCompletadas, ViewSerieDetail, ViewAddSerie, ViewLogin, CalendarioEstrenos, ViewStats, ViewDiscover  },
+    components: { BottomNav, ViewDashboard, ViewViendo, ViewEnCola, ViewCompletadas, ViewSerieDetail, ViewAddSerie, ViewLogin, CalendarioEstrenos, ViewStats, ViewDiscover },
     setup() {
         const { data, status, loading, error, añoActual, loadAll } = useSeriesData()
         const { isMobile } = userDevice()
         const searchTerm = ref('')
-        const themePreference = ref('auto')
         const activeView = ref('viendo')
         const selectedSerie = ref(null)
         const calendarioRef = ref(null)
 
-        const applyTheme = (preference = themePreference.value) => {
-            const resolvedTheme = preference === 'auto'
-                ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-                : preference
-
-            document.documentElement.setAttribute('data-theme', resolvedTheme)
-            document.documentElement.setAttribute('data-theme-preference', preference)
-        }
-
-        const syncSystemTheme = () => {
-            if (themePreference.value === 'auto') {
-                applyTheme('auto')
-            }
-        }
-
         onMounted(() => {
             loadAll()
+
+            // Tema oscuro fijo: limpiamos la preferencia antigua si existía
+            document.documentElement.setAttribute('data-theme', 'dark')
 
             let vistaGuardada = null
 
             try {
-                const storedTheme = localStorage.getItem('viendo-theme')
-                if (storedTheme === 'auto' || storedTheme === 'light' || storedTheme === 'dark') {
-                    themePreference.value = storedTheme
-                }
                 const storedView = localStorage.getItem('viendo-active-view')
                 if (storedView && ['viendo', 'en-cola', 'completadas', 'stats', 'detalle', 'dashboard', 'discover'].includes(storedView)) {
                     vistaGuardada = storedView
@@ -75,29 +55,10 @@ export default {
                 activeView.value = 'dashboard'
             }
 
-            applyTheme(themePreference.value)
-
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-            mediaQuery.addEventListener?.('change', syncSystemTheme)
-
-            onBeforeUnmount(() => {
-                mediaQuery.removeEventListener?.('change', syncSystemTheme)
-            })
-
             // Si el estado activo es 'detalle' pero no hay serie seleccionada, evitamos el bloqueo
             if (activeView.value === 'detalle' && !selectedSerie.value) {
                 activeView.value = 'viendo'
             }
-        })
-
-        watch(themePreference, (value) => {
-            try {
-                localStorage.setItem('viendo-theme', value)
-            } catch (error) {
-                console.warn('No se pudo guardar el tema:', error)
-            }
-
-            applyTheme(value)
         })
 
         // Si la ventana pasa a tamaño móvil mientras el dashboard está
@@ -167,22 +128,13 @@ export default {
 
         return {
             data, status, loading, error, añoActual,
-            searchTerm, themePreference, activeView, viendo, completadas,
+            searchTerm, activeView, viendo, completadas,
             dropeadas, enCola, abrirDetalle, volverAtras, selectedSerie, cambiarVista,
             calendarioRef
         }
     },
     template: `
         <main class="app-container" :class="{ 'app-container--wide': activeView === 'dashboard' }">
-            <div class="theme-selector">
-                <label for="theme-select">Tema</label>
-                <select id="theme-select" v-model="themePreference">
-                    <option value="auto">Automático</option>
-                    <option value="light">Claro</option>
-                    <option value="dark">Oscuro</option>
-                </select>
-            </div>
-
             <ViewLogin
                 v-if="activeView === 'login'" 
                 @login-success="activeView = 'viendo'"
@@ -248,7 +200,6 @@ export default {
                     @select-serie="abrirDetalle"
                 />
                 
-                <!-- Nueva vista de detalle de serie -->
                 <ViewSerieDetail
                     v-if="activeView === 'detalle' && selectedSerie"
                     :serie="selectedSerie"

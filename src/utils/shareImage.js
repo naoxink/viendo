@@ -152,14 +152,14 @@ export async function renderSerieImage(serie) {
     ctx.scale(scale, scale)
 
     const c = {
-        bg: css('--bg', '#f8fafc'),
-        surface: css('--surface', '#ffffff'),
-        border: css('--border', '#e2e8f0'),
-        text: css('--text', '#1f2937'),
-        muted: css('--text-muted', '#64748b'),
-        accent: css('--accent', '#2563eb'),
-        accentSoft: css('--accent-soft', 'rgba(37,99,235,.1)'),
-        accentStrong: css('--accent-strong', '#1d4ed8'),
+        bg: css('--bg', '#020617'),
+        surface: css('--surface', '#111827'),
+        border: css('--border', '#334155'),
+        text: css('--text', '#f8fafc'),
+        muted: css('--text-muted', '#94a3b8'),
+        accent: css('--accent', '#60a5fa'),
+        accentSoft: css('--accent-soft', 'rgba(96,165,250,.16)'),
+        accentStrong: css('--accent-strong', '#93c5fd'),
         goodBg: css('--note-good-bg', '#ecfdf5'),
         goodText: css('--note-good-text', '#059669'),
         goodBorder: css('--note-good-border', '#a7f3d0'),

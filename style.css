@@ -1,66 +1,6 @@
 :root {
-    --bg: #f8fafc;
-    --surface: #ffffff;
-    --surface-elevated: #f8fafc;
-    --surface-muted: #f8fafc;
-    --text: #1f2937;
-    --text-muted: #64748b;
-    --accent: #2563eb;
-    --accent-soft: rgba(37, 99, 235, 0.08);
-    --accent-strong: #1d4ed8;
-    --border: #e2e8f0;
-    --border-strong: #cbd5e1;
-    --section-border: var(--border);
-    --section-shadow: rgba(15, 23, 42, 0.06);
-    --section-shadow-strong: rgba(15, 23, 42, 0.12);
-    --section-title: var(--text);
-    --section-muted: var(--text-muted);
-    --pill-bg: var(--surface-elevated);
-    --pill-text: var(--text-muted);
-    --card-footer-bg: rgba(15, 23, 42, 0.04);
-    --link-bg: rgba(15, 23, 42, 0.06);
-    --link-border: var(--border);
-    --note-bad-bg: #fef2f2;
-    --note-bad-text: #dc2626;
-    --note-bad-border: #fecaca;
-    --note-medium-bg: #fffbeb;
-    --note-medium-text: #d97706;
-    --note-medium-border: #fde68a;
-    --note-good-bg: #ecfdf5;
-    --note-good-text: #059669;
-    --note-good-border: #a7f3d0;
-    --cola-border: var(--section-border);
-    --accent-cola: var(--accent);
-    --cola-text: var(--section-title);
-    --cola-count-bg: var(--pill-bg);
-    --cola-count-text: var(--pill-text);
-    --cola-content-bg: var(--surface-muted);
-    --cola-content-border: var(--border);
-    --cola-progress-text: var(--text-muted);
-    --badge-slowmode-bg: #f59f0bc4;
-    --badge-slowmode-text: #fff7ed;
-    --badge-watching-together-bg: #0ea4e9b0;
-    --badge-watching-together-text: #f0f9ff;
-    --estreno-bg: rgba(39, 174, 96, 0.15);
-    --estreno-text: #256a41;
-    --final-status-bg: #0f766db9;
-    --final-status-text: #f0fdfa;
-    --pending-card-bg: var(--accent-soft);
-    --pending-card-border: var(--accent);
-    --rewatch-badge-bg: #6365f1bb;
-    --rewatch-badge-border: #4f46e5;
-    --rewatch-badge-text: #eef2ff;
-    --warning-bg: #dc2626be;
-    --warning-text: #fff1f2;
-    --status-container-bg: #0f172a1a;
-    --status-item-text: #404347;
-    --status-timestamp: #64748b;
-    --nc-text: #6c757d;
-    --nc-bg: #f8f9fa;
-    --nc-border: #d6d8db; 
-}
+    color-scheme: dark;
 
-:root[data-theme="dark"] {
     --bg: #020617;
     --surface: #111827;
     --surface-elevated: #172033;
@@ -91,7 +31,13 @@
     --note-good-bg: #12332d;
     --note-good-text: #5eead4;
     --note-good-border: #155e75;
+    --cola-border: var(--section-border);
+    --accent-cola: var(--accent);
+    --cola-text: var(--section-title);
+    --cola-count-bg: var(--pill-bg);
+    --cola-count-text: var(--pill-text);
     --cola-content-bg: var(--surface-elevated);
+    --cola-content-border: var(--border);
     --cola-progress-text: #cbd5e1;
     --badge-slowmode-bg: #d977067e;
     --badge-slowmode-text: #fff7ed;
@@ -146,33 +92,6 @@ body {
     background-color: var(--bg);
     color: var(--text);
     margin: 0;
-}
-
-.theme-selector {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.6rem;
-    margin-bottom: 1rem;
-}
-
-.theme-selector label {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.theme-selector select {
-    padding: 0.45rem 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: var(--surface);
-    color: var(--text);
-    font-size: 0.9rem;
-    outline: none;
-}
-
-.theme-selector select:focus {
-    border-color: var(--accent);
 }
 
 .container {
@@ -896,13 +815,6 @@ summary::after {
     padding: 0;
     border-radius: 0;
     line-height: 1.3;
-}
-
-/* MÓVIL PEQUEÑO (< 480px) — Ajuste para que no se amontone */
-@media (max-width: 480px) {
-    .theme-selector {
-        display: none;
-    }
 }
 
 /* Dropeadas */
@@ -2018,13 +1930,6 @@ a.link {
     overflow: hidden;
 }
 
-.theme-selector {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    z-index: 10;
-}
-
 .views-container {
     flex: 1;
     min-height: 0;
@@ -2290,10 +2195,6 @@ h4.fecha-separador {
         height: calc(4rem + env(safe-area-inset-bottom, 0px));
     }
 
-    .theme-selector {
-        top: 0.5rem;
-        right: 0.5rem;
-    }
 }
 
 /* ==========================================================================
