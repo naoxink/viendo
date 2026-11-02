@@ -751,46 +751,5 @@
             }
         },
         "viendo_con_alguien": false
-    },
-    {
-        "id": 369,
-        "titulo": "The Body (2026)",
-        "anio": 2026,
-        "visto_en": null,
-        "temporada": 1,
-        "capitulo": 0,
-        "pendiente": false,
-        "nota": null,
-        "tvdb_id": 463695,
-        "imdb_id": "tt8014982",
-        "acumulados": 0,
-        "image_url": "https://artworks.thetvdb.com/banners/v4/series/463695/posters/6ad360a2b7dec.jpg",
-        "poster_path": "posters/463695_The_Body_2026.jpg",
-        "notas": null,
-        "estado_final": null,
-        "duracion_media": 0,
-        "capitulos_por_temporada": {
-            "1": 8
-        },
-        "created_at": "2026-10-23T09:47:59.158831+00:00",
-        "estado": "en_cola",
-        "proxima_fecha": null,
-        "rewatch": null,
-        "veces": null,
-        "slow_mode": false,
-        "ultimo_capitulo_visto_en": null,
-        "fechas_episodios": {
-            "1": {
-                "1": "2026-11-11",
-                "2": null,
-                "3": null,
-                "4": null,
-                "5": null,
-                "6": null,
-                "7": null,
-                "8": null
-            }
-        },
-        "viendo_con_alguien": false
     }
 ]
