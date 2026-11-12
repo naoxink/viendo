@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { getTvdbToken, tvdbGet, getEpisodiosValidos, construirFechas, contarCapitulos } from './_tvdb.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -161,27 +162,24 @@ export default async function handler(req, res) {
       titulo = await getTituloEspanol(tvdb_id, token, extended.data.name);
 
       try {
-        const { capitulos_por_temporada, primerEpisodio, emitidosCount } = await getInfoEpisodios(tvdb_id, token);
+        const eps = await getEpisodiosValidos(tvdb_id, token);
+        const hoy = new Date().toISOString().slice(0, 10);
 
-        if (Object.keys(capitulos_por_temporada).length > 0) {
-          metadata.capitulos_por_temporada = capitulos_por_temporada;
-        }
+        const capitulos = contarCapitulos(eps);
+        if (Object.keys(capitulos).length) metadata.capitulos_por_temporada = capitulos;
+        metadata.fechas_episodios = construirFechas(eps);
 
-        if (primerEpisodio?.aired) {
-          const hoy = new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
-          // Pendiente = el primer capítulo ya se emitió (toca verlo)
-          pendiente = primerEpisodio.aired <= hoy;
-        }
+        const conFecha = eps.filter(e => e.aired).sort((a, b) =>
+          a.aired.localeCompare(b.aired) || a.seasonNumber - b.seasonNumber || a.number - b.number);
+        const primero = conFecha.find(e => e.seasonNumber === 1 && e.number === 1) || conFecha[0];
 
-        // Si el primer capítulo ya está pendiente de ver, todo lo que se haya
-        // emitido POR ENCIMA de ese primer capítulo cuenta como "acumulado".
-        // Si el primer capítulo ni siquiera ha emitido aún, no hay acumulados.
-        acumulados = pendiente ? Math.max(0, emitidosCount - 1) : 0;
+        if (primero) pendiente = primero.aired <= hoy;
+        const emitidos = conFecha.filter(e => e.aired <= hoy).length;
+        acumulados = pendiente ? Math.max(0, emitidos - 1) : 0;
       } catch (e) {
-        // Si esto falla, la serie se guarda igualmente pero SIN capitulos_por_temporada
-        // (quedará como {} y luego "completar_metadatos"/"actualizar_fechas" la rellenarán).
         console.error(`⚠️ No se pudieron obtener episodios de tvdb_id=${tvdb_id}:`, e.message);
       }
+
     } catch (e) {
       console.error('Fallo obteniendo datos de TVDB:', e);
       return res.status(502).json({

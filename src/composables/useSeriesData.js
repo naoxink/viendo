@@ -287,6 +287,27 @@ export function useSeriesData() {
         return data
     }
 
+    async function refreshShow(id) {
+        const token = sessionStorage.getItem('adminToken')
+        if (!token) return { success: false, error: 'No se encontró el token de administrador' }
+        try {
+            const res = await fetch(`${CONFIG.API_BASE_URL}/api/refresh-show`, {
+                method: 'POST',
+                headers: { 'Authorization': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            })
+            const data = await res.json()
+            if (!res.ok || !data.success) throw new Error(data.error || `Error ${res.status}`)
+            await loadData()
+            return { success: true, data: data.serie }
+        } catch (e) {
+            console.error('Error al rellenar fechas:', e)
+            return { success: false, error: e.message }
+        }
+    }
+
     return { data, status, loading, error, añoActual, loadAll, updateShowStatus,
-        updateShowField, insertShow, deleteShow, fetchUpcomingSeries, fetchTrendingSeries, fetchRecentlyUpdated }
+        updateShowField, insertShow, deleteShow, fetchUpcomingSeries, fetchTrendingSeries, fetchRecentlyUpdated,
+        refreshShow
+    }
 }

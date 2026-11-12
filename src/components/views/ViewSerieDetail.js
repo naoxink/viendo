@@ -18,7 +18,7 @@ export default {
     emits: ['back'],
     setup(props, { emit }) {
         const bgStyle = computed(() => cardBgStyle(props.serie))
-        const { updateShowStatus, updateShowField, deleteShow } = useSeriesData()
+        const { updateShowStatus, updateShowField, deleteShow, refreshShow } = useSeriesData()
 
         // Campos cuya edición cambia "hasta dónde ha visto el usuario", y por
         // tanto invalidan pendiente/acumulados/proxima_fecha calculados.
@@ -240,6 +240,34 @@ export default {
             }
         }
 
+        const rellenando = ref(false)
+
+        const rellenarFechas = async () => {
+            if (!isAdmin.value || rellenando.value) return
+            rellenando.value = true
+            mensajeFechas.value = ''
+
+            const resultado = await refreshShow(props.serie.id)
+            rellenando.value = false
+
+            if (!resultado.success) {
+                mensajeFechas.value = '❌ ' + resultado.error
+                return
+            }
+
+            // loadData() crea objetos nuevos; sincronizamos el que tiene la vista abierta
+            const s = resultado.data
+            props.serie.fechas_episodios = s.fechas_episodios
+            props.serie.capitulos_por_temporada = s.capitulos_por_temporada
+            props.serie.capitulosPorTemporada = s.capitulos_por_temporada
+            props.serie.duracionMedia = s.duracion_media
+            props.serie.estado_final = s.estado_final
+            Object.keys(fechasEdit).forEach(k => delete fechasEdit[k])
+            Object.assign(fechasEdit, clonarFechas(s.fechas_episodios))
+            recalcularEstadoLocal()
+            mensajeFechas.value = '✅ Fechas rellenadas desde TheTVDB'
+        }
+
         return {
             hasNotas,
             nextAirText,
@@ -273,7 +301,9 @@ export default {
             mensajeFechas,
             compartiendo,
             mensajeCompartir,
-            compartirSerie
+            compartirSerie,
+            rellenando,
+            rellenarFechas
         }
     },
     methods: {
@@ -444,6 +474,9 @@ export default {
                                     <div class="fechas-actions">
                                         <button type="button" class="btn-submit poster-path-button" @click="guardarFechasEpisodios" :disabled="guardandoFechas">
                                             {{ guardandoFechas ? 'Guardando…' : 'Guardar fechas' }}
+                                        </button>
+                                        <button type="button" class="btn-submit poster-path-button" @click="rellenarFechas" :disabled="rellenando">
+                                            {{ rellenando ? 'Consultando…' : '🔄 Rellenar desde TheTVDB' }}
                                         </button>
                                         <span v-if="mensajeFechas" class="mensaje-fechas">{{ mensajeFechas }}</span>
                                     </div>
