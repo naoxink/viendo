@@ -1,49 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
-import { getTvdbToken, tvdbGet, getEpisodiosValidos, construirFechas, contarCapitulos } from './_tvdb.js';
+import {
+  getTvdbToken, tvdbGet, getEpisodiosValidos, construirFechas, contarCapitulos
+} from './_tvdb.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
-
-// Cache en memoria del módulo (persiste entre invocaciones "warm")
-let tvdbToken = null;
-let tvdbTokenExp = 0;
-
-async function fetchWithTimeout(url, options = {}, ms = 4000) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), ms);
-  try {
-    return await fetch(url, { ...options, signal: controller.signal });
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-async function getTvdbToken() {
-  const now = Date.now();
-  if (tvdbToken && now < tvdbTokenExp) return tvdbToken;
-
-  const res = await fetchWithTimeout('https://api4.thetvdb.com/v4/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ apikey: process.env.TVDB_API_KEY })
-  }, 3000);
-
-  if (!res.ok) throw new Error('Login TVDB falló: ' + res.status);
-  const json = await res.json();
-  tvdbToken = json.data.token;
-  tvdbTokenExp = now + 1000 * 60 * 60 * 24; // refrescamos cada 24h por seguridad
-  return tvdbToken;
-}
-
-async function tvdbGet(path, token, ms = 3000) {
-  const res = await fetchWithTimeout(`https://api4.thetvdb.com/v4${path}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  }, ms);
-  if (!res.ok) throw new Error(`TVDB ${path} falló: ${res.status}`);
-  return res.json();
-}
 
 function mapSeriesExtended(d) {
   const imdb = (d.remoteIds || []).find(r => r.sourceName === 'IMDB');
@@ -53,61 +16,6 @@ function mapSeriesExtended(d) {
     image_url: d.image || null,
     duracion_media: d.averageRuntime ?? null
   };
-}
-
-// Recorre los episodios, cuenta capítulos por temporada, localiza la fecha
-// de emisión del primer capítulo (T1E1, o el más antiguo válido si no existe)
-// y cuenta cuántos episodios ya se han emitido a día de hoy (para poder
-// calcular después cuántos capítulos hay "acumulados" desde el primero).
-async function getInfoEpisodios(tvdb_id, token) {
-  const conteo = {};
-  let primerEpisodio = null; // { seasonNumber, number, aired }
-  let emitidosCount = 0;
-  const hoy = new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
-  let page = 0;
-  const MAX_PAGES = 3;
-
-  while (page < MAX_PAGES) {
-    const json = await tvdbGet(
-      `/series/${tvdb_id}/episodes/default?page=${page}`,
-      token,
-      4000
-    );
-    const episodios = json.data?.episodes || [];
-
-    for (const ep of episodios) {
-      if (ep.seasonNumber == null || ep.seasonNumber <= 0) continue;
-
-      const key = String(ep.seasonNumber);
-      conteo[key] = (conteo[key] || 0) + 1;
-
-      if (!ep.aired) continue;
-
-      // Contamos cualquier episodio válido (temporada > 0) que ya se haya emitido
-      if (ep.aired <= hoy) {
-        emitidosCount++;
-      }
-
-      // Preferimos explícitamente T1E1 si la encontramos
-      const esT1E1 = ep.seasonNumber === 1 && ep.number === 1;
-      const esMasAntiguo = !primerEpisodio || ep.aired < primerEpisodio.aired;
-
-      if (esT1E1) {
-        // Si encontramos T1E1 nos quedamos con ella siempre (tiene prioridad)
-        if (!primerEpisodio || !(primerEpisodio.seasonNumber === 1 && primerEpisodio.number === 1)) {
-          primerEpisodio = ep;
-        }
-      } else if (esMasAntiguo && !(primerEpisodio && primerEpisodio.seasonNumber === 1 && primerEpisodio.number === 1)) {
-        primerEpisodio = ep;
-      }
-    }
-
-    const next = json.links?.next;
-    if (!next) break;
-    page++;
-  }
-
-  return { capitulos_por_temporada: conteo, primerEpisodio, emitidosCount };
 }
 
 // Título en español. Si no hay traducción disponible, cae al nombre original.
@@ -151,8 +59,8 @@ export default async function handler(req, res) {
 
     let metadata = {};
     let titulo = null;
-    let pendiente = true; // valor por defecto/fallback si no podemos determinarlo
-    let acumulados = 0;   // capítulos ya emitidos por encima del 1x1, pendientes de ver
+    let pendiente = true; // fallback si no podemos determinarlo
+    let acumulados = 0;
 
     try {
       const token = await getTvdbToken();
@@ -169,17 +77,19 @@ export default async function handler(req, res) {
         if (Object.keys(capitulos).length) metadata.capitulos_por_temporada = capitulos;
         metadata.fechas_episodios = construirFechas(eps);
 
-        const conFecha = eps.filter(e => e.aired).sort((a, b) =>
-          a.aired.localeCompare(b.aired) || a.seasonNumber - b.seasonNumber || a.number - b.number);
+        const conFecha = eps
+          .filter(e => e.aired)
+          .sort((a, b) =>
+            a.aired.localeCompare(b.aired) || a.seasonNumber - b.seasonNumber || a.number - b.number);
         const primero = conFecha.find(e => e.seasonNumber === 1 && e.number === 1) || conFecha[0];
 
         if (primero) pendiente = primero.aired <= hoy;
         const emitidos = conFecha.filter(e => e.aired <= hoy).length;
         acumulados = pendiente ? Math.max(0, emitidos - 1) : 0;
       } catch (e) {
+        // La serie se guarda igualmente sin episodios; el workflow diario o el botón de la ficha lo completan.
         console.error(`⚠️ No se pudieron obtener episodios de tvdb_id=${tvdb_id}:`, e.message);
       }
-
     } catch (e) {
       console.error('Fallo obteniendo datos de TVDB:', e);
       return res.status(502).json({
@@ -204,9 +114,6 @@ export default async function handler(req, res) {
       pendiente,
       acumulados,
       ...metadata,
-      // Aseguramos explícitamente (al final, sin depender del orden del spread)
-      // que si TVDB no devolvió capítulos por temporada, quede un objeto vacío
-      // en vez de "undefined" — pero si sí los tenemos, se respetan.
       capitulos_por_temporada: metadata.capitulos_por_temporada ?? {}
     };
 
