@@ -10,11 +10,14 @@ const supabase = createClient(
 
 function mapSeriesExtended(d) {
   const imdb = (d.remoteIds || []).find(r => r.sourceName === 'IMDB');
+  const estadoApi = d.status?.name; // Continuing | Ended | Upcoming | Canceled...
+
   return {
     anio: d.firstAired ? parseInt(d.firstAired.slice(0, 4), 10) : null,
     imdb_id: imdb ? imdb.id : null,
     image_url: d.image || null,
-    duracion_media: d.averageRuntime ?? null
+    duracion_media: d.averageRuntime ?? null,
+    estado_final: ['Ended', 'Canceled'].includes(estadoApi) ? estadoApi : null
   };
 }
 
