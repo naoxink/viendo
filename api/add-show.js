@@ -113,7 +113,7 @@ export default async function handler(req, res) {
       tvdb_id,
       estado,
       temporada: 1,
-      capitulo: 1,
+      capitulo: 0,
       pendiente,
       acumulados,
       ...metadata,
