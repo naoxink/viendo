@@ -31,12 +31,17 @@ export function useSeriesData() {
             }
 
             rows.forEach(item => {
+                const caps = { ...(item.capitulos_por_temporada || {}) }
+                for (const [t, eps] of Object.entries(item.fechas_episodios || {})) {
+                    const conFecha = Object.values(eps || {}).filter(Boolean).length
+                    if (conFecha > (Number(caps[t]) || 0)) caps[t] = conFecha
+                }
                 const serieMapeada = {
                     ...item,
                     año: item.anio,
                     vistoEn: item.visto_en,
                     duracionMedia: item.duracion_media,
-                    capitulosPorTemporada: item.capitulos_por_temporada
+                    capitulosPorTemporada: caps
                 }
 
                 if (serieMapeada.fechas_episodios && Object.keys(serieMapeada.fechas_episodios).length > 0) {
