@@ -217,6 +217,14 @@ export default {
             }
 
             props.serie.fechas_episodios = payload
+
+            const caps = { ...(props.serie.capitulosPorTemporada || {}) }
+            for (const [t, eps] of Object.entries(payload)) {
+                const n = Object.values(eps || {}).filter(Boolean).length
+                if (n > (Number(caps[t]) || 0)) caps[t] = n
+            }
+            props.serie.capitulosPorTemporada = caps
+            
             recalcularEstadoLocal() // las fechas afectan a pendiente/acumulados/próxima fecha
             mensajeFechas.value = '✅ Fechas guardadas'
         }
