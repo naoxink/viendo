@@ -123,7 +123,7 @@ export default {
     },
     template: `
         <div
-            class="serie-card"
+            class="serie-card serie-card--viendo"
             :style="bgStyle"
             :class="{
                 'mark-before': markState === 'before',
@@ -140,10 +140,11 @@ export default {
                         T{{ serie.temporada }} • E{{ serie.capitulo }}
                         <span v-if="serie.pendiente" class="badge-pendiente">Pendiente</span>
                         <span v-else class="badge-visto">Visto</span>
-                        <div></div>
                     </p>
-                    <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
-                    <span v-if="esFinalDeTemporada" class="badge-final-status" title="Este capítulo es el último de la temporada">Fin temp.</span>
+                    <div v-if="serie.acumulados > 0 || esFinalDeTemporada" class="info-badges">
+                        <span v-if="serie.acumulados > 0" class="badge-warning">+{{ serie.acumulados }} caps</span>
+                        <span v-if="esFinalDeTemporada" class="badge-final-status" title="Este capítulo es el último de la temporada">Fin temp.</span>
+                    </div>
                 </div>
                 <button
                     v-if="isAdmin && serie.pendiente"

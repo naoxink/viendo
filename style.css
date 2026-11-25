@@ -3462,3 +3462,90 @@ button.btn-submit.poster-path-button:active:not(:disabled) {
     background: var(--note-bad-bg);
     border-top: 1px solid var(--note-bad-border);
 }
+
+
+
+
+
+/* ==========================================================================
+   CARD "VIENDO" — póster grande + degradado oscuro para legibilidad
+   ========================================================================== */
+.serie-card.serie-card--viendo {
+    border-radius: 14px;
+}
+
+/* Imagen de fondo: se ve a la derecha, se pierde hacia la izquierda */
+.serie-card.serie-card--viendo::before {
+    inset: 0;
+    background-position: center 25%;
+    opacity: 0.75;
+}
+
+.serie-card.serie-card--viendo:not(:has(.badge-pendiente))::before {
+    opacity: 0.4;
+}
+
+/* Degradado horizontal: muy oscuro bajo el texto, translúcido a la derecha */
+.serie-card--viendo .serie-card-body {
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.6rem 0.9rem 0.6rem 0.6rem;
+    background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--bg) 97%, transparent) 0%,
+        color-mix(in srgb, var(--bg) 88%, transparent) 45%,
+        color-mix(in srgb, var(--bg) 40%, transparent) 100%
+    );
+}
+
+.serie-card--viendo .serie-card-body:has(.badge-pendiente) {
+    padding: 0.6rem 0.9rem 0.6rem 0.6rem;
+}
+
+/* Póster más grande */
+.serie-card--viendo .serie-thumb,
+.serie-card--viendo .serie-card-body .serie-thumb-placeholder {
+    width: 72px;
+    height: 104px;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+}
+
+/* Texto */
+.serie-card--viendo .info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.serie-card--viendo .info h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.25;
+    flex-wrap: wrap;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+.serie-card--viendo .progress {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text);
+    opacity: 0.85;
+}
+
+.serie-card--viendo .info-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+/* Footer: más fino y fundido con el degradado */
+.serie-card--viendo .serie-card-footer {
+    padding: 0.45rem 0.75rem;
+    background-color: color-mix(in srgb, var(--bg) 82%, transparent);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
